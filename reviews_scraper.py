@@ -28,7 +28,7 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
     def looks(d: dict) -> bool:
         if not isinstance(d, dict): return False
         keys = {k.lower() for k in d.keys()}
-        sig = ["pros","cons","headline","reviewbody","overallrating","rating","jobtitle","createddatetime"]
+        sig = ["pros","cons","headline","reviewbody","overallrating","rating","jobtitle","createddatetime","summary","reviewdatetime"]
         return sum(any(s in k for k in keys) for s in sig) >= 2
     def walk(o):
         if isinstance(o, dict):
@@ -41,12 +41,12 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
     for r in cand:
         x = {
             "review_id": r.get("reviewId") or r.get("id"),
-            "title": r.get("headline") or r.get("title"),
+            "title": r.get("headline") or r.get("title") or r.get("summary"),
             "body": r.get("reviewBody") or r.get("body") or r.get("text"),
             "pros": r.get("pros") or r.get("reviewPros"),
             "cons": r.get("cons") or r.get("reviewCons"),
             "rating": r.get("overallRating") or r.get("ratingOverall") or r.get("rating"),
-            "date": r.get("reviewDate") or r.get("createdDateTime") or r.get("time"),
+            "date": r.get("reviewDate") or r.get("createdDateTime") or r.get("reviewDateTime") or r.get("time"),
             "role": r.get("jobTitle") or r.get("authorJobTitle"),
             "location": r.get("location") or r.get("reviewerLocation"),
             "employmentStatus": r.get("employmentStatus"),
@@ -69,7 +69,8 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
     def walk(o):
         if isinstance(o, dict):
             keys = {k.lower() for k in o.keys()}
-            if "pros" in keys or "cons" in keys: cand.append(o)
+            if "pros" in keys or "cons" in keys:
+                cand.append(o)
             for v in o.values(): walk(v)
         elif isinstance(o, list):
             for v in o: walk(v)
@@ -92,6 +93,180 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
         k = x.get("review_id") or (x.get("title"), x.get("date"))
         if k and k not in seen: seen.add(k); out.append(x)
     return out
+
+# ---------- Deref + backfill helpers ----------
+def _apollo_index_from_html(html: str) -> Dict[str, Any]:
+    """Return the apolloState dict keyed like 'JobTitle:239483', 'City:2856202', etc."""
+    if not html: return {}
+    m = re.search(r'apolloState"\s*:\s*({.+?})\s*}\s*[,;]\s*</script', html, flags=re.S|re.I)
+    if not m: return {}
+    try:
+        return json.loads(m.group(1))
+    except Exception:
+        return {}
+
+def _deref_ref(v: Any, idx: Dict[str, Any]) -> Optional[str]:
+    """Resolve {'__ref': 'Type:ID'} into a readable string; return None if can't."""
+    if not isinstance(v, dict) or "__ref" not in v:  # already a string or None
+        return v if isinstance(v, str) else None
+    ref = v.get("__ref")
+    target = idx.get(ref, {})
+    if isinstance(target, dict):
+        tname = target.get("__typename") or ""
+        # Job title
+        if tname == "JobTitle" or str(ref).startswith("JobTitle:"):
+            return target.get("text") or target.get("jobTitleText") or target.get("name")
+        # City (try a few common fields)
+        if tname == "City" or str(ref).startswith("City:"):
+            city = target.get("name") or target.get("city") or ""
+            region = target.get("regionName") or target.get("state") or ""
+            country = target.get("countryName") or target.get("country") or ""
+            parts = [p for p in [city, region, country] if p]
+            return ", ".join(parts) if parts else None
+        # Generic readable label
+        return target.get("name") or target.get("title") or target.get("label")
+    return None
+
+def _first_nonempty(*vals) -> Optional[Any]:
+    for v in vals:
+        if v not in (None, "", [], {}):
+            return v
+    return None
+
+def _normalize_row_fields(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
+    """Ensure title, rating, date, role, location are not null. Mutates & returns row."""
+    # 1) Hydrate role/location
+    row["role"] = _first_nonempty(
+        _deref_ref(row.get("role"), apollo_idx),
+        _deref_ref(row.get("jobTitle"), apollo_idx),  # sometimes named jobTitle
+        row.get("role") if isinstance(row.get("role"), str) else None
+    ) or "Unknown role"
+
+    row["location"] = _first_nonempty(
+        _deref_ref(row.get("location"), apollo_idx),
+        row.get("location") if isinstance(row.get("location"), str) else None
+    ) or "Unknown location"
+
+    # 2) Backfill title/body variants
+    row["title"] = _first_nonempty(
+        row.get("title"),
+        row.get("headline"),
+        row.get("summary"),          # Apollo often uses 'summary'
+    )
+    if not row.get("title"):
+        # synthesize a short title from pros/cons/body if needed
+        seed = _first_nonempty(row.get("pros"), row.get("cons"), row.get("body"), "Review")
+        row["title"] = (seed or "Review")
+        if isinstance(row["title"], str) and len(row["title"]) > 80:
+            row["title"] = row["title"][:77].rstrip() + "..."
+
+    # 3) Backfill rating variants → float when possible
+    rating_raw = _first_nonempty(row.get("rating"), row.get("overallRating"), row.get("ratingOverall"))
+    if isinstance(rating_raw, (int, float)):
+        row["rating"] = float(rating_raw)
+    elif isinstance(rating_raw, str):
+        m = re.search(r'\d+(?:\.\d+)?', rating_raw)
+        row["rating"] = float(m.group(0)) if m else None
+    else:
+        row["rating"] = None
+    if row["rating"] is None:
+        row["rating"] = 0.0  # guaranteed non-null; change to "" if you prefer
+
+    # 4) Backfill date variants (keep as ISO string if present)
+    row["date"] = _first_nonempty(
+        row.get("date"),
+        row.get("createdDateTime"),
+        row.get("reviewDate"),
+        row.get("reviewDateTime")
+    ) or ""  # guaranteed non-null (empty string if truly missing)
+
+    return row
+
+def _find_apollo_review_node(apollo_idx: Dict[str, Any], review_id: Any) -> Optional[Dict[str, Any]]:
+    """Locate the Apollo object for this review_id (keys vary: EmployerReview, EmployerReviewRG, etc.)."""
+    if not apollo_idx or review_id is None:
+        return None
+    rid_s = str(review_id)
+    for k, v in apollo_idx.items():
+        if not isinstance(v, dict):
+            continue
+        tname = v.get("__typename", "")
+        if "Review" not in tname and "Review" not in k:
+            continue
+        if v.get("reviewId") == review_id or v.get("id") == review_id or rid_s in k:
+            return v
+    return None
+
+def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Use Apollo's review node to fill missing/placeholder fields:
+    title ← summary, rating ← ratingOverall, date ← reviewDateTime,
+    role/location ← deref(jobTitle/location).
+    """
+    node = _find_apollo_review_node(apollo_idx, row.get("review_id"))
+    if not node:
+        return row
+
+    # Title (prefer explicit title/headline; else Apollo 'summary')
+    if not row.get("title") or row.get("title") in ("Review", ""):
+        row["title"] = _first_nonempty(row.get("title"), node.get("summary"), "Review")
+
+    # Rating (numeric)
+    if not row.get("rating") or row.get("rating") == 0.0:
+        rating_raw = _first_nonempty(row.get("rating"), node.get("ratingOverall"))
+        if isinstance(rating_raw, (int, float)):
+            row["rating"] = float(rating_raw)
+        elif isinstance(rating_raw, str):
+            m = re.search(r'\d+(?:\.\d+)?', rating_raw)
+            row["rating"] = float(m.group(0)) if m else row.get("rating") or 0.0
+
+    # Date (prefer ISO from Apollo)
+    if not row.get("date"):
+        row["date"] = _first_nonempty(row.get("date"), node.get("reviewDateTime"), node.get("createdDateTime"), node.get("reviewDate")) or ""
+
+    # Role + Location (deref Apollo refs)
+    if row.get("role") in (None, "", "Unknown role") or isinstance(row.get("role"), dict):
+        row["role"] = _first_nonempty(
+            _deref_ref(node.get("jobTitle"), apollo_idx),
+            row.get("role"),
+            "Unknown role"
+        )
+
+    if row.get("location") in (None, "", "Unknown location") or isinstance(row.get("location"), dict):
+        row["location"] = _first_nonempty(
+            _deref_ref(node.get("location"), apollo_idx),
+            row.get("location"),
+            "Unknown location"
+        )
+
+    return row
+
+
+def _safe_scalar(v: Any):
+    """Return a hashable scalar usable in a set/dict key."""
+    if v is None:
+        return ""
+    if isinstance(v, (int, float, str)):
+        return str(v)
+    # Lists/dicts/other → stable JSON string
+    try:
+        return json.dumps(v, sort_keys=True, ensure_ascii=False)
+    except Exception:
+        return str(v)
+
+def _row_dedupe_key(r: Dict[str, Any]):
+    """Prefer review_id; else fall back to (title, date, role) after scalarizing."""
+    rid = r.get("review_id")
+    if isinstance(rid, (int, str)) and str(rid).strip() != "":
+        return ("id", str(rid))
+    # Fallback: coerce to scalars so the tuple is hashable
+    return (
+        "tdr",
+        _safe_scalar(r.get("title")),
+        _safe_scalar(r.get("date")),
+        _safe_scalar(r.get("role")),
+    )
+
 
 # ---------------- Browser client (JSON-only) ----------------
 class GlassdoorReviews:
@@ -324,8 +499,17 @@ class GlassdoorReviews:
                 else:
                     prev_ids = ids_now
 
+                # NEW: build apollo index for deref + backfills
+                apollo_idx = _apollo_index_from_html(html)
+
                 rows = _extract_apollo_state_reviews(html) or _extract_next_data_reviews(html)
                 log(f"[json] Extracted {len(rows)} objects on page {page}")
+
+                # NEW: hydrate & backfill to avoid nulls
+                for r in rows:
+                    _normalize_row_fields(r, apollo_idx)
+                    _enrich_from_apollo(r, apollo_idx)
+
                 all_rows.extend(rows)
 
             # de-dupe & normalize (keep __typename entries intact)
@@ -335,9 +519,10 @@ class GlassdoorReviews:
                 if isinstance(rating, str):
                     m = re.search(r'\d+(?:\.\d+)?', rating)
                     r["rating"] = float(m.group(0)) if m else None
-                key = r.get("review_id") or (r.get("title"), r.get("date"), r.get("role"))
+                key = _row_dedupe_key(r)
                 if key not in seen:
-                    seen.add(key); dedup.append(r)
+                    seen.add(key); 
+                    dedup.append(r)
 
             OUT_JSON.write_text(json.dumps(dedup, indent=2, ensure_ascii=False), encoding="utf-8")
             log(f"[run] Saved {len(dedup)} reviews → {OUT_JSON.resolve()}")
