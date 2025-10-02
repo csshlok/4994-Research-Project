@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional
 from urllib.parse import parse_qsl, urlencode
 
 from pydoll.browser.chromium import Chrome
-from pydoll.browser.options import ChromiumOptions
+from pydoll.browser.options import ChromiumOptions  
 
 PROFILE_DIR = Path("chrome-profile")
 OUT_JSON    = Path("reviews.json")
@@ -28,7 +28,10 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
     def looks(d: dict) -> bool:
         if not isinstance(d, dict): return False
         keys = {k.lower() for k in d.keys()}
-        sig = ["pros","cons","headline","reviewbody","overallrating","rating","jobtitle","createddatetime","summary","reviewdatetime"]
+        sig = [
+            "pros","cons","headline","reviewbody","overallrating","rating",
+            "jobtitle","createddatetime","summary","reviewdatetime"
+        ]
         return sum(any(s in k for k in keys) for s in sig) >= 2
     def walk(o):
         if isinstance(o, dict):
@@ -53,10 +56,13 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
             "_source": "apollo",
         }
         k = x.get("review_id") or (x.get("title"), x.get("date"))
-        if k and k not in seen: seen.add(k); out.append(x)
+        if k and k not in seen:
+            seen.add(k)
+            out.append(x)
     return out
 
 def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
+    """Stricter filter: only collect true review objects (skip highlight/aggregate blobs)."""
     if not html: return []
     m = re.search(r'__NEXT_DATA__"\s*type="application/json">\s*({.+?})\s*</script>', html, flags=re.S|re.I)
     if not m: return []
@@ -65,16 +71,30 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
     except Exception as e:
         log(f"[next] JSON decode failed: {e}")
         return []
+
+    def is_review_shape(d: dict) -> bool:
+        if not isinstance(d, dict): return False
+        keys = {k.lower() for k in d.keys()}
+        # must look like a review (have id and either pros/cons)
+        if not (("reviewid" in keys or "id" in keys) and ("pros" in keys or "cons" in keys)):
+            return False
+        # avoid highlight/aggregate types
+        t = d.get("__typename", "")
+        if isinstance(t, str) and ("Highlight" in t or "ProsAndConsType" in t):
+            return False
+        rid = d.get("reviewId") or d.get("id")
+        return isinstance(rid, (int, str))
+
     cand: List[Dict[str, Any]] = []
+
     def walk(o):
         if isinstance(o, dict):
-            keys = {k.lower() for k in o.keys()}
-            if "pros" in keys or "cons" in keys:
-                cand.append(o)
+            if is_review_shape(o): cand.append(o)
             for v in o.values(): walk(v)
         elif isinstance(o, list):
             for v in o: walk(v)
     walk(data)
+
     out, seen = [], set()
     for r in cand:
         x = {
@@ -90,20 +110,105 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
             "employmentStatus": r.get("employmentStatus"),
             "_source": "next",
         }
-        k = x.get("review_id") or (x.get("title"), x.get("date"))
-        if k and k not in seen: seen.add(k); out.append(x)
+        k = x.get("review_id")
+        if k and k not in seen:
+            seen.add(k)
+            out.append(x)
     return out
 
 # ---------- Deref + backfill helpers ----------
 def _apollo_index_from_html(html: str) -> Dict[str, Any]:
-    """Return the apolloState dict keyed like 'JobTitle:239483', 'City:2856202', etc."""
-    if not html: return {}
-    m = re.search(r'apolloState"\s*:\s*({.+?})\s*}\s*[,;]\s*</script', html, flags=re.S|re.I)
-    if not m: return {}
-    try:
-        return json.loads(m.group(1))
-    except Exception:
+    """
+    Return the Apollo normalized store as a dict mapping keys like
+    'JobTitle:239483' → {...}. Works whether the store is embedded as a
+    standalone <script> or nested inside __NEXT_DATA__.
+    """
+    if not html:
         return {}
+
+    # --- Attempt A: standalone apolloState blob next to </script>
+    m = re.search(
+        r'apolloState"\s*:\s*({.+?})\s*}\s*[,;]\s*</script>',
+        html, flags=re.S | re.I
+    )
+    if m:
+        try:
+            return json.loads(m.group(1))
+        except Exception:
+            pass  # fall through to NEXT_DATA traversal
+
+    # --- Attempt B: dig into __NEXT_DATA__ and locate the apollo dict
+    def _load_next_data(h: str) -> Optional[Dict[str, Any]]:
+        m2 = re.search(
+            r'__NEXT_DATA__"\s*type="application/json">\s*({.+?})\s*</script>',
+            h, flags=re.S | re.I
+        )
+        if not m2:
+            return None
+        try:
+            return json.loads(m2.group(1))
+        except Exception:
+            return None
+
+    def _find_apollo_dict(o: Any) -> Optional[Dict[str, Any]]:
+        """
+        Heuristic: find a dict whose values are mostly dicts with '__typename'
+        and whose KEYS often contain a colon (e.g., 'JobTitle:123').
+        Prefer the highest 'score'.
+        """
+        best = None
+        best_score = 0
+
+        def score_dict(d: Dict[str, Any]) -> int:
+            if not isinstance(d, dict): return 0
+            vals = list(d.values())
+            if not vals: return 0
+            typename_cnt = sum(1 for v in vals if isinstance(v, dict) and "__typename" in v)
+            colon_key_cnt = sum(1 for k in d.keys() if isinstance(k, str) and ":" in k)
+            return 2 * typename_cnt + colon_key_cnt
+
+        def walk(x: Any):
+            nonlocal best, best_score
+            if isinstance(x, dict):
+                s = score_dict(x)
+                if s > best_score and len(x) >= 3:
+                    best, best_score = x, s
+                for v in x.values(): walk(v)
+            elif isinstance(x, list):
+                for v in x: walk(v)
+
+        walk(o)
+        return best
+
+    nd = _load_next_data(html)
+    if not nd:
+        return {}
+    # Try common nesting first
+    cur = nd
+    for key in ("props", "pageProps", "apolloState"):
+        if isinstance(cur, dict) and key in cur:
+            cur = cur[key]
+        else:
+            cur = None
+            break
+    if isinstance(cur, dict) and cur:
+        return cur
+
+    # Fallback: heuristic search anywhere in __NEXT_DATA__
+    apollo_guess = _find_apollo_dict(nd)
+    return apollo_guess if isinstance(apollo_guess, dict) else {}
+
+def _coerce_rating(v) -> Optional[float]:
+    """Parse a rating into float if > 0; else None."""
+    if isinstance(v, (int, float)):
+        return float(v) if v > 0 else None
+    if isinstance(v, str):
+        m = re.search(r'\d+(?:\.\d+)?', v)
+        if m:
+            val = float(m.group(0))
+            return val if val > 0 else None
+    return None
+
 
 def _deref_ref(v: Any, idx: Dict[str, Any]) -> Optional[str]:
     """Resolve {'__ref': 'Type:ID'} into a readable string; return None if can't."""
@@ -187,13 +292,33 @@ def _find_apollo_review_node(apollo_idx: Dict[str, Any], review_id: Any) -> Opti
     if not apollo_idx or review_id is None:
         return None
     rid_s = str(review_id)
+
+    # 1) Fast path: values with explicit reviewId/id match
+    for v in apollo_idx.values():
+        if isinstance(v, dict):
+            if v.get("reviewId") == review_id or v.get("id") == review_id:
+                return v
+
+    # 2) Key-encoded path: keys like 'EmployerReviewRG:{"reviewId":100296184}'
     for k, v in apollo_idx.items():
-        if not isinstance(v, dict):
+        if not isinstance(k, str):
             continue
-        tname = v.get("__typename", "")
-        if "Review" not in tname and "Review" not in k:
+        if "Review" not in k:
             continue
-        if v.get("reviewId") == review_id or v.get("id") == review_id or rid_s in k:
+        try:
+            # split on first colon and parse JSON-ish suffix
+            _, jsonish = k.split(":", 1)
+            jsonish = jsonish.strip()
+            if jsonish.startswith("{") and jsonish.endswith("}"):
+                obj = json.loads(jsonish)
+                if str(obj.get("reviewId") or obj.get("id")) == rid_s:
+                    return v if isinstance(v, dict) else None
+        except Exception:
+            continue
+
+    # 3) Fallback: substring check in the key
+    for k, v in apollo_idx.items():
+        if isinstance(k, str) and rid_s in k and isinstance(v, dict):
             return v
     return None
 
@@ -212,17 +337,21 @@ def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict
         row["title"] = _first_nonempty(row.get("title"), node.get("summary"), "Review")
 
     # Rating (numeric)
-    if not row.get("rating") or row.get("rating") == 0.0:
-        rating_raw = _first_nonempty(row.get("rating"), node.get("ratingOverall"))
-        if isinstance(rating_raw, (int, float)):
-            row["rating"] = float(rating_raw)
-        elif isinstance(rating_raw, str):
-            m = re.search(r'\d+(?:\.\d+)?', rating_raw)
-            row["rating"] = float(m.group(0)) if m else row.get("rating") or 0.0
+    cur = row.get("rating")
+    needs_rating = cur in (None, "", '0', "0.0", 0, 0.0)
+    if needs_rating:
+        apollo_rating = _coerce_rating(_first_nonempty(node.get("ratingOverall"), node.get("overallRating"), node.get("rating")))
+        if apollo_rating is not None:
+            row["rating"] = max(0.0, min(5.0, apollo_rating))
 
     # Date (prefer ISO from Apollo)
     if not row.get("date"):
-        row["date"] = _first_nonempty(row.get("date"), node.get("reviewDateTime"), node.get("createdDateTime"), node.get("reviewDate")) or ""
+        row["date"] = _first_nonempty(
+            row.get("date"),
+            node.get("reviewDateTime"),
+            node.get("createdDateTime"),
+            node.get("reviewDate")
+        ) or ""
 
     # Role + Location (deref Apollo refs)
     if row.get("role") in (None, "", "Unknown role") or isinstance(row.get("role"), dict):
@@ -241,14 +370,13 @@ def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict
 
     return row
 
-
+# ---------- Safe de-dupe key helpers ----------
 def _safe_scalar(v: Any):
     """Return a hashable scalar usable in a set/dict key."""
     if v is None:
         return ""
     if isinstance(v, (int, float, str)):
         return str(v)
-    # Lists/dicts/other → stable JSON string
     try:
         return json.dumps(v, sort_keys=True, ensure_ascii=False)
     except Exception:
@@ -259,14 +387,12 @@ def _row_dedupe_key(r: Dict[str, Any]):
     rid = r.get("review_id")
     if isinstance(rid, (int, str)) and str(rid).strip() != "":
         return ("id", str(rid))
-    # Fallback: coerce to scalars so the tuple is hashable
     return (
         "tdr",
         _safe_scalar(r.get("title")),
         _safe_scalar(r.get("date")),
         _safe_scalar(r.get("role")),
     )
-
 
 # ---------------- Browser client (JSON-only) ----------------
 class GlassdoorReviews:
@@ -499,13 +625,18 @@ class GlassdoorReviews:
                 else:
                     prev_ids = ids_now
 
-                # NEW: build apollo index for deref + backfills
+                # Build apollo index for deref + backfills
                 apollo_idx = _apollo_index_from_html(html)
 
-                rows = _extract_apollo_state_reviews(html) or _extract_next_data_reviews(html)
+                # ---- Combine Apollo + Next results, skip items without review_id
+                rows: List[Dict[str, Any]] = []
+                rows.extend(_extract_apollo_state_reviews(html))
+                rows.extend(_extract_next_data_reviews(html))
+                rows = [r for r in rows if r.get("review_id") not in (None, "", [])]
+
                 log(f"[json] Extracted {len(rows)} objects on page {page}")
 
-                # NEW: hydrate & backfill to avoid nulls
+                # Hydrate + Enrich to avoid nulls and fill from Apollo by review_id
                 for r in rows:
                     _normalize_row_fields(r, apollo_idx)
                     _enrich_from_apollo(r, apollo_idx)
@@ -519,9 +650,10 @@ class GlassdoorReviews:
                 if isinstance(rating, str):
                     m = re.search(r'\d+(?:\.\d+)?', rating)
                     r["rating"] = float(m.group(0)) if m else None
+
                 key = _row_dedupe_key(r)
                 if key not in seen:
-                    seen.add(key); 
+                    seen.add(key)
                     dedup.append(r)
 
             OUT_JSON.write_text(json.dumps(dedup, indent=2, ensure_ascii=False), encoding="utf-8")
