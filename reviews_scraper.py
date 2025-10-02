@@ -1,11 +1,11 @@
 # reviews_scraper.py
-import asyncio, json, re, inspect, sys, random, argparse, time
+import asyncio, json, re, inspect, sys, random, argparse, time, csv
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from urllib.parse import parse_qsl, urlencode
 
 from pydoll.browser.chromium import Chrome
-from pydoll.browser.options import ChromiumOptions  
+from pydoll.browser.options import ChromiumOptions
 
 PROFILE_DIR = Path("chrome-profile")
 OUT_JSON    = Path("reviews.json")
@@ -64,7 +64,8 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
 def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
     """Stricter filter: only collect true review objects (skip highlight/aggregate blobs)."""
     if not html: return []
-    m = re.search(r'__NEXT_DATA__"\s*type="application/json">\s*({.+?})\s*</script>', html, flags=re.S|re.I)
+    # Fix #1: robust __NEXT_DATA__ extraction
+    m = re.search(r'id="__NEXT_DATA__"[^>]*>\s*({.+?})\s*</script>', html, flags=re.S|re.I)
     if not m: return []
     try:
         data = json.loads(m.group(1))
@@ -75,10 +76,8 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
     def is_review_shape(d: dict) -> bool:
         if not isinstance(d, dict): return False
         keys = {k.lower() for k in d.keys()}
-        # must look like a review (have id and either pros/cons)
         if not (("reviewid" in keys or "id" in keys) and ("pros" in keys or "cons" in keys)):
             return False
-        # avoid highlight/aggregate types
         t = d.get("__typename", "")
         if isinstance(t, str) and ("Highlight" in t or "ProsAndConsType" in t):
             return False
@@ -86,7 +85,6 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
         return isinstance(rid, (int, str))
 
     cand: List[Dict[str, Any]] = []
-
     def walk(o):
         if isinstance(o, dict):
             if is_review_shape(o): cand.append(o)
@@ -126,7 +124,7 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
     if not html:
         return {}
 
-    # --- Attempt A: standalone apolloState blob next to </script>
+    # Attempt A: standalone apolloState blob
     m = re.search(
         r'apolloState"\s*:\s*({.+?})\s*}\s*[,;]\s*</script>',
         html, flags=re.S | re.I
@@ -135,12 +133,13 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
         try:
             return json.loads(m.group(1))
         except Exception:
-            pass  # fall through to NEXT_DATA traversal
+            pass
 
-    # --- Attempt B: dig into __NEXT_DATA__ and locate the apollo dict
+    # Attempt B: dig into __NEXT_DATA__
     def _load_next_data(h: str) -> Optional[Dict[str, Any]]:
+        # Fix #1 (second occurrence)
         m2 = re.search(
-            r'__NEXT_DATA__"\s*type="application/json">\s*({.+?})\s*</script>',
+            r'id="__NEXT_DATA__"[^>]*>\s*({.+?})\s*</script>',
             h, flags=re.S | re.I
         )
         if not m2:
@@ -151,14 +150,8 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
             return None
 
     def _find_apollo_dict(o: Any) -> Optional[Dict[str, Any]]:
-        """
-        Heuristic: find a dict whose values are mostly dicts with '__typename'
-        and whose KEYS often contain a colon (e.g., 'JobTitle:123').
-        Prefer the highest 'score'.
-        """
         best = None
         best_score = 0
-
         def score_dict(d: Dict[str, Any]) -> int:
             if not isinstance(d, dict): return 0
             vals = list(d.values())
@@ -166,7 +159,6 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
             typename_cnt = sum(1 for v in vals if isinstance(v, dict) and "__typename" in v)
             colon_key_cnt = sum(1 for k in d.keys() if isinstance(k, str) and ":" in k)
             return 2 * typename_cnt + colon_key_cnt
-
         def walk(x: Any):
             nonlocal best, best_score
             if isinstance(x, dict):
@@ -176,14 +168,12 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
                 for v in x.values(): walk(v)
             elif isinstance(x, list):
                 for v in x: walk(v)
-
         walk(o)
         return best
 
     nd = _load_next_data(html)
     if not nd:
         return {}
-    # Try common nesting first
     cur = nd
     for key in ("props", "pageProps", "apolloState"):
         if isinstance(cur, dict) and key in cur:
@@ -193,10 +183,106 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
             break
     if isinstance(cur, dict) and cur:
         return cur
-
-    # Fallback: heuristic search anywhere in __NEXT_DATA__
     apollo_guess = _find_apollo_dict(nd)
     return apollo_guess if isinstance(apollo_guess, dict) else {}
+
+def _deref_ref(v: Any, idx: Dict[str, Any]) -> Optional[str]:
+    """Resolve {'__ref': 'Type:ID'} into a readable string; return None if can't."""
+    if not isinstance(v, dict) or "__ref" not in v:
+        return v if isinstance(v, str) else None
+    ref = v.get("__ref")
+    target = idx.get(ref, {})
+    if isinstance(target, dict):
+        tname = target.get("__typename") or ""
+        if tname == "JobTitle" or str(ref).startswith("JobTitle:"):
+            return target.get("text") or target.get("jobTitleText") or target.get("name")
+        if tname == "City" or str(ref).startswith("City:"):
+            city = target.get("name") or target.get("city") or ""
+            region = target.get("regionName") or target.get("state") or ""
+            country = target.get("countryName") or target.get("country") or ""
+            parts = [p for p in [city, region, country] if p]
+            return ", ".join(parts) if parts else None
+        return target.get("name") or target.get("title") or target.get("label")
+    return None
+
+def _first_nonempty(*vals) -> Optional[Any]:
+    for v in vals:
+        if v not in (None, "", [], {}):
+            return v
+    return None
+
+def _oneline(s: Optional[str]) -> Optional[str]:
+    if not isinstance(s, str):
+        return s
+    return re.sub(r'\s+', ' ', s).strip()
+
+def _normalize_row_fields(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
+    """Ensure title, rating, date, role, location are not null. Mutates & returns row."""
+    row["role"] = _first_nonempty(
+        _deref_ref(row.get("role"), apollo_idx),
+        _deref_ref(row.get("jobTitle"), apollo_idx),
+        row.get("role") if isinstance(row.get("role"), str) else None
+    ) or "Unknown role"
+
+    row["location"] = _first_nonempty(
+        _deref_ref(row.get("location"), apollo_idx),
+        row.get("location") if isinstance(row.get("location"), str) else None
+    ) or "Unknown location"
+
+    row["title"] = _first_nonempty(
+        row.get("title"),
+        row.get("headline"),
+        row.get("summary"),
+    )
+    if not row.get("title"):
+        seed = _first_nonempty(row.get("pros"), row.get("cons"), row.get("body"), "Review")
+        row["title"] = (seed or "Review")
+    row["title"] = _oneline(row.get("title"))
+
+    rating_raw = _first_nonempty(row.get("rating"), row.get("overallRating"), row.get("ratingOverall"))
+    if isinstance(rating_raw, (int, float)):
+        row["rating"] = float(rating_raw)
+    elif isinstance(rating_raw, str):
+        m = re.search(r'\d+(?:\.\d+)?', rating_raw)
+        row["rating"] = float(m.group(0)) if m else None
+    else:
+        row["rating"] = None
+    if row["rating"] is None:
+        row["rating"] = 0.0
+
+    row["date"] = _first_nonempty(
+        row.get("date"),
+        row.get("createdDateTime"),
+        row.get("reviewDate"),
+        row.get("reviewDateTime")
+    ) or ""
+    return row
+
+def _find_apollo_review_node(apollo_idx: Dict[str, Any], review_id: Any) -> Optional[Dict[str, Any]]:
+    """Locate the Apollo object for this review_id (keys vary: EmployerReview, EmployerReviewRG, etc.)."""
+    if not apollo_idx or review_id is None:
+        return None
+    rid_s = str(review_id)
+    for v in apollo_idx.values():
+        if isinstance(v, dict):
+            if v.get("reviewId") == review_id or v.get("id") == review_id:
+                return v
+    for k, v in apollo_idx.items():
+        if not isinstance(k, str): continue
+        if "Review" not in k: continue
+        try:
+            _, jsonish = k.split(":", 1)
+            jsonish = jsonish.strip()
+            if jsonish.startswith("{") and jsonish.endswith("}"):
+                obj = json.loads(jsonish)
+                if str(obj.get("reviewId") or obj.get("id")) == rid_s:
+                    return v if isinstance(v, dict) else None
+        except Exception:
+            continue
+    for k, v in apollo_idx.items():
+        if isinstance(k, str) and rid_s in k and isinstance(v, dict):
+            return v
+    return None
 
 def _coerce_rating(v) -> Optional[float]:
     """Parse a rating into float if > 0; else None."""
@@ -209,119 +295,6 @@ def _coerce_rating(v) -> Optional[float]:
             return val if val > 0 else None
     return None
 
-
-def _deref_ref(v: Any, idx: Dict[str, Any]) -> Optional[str]:
-    """Resolve {'__ref': 'Type:ID'} into a readable string; return None if can't."""
-    if not isinstance(v, dict) or "__ref" not in v:  # already a string or None
-        return v if isinstance(v, str) else None
-    ref = v.get("__ref")
-    target = idx.get(ref, {})
-    if isinstance(target, dict):
-        tname = target.get("__typename") or ""
-        # Job title
-        if tname == "JobTitle" or str(ref).startswith("JobTitle:"):
-            return target.get("text") or target.get("jobTitleText") or target.get("name")
-        # City (try a few common fields)
-        if tname == "City" or str(ref).startswith("City:"):
-            city = target.get("name") or target.get("city") or ""
-            region = target.get("regionName") or target.get("state") or ""
-            country = target.get("countryName") or target.get("country") or ""
-            parts = [p for p in [city, region, country] if p]
-            return ", ".join(parts) if parts else None
-        # Generic readable label
-        return target.get("name") or target.get("title") or target.get("label")
-    return None
-
-def _first_nonempty(*vals) -> Optional[Any]:
-    for v in vals:
-        if v not in (None, "", [], {}):
-            return v
-    return None
-
-def _normalize_row_fields(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
-    """Ensure title, rating, date, role, location are not null. Mutates & returns row."""
-    # 1) Hydrate role/location
-    row["role"] = _first_nonempty(
-        _deref_ref(row.get("role"), apollo_idx),
-        _deref_ref(row.get("jobTitle"), apollo_idx),  # sometimes named jobTitle
-        row.get("role") if isinstance(row.get("role"), str) else None
-    ) or "Unknown role"
-
-    row["location"] = _first_nonempty(
-        _deref_ref(row.get("location"), apollo_idx),
-        row.get("location") if isinstance(row.get("location"), str) else None
-    ) or "Unknown location"
-
-    # 2) Backfill title/body variants
-    row["title"] = _first_nonempty(
-        row.get("title"),
-        row.get("headline"),
-        row.get("summary"),          # Apollo often uses 'summary'
-    )
-    if not row.get("title"):
-        # synthesize a short title from pros/cons/body if needed
-        seed = _first_nonempty(row.get("pros"), row.get("cons"), row.get("body"), "Review")
-        row["title"] = (seed or "Review")
-        if isinstance(row["title"], str) and len(row["title"]) > 80:
-            row["title"] = row["title"][:77].rstrip() + "..."
-
-    # 3) Backfill rating variants → float when possible
-    rating_raw = _first_nonempty(row.get("rating"), row.get("overallRating"), row.get("ratingOverall"))
-    if isinstance(rating_raw, (int, float)):
-        row["rating"] = float(rating_raw)
-    elif isinstance(rating_raw, str):
-        m = re.search(r'\d+(?:\.\d+)?', rating_raw)
-        row["rating"] = float(m.group(0)) if m else None
-    else:
-        row["rating"] = None
-    if row["rating"] is None:
-        row["rating"] = 0.0  # guaranteed non-null; change to "" if you prefer
-
-    # 4) Backfill date variants (keep as ISO string if present)
-    row["date"] = _first_nonempty(
-        row.get("date"),
-        row.get("createdDateTime"),
-        row.get("reviewDate"),
-        row.get("reviewDateTime")
-    ) or ""  # guaranteed non-null (empty string if truly missing)
-
-    return row
-
-def _find_apollo_review_node(apollo_idx: Dict[str, Any], review_id: Any) -> Optional[Dict[str, Any]]:
-    """Locate the Apollo object for this review_id (keys vary: EmployerReview, EmployerReviewRG, etc.)."""
-    if not apollo_idx or review_id is None:
-        return None
-    rid_s = str(review_id)
-
-    # 1) Fast path: values with explicit reviewId/id match
-    for v in apollo_idx.values():
-        if isinstance(v, dict):
-            if v.get("reviewId") == review_id or v.get("id") == review_id:
-                return v
-
-    # 2) Key-encoded path: keys like 'EmployerReviewRG:{"reviewId":100296184}'
-    for k, v in apollo_idx.items():
-        if not isinstance(k, str):
-            continue
-        if "Review" not in k:
-            continue
-        try:
-            # split on first colon and parse JSON-ish suffix
-            _, jsonish = k.split(":", 1)
-            jsonish = jsonish.strip()
-            if jsonish.startswith("{") and jsonish.endswith("}"):
-                obj = json.loads(jsonish)
-                if str(obj.get("reviewId") or obj.get("id")) == rid_s:
-                    return v if isinstance(v, dict) else None
-        except Exception:
-            continue
-
-    # 3) Fallback: substring check in the key
-    for k, v in apollo_idx.items():
-        if isinstance(k, str) and rid_s in k and isinstance(v, dict):
-            return v
-    return None
-
 def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
     """
     Use Apollo's review node to fill missing/placeholder fields:
@@ -332,19 +305,23 @@ def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict
     if not node:
         return row
 
-    # Title (prefer explicit title/headline; else Apollo 'summary')
     if not row.get("title") or row.get("title") in ("Review", ""):
         row["title"] = _first_nonempty(row.get("title"), node.get("summary"), "Review")
+        row["title"] = _oneline(row["title"])
 
-    # Rating (numeric)
     cur = row.get("rating")
-    needs_rating = cur in (None, "", '0', "0.0", 0, 0.0)
+    needs_rating = cur in (None, "", "0", "0.0", 0, 0.0)
     if needs_rating:
-        apollo_rating = _coerce_rating(_first_nonempty(node.get("ratingOverall"), node.get("overallRating"), node.get("rating")))
+        apollo_rating = _coerce_rating(
+            _first_nonempty(
+                node.get("ratingOverall"),
+                node.get("overallRating"),
+                node.get("rating"),
+            )
+        )
         if apollo_rating is not None:
             row["rating"] = max(0.0, min(5.0, apollo_rating))
 
-    # Date (prefer ISO from Apollo)
     if not row.get("date"):
         row["date"] = _first_nonempty(
             row.get("date"),
@@ -353,7 +330,6 @@ def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict
             node.get("reviewDate")
         ) or ""
 
-    # Role + Location (deref Apollo refs)
     if row.get("role") in (None, "", "Unknown role") or isinstance(row.get("role"), dict):
         row["role"] = _first_nonempty(
             _deref_ref(node.get("jobTitle"), apollo_idx),
@@ -367,7 +343,6 @@ def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict
             row.get("location"),
             "Unknown location"
         )
-
     return row
 
 # ---------- Safe de-dupe key helpers ----------
@@ -393,6 +368,33 @@ def _row_dedupe_key(r: Dict[str, Any]):
         _safe_scalar(r.get("date")),
         _safe_scalar(r.get("role")),
     )
+
+# ---------- CSV writer ----------
+def _write_reviews_csv(rows: List[Dict[str, Any]], path: Path):
+    """Write normalized/enriched rows to CSV."""
+    fields = ["review_id","title","body","pros","cons","rating","date","role","location","employmentStatus","_source"]
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8-sig") as f:
+        # Fix #6: quote all fields for Excel-friendliness
+        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore", quoting=csv.QUOTE_ALL, strict=True)
+        w.writeheader()
+        for r in rows:
+            rec = {k: r.get(k, "") for k in fields}
+            # sanitize text-ish columns to one line
+            for k in ("title","body","pros","cons","role","location"):
+                v = rec.get(k, "")
+                if isinstance(v, (list, dict)):
+                    try:
+                        v = json.dumps(v, ensure_ascii=False)
+                    except Exception:
+                        v = str(v)
+                if isinstance(v, str):
+                    v = _oneline(v)
+                rec[k] = "" if v is None else v
+            if rec["rating"] is None:
+                rec["rating"] = ""
+            w.writerow(rec)
 
 # ---------------- Browser client (JSON-only) ----------------
 class GlassdoorReviews:
@@ -459,7 +461,6 @@ class GlassdoorReviews:
             pass
 
     async def _detect_challenge(self, tab) -> bool:
-        # Non-blocking informational check
         js = r"""
         (() => {
           const h = document.documentElement.innerHTML.toLowerCase();
@@ -481,10 +482,6 @@ class GlassdoorReviews:
 
     # ---- Robust URL un-wrapper ----
     def _unwrap_url_obj(self, v) -> str:
-        """
-        Unwrap driver-returned JS objects into a plain URL string.
-        Handles nested {"result": {...}}, {"value": "..."} shells and extracts URLs from reprs.
-        """
         seen = set()
         while isinstance(v, dict) and id(v) not in seen:
             seen.add(id(v))
@@ -514,7 +511,6 @@ class GlassdoorReviews:
         await self._accept_cookies(tab)
         await self._note_challenge(tab)
 
-        # If not on Reviews tab, synthesize Reviews URL
         try:
             is_reviews = await self._eval_js(tab, "(() => location.pathname.toLowerCase().includes('/reviews'))();")
         except Exception:
@@ -524,7 +520,6 @@ class GlassdoorReviews:
             base = _re.sub(r'(?:_P\d+)?\.htm.*$', '', url).rstrip('/')
             await tab.go_to(base + "/Reviews.htm")
 
-        # Ensure English param
         await self._eval_js(tab, r"""
           (() => {
             const u = new URL(window.location.href);
@@ -549,44 +544,44 @@ class GlassdoorReviews:
 
     # ---- Deterministic pagination (_P{n}.htm) ----
     def _canonize_reviews_base(self, url: str) -> (str, dict):
-        """
-        Returns (base_without_suffix_htm, query_params_dict)
-        such that page 1 is base + ".htm", page n>=2 is base + f"_P{n}.htm"
-        """
         url = self._unwrap_url_obj(url)
-        base = re.sub(r'(_P\d+)?\.htm.*$', '', url)  # strip existing _P# and .htm and anything after
-        # preserve/normalize query params
+        base = re.sub(r'(_P\d+)?\.htm.*$', '', url)
         qs_match = re.search(r'\?(.+)$', url)
         qd = dict(parse_qsl(qs_match.group(1), keep_blank_values=True)) if qs_match else {}
-        # force English
+        # Fix #2: enforce desired params on every page
         qd['filter.iso3Language'] = 'eng'
+        qd['sort.sortType'] = 'RD'
+        qd['sort.ascending'] = 'false'
         return base, qd
 
     def _page_url(self, base: str, qd: dict, page_idx: int) -> str:
-        """Builds: base + .htm (p1) or _P{n}.htm (p>=2) + ?query"""
         path = f"{base}.htm" if page_idx == 1 else f"{base}_P{page_idx}.htm"
         qs = urlencode(qd, doseq=True)
         return f"{path}?{qs}" if qs else path
 
     # ---------------- main (JSON-only) ----------------
-    async def scrape_reviews(self, company_url: str, pages: int = 3) -> List[Dict[str, Any]]:
+    async def scrape_reviews(self, company_url: str, pages: int = 3, csv_path: Optional[Path] = None) -> List[Dict[str, Any]]:
         log("[run] Launching Chrome…")
         async with Chrome(options=self.opts) as browser:
             tab = await browser.start(); log("[run] Tab started")
 
             await self._goto_reviews_tab(tab, company_url)
 
-            # Optional: request reverse-date sort if not present (harmless if ignored)
+            # Keep sort=newest via JS (no waiter), then re-fetch URL
             try:
                 changed = await self._eval_js(tab, """
                   (() => {
                     const u = new URL(location.href);
-                    if (!u.searchParams.get('sort.sortType')) {
+                    let did = false;
+                    if (u.searchParams.get('sort.sortType') !== 'RD') {
                       u.searchParams.set('sort.sortType','RD');
-                      u.searchParams.set('sort.ascending','false');
-                      location.replace(u.toString());
-                      return true;
+                      did = true;
                     }
+                    if (u.searchParams.get('sort.ascending') !== 'false') {
+                      u.searchParams.set('sort.ascending','false');
+                      did = true;
+                    }
+                    if (did) { location.replace(u.toString()); return true; }
                     return false;
                   })();
                 """)
@@ -594,6 +589,7 @@ class GlassdoorReviews:
             except Exception:
                 pass
 
+            # Re-fetch URL after potential replace (but no explicit waiter)
             cur_url = await self._current_href(tab)
             base, qd = self._canonize_reviews_base(cur_url)
             base = self._unwrap_url_obj(base)
@@ -601,19 +597,19 @@ class GlassdoorReviews:
 
             all_rows: List[Dict[str, Any]] = []
             prev_ids: set = set()
+            empty_streak = 0  # Fix #3: early stop on consecutive empty JSON pages
 
             for page in range(1, max(1, pages)+1):
-                # Navigate deterministically
                 target = self._page_url(base, qd, page)
                 target = self._unwrap_url_obj(target)
                 log(f"[page] {page}/{pages} → {target}")
                 await tab.go_to(target)
                 await self._sleep_human(0.4, 0.8)
                 await self._note_challenge(tab)
+
                 landed = await self._current_href(tab)
                 log(f"[nav] Landed: {landed}")
 
-                # Light poke to encourage hydration (non-essential)
                 try: await self._eval_js(tab, "window.scrollBy(0, 400);")
                 except Exception: pass
                 await self._sleep_human(0.2, 0.5)
@@ -625,10 +621,8 @@ class GlassdoorReviews:
                 else:
                     prev_ids = ids_now
 
-                # Build apollo index for deref + backfills
                 apollo_idx = _apollo_index_from_html(html)
 
-                # ---- Combine Apollo + Next results, skip items without review_id
                 rows: List[Dict[str, Any]] = []
                 rows.extend(_extract_apollo_state_reviews(html))
                 rows.extend(_extract_next_data_reviews(html))
@@ -636,14 +630,22 @@ class GlassdoorReviews:
 
                 log(f"[json] Extracted {len(rows)} objects on page {page}")
 
-                # Hydrate + Enrich to avoid nulls and fill from Apollo by review_id
+                # Fix #3: early stop condition
+                if len(rows) == 0:
+                    empty_streak += 1
+                    if empty_streak >= 2:
+                        log(f"[stop] No JSON reviews for {empty_streak} consecutive pages. Stopping at page {page}.")
+                        break
+                else:
+                    empty_streak = 0
+
                 for r in rows:
                     _normalize_row_fields(r, apollo_idx)
                     _enrich_from_apollo(r, apollo_idx)
 
                 all_rows.extend(rows)
 
-            # de-dupe & normalize (keep __typename entries intact)
+            # de-dupe & normalize
             dedup, seen = [], set()
             for r in all_rows:
                 rating = r.get("rating")
@@ -658,6 +660,11 @@ class GlassdoorReviews:
 
             OUT_JSON.write_text(json.dumps(dedup, indent=2, ensure_ascii=False), encoding="utf-8")
             log(f"[run] Saved {len(dedup)} reviews → {OUT_JSON.resolve()}")
+
+            if csv_path:
+                _write_reviews_csv(dedup, Path(csv_path))
+                log(f"[run] Saved {len(dedup)} rows → {Path(csv_path).resolve()}")
+
             if dedup: log(f"[sample] {dedup[0]}")
             return dedup
 
@@ -669,8 +676,10 @@ def parse_args():
     p.add_argument("--headless", action="store_true", help="Run Chrome headless")
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
     p.add_argument("--profile-dir", help="Custom Chrome profile dir (optional)")
-    p.add_argument("--timeout", type=int, default=240, help="Overall run timeout (seconds)")
+    # Timeout default increased to 600s
+    p.add_argument("--timeout", type=int, default=600, help="Overall run timeout (seconds)")
     p.add_argument("-o","--out", default=str(OUT_JSON), help="Output JSON path")
+    p.add_argument("--csv", help="Also write CSV to this path (e.g., reviews.csv)")
     return p.parse_args()
 
 async def run_cli(args):
@@ -681,7 +690,7 @@ async def run_cli(args):
         chrome_path=args.chrome_binary,
         profile_dir=Path(args.profile_dir) if args.profile_dir else None
     )
-    await client.scrape_reviews(args.url, pages=args.pages)
+    await client.scrape_reviews(args.url, pages=args.pages, csv_path=Path(args.csv) if args.csv else None)
 
 if __name__ == "__main__":
     a = parse_args()
