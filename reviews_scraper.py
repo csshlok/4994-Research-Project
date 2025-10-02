@@ -197,10 +197,22 @@ def _deref_ref(v: Any, idx: Dict[str, Any]) -> Optional[str]:
         if tname == "JobTitle" or str(ref).startswith("JobTitle:"):
             return target.get("text") or target.get("jobTitleText") or target.get("name")
         if tname == "City" or str(ref).startswith("City:"):
-            city = target.get("name") or target.get("city") or ""
-            region = target.get("regionName") or target.get("state") or ""
-            country = target.get("countryName") or target.get("country") or ""
-            parts = [p for p in [city, region, country] if p]
+            def _txt(x):
+                if isinstance(x, dict) and "__ref" in x:
+                    return _deref_ref(x, idx) or ""
+                if isinstance(x, dict):
+                    for k in ("name", "text", "label", "title"):
+                        v = x.get(k)
+                        if isinstance(v, str):
+                            return v
+                    return ""
+                return x if isinstance(x, str) else ""
+            
+            city = _txt(target.get("name") or target.get("city"))
+            region = _txt(target.get("regionName") or target.get("state") or target.get("region"))
+            country = _txt(target.get("countryName") or target.get("country"))
+
+            parts = [p for p in (city, region, country) if isinstance(p, str) and p]
             return ", ".join(parts) if parts else None
         return target.get("name") or target.get("title") or target.get("label")
     return None
@@ -560,7 +572,8 @@ class GlassdoorReviews:
         return f"{path}?{qs}" if qs else path
 
     # ---------------- main (JSON-only) ----------------
-    async def scrape_reviews(self, company_url: str, pages: int = 3, csv_path: Optional[Path] = None) -> List[Dict[str, Any]]:
+    async def scrape_reviews(self, company_url: str, pages: int = 3, csv_path: Optional[Path] = None,
+                             page_delay: float = 3.0) -> List[Dict[str, Any]]:
         log("[run] Launching Chrome…")
         async with Chrome(options=self.opts) as browser:
             tab = await browser.start(); log("[run] Tab started")
@@ -645,6 +658,12 @@ class GlassdoorReviews:
 
                 all_rows.extend(rows)
 
+                # ---- NEW: configurable pause between pages
+                if page < pages:
+                    pause = max(0.0, float(page_delay))
+                    log(f"[pace] Sleeping {pause:.1f}s before next page…")
+                    await asyncio.sleep(pause)
+
             # de-dupe & normalize
             dedup, seen = [], set()
             for r in all_rows:
@@ -677,7 +696,9 @@ def parse_args():
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
     p.add_argument("--profile-dir", help="Custom Chrome profile dir (optional)")
     # Timeout default increased to 600s
-    p.add_argument("--timeout", type=int, default=600, help="Overall run timeout (seconds)")
+    p.add_argument("--timeout", type=int, default=1400, help="Overall run timeout (seconds)")
+    p.add_argument("--page-delay", type=float, default=3.0,
+                   help="Seconds to wait between pages after extraction (default: 3.0)")
     p.add_argument("-o","--out", default=str(OUT_JSON), help="Output JSON path")
     p.add_argument("--csv", help="Also write CSV to this path (e.g., reviews.csv)")
     return p.parse_args()
@@ -690,7 +711,12 @@ async def run_cli(args):
         chrome_path=args.chrome_binary,
         profile_dir=Path(args.profile_dir) if args.profile_dir else None
     )
-    await client.scrape_reviews(args.url, pages=args.pages, csv_path=Path(args.csv) if args.csv else None)
+    await client.scrape_reviews(
+        args.url,
+        pages=args.pages,
+        csv_path=Path(args.csv) if args.csv else None,
+        page_delay=args.page_delay
+    )
 
 if __name__ == "__main__":
     a = parse_args()
