@@ -12,7 +12,7 @@ from pathlib import Path
 
 # ---------------- Config knobs ----------------
 RAW_DIR = Path("C:/Users/csshl/Desktop/4994-Scrapper")
-OUT_DIR = Path("C:/Users/csshl/Desktop/4994-Scrapper/cleaned")
+OUT_DIR = Path("C:/Users/csshl/Desktop/4994-Scrapper/cleaned_US")
 OUT_DIR.mkdir(exist_ok=True)
 
 MIN_LEN = 5              # drop texts shorter than this (set None to keep all)

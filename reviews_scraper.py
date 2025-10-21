@@ -524,13 +524,16 @@ class GlassdoorReviews:
         await self._note_challenge(tab)
 
         try:
-            is_reviews = await self._eval_js(tab, "(() => location.pathname.toLowerCase().includes('/reviews'))();")
+            is_reviews = await self._eval_js(tab, "(()=>/\\/reviews/i.test(location.pathname))();")
         except Exception:
             is_reviews = False
+
         if not is_reviews:
             import re as _re
-            base = _re.sub(r'(?:_P\d+)?\.htm.*$', '', url).rstrip('/')
-            await tab.go_to(base + "/Reviews.htm")
+            path = await self._eval_js(tab, "location.pathname") or ""
+            if not _re.search(r'-US-Reviews', path, flags=_re.I):
+                base = _re.sub(r'(?:_P\\d+|_IP\\d+)?\\.htm.*$', '', (await self._current_href(tab)))
+                await tab.go_to(base + "/Reviews.htm")
 
         await self._eval_js(tab, r"""
           (() => {
@@ -555,20 +558,24 @@ class GlassdoorReviews:
         return ids
 
     # ---- Deterministic pagination (_P{n}.htm) ----
-    def _canonize_reviews_base(self, url: str) -> (str, dict):
+    def _canonize_reviews_base(self, url: str) -> (str, dict, str):
         url = self._unwrap_url_obj(url)
-        base = re.sub(r'(_P\d+)?\.htm.*$', '', url)
+        base = re.sub(r'(_P\d+|_IP\d+)?\.htm.*$', '', url)
         qs_match = re.search(r'\?(.+)$', url)
-        qd = dict(parse_qsl(qs_match.group(1), keep_blank_values=True)) if qs_match else {}
-        # Fix #2: enforce desired params on every page
-        qd['filter.iso3Language'] = 'eng'
-        qd['sort.sortType'] = 'RD'
-        qd['sort.ascending'] = 'false'
-        return base, qd
+        pairs = parse_qsl(qs_match.group(1), keep_blank_values=True) if qs_match else []
+        qd: Dict[str, List[str]] = {}
+        for k, v in pairs:
+            qd.setdefault(k, []).append(v)
+        qd['filter.iso3Language'] = ['eng']
+        qd['sort.sortType'] = ['RD']
+        qd['sort.ascending'] = ['false']
+        page_token = "IP" if re.search(r'(?:-US-Reviews|_IN\d+)', base, flags=re.I) else "P"
+        return base, qd, page_token
 
-    def _page_url(self, base: str, qd: dict, page_idx: int) -> str:
-        path = f"{base}.htm" if page_idx == 1 else f"{base}_P{page_idx}.htm"
-        qs = urlencode(qd, doseq=True)
+    def _page_url(self, base: str, qd: dict, page_idx: int, page_token: str) -> str:
+        suffix = "" if page_idx == 1 else f"_{page_token}{page_idx}"
+        path = f"{base}{suffix}.htm"
+        qs = urlencode(qd, doseq=True) 
         return f"{path}?{qs}" if qs else path
 
     # ---------------- main (JSON-only) ----------------
@@ -604,16 +611,16 @@ class GlassdoorReviews:
 
             # Re-fetch URL after potential replace (but no explicit waiter)
             cur_url = await self._current_href(tab)
-            base, qd = self._canonize_reviews_base(cur_url)
+            base, qd, page_token = self._canonize_reviews_base(cur_url)
             base = self._unwrap_url_obj(base)
-            log(f"[nav] Base resolved: {base}.htm  | pages={pages}")
+            log(f"[nav] Base resolved: {base}.htm  | pages={pages} | mode=_{page_token}*")
 
             all_rows: List[Dict[str, Any]] = []
             prev_ids: set = set()
             empty_streak = 0  # Fix #3: early stop on consecutive empty JSON pages
 
             for page in range(1, max(1, pages)+1):
-                target = self._page_url(base, qd, page)
+                target = self._page_url(base, qd, page, page_token)
                 target = self._unwrap_url_obj(target)
                 log(f"[page] {page}/{pages} → {target}")
                 await tab.go_to(target)
@@ -696,7 +703,7 @@ def parse_args():
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
     p.add_argument("--profile-dir", help="Custom Chrome profile dir (optional)")
     # Timeout default increased to 600s
-    p.add_argument("--timeout", type=int, default=1400, help="Overall run timeout (seconds)")
+    p.add_argument("--timeout", type=int, default=1600, help="Overall run timeout (seconds)")
     p.add_argument("--page-delay", type=float, default=3.0,
                    help="Seconds to wait between pages after extraction (default: 3.0)")
     p.add_argument("-o","--out", default=str(OUT_JSON), help="Output JSON path")
