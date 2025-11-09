@@ -12,7 +12,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
 
-ROOT = Path(__file__).resolve().parents[1] if "4994-Scrapper" in str(Path(__file__).resolve()) else Path.cwd()
+ROOT = Path(__file__).resolve().parent
 
 FEATURES_DIR = ROOT / "features_exctract"
 CONFIG_DIR   = ROOT / "config"
@@ -21,7 +21,7 @@ OUT_DIR      = ROOT / "out"
 REVIEWS_PATH = FEATURES_DIR / "combined_reviews.parquet"
 TFIDF_PATH   = FEATURES_DIR / "tfidf_reviews.npz"
 VOCAB_PATH   = FEATURES_DIR / "tfidf_vocab.json"
-GOALS_PATH   = CONFIG_DIR / "goals_dictionary.json"
+GOALS_PATH   = CONFIG_DIR / "goal_dict.json"
 
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -35,14 +35,75 @@ print(f"[auto] Using files:\n"
 
 def load_reviews(path: Path) -> pd.DataFrame:
     df = pd.read_parquet(path)
-    if "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+    text_candidates = [
+        "text_clean", "clean_text", "review_text", "review", "text",
+        "body", "content", "full_text", "comments", "summary"
+    ]
+    text_col = next((c for c in text_candidates if c in df.columns), None)
+
+    if text_col is None:
+        if {"pros", "cons"}.issubset(df.columns):
+            df["__joined_text__"] = (
+                df["pros"].fillna("").astype(str).str.strip() + ". " +
+                df["cons"].fillna("").astype(str).str.strip()
+            )
+            text_col = "__joined_text__"
+        else:
+            raise ValueError(
+                f"No text column found in {path}. "
+                f"Available columns: {list(df.columns)}. "
+                f"Tried {text_candidates} or (pros+cons)."
+            )
+
+    if "review_id" not in df.columns:
+        for alt in ["id", "doc_id", "reviewID"]:
+            if alt in df.columns:
+                df = df.rename(columns={alt: "review_id"})
+                break
+    if "review_id" not in df.columns:
+        raise ValueError("Missing 'review_id' column (or fallback id/doc_id).")
+
+    if "company_id" not in df.columns:
+        for alt in ["company", "employer", "firm_id", "companyName", "companyID"]:
+            if alt in df.columns:
+                df = df.rename(columns={alt: "company_id"})
+                break
+    if "company_id" not in df.columns:
+        raise ValueError("Missing 'company_id' column (or fallback company/employer/firm_id).")
+
+    date_alt = next((c for c in ["date", "review_date", "timestamp", "created_at"] if c in df.columns), None)
+    df["date"] = pd.to_datetime(df[date_alt], errors="coerce") if date_alt else pd.NaT
+
+    tok_alt = next((c for c in ["tokens", "token_list", "lemmas"] if c in df.columns), None)
+
+    def to_tokens_from_text(s: str) -> list[str]:
+        s = "" if s is None else str(s)
+        return re.findall(r"[A-Za-z]+", s.lower())
+
+    if tok_alt is None:
+        df["tokens"] = df[text_col].fillna("").map(to_tokens_from_text)
     else:
-        df["date"] = pd.NaT
-    if "n_tokens" not in df.columns:
-        df["n_tokens"] = df["text_clean"].fillna("").str.split().apply(len)
-    if "tokens" not in df.columns:
-        df["tokens"] = df["text_clean"].fillna("").str.split()
+        def normalize_tok(x):
+            if isinstance(x, list):
+                return [str(t).lower() for t in x]
+            if isinstance(x, str):
+                s = x.strip()
+                if s.startswith("[") and s.endswith("]"):
+                    try:
+                        arr = ast.literal_eval(s)
+                        return [str(t).lower() for t in arr]
+                    except Exception:
+                        pass
+                return [t for t in s.lower().split() if any(ch.isalpha() for ch in t)]
+            return []
+        df["tokens"] = df[tok_alt].apply(normalize_tok)
+
+    df["n_tokens"] = df["tokens"].apply(len)
+
+    df["text_clean"] = df[text_col].fillna("").astype(str)
+
+
     return df
 
 def load_vocab(vpath: Path) -> Dict[str,int]:
