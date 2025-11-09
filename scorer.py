@@ -1,9 +1,8 @@
 from __future__ import annotations
-import os, re, json, math, random, platform
+import os, re, json, math, random, platform, ast
 from pathlib import Path
-from typing import Dict, List, Tuple, Set, Optional
+from typing import Dict, List, Tuple, Set
 from collections import defaultdict
-import ast
 import numpy as np
 import pandas as pd
 import torch
@@ -11,21 +10,19 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from tqdm import tqdm
 from scipy import sparse
 
-
+# ---------------- Paths ----------------
 ROOT = Path(__file__).resolve().parent
 FEATURES_DIR = ROOT / "features_exctract"
 CONFIG_DIR   = ROOT / "config"
 OUT_DIR      = ROOT / "out"
 
-
 REVIEWS_PATH  = FEATURES_DIR / "combined_reviews.parquet"
 VOCAB_PATH    = FEATURES_DIR / "tfidf_vocab.json"
 TFIDF_NPZ     = FEATURES_DIR / "tfidf_reviews.npz"
-GOALS_PATH    = (CONFIG_DIR / "goals_dictionary.json" if (CONFIG_DIR / "goals_dictionary.json").exists()
-                 else CONFIG_DIR / "goal_dict.json")
+GOALS_PATH    = CONFIG_DIR / "goal_dict.json"
 CONFIG_JSON   = FEATURES_DIR / "config.json"
 
-
+# allow fallbacks
 if not CONFIG_JSON.exists() and Path("/mnt/data/config.json").exists():
     CONFIG_JSON = Path("/mnt/data/config.json")
 if not VOCAB_PATH.exists() and Path("/mnt/data/tfidf_vocab.json").exists():
@@ -42,7 +39,7 @@ print("  goals:  ", GOALS_PATH)
 print("  config: ", CONFIG_JSON)
 print("  outdir: ", OUT_DIR, flush=True)
 
-
+# ---------------- Utils ----------------
 def _need(p: Path, label: str):
     if not p.exists():
         raise FileNotFoundError(f"Missing {label}: {p}")
@@ -57,7 +54,6 @@ def best_batch(default=64) -> int:
         return default
     try:
         props = torch.cuda.get_device_properties(0)
-
         gb = props.total_memory / (1024**3)
         if gb >= 20: return 128
         if gb >= 12: return 96
@@ -66,34 +62,54 @@ def best_batch(default=64) -> int:
     except Exception:
         return default
 
+# --- Normalization & tokenization helpers (unified) ---
+WS = re.compile(r"\s+")
+TOKEN_RE = re.compile(r"[a-zA-Z]+(?:'[a-zA-Z]+)?")  # word or word'word
+
+def norm_text_for_tokens(s: str) -> str:
+    # Hyphens → spaces so "work-life" => "work life"
+    s = (s or "").replace("-", " ")
+    return WS.sub(" ", s).strip().lower()
+
+def tokenize(s: str) -> List[str]:
+    s = norm_text_for_tokens(s)
+    return [m.group(0).lower() for m in TOKEN_RE.finditer(s)]
 
 _norm_space = re.compile(r"\s+")
 def norm_term(s: str) -> str:
-    s = (s or "").lower().strip()
-    s = _norm_space.sub(" ", s)
+    # Normalize goal dictionary entries to underscore-joined phrases
+    s = (s or "").strip()
     s = s.replace("-", " ")
-    s = s.replace(" ", "_")
-    return s
+    s = _norm_space.sub(" ", s)
+    return s.lower().replace(" ", "_")
 
 def ensure_variants(lst: List[str]) -> List[str]:
-    out = set()
-    for t in lst:
-        t0 = t.strip()
-        out.add(norm_term(t0))
-    return list(out)
+    return list({norm_term(t) for t in lst if str(t).strip()})
+
+COUNTRY_CODES = {
+    "us","uk","ca","au","in","de","fr","es","sg","ie","nl","se","ch","cn","jp","it","br","mx"
+}
 
 def _derive_company_id(source_file: str) -> str:
-    name = Path(str(source_file)).stem
-    name = name.lower()
-    name = re.sub(r"[^a-z0-9]+", "_", name).strip("_")
-    return name or "unknown_source"
+    """
+    'reviews_accenture_us_clean.parquet' -> 'accenture'
+    'reviews_boston_consulting_group_us_clean' -> 'boston_consulting_group'
+    If no country present, just joins remaining parts.
+    """
+    stem = Path(str(source_file)).stem.lower()
+    parts = [p for p in stem.split("_") if p not in {"reviews","review","clean",""}]
+    if not parts:
+        return "unknown"
+    if parts[-1] in COUNTRY_CODES:
+        parts.pop(-1)  # drop trailing country code
+    company = "_".join(parts) if parts else "unknown"
+    return company
 
-
+# ---------------- Loaders ----------------
 def load_config(cpath: Path) -> dict:
     _need(cpath, "config.json")
     with open(cpath, "r", encoding="utf-8") as f:
         cfg = json.load(f)
-
     cfg.setdefault("negators", ["no","not","never","without","hardly","scarcely","lack","barely","rarely","seldom"])
     cfg.setdefault("ngram_range", [1,2])
     cfg.setdefault("stop_extra", [])
@@ -119,79 +135,59 @@ def load_goals(gpath: Path) -> Dict[str, Dict[str, List[str]]]:
 
 def load_reviews(path: Path) -> pd.DataFrame:
     _need(path, "combined_reviews file")
-
-    if path.suffix == ".parquet":
-        df = pd.read_parquet(path)
-    else:
-        df = pd.read_csv(path)
+    df = pd.read_parquet(path) if path.suffix == ".parquet" else pd.read_csv(path)
 
     for col in ["review_id", "source_file"]:
         if col not in df.columns:
             raise ValueError(f"Expected column '{col}' missing. Columns found: {list(df.columns)}")
 
-
-    txt_col = "text_norm" if "text_norm" in df.columns else (
-        "text_raw" if "text_raw" in df.columns else None
-    )
+    txt_col = "text_norm" if "text_norm" in df.columns else ("text_raw" if "text_raw" in df.columns else None)
     if txt_col is None:
         raise ValueError("Neither 'text_norm' nor 'text_raw' found in dataset.")
     df["text_clean"] = df[txt_col].fillna("").astype(str)
 
     def parse_token_cell(x):
-        """Parse tokens from stringified list or leave as-is if already list."""
+        # Rehydrate stringified lists and re-tokenize uniformly
         if isinstance(x, list):
-            return [str(t).lower().strip() for t in x if str(t).strip()]
+            return tokenize(" ".join(map(str, x)))
         if isinstance(x, str):
             s = x.strip()
-
             if s.startswith("[") and "]" in s:
                 try:
-
                     if "'" not in s and '"' not in s:
-                        s = "[" + ",".join(
-                            [f"'{t.strip()}'" for t in s.strip("[]").split(",")]
-                        ) + "]"
+                        s = "[" + ",".join([f"'{t.strip()}'" for t in s.strip("[]").split(",")]) + "]"
                     vals = ast.literal_eval(s)
                     if isinstance(vals, list):
-                        return [re.sub(r"[^a-z0-9']+", "", str(t).lower()) for t in vals if str(t).strip()]
+                        return tokenize(" ".join(map(str, vals)))
                 except Exception:
                     pass
-
-            toks = re.findall(r"[a-z0-9]+'?[a-z0-9]*", s.lower())
-            return toks
+            return tokenize(s)
         return []
 
     if "tokens" in df.columns:
         df["tokens"] = df["tokens"].apply(parse_token_cell)
     else:
+        df["tokens"] = df["text_clean"].map(tokenize)
 
-        df["tokens"] = df["text_clean"].map(lambda s: re.findall(r"[a-z0-9]+'?[a-z0-9]*", s.lower()))
-
-    def to_tokens_from_text(s: str) -> list[str]:
-        return re.findall(r"[a-z0-9]+'?[a-z0-9]*", (s or "").lower())
-
+    # Fallback rebuild for empty
     empty_mask = df["tokens"].apply(lambda z: not isinstance(z, list) or len(z) == 0)
     if empty_mask.any():
-        df.loc[empty_mask, "tokens"] = df.loc[empty_mask, "text_clean"].map(to_tokens_from_text)
+        df.loc[empty_mask, "tokens"] = df.loc[empty_mask, "text_clean"].map(tokenize)
 
-
+    # company id (name only)
     df["company_id"] = df["source_file"].map(_derive_company_id)
 
-
+    # date placeholder if missing
     if "date" not in df.columns:
         df["date"] = pd.NaT
 
-
     df["n_tokens"] = df["tokens"].apply(len)
-
-
     print(f"[load_reviews] rows={len(df)} companies≈{df['company_id'].nunique()} tokens_mean={df['n_tokens'].mean():.1f}")
-
     return df
+
 def load_vocab(vpath: Path) -> Dict[str, int]:
     _need(vpath, "tfidf_vocab.json")
     vocab_raw = json.load(open(vpath, "r", encoding="utf-8"))
-
     vocab_map: Dict[str,int] = {}
     if all(isinstance(k, str) and isinstance(v, int) for k,v in vocab_raw.items()):
         for tok, idx in vocab_raw.items():
@@ -204,28 +200,24 @@ def load_vocab(vpath: Path) -> Dict[str, int]:
 def load_tfidf(npz_path: Path) -> sparse.csr_matrix:
     _need(npz_path, "tfidf_reviews.npz")
     loader = np.load(npz_path)
-
     if {"data","indices","indptr","shape"} <= set(loader.files):
         return sparse.csr_matrix((loader["data"], loader["indices"], loader["indptr"]), shape=loader["shape"])
-
     try:
         from scipy.sparse import load_npz
         return load_npz(str(npz_path))
     except Exception as e:
         raise RuntimeError(f"Unrecognized TF-IDF npz format: {e}")
 
-
+# ---------------- Sentiment ----------------
 class SentimentModel:
     def __init__(self, model_name="cardiffnlp/twitter-roberta-base-sentiment-latest",
                  offline=False, device=None, max_length=256):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.max_length = max_length
-
         try:
             self.tok = AutoTokenizer.from_pretrained(model_name, local_files_only=offline)
             self.model = AutoModelForSequenceClassification.from_pretrained(model_name, local_files_only=offline)
         except Exception:
-
             self.tok = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
             self.model = AutoModelForSequenceClassification.from_pretrained(model_name, local_files_only=True)
         self.model = self.model.to(self.device).eval()
@@ -240,8 +232,7 @@ class SentimentModel:
         out = []
         for i in tqdm(range(0, len(sentences), batch), desc="[sent] batches"):
             batch_s = sentences[i:i+batch]
-
-            batch_s = [" ".join(s.split()[:60]) for s in batch_s]
+            batch_s = [" ".join(s.split()[:60]) for s in batch_s]  # clip very long sentences
             toks = self.tok(batch_s, padding=True, truncation=True,
                             max_length=self.max_length, return_tensors="pt").to(self.device)
             probs = torch.softmax(self.model(**toks).logits, dim=-1).cpu().numpy()
@@ -254,20 +245,14 @@ class SentimentModel:
         denom = max(1e-6, 1.0 - p_neu/2.0)
         return float(np.clip((p_pos - p_neg) / denom, -1.0, 1.0))
 
-
+# ---------------- Phrase/negation helpers ----------------
 _SENT_SPLIT = re.compile(r"[.!?]+")
-
 def simple_sent_split(txt: str) -> List[str]:
     return [s.strip() for s in _SENT_SPLIT.split(txt) if s.strip()]
 
-def token_bigrams(tokens: List[str]) -> List[str]:
-    return [f"{tokens[i]}_{tokens[i+1]}" for i in range(len(tokens)-1)]
-
 def find_phrase_positions(tokens: List[str], phrase_term: str) -> List[Tuple[int,int]]:
-
     parts = phrase_term.split("_")
-    n = len(parts)
-    out = []
+    n = len(parts); out = []
     if n == 1:
         for i, t in enumerate(tokens):
             if t == parts[0]:
@@ -279,49 +264,43 @@ def find_phrase_positions(tokens: List[str], phrase_term: str) -> List[Tuple[int
     return out
 
 def within_window(span_a: Tuple[int,int], span_b: Tuple[int,int], k: int) -> bool:
-
-    aL, aR = span_a
-    bL, bR = span_b
+    aL, aR = span_a; bL, bR = span_b
     return not (aL > bR + k or bL > aR + k)
 
 _SPACY_OK = False
 try:
     import spacy
-    _nlp = None 
+    _nlp = None
     _SPACY_OK = True
 except Exception:
     _SPACY_OK = False
 
 def detect_negated_spans(tokens: List[str], cfg_negators: List[str]) -> Set[int]:
-
     neg_idx: Set[int] = set()
     if _SPACY_OK:
         global _nlp
         if _nlp is None:
-
             try:
                 _nlp = spacy.load("en_core_web_sm", disable=["ner","textcat"])
             except Exception:
                 _nlp = None
         if _nlp is not None:
             doc = _nlp(" ".join(tokens))
-
             for tok in doc:
                 if tok.dep_.lower() == "neg":
                     head = tok.head
-
                     for w in head.subtree:
                         neg_idx.add(w.i)
             if neg_idx:
                 return neg_idx
-
-    neg_set = set(cfg_negators)
+    neg_set = set(t.lower() for t in cfg_negators)
     for j, t in enumerate(tokens):
         if t in neg_set:
             for k in range(j+1, min(j+6, len(tokens))):
                 neg_idx.add(k)
     return neg_idx
 
+# ---------------- Main ----------------
 def main():
     set_seed(42)
 
@@ -329,10 +308,11 @@ def main():
     reviews = load_reviews(REVIEWS_PATH)
     goals = load_goals(GOALS_PATH)
     vocab  = load_vocab(VOCAB_PATH)
-    tfidf  = load_tfidf(TFIDF_NPZ) 
+    tfidf  = load_tfidf(TFIDF_NPZ)
 
     print(f"[load] reviews={len(reviews)} companies≈{reviews['company_id'].nunique()} terms={len(vocab)} tfidf={tfidf.shape}")
 
+    # flatten goal terms → targets
     term2targets: Dict[str, List[Tuple[str,str]]] = defaultdict(list)
     guardrails = {g: [norm_term(x) for x in goals[g]["guardrails"]] for g in goals}
     for g in goals:
@@ -341,15 +321,16 @@ def main():
         for t in goals[g]["hindrance"]:
             term2targets[t].append((g, "H"))
 
-
+    # vocab columns for terms we have
     term2col: Dict[str, int] = {t: vocab[t] for t in term2targets.keys() if t in vocab}
 
+    # scoring knobs
     T_W_UNI, T_W_BI, CAP = 0.7, 1.0, 3
     GAMMA, DELTA = 0.8, 0.3
     GUARD_WIN = 6
     NEG_FALLBACK_WIN = 5
 
-
+    # sentiment
     sm = SentimentModel(
         model_name="cardiffnlp/twitter-roberta-base-sentiment-latest",
         offline=bool(cfg.get("offline_model", False)),
@@ -372,20 +353,18 @@ def main():
         S[i] = float(np.average(bucket[i], weights=weights[i])) if bucket[i] else 0.0
     reviews["S_raw"] = S
 
-
+    # goal scoring
     goal_keys = list(goals.keys())
     outF = {g: [] for g in goal_keys}
     outH = {g: [] for g in goal_keys}
     outG = {g: [] for g in goal_keys}
     outW = {g: [] for g in goal_keys}
     outGw= {g: [] for g in goal_keys}
-
     negators_cfg = [t.lower() for t in cfg.get("negators", [])]
 
     for i, row in tqdm(list(reviews.iterrows()), desc="[goals] reviews"):
         toks: List[str] = row["tokens"]
         n = int(row["n_tokens"])
-
 
         neg_idx = detect_negated_spans(toks, negators_cfg)
 
@@ -395,13 +374,10 @@ def main():
                 guard_spans.extend(find_phrase_positions(toks, gr))
 
         spans_cache: Dict[str, List[Tuple[int,int]]] = {}
-
-
         Fg = {g: 0.0 for g in goal_keys}
         Hg = {g: 0.0 for g in goal_keys}
 
         for term, targets in term2targets.items():
-
             spans = spans_cache.get(term)
             if spans is None:
                 spans = find_phrase_positions(toks, term)
@@ -409,6 +385,7 @@ def main():
             if not spans:
                 continue
 
+            # windowed guardrail suppression
             spans_kept = []
             for sp in spans:
                 if any(within_window(sp, grsp, GUARD_WIN) for grsp in guard_spans):
@@ -420,20 +397,15 @@ def main():
             col = term2col.get(term, None)
             base_val = 0.0
             if col is not None:
-
                 base_val = float(tfidf[i, col])
-
             if col is None or base_val == 0.0:
                 base_val = float(len(spans_kept))
 
             wt_ng = T_W_BI if "_" in term else T_W_UNI
             val = base_val * wt_ng
 
-
             for g, kind in targets:
-
-                neg_occ = 0
-                pos_occ = 0
+                neg_occ = 0; pos_occ = 0
                 for (a,b) in spans_kept:
                     if any(k in neg_idx for k in range(a,b)):
                         neg_occ += 1
@@ -441,16 +413,14 @@ def main():
                         pos_occ += 1
                 if pos_occ + neg_occ == 0:
                     continue
-
                 v_pos = val * (pos_occ / (pos_occ + neg_occ))
                 v_neg = val * (neg_occ / (pos_occ + neg_occ))
                 if kind == "F":
                     Fg[g] += v_pos
-                    Hg[g] += GAMMA * v_neg  
-                else:  
+                    Hg[g] += GAMMA * v_neg
+                else:
                     Hg[g] += v_pos
-                    Fg[g] += DELTA * v_neg 
-
+                    Fg[g] += DELTA * v_neg
 
         Ln = 1.0 + math.log(1 + n)
         for g in goal_keys:
@@ -460,17 +430,15 @@ def main():
 
             Srev = float(row["S_raw"])
             sgn = 1 if G > 0 else -1 if G < 0 else 0
-            eps, tau, lo, hi = 0.08, 0.50, 0.3, 1.2
+            eps, tau, lo, hi = 0.08, 0.50, 0.3, 1.2  # narrower neutral band
             w = 0.5 + 0.5 * sgn * math.tanh(max(abs(Srev) - eps, 0.0) / tau)
             w = float(np.clip(w, lo, hi))
             Gw = w * G
 
-            outF[g].append(Fn)
-            outH[g].append(Hn)
-            outG[g].append(G)
-            outW[g].append(w)
-            outGw[g].append(Gw)
+            outF[g].append(Fn); outH[g].append(Hn); outG[g].append(G)
+            outW[g].append(w);  outGw[g].append(Gw)
 
+    # ---------------- Outputs ----------------
     rev_out = pd.DataFrame({
         "review_id": reviews["review_id"],
         "company_id": reviews["company_id"],
@@ -485,19 +453,16 @@ def main():
         rev_out[f"w_sent_{g}"] = outW[g]
         rev_out[f"G_weighted_{g}"] = outGw[g]
 
-
     print("[aggregate] company metrics…")
     grp = rev_out.groupby("company_id", dropna=False)
     comp = grp["S_raw"].agg(["count","mean","std"]).reset_index().rename(
         columns={"count":"n_reviews","mean":"S_mean","std":"S_std"}
     )
 
-
     lamS = lamG = 80.0
     muS = float(comp["S_mean"].mean()) if len(comp) else 0.0
     eb = lambda m, n, lam, mu: (n/(n+lam))*m + (lam/(n+lam))*mu
     comp["S_smoothed"] = eb(comp["S_mean"], comp["n_reviews"].astype(float), lamS, muS)
-
 
     comp["SE"] = comp["S_std"] / np.sqrt(comp["n_reviews"].replace(0, np.nan))
     comp["S_CI_low"]  = comp["S_mean"] - 1.96 * comp["SE"]
@@ -516,10 +481,32 @@ def main():
         comp[f"G_smoothed_weighted_{g}"] = eb(comp[f"G_mean_weighted_{g}"],
                                               comp["n_reviews"].astype(float), lamG, muG)
 
+    # ----- Write outputs (CSV-only) -----
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    rev_path_csv  = OUT_DIR / "review_scores.csv"
+    cmp_path_csv  = OUT_DIR / "company_scores.csv"
+    per_dir       = OUT_DIR / "per_company"
+    per_dir.mkdir(exist_ok=True)
 
-    rev_out.to_csv(OUT_DIR / "review_scores.csv", index=False)
-    comp.to_csv(OUT_DIR / "company_scores.csv", index=False)
+    # 1) Global review-level scores (all reviews)
+    rev_out.to_csv(rev_path_csv, index=False)
 
+    # 2) Company-level aggregates
+    comp.to_csv(cmp_path_csv, index=False)
+
+    # 3) Per-company review-level (trimmed)
+    import re as _re
+    g_cols = [c for c in rev_out.columns if c.startswith("G_raw_") or c.startswith("G_weighted_")]
+    base_cols = ["review_id","company_id","S_raw"]
+    keep_cols = base_cols + g_cols
+
+    written_per_company = []
+    for cid, sub in rev_out.groupby("company_id", dropna=False):
+        safe = _re.sub(r"[^A-Za-z0-9_]+", "_", str(cid)).strip("_") or "unknown"
+        (per_dir / f"{safe}.csv").write_text(sub[keep_cols].to_csv(index=False))
+        written_per_company.append(str(per_dir / f"{safe}.csv"))
+
+    # Run report JSON
     run_meta = {
         "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
         "batch": best_batch(),
@@ -531,17 +518,20 @@ def main():
         "guard_window": 6,
         "neg_fallback_window": 5,
         "offline_model": bool(cfg.get("offline_model", False)),
-        "env": {
-            "python": platform.python_version(),
-            "torch": torch.__version__,
-            "numpy": np.__version__
+        "env": {"python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__},
+        "output_files": {
+            "review_csv": str(rev_path_csv),
+            "company_csv": str(cmp_path_csv),
+            "per_company_dir": str(per_dir),
+            "per_company_files_count": len(written_per_company),
+            "per_company_cols": keep_cols
         }
     }
     json.dump(
         {
             "N_reviews": int(len(reviews)),
             "companies": int(reviews["company_id"].nunique()),
-            "goals": goal_keys,
+            "goals": list(goal_keys),
             "columns_review": list(rev_out.columns),
             "columns_company": list(comp.columns),
             "run_meta": run_meta
@@ -550,8 +540,7 @@ def main():
         indent=2
     )
 
-    print(f"[done] wrote:\n  {OUT_DIR/'review_scores.parquet'}\n  {OUT_DIR/'company_scores.parquet'}\n  {OUT_DIR/'run_report.json'}")
-
+    print(f"[done] CSVs:\n - {rev_path_csv}\n - {cmp_path_csv}\n - per-company (trimmed) in {per_dir}")
 
 if __name__ == "__main__":
     main()
