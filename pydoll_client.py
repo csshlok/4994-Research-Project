@@ -1,4 +1,3 @@
-# pydoll_client.py
 import asyncio, json, re, inspect, sys
 from pathlib import Path
 from typing import List, Dict, Any, Optional
@@ -71,7 +70,6 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
             "location": r.get("location") or r.get("reviewerLocation"),
         })
 
-    # Deduplicate
     seen, out = set(), []
     for x in norm:
         k = x.get("review_id") or (x.get("title"), x.get("date"))
@@ -87,7 +85,6 @@ class GlassdoorPydoll:
     def __init__(self, headless: bool = False, chrome_path: Optional[str] = None):
         log("[init] Building Chromium options")
         opts = ChromiumOptions()
-        # keep only what we must add manually to avoid collisions with Pydoll defaults
         opts.add_argument(f"--user-data-dir={PROFILE_DIR.resolve()}")
         opts.add_argument("--disable-blink-features=AutomationControlled")
         if chrome_path:
@@ -196,10 +193,8 @@ class GlassdoorPydoll:
             await tab.go_to(company_url)
             log("[run] Navigation complete")
 
-            # Apollo first
             reviews = await self._scrape_reviews_state(tab)
 
-            # DOM fallback
             if not reviews:
                 log("[run] Falling back to DOM scraping")
                 reviews = await self._scrape_reviews_dom(tab)
@@ -209,7 +204,6 @@ class GlassdoorPydoll:
             return reviews
 
 
-# Demo
 async def _demo():
     url = "https://www.glassdoor.com/Reviews/Tata-Consultancy-Services-Reviews-E13461.htm?filter.iso3Language=eng"
     client = GlassdoorPydoll(headless=False)

@@ -1,4 +1,3 @@
-# reviews_scraper.py
 import asyncio, json, re, inspect, sys, random, argparse, time, csv
 from pathlib import Path
 from typing import List, Dict, Any, Optional
@@ -64,7 +63,6 @@ def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
 def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
     """Stricter filter: only collect true review objects (skip highlight/aggregate blobs)."""
     if not html: return []
-    # Fix #1: robust __NEXT_DATA__ extraction
     m = re.search(r'id="__NEXT_DATA__"[^>]*>\s*({.+?})\s*</script>', html, flags=re.S|re.I)
     if not m: return []
     try:
@@ -124,7 +122,6 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
     if not html:
         return {}
 
-    # Attempt A: standalone apolloState blob
     m = re.search(
         r'apolloState"\s*:\s*({.+?})\s*}\s*[,;]\s*</script>',
         html, flags=re.S | re.I
@@ -135,9 +132,7 @@ def _apollo_index_from_html(html: str) -> Dict[str, Any]:
         except Exception:
             pass
 
-    # Attempt B: dig into __NEXT_DATA__
     def _load_next_data(h: str) -> Optional[Dict[str, Any]]:
-        # Fix #1 (second occurrence)
         m2 = re.search(
             r'id="__NEXT_DATA__"[^>]*>\s*({.+?})\s*</script>',
             h, flags=re.S | re.I
@@ -388,12 +383,10 @@ def _write_reviews_csv(rows: List[Dict[str, Any]], path: Path):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8-sig") as f:
-        # Fix #6: quote all fields for Excel-friendliness
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore", quoting=csv.QUOTE_ALL, strict=True)
         w.writeheader()
         for r in rows:
             rec = {k: r.get(k, "") for k in fields}
-            # sanitize text-ish columns to one line
             for k in ("title","body","pros","cons","role","location"):
                 v = rec.get(k, "")
                 if isinstance(v, (list, dict)):
@@ -587,7 +580,6 @@ class GlassdoorReviews:
 
             await self._goto_reviews_tab(tab, company_url)
 
-            # Keep sort=newest via JS (no waiter), then re-fetch URL
             try:
                 changed = await self._eval_js(tab, """
                   (() => {
@@ -609,7 +601,6 @@ class GlassdoorReviews:
             except Exception:
                 pass
 
-            # Re-fetch URL after potential replace (but no explicit waiter)
             cur_url = await self._current_href(tab)
             base, qd, page_token = self._canonize_reviews_base(cur_url)
             base = self._unwrap_url_obj(base)
@@ -617,7 +608,7 @@ class GlassdoorReviews:
 
             all_rows: List[Dict[str, Any]] = []
             prev_ids: set = set()
-            empty_streak = 0  # Fix #3: early stop on consecutive empty JSON pages
+            empty_streak = 0
 
             for page in range(1, max(1, pages)+1):
                 target = self._page_url(base, qd, page, page_token)
@@ -650,7 +641,6 @@ class GlassdoorReviews:
 
                 log(f"[json] Extracted {len(rows)} objects on page {page}")
 
-                # Fix #3: early stop condition
                 if len(rows) == 0:
                     empty_streak += 1
                     if empty_streak >= 2:
@@ -671,7 +661,6 @@ class GlassdoorReviews:
                     log(f"[pace] Sleeping {pause:.1f}s before next page…")
                     await asyncio.sleep(pause)
 
-            # de-dupe & normalize
             dedup, seen = [], set()
             for r in all_rows:
                 rating = r.get("rating")
@@ -702,7 +691,6 @@ def parse_args():
     p.add_argument("--headless", action="store_true", help="Run Chrome headless")
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
     p.add_argument("--profile-dir", help="Custom Chrome profile dir (optional)")
-    # Timeout default increased to 600s
     p.add_argument("--timeout", type=int, default=1600, help="Overall run timeout (seconds)")
     p.add_argument("--page-delay", type=float, default=3.0,
                    help="Seconds to wait between pages after extraction (default: 3.0)")

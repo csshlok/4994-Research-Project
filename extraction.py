@@ -8,7 +8,6 @@ from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 import spacy
-# Keep tagger for better lemmas; disable heavy components for speed
 nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
 SPACY_STOP = nlp.Defaults.stop_words
 
@@ -19,16 +18,15 @@ DEFAULT_STOP_EXTRA = {
     "pros","cons","review","reviews","glassdoor","tldr"
 }
 
-# Negation triggers (added 'barely', 'seldom')
 NEGATORS = {"no","not","never","without","hardly","rarely","scarcely","barely","seldom"}
-NEG_WINDOW = 3                 # tag next N content tokens as negated
+NEG_WINDOW = 3
 
 MIN_TOKEN_LEN = 2
-MIN_DOC_LEN = 3                # drop docs with <3 content tokens
+MIN_DOC_LEN = 3
 NGRAM_RANGE = (1,2)
 MAX_FEATURES = 60000
-MIN_DF = 5                     # ignore very rare terms
-MAX_DF = 0.9                   # ignore very common terms
+MIN_DF = 5
+MAX_DF = 0.9
 
 ID_COL_CANDIDATES = ["review_id","id","gid"]
 TEXT_COL_CANDIDATES = ["text","body","review_text","content"]
@@ -48,14 +46,11 @@ def normalize_text(s: str) -> str:
     s = html.unescape(s)
     s = s.replace("\u00A0", " ")
     s = unicodedata.normalize("NFKC", s)
-    # Keep numbers intact; mask only URLs/emails
     s = URL_RE.sub(" <url> ", s)
     s = EMAIL_RE.sub(" <email> ", s)
     s = s.lower()
-    # Keep letters, digits, <>, hyphens/apostrophes; space the rest
     s = re.sub(r"[^a-z0-9<>\-']+", " ", s)
     s = WS_RE.sub(" ", s).strip()
-    # ASCII-fold after lowercasing
     s = unidecode(s)
     return s
 
@@ -67,7 +62,6 @@ def spacy_tokenize_lemma(s: str) -> List[str]:
 
     toks = []
     for t in doc:
-        # preserve placeholders
         if t.like_email or t.text == "<email>":
             toks.append("<email>")
             continue
@@ -75,7 +69,6 @@ def spacy_tokenize_lemma(s: str) -> List[str]:
             toks.append("<url>")
             continue
 
-        # keep numbers as they appear
         if t.like_num:
             numtok = t.text.strip()
             if len(numtok) >= MIN_TOKEN_LEN:
@@ -90,7 +83,6 @@ def spacy_tokenize_lemma(s: str) -> List[str]:
             continue
         if len(lemma) < MIN_TOKEN_LEN:
             continue
-        # require at least one alpha (numbers already handled)
         if not any(ch.isalpha() for ch in lemma):
             continue
 
@@ -109,7 +101,6 @@ def apply_negation(tokens: List[str], window: int = NEG_WINDOW) -> List[str]:
             j = i + 1
             while j < len(tokens) and k < window:
                 nxt = tokens[j]
-                # don't negate placeholders or further negators
                 if nxt not in {"<url>","<email>"} and nxt not in NEGATORS:
                     out.append(f"{nxt}_NEG")
                     j += 1
@@ -137,14 +128,12 @@ def detect_id_col(df: pd.DataFrame) -> str | None:
     return None
 
 def build_text_raw(df: pd.DataFrame) -> pd.Series:
-    # prefer existing text column if present
     for c in TEXT_COL_CANDIDATES:
         if c in df.columns:
             base = df[c].fillna("")
             break
     else:
         base = pd.Series([""]*len(df))
-    # append title/pros/cons if present
     cols = [TITLE_COL, PROS_COL, CONS_COL]
     extra = df.apply(lambda r: join_cols(r, cols), axis=1)
     return (base.fillna("") + "\n" + extra.fillna("")).str.strip()
@@ -156,9 +145,9 @@ def vectorize_tfidf(pretokenized, max_features=MAX_FEATURES,
     vec = TfidfVectorizer(
         analyzer="word",
         preprocessor=None,
-        tokenizer=str.split,            # we already space-joined tokens
-        token_pattern=r"(?u)\b\w+\b",   # valid regex so ngrams are honored
-        ngram_range=ngram_range,        # (1,2) now respected
+        tokenizer=str.split,
+        token_pattern=r"(?u)\b\w+\b",
+        ngram_range=ngram_range,
         lowercase=False,
         max_features=max_features,
         min_df=min_df,
@@ -186,31 +175,24 @@ def process_files(pattern: str, out_dir: Path):
         frames.append(df)
     df = pd.concat(frames, ignore_index=True)
 
-    # determine an id
     id_col = detect_id_col(df)
     if id_col is None:
         df["review_id"] = np.arange(len(df), dtype=int)
         id_col = "review_id"
 
-    # raw text build
     df["text_raw"] = build_text_raw(df).astype(str)
 
-    # normalization + tokenization
     df["text_norm"] = df["text_raw"].map(normalize_text)
     df["tokens"] = df["text_norm"].map(spacy_tokenize_lemma)
 
-    # apply negation first, THEN remove the negator tokens themselves
     df["tokens"] = df["tokens"].map(apply_negation)
     df["tokens"] = df["tokens"].map(lambda ts: [t for t in ts if t not in NEGATORS])
 
-    # drop too-short docs
     lens = df["tokens"].map(len)
     df = df[lens >= MIN_DOC_LEN].reset_index(drop=True)
 
-    # vectorize
     X, vocab = vectorize_tfidf(df["tokens"].tolist())
 
-    # save artifacts
     df_out = df[[id_col, "source_file", "text_raw", "text_norm", "tokens"]].copy()
     out_dir.mkdir(parents=True, exist_ok=True)
     df_out.to_parquet(out_dir / "combined_reviews.parquet", index=False)

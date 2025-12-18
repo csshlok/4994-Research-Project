@@ -17,9 +17,8 @@ from selenium.webdriver.chrome.service import Service
 from urllib.parse import urlparse, parse_qs
 from schema import SCHEMA
 
-# Optional import for pydoll engine (gracefully handled if missing)
 try:
-    from pydoll_client import GlassdoorPydoll  # your new module
+    from pydoll_client import GlassdoorPydoll
     _pydoll_available = True
 except Exception:
     _pydoll_available = False
@@ -72,7 +71,6 @@ else:
             args.username = d['username']
             args.password = d['password']
     except FileNotFoundError:
-        # For pydoll engine, creds may be unnecessary if you use a warmed Chrome profile.
         if args.engine == 'selenium':
             raise Exception("Please provide Glassdoor credentials via secret.json or CLI")
 
@@ -108,7 +106,7 @@ def human_throttle_page_nav():
         human_scroll_small()
 
 # ------------------ Cloudflare Handling ------------------
-CF_VERIFY_TIMEOUT = 90         # seconds after pressing Enter
+CF_VERIFY_TIMEOUT = 90
 CF_POLL_INTERVAL  = 2
 CF_MAX_PROMPTS    = 3
 cf_prompt_count   = [0]
@@ -202,7 +200,6 @@ def get_browser():
     logger.info('Configuring browser')
     chrome_options = wd.ChromeOptions()
 
-    # Reuse profile only when NOT headless
     if not args.headless:
         chrome_options.add_argument(f"--user-data-dir={PROFILE_DIR}")
         chrome_options.add_argument("--profile-directory=Default")
@@ -222,7 +219,6 @@ def get_browser():
 
     chrome_options.page_load_strategy = "eager"
 
-    # Mild UA randomization
     ua = (
         f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/{random.randint(537,538)}.36 "
         f"(KHTML, like Gecko) Chrome/{random.randint(119,122)}.0.{random.randint(1000,5999)}.0 Safari/537.36"
@@ -419,7 +415,6 @@ def scrape_overall_rating(_review):
         try:
             els = _review.find_elements(by, sel)
             for el in els:
-                # Try attributes and text
                 txt = None
                 try:
                     txt = el.text
@@ -474,7 +469,6 @@ def _scrape_badge(review, label):
         if "neutralStyles" in classes:
             return "Neutral"
 
-        # Fallback: check the SVG
         try:
             svg = el.find_element(By.TAG_NAME, "svg").get_attribute("outerHTML").lower()
             if "path" in svg and "evenodd" in svg:
@@ -513,7 +507,6 @@ def _expand_show_more_in_text(_review):
                 try:
                     btns[0].click()
                 except Exception:
-                    # fallback to JS click in case of overlay/z-index
                     _review.parent.execute_script("arguments[0].click();", btns[0])
                 time.sleep(0.1)
                 break
@@ -608,7 +601,6 @@ def _first_text(el, locators):
 # ---- Field scrapers ----
 
 def _scrape_date(review, author):
-    # Common patterns seen on GD review cards
     locs = [
         (By.CSS_SELECTOR, '[data-test="review-date"]'),
         (By.CSS_SELECTOR, 'time[datetime]'),
@@ -617,7 +609,6 @@ def _scrape_date(review, author):
     txt = _first_text(review, locs)
     if not txt:
         txt = _norm(review.text)
-    # Return raw; your pipeline already parses multiple formats
     return txt or "N/A"
 
 def _scrape_employee_title(review, author):
@@ -637,14 +628,12 @@ def _scrape_location(review, author):
     return _first_text(review, locs) or "N/A"
 
 def _scrape_employee_status(review, author):
-    # e.g., "Current Employee, more than 1 year"
     locs = [
         (By.CSS_SELECTOR, '[data-test="reviewer-status"]'),
         (By.XPATH, './/*[contains(@class,"employmentStatus") or contains(text(),"Current Employee") or contains(text(),"Former Employee")]'),
     ]
     txt = _first_text(review, locs)
     if txt:
-        # normalize common start
         m = re.search(r'(Current|Former)\s+Employee\b.*', txt, re.I)
         if m: return _norm(m.group(0))
         return txt
@@ -658,7 +647,6 @@ def _scrape_review_title(review, author):
     return _first_text(review, locs) or "N/A"
 
 def _scrape_helpful(review, author):
-    # Buttons often show "Helpful (12)" or an aria-label with a number
     candidates = [
         (By.CSS_SELECTOR, '[data-test*="helpful"], button[aria-label*="Helpful"], [aria-label*="Helpful"]'),
         (By.XPATH, './/button[contains(.,"Helpful") or contains(@aria-label,"Helpful") or contains(@data-test,"helpful")]'),
@@ -674,12 +662,7 @@ def _scrape_helpful(review, author):
                         return int(n)
         except Exception:
             pass
-    return 0  # keep numeric for CSV
-
-# You already have these implemented above:
-#   scrape_pros, scrape_cons, scrape_advice
-#   scrape_overall_rating
-#   scrape_recommends, scrape_outlook, scrape_approve_ceo
+    return 0
 
 def _scrape_subrating(review, keywords: list[str], data_tests: list[str] = None):
     """
@@ -687,29 +670,23 @@ def _scrape_subrating(review, keywords: list[str], data_tests: list[str] = None)
     Returns "x.y" string or "N/A".
     """
     data_tests = data_tests or []
-    # 1) data-test attributes
     for key in data_tests:
         try:
             els = review.find_elements(By.CSS_SELECTOR, f'[data-test*="{key}"]')
             for el in els:
-                # numeric in text or aria-label "4.0 out of 5"
                 txt = _norm(el.text) or _norm(el.get_attribute("aria-label") or "") or _norm(el.get_attribute("title") or "")
                 val = _float_0_5(txt)
                 if val: return val
         except Exception:
             pass
 
-    # 2) by nearby label text + following sibling
     for kw in keywords:
         try:
-            # Label node then a sibling/descendant containing numeric/aria
             els = review.find_elements(By.XPATH, f'.//*[contains(translate(.,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz"), "{kw.lower()}")]')
             for lab in els:
-                # search within label container first
                 txt = _norm(lab.text) or _norm(lab.get_attribute("aria-label") or "")
                 val = _float_0_5(txt)
                 if val: return val
-                # then search siblings/descendants
                 siblings = lab.find_elements(By.XPATH, './/following::*[position()<=3]')
                 for sib in siblings:
                     t2 = _norm(sib.text) or _norm(sib.get_attribute("aria-label") or "") or _norm(sib.get_attribute("title") or "")
@@ -801,11 +778,10 @@ def extract_review(review):
     row = {}
     for field in SCHEMA:
         try:
-            row[field] = scrape(field, review, author)  # you provide `scrape`
+            row[field] = scrape(field, review, author)
         except Exception:
             row[field] = np.nan
 
-    # Optional min/max date enforcement using 'review_date' if present
     try:
         if args.max_date or args.min_date:
             rv_dt = row.get('review_date')
@@ -960,19 +936,16 @@ def run_with_pydoll():
 
     logger.info(f'[pydoll] Starting scrape from {args.url} for ~{args.pages} pages')
     client = GlassdoorPydoll(headless=args.headless)
-    reviews = asyncio.run(client.scrape_reviews(args.url, pages=args.pages))  # list[dict]
+    reviews = asyncio.run(client.scrape_reviews(args.url, pages=args.pages))
 
-    # Normalize JSON -> DataFrame
     if not reviews:
         df = pd.DataFrame([])
     else:
         df = pd.json_normalize(reviews)
 
-    # Respect --limit
     if args.limit and len(df) > args.limit:
         df = df.iloc[:args.limit]
 
-    # Order columns to match SCHEMA when overlapping
     if len(df) > 0:
         common = [c for c in SCHEMA if c in df.columns]
         others = [c for c in df.columns if c not in common]
@@ -988,11 +961,9 @@ browser = None
 page = [1]; idx = [0]; date_limit_reached = [False]; valid_page = [True]
 
 def main():
-    # Route by engine
     if args.engine == 'pydoll':
         return run_with_pydoll()
 
-    # ---- Selenium path (existing) ----
     logger.info(f"Scraping up to {args.limit} reviews (engine=selenium)")
     global browser
     browser = get_browser()
@@ -1001,7 +972,6 @@ def main():
     if args.manual_nav and args.headless:
         raise RuntimeError("--manual_nav cannot be used with --headless.")
 
-    # Sign in (or reuse profile cookies)
     if not already_signed_in():
         try:
             sign_in()
@@ -1014,10 +984,8 @@ def main():
             wait_for_manual_cf_clear(browser)
 
     if args.manual_nav:
-        # You manually open Reviews tab & paginate; we only read the DOM
         res = manual_navigation_loop(res)
     else:
-        # Automated flow (may re-trigger CF; switch to --manual_nav if so)
         if not args.start_from_url:
             reviews_exist = navigate_to_reviews()
             if not reviews_exist:

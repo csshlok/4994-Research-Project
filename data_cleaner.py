@@ -100,7 +100,6 @@ def load_gazetteers():
             if base:
                 us_name_set.add(base)
 
-    # Also add a few generic US markers
     us_name_set.update({
         "united states", "usa", "u s a", "u s", "us",
         "washington dc", "district of columbia"

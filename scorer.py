@@ -2,13 +2,14 @@ from __future__ import annotations
 import os, re, json, math, random, platform, ast
 from pathlib import Path
 from typing import Dict, List, Tuple, Set
-from collections import defaultdict
+from collections import defaultdict, Counter
+
 import numpy as np
 import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from tqdm import tqdm
-from scipy import sparse
+
 
 # ---------------- Paths ----------------
 ROOT = Path(__file__).resolve().parent
@@ -17,27 +18,31 @@ CONFIG_DIR   = ROOT / "config"
 OUT_DIR      = ROOT / "out"
 
 REVIEWS_PATH  = FEATURES_DIR / "combined_reviews.parquet"
-VOCAB_PATH    = FEATURES_DIR / "tfidf_vocab.json"
-TFIDF_NPZ     = FEATURES_DIR / "tfidf_reviews.npz"
 GOALS_PATH    = CONFIG_DIR / "goal_dict.json"
 CONFIG_JSON   = FEATURES_DIR / "config.json"
 
-# allow fallbacks
 if not CONFIG_JSON.exists() and Path("/mnt/data/config.json").exists():
     CONFIG_JSON = Path("/mnt/data/config.json")
-if not VOCAB_PATH.exists() and Path("/mnt/data/tfidf_vocab.json").exists():
-    VOCAB_PATH = Path("/mnt/data/tfidf_vocab.json")
-if not TFIDF_NPZ.exists() and Path("/mnt/data/tfidf_reviews.npz").exists():
-    TFIDF_NPZ = Path("/mnt/data/tfidf_reviews.npz")
 
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 print("[auto] Using files:")
 print("  reviews:", REVIEWS_PATH)
-print("  vocab:  ", VOCAB_PATH)
-print("  tfidf:  ", TFIDF_NPZ)
 print("  goals:  ", GOALS_PATH)
 print("  config: ", CONFIG_JSON)
 print("  outdir: ", OUT_DIR, flush=True)
+
+
+# ---------------- Goal configuration (5-goal version) ----------------
+GOAL_NAMES = [
+    "physiological",
+    "self_protection",
+    "affiliation",
+    "status_esteem",
+    "family_care",
+]
+GOAL_INDEX = {name: i for i, name in enumerate(GOAL_NAMES)}
+N_GOALS = len(GOAL_NAMES)
+
 
 # ---------------- Utils ----------------
 def _need(p: Path, label: str):
@@ -62,12 +67,12 @@ def best_batch(default=64) -> int:
     except Exception:
         return default
 
+
 # --- Normalization & tokenization helpers (unified) ---
 WS = re.compile(r"\s+")
-TOKEN_RE = re.compile(r"[a-zA-Z]+(?:'[a-zA-Z]+)?")  # word or word'word
+TOKEN_RE = re.compile(r"[a-zA-Z]+(?:'[a-zA-Z]+)?")
 
 def norm_text_for_tokens(s: str) -> str:
-    # Hyphens → spaces so "work-life" => "work life"
     s = (s or "").replace("-", " ")
     return WS.sub(" ", s).strip().lower()
 
@@ -77,7 +82,6 @@ def tokenize(s: str) -> List[str]:
 
 _norm_space = re.compile(r"\s+")
 def norm_term(s: str) -> str:
-    # Normalize goal dictionary entries to underscore-joined phrases
     s = (s or "").strip()
     s = s.replace("-", " ")
     s = _norm_space.sub(" ", s)
@@ -85,6 +89,7 @@ def norm_term(s: str) -> str:
 
 def ensure_variants(lst: List[str]) -> List[str]:
     return list({norm_term(t) for t in lst if str(t).strip()})
+
 
 COUNTRY_CODES = {
     "us","uk","ca","au","in","de","fr","es","sg","ie","nl","se","ch","cn","jp","it","br","mx"
@@ -101,9 +106,10 @@ def _derive_company_id(source_file: str) -> str:
     if not parts:
         return "unknown"
     if parts[-1] in COUNTRY_CODES:
-        parts.pop(-1)  # drop trailing country code
+        parts.pop(-1)
     company = "_".join(parts) if parts else "unknown"
     return company
+
 
 # ---------------- Loaders ----------------
 def load_config(cpath: Path) -> dict:
@@ -111,25 +117,31 @@ def load_config(cpath: Path) -> dict:
     with open(cpath, "r", encoding="utf-8") as f:
         cfg = json.load(f)
     cfg.setdefault("negators", ["no","not","never","without","hardly","scarcely","lack","barely","rarely","seldom"])
-    cfg.setdefault("ngram_range", [1,2])
-    cfg.setdefault("stop_extra", [])
     cfg.setdefault("offline_model", False)
     return cfg
 
 def load_goals(gpath: Path) -> Dict[str, Dict[str, List[str]]]:
+    """
+    Load the 5-goal dictionary from JSON.
+    We keep short codes for compatibility:
+      phys, selfprot, aff, stat, fam
+    Guardrails are not used in this version.
+    """
     _need(gpath, "goals dictionary json")
     raw = json.load(open(gpath, "r", encoding="utf-8"))
     mapping = {
-        "physiological":"phys","self_protection":"selfprot","affiliation":"aff",
-        "status_esteem":"stat","mate_acquisition":"m_acq","mate_retention":"m_ret","family_care":"fam"
+        "physiological":   "phys",
+        "self_protection": "selfprot",
+        "affiliation":     "aff",
+        "status_esteem":   "stat",
+        "family_care":     "fam"
     }
-    goals = {}
+    goals: Dict[str, Dict[str, List[str]]] = {}
     for k, v in raw.items():
         kk = mapping.get(k, k)
         goals[kk] = {
             "fulfillment": ensure_variants(v.get("fulfillment", [])),
             "hindrance":   ensure_variants(v.get("hindrance", [])),
-            "guardrails":  ensure_variants(v.get("guardrails", [])),
         }
     return goals
 
@@ -147,7 +159,6 @@ def load_reviews(path: Path) -> pd.DataFrame:
     df["text_clean"] = df[txt_col].fillna("").astype(str)
 
     def parse_token_cell(x):
-        # Rehydrate stringified lists and re-tokenize uniformly
         if isinstance(x, list):
             return tokenize(" ".join(map(str, x)))
         if isinstance(x, str):
@@ -169,15 +180,12 @@ def load_reviews(path: Path) -> pd.DataFrame:
     else:
         df["tokens"] = df["text_clean"].map(tokenize)
 
-    # Fallback rebuild for empty
     empty_mask = df["tokens"].apply(lambda z: not isinstance(z, list) or len(z) == 0)
     if empty_mask.any():
         df.loc[empty_mask, "tokens"] = df.loc[empty_mask, "text_clean"].map(tokenize)
 
-    # company id (name only)
     df["company_id"] = df["source_file"].map(_derive_company_id)
 
-    # date placeholder if missing
     if "date" not in df.columns:
         df["date"] = pd.NaT
 
@@ -185,28 +193,6 @@ def load_reviews(path: Path) -> pd.DataFrame:
     print(f"[load_reviews] rows={len(df)} companies≈{df['company_id'].nunique()} tokens_mean={df['n_tokens'].mean():.1f}")
     return df
 
-def load_vocab(vpath: Path) -> Dict[str, int]:
-    _need(vpath, "tfidf_vocab.json")
-    vocab_raw = json.load(open(vpath, "r", encoding="utf-8"))
-    vocab_map: Dict[str,int] = {}
-    if all(isinstance(k, str) and isinstance(v, int) for k,v in vocab_raw.items()):
-        for tok, idx in vocab_raw.items():
-            vocab_map[norm_term(tok)] = int(idx)
-    else:
-        for k, tok in vocab_raw.items():
-            vocab_map[norm_term(tok)] = int(k)
-    return vocab_map
-
-def load_tfidf(npz_path: Path) -> sparse.csr_matrix:
-    _need(npz_path, "tfidf_reviews.npz")
-    loader = np.load(npz_path)
-    if {"data","indices","indptr","shape"} <= set(loader.files):
-        return sparse.csr_matrix((loader["data"], loader["indices"], loader["indptr"]), shape=loader["shape"])
-    try:
-        from scipy.sparse import load_npz
-        return load_npz(str(npz_path))
-    except Exception as e:
-        raise RuntimeError(f"Unrecognized TF-IDF npz format: {e}")
 
 # ---------------- Sentiment ----------------
 class SentimentModel:
@@ -232,7 +218,7 @@ class SentimentModel:
         out = []
         for i in tqdm(range(0, len(sentences), batch), desc="[sent] batches"):
             batch_s = sentences[i:i+batch]
-            batch_s = [" ".join(s.split()[:60]) for s in batch_s]  # clip very long sentences
+            batch_s = [" ".join(s.split()[:60]) for s in batch_s]
             toks = self.tok(batch_s, padding=True, truncation=True,
                             max_length=self.max_length, return_tensors="pt").to(self.device)
             probs = torch.softmax(self.model(**toks).logits, dim=-1).cpu().numpy()
@@ -245,12 +231,16 @@ class SentimentModel:
         denom = max(1e-6, 1.0 - p_neu/2.0)
         return float(np.clip((p_pos - p_neg) / denom, -1.0, 1.0))
 
-# ---------------- Phrase/negation helpers ----------------
+
+# ---------------- Sentence / negation helpers ----------------
 _SENT_SPLIT = re.compile(r"[.!?]+")
 def simple_sent_split(txt: str) -> List[str]:
     return [s.strip() for s in _SENT_SPLIT.split(txt) if s.strip()]
 
 def find_phrase_positions(tokens: List[str], phrase_term: str) -> List[Tuple[int,int]]:
+    """
+    Exact consecutive-token match for underscore-joined phrases.
+    """
     parts = phrase_term.split("_")
     n = len(parts); out = []
     if n == 1:
@@ -263,10 +253,6 @@ def find_phrase_positions(tokens: List[str], phrase_term: str) -> List[Tuple[int
                 out.append((i, i+n))
     return out
 
-def within_window(span_a: Tuple[int,int], span_b: Tuple[int,int], k: int) -> bool:
-    aL, aR = span_a; bL, bR = span_b
-    return not (aL > bR + k or bL > aR + k)
-
 _SPACY_OK = False
 try:
     import spacy
@@ -276,6 +262,10 @@ except Exception:
     _SPACY_OK = False
 
 def detect_negated_spans(tokens: List[str], cfg_negators: List[str]) -> Set[int]:
+    """
+    Returns token indices considered negated.
+    Uses spaCy if available; otherwise a simple negator-window fallback.
+    """
     neg_idx: Set[int] = set()
     if _SPACY_OK:
         global _nlp
@@ -293,12 +283,198 @@ def detect_negated_spans(tokens: List[str], cfg_negators: List[str]) -> Set[int]
                         neg_idx.add(w.i)
             if neg_idx:
                 return neg_idx
+
     neg_set = set(t.lower() for t in cfg_negators)
     for j, t in enumerate(tokens):
         if t in neg_set:
             for k in range(j+1, min(j+6, len(tokens))):
                 neg_idx.add(k)
     return neg_idx
+
+
+# ---------------- Option-C lexicon preparation ----------------
+def build_lexicon(goals: Dict[str, Dict[str, List[str]]]) -> dict:
+    """
+    Builds efficient structures:
+      - unigram sets (token)
+      - bigram sets ((tok1,tok2))
+      - long phrase lists (underscore terms, len>=3)
+    For both fulfillment and hindrance.
+    """
+    lex = {}
+    for g, d in goals.items():
+        f_uni: Set[str] = set()
+        f_bi: Set[Tuple[str,str]] = set()
+        f_long: List[str] = []
+
+        h_uni: Set[str] = set()
+        h_bi: Set[Tuple[str,str]] = set()
+        h_long: List[str] = []
+
+        for term in d.get("fulfillment", []):
+            parts = term.split("_")
+            if len(parts) == 1:
+                f_uni.add(parts[0])
+            elif len(parts) == 2:
+                f_bi.add((parts[0], parts[1]))
+            else:
+                f_long.append(term)
+
+        for term in d.get("hindrance", []):
+            parts = term.split("_")
+            if len(parts) == 1:
+                h_uni.add(parts[0])
+            elif len(parts) == 2:
+                h_bi.add((parts[0], parts[1]))
+            else:
+                h_long.append(term)
+
+        lex[g] = {
+            "F_uni": f_uni, "F_bi": f_bi, "F_long": f_long,
+            "H_uni": h_uni, "H_bi": h_bi, "H_long": h_long,
+        }
+    return lex
+
+
+def score_review_goals_option_c(
+    tokens: List[str],
+    neg_idx: Set[int],
+    lex: dict,
+    weights: dict
+) -> Tuple[Dict[str,float], Dict[str,float]]:
+    """
+    Compute raw evidence totals per goal:
+      Fg[g] = fulfillment evidence
+      Hg[g] = hindrance evidence
+
+    - unigrams/bigrams: count occurrences via token scan
+    - long phrases: count occurrences via exact consecutive-token spans
+    - negation: if a match span touches neg_idx, flip polarity (F -> H or H -> F)
+    """
+    w_uni  = float(weights.get("w_uni", 1.0))
+    w_bi   = float(weights.get("w_bi", 1.25))
+    w_long = float(weights.get("w_long", 2.0))
+
+    uni_counts = Counter(tokens)
+    bi_counts = Counter(zip(tokens, tokens[1:])) if len(tokens) >= 2 else Counter()
+
+    Fg: Dict[str, float] = {g: 0.0 for g in lex.keys()}
+    Hg: Dict[str, float] = {g: 0.0 for g in lex.keys()}
+
+    for g, gd in lex.items():
+        # ----- unigrams -----
+        for u in gd["F_uni"]:
+            c = uni_counts.get(u, 0)
+            if c <= 0:
+                continue
+            for i, tok in enumerate(tokens):
+                if tok != u:
+                    continue
+                if i in neg_idx:
+                    Hg[g] += w_uni
+                else:
+                    Fg[g] += w_uni
+
+        for u in gd["H_uni"]:
+            c = uni_counts.get(u, 0)
+            if c <= 0:
+                continue
+            for i, tok in enumerate(tokens):
+                if tok != u:
+                    continue
+                if i in neg_idx:
+                    Fg[g] += w_uni
+                else:
+                    Hg[g] += w_uni
+
+        # ----- bigrams -----
+        for b in gd["F_bi"]:
+            if bi_counts.get(b, 0) <= 0:
+                continue
+            a, b2 = b
+            for i in range(len(tokens)-1):
+                if tokens[i] == a and tokens[i+1] == b2:
+                    if (i in neg_idx) or ((i+1) in neg_idx):
+                        Hg[g] += w_bi
+                    else:
+                        Fg[g] += w_bi
+
+        for b in gd["H_bi"]:
+            if bi_counts.get(b, 0) <= 0:
+                continue
+            a, b2 = b
+            for i in range(len(tokens)-1):
+                if tokens[i] == a and tokens[i+1] == b2:
+                    if (i in neg_idx) or ((i+1) in neg_idx):
+                        Fg[g] += w_bi
+                    else:
+                        Hg[g] += w_bi
+
+        # ----- long phrases (len>=3) -----
+        for term in gd["F_long"]:
+            spans = find_phrase_positions(tokens, term)
+            for (L, R) in spans:
+                if any(k in neg_idx for k in range(L, R)):
+                    Hg[g] += w_long
+                else:
+                    Fg[g] += w_long
+
+        for term in gd["H_long"]:
+            spans = find_phrase_positions(tokens, term)
+            for (L, R) in spans:
+                if any(k in neg_idx for k in range(L, R)):
+                    Fg[g] += w_long
+                else:
+                    Hg[g] += w_long
+
+    return Fg, Hg
+
+
+def balance_ratio(F: float, H: float, eps: float = 1e-6) -> float:
+    """
+    Recommended mixing normalization:
+      R = (F - H) / (F + H + eps)   in [-1, 1]
+    """
+    return float((F - H) / (F + H + eps))
+
+
+def sentiment_weight(Srev: float, sign: int) -> float:
+    """
+    Your existing sentiment coupling idea, preserved.
+    Produces w in [lo, hi].
+    """
+    eps, tau, lo, hi = 0.08, 0.50, 0.3, 1.2
+    w = 0.5 + 0.5 * sign * math.tanh(max(abs(Srev) - eps, 0.0) / tau)
+    return float(np.clip(w, lo, hi))
+
+def print_goal_coverage_summary(rev_out: pd.DataFrame):
+    """
+    Prints:
+      - total reviews
+      - how many hit at least one goal
+      - how many hit zero goals
+      - mean sentiment for each group
+    """
+    goal_cols = [c for c in rev_out.columns if c.startswith("G_final_")]
+
+    total = len(rev_out)
+
+    has_goal = (rev_out[goal_cols].abs().sum(axis=1) > 0)
+    n_hit = int(has_goal.sum())
+    n_zero = int((~has_goal).sum())
+
+    mean_sent_all = float(rev_out["S_raw"].mean())
+    mean_sent_hit = float(rev_out.loc[has_goal, "S_raw"].mean()) if n_hit > 0 else 0.0
+    mean_sent_zero = float(rev_out.loc[~has_goal, "S_raw"].mean()) if n_zero > 0 else 0.0
+
+    print("\n[goal coverage summary]")
+    print(f"  total reviews           : {total}")
+    print(f"  reviews with ≥1 goal hit: {n_hit} ({n_hit/total:.1%})")
+    print(f"  reviews with 0 goals    : {n_zero} ({n_zero/total:.1%})")
+    print(f"  mean sentiment (all)    : {mean_sent_all:+.3f}")
+    print(f"  mean sentiment (≥1 goal): {mean_sent_hit:+.3f}")
+    print(f"  mean sentiment (0 goals): {mean_sent_zero:+.3f}")
+
 
 # ---------------- Main ----------------
 def main():
@@ -307,30 +483,12 @@ def main():
     cfg = load_config(CONFIG_JSON)
     reviews = load_reviews(REVIEWS_PATH)
     goals = load_goals(GOALS_PATH)
-    vocab  = load_vocab(VOCAB_PATH)
-    tfidf  = load_tfidf(TFIDF_NPZ)
 
-    print(f"[load] reviews={len(reviews)} companies≈{reviews['company_id'].nunique()} terms={len(vocab)} tfidf={tfidf.shape}")
+    lex = build_lexicon(goals)
+    goal_keys = list(goals.keys())
 
-    # flatten goal terms → targets
-    term2targets: Dict[str, List[Tuple[str,str]]] = defaultdict(list)
-    guardrails = {g: [norm_term(x) for x in goals[g]["guardrails"]] for g in goals}
-    for g in goals:
-        for t in goals[g]["fulfillment"]:
-            term2targets[t].append((g, "F"))
-        for t in goals[g]["hindrance"]:
-            term2targets[t].append((g, "H"))
+    print(f"[load] reviews={len(reviews)} companies≈{reviews['company_id'].nunique()} goals={goal_keys}")
 
-    # vocab columns for terms we have
-    term2col: Dict[str, int] = {t: vocab[t] for t in term2targets.keys() if t in vocab}
-
-    # scoring knobs
-    T_W_UNI, T_W_BI, CAP = 0.7, 1.0, 3
-    GAMMA, DELTA = 0.8, 0.3
-    GUARD_WIN = 6
-    NEG_FALLBACK_WIN = 5
-
-    # sentiment
     sm = SentimentModel(
         model_name="cardiffnlp/twitter-roberta-base-sentiment-latest",
         offline=bool(cfg.get("offline_model", False)),
@@ -341,6 +499,7 @@ def main():
         sents = simple_sent_split(txt) or [txt]
         for s in sents:
             all_sents.append(s); ridx.append(i); slen.append(max(1, len(s.split())))
+
     print(f"[sent] scoring {len(all_sents)} sentences…")
     probs = sm.score(all_sents, best_batch())
     s_scalar = [sm.to_scalar(p[0], p[1], p[2]) for p in probs]
@@ -353,90 +512,43 @@ def main():
         S[i] = float(np.average(bucket[i], weights=weights[i])) if bucket[i] else 0.0
     reviews["S_raw"] = S
 
-    # goal scoring
-    goal_keys = list(goals.keys())
+    match_weights = {
+        "w_uni": 1.0,
+        "w_bi": 1.25,
+        "w_long": 2.0,
+    }
+
     outF = {g: [] for g in goal_keys}
     outH = {g: [] for g in goal_keys}
-    outG = {g: [] for g in goal_keys}
+    outR = {g: [] for g in goal_keys}
     outW = {g: [] for g in goal_keys}
-    outGw= {g: [] for g in goal_keys}
+    outRw = {g: [] for g in goal_keys}
+
     negators_cfg = [t.lower() for t in cfg.get("negators", [])]
 
-    for i, row in tqdm(list(reviews.iterrows()), desc="[goals] reviews"):
+    for _, row in tqdm(list(reviews.iterrows()), desc="[goals] reviews"):
         toks: List[str] = row["tokens"]
-        n = int(row["n_tokens"])
-
         neg_idx = detect_negated_spans(toks, negators_cfg)
 
-        guard_spans = []
+        Fg, Hg = score_review_goals_option_c(toks, neg_idx, lex, match_weights)
+
+        Srev = float(row["S_raw"])
+
         for g in goal_keys:
-            for gr in guardrails[g]:
-                guard_spans.extend(find_phrase_positions(toks, gr))
+            F = float(Fg.get(g, 0.0))
+            H = float(Hg.get(g, 0.0))
 
-        spans_cache: Dict[str, List[Tuple[int,int]]] = {}
-        Fg = {g: 0.0 for g in goal_keys}
-        Hg = {g: 0.0 for g in goal_keys}
+            R = balance_ratio(F, H, eps=1e-6)
+            sign = 1 if R > 0 else -1 if R < 0 else 0
+            w = sentiment_weight(Srev, sign)
 
-        for term, targets in term2targets.items():
-            spans = spans_cache.get(term)
-            if spans is None:
-                spans = find_phrase_positions(toks, term)
-                spans_cache[term] = spans
-            if not spans:
-                continue
+            Rw = float(np.clip(w * R, -1.0, 1.0))
 
-            # windowed guardrail suppression
-            spans_kept = []
-            for sp in spans:
-                if any(within_window(sp, grsp, GUARD_WIN) for grsp in guard_spans):
-                    continue
-                spans_kept.append(sp)
-            if not spans_kept:
-                continue
-
-            col = term2col.get(term, None)
-            base_val = 0.0
-            if col is not None:
-                base_val = float(tfidf[i, col])
-            if col is None or base_val == 0.0:
-                base_val = float(len(spans_kept))
-
-            wt_ng = T_W_BI if "_" in term else T_W_UNI
-            val = base_val * wt_ng
-
-            for g, kind in targets:
-                neg_occ = 0; pos_occ = 0
-                for (a,b) in spans_kept:
-                    if any(k in neg_idx for k in range(a,b)):
-                        neg_occ += 1
-                    else:
-                        pos_occ += 1
-                if pos_occ + neg_occ == 0:
-                    continue
-                v_pos = val * (pos_occ / (pos_occ + neg_occ))
-                v_neg = val * (neg_occ / (pos_occ + neg_occ))
-                if kind == "F":
-                    Fg[g] += v_pos
-                    Hg[g] += GAMMA * v_neg
-                else:
-                    Hg[g] += v_pos
-                    Fg[g] += DELTA * v_neg
-
-        Ln = 1.0 + math.log(1 + n)
-        for g in goal_keys:
-            Fn = Fg[g] / Ln
-            Hn = Hg[g] / Ln
-            G  = Fn - Hn
-
-            Srev = float(row["S_raw"])
-            sgn = 1 if G > 0 else -1 if G < 0 else 0
-            eps, tau, lo, hi = 0.08, 0.50, 0.3, 1.2  # narrower neutral band
-            w = 0.5 + 0.5 * sgn * math.tanh(max(abs(Srev) - eps, 0.0) / tau)
-            w = float(np.clip(w, lo, hi))
-            Gw = w * G
-
-            outF[g].append(Fn); outH[g].append(Hn); outG[g].append(G)
-            outW[g].append(w);  outGw[g].append(Gw)
+            outF[g].append(F)
+            outH[g].append(H)
+            outR[g].append(R)
+            outW[g].append(w)
+            outRw[g].append(Rw)
 
     # ---------------- Outputs ----------------
     rev_out = pd.DataFrame({
@@ -446,15 +558,17 @@ def main():
         "n_tokens": reviews["n_tokens"],
         "S_raw": reviews["S_raw"]
     })
+
     for g in goal_keys:
-        rev_out[f"F_norm_{g}"] = outF[g]
-        rev_out[f"H_norm_{g}"] = outH[g]
-        rev_out[f"G_raw_{g}"]  = outG[g]
+        rev_out[f"F_raw_{g}"] = outF[g]
+        rev_out[f"H_raw_{g}"] = outH[g]
+        rev_out[f"G_ratio_{g}"] = outR[g]
         rev_out[f"w_sent_{g}"] = outW[g]
-        rev_out[f"G_weighted_{g}"] = outGw[g]
+        rev_out[f"G_final_{g}"] = outRw[g]
 
     print("[aggregate] company metrics…")
     grp = rev_out.groupby("company_id", dropna=False)
+
     comp = grp["S_raw"].agg(["count","mean","std"]).reset_index().rename(
         columns={"count":"n_reviews","mean":"S_mean","std":"S_std"}
     )
@@ -474,12 +588,23 @@ def main():
     comp = comp.merge(pos_share, on="company_id").merge(neg_share, on="company_id")
 
     for g in goal_keys:
-        gmeans = grp[[f"G_raw_{g}", f"G_weighted_{g}"]].mean().reset_index()
-        gmeans = gmeans.rename(columns={f"G_raw_{g}":f"G_mean_raw_{g}", f"G_weighted_{g}":f"G_mean_weighted_{g}"})
+        gmeans = grp[[f"G_ratio_{g}", f"G_final_{g}"]].mean().reset_index()
+        gmeans = gmeans.rename(columns={
+            f"G_ratio_{g}": f"G_mean_ratio_{g}",
+            f"G_final_{g}": f"G_mean_final_{g}"
+        })
         comp = comp.merge(gmeans, on="company_id")
-        muG = float(comp[f"G_mean_weighted_{g}"].mean())
-        comp[f"G_smoothed_weighted_{g}"] = eb(comp[f"G_mean_weighted_{g}"],
-                                              comp["n_reviews"].astype(float), lamG, muG)
+
+        muG = float(comp[f"G_mean_final_{g}"].mean()) if len(comp) else 0.0
+        comp[f"G_smoothed_final_{g}"] = eb(
+            comp[f"G_mean_final_{g}"],
+            comp["n_reviews"].astype(float),
+            lamG,
+            muG
+        )
+    
+    print_goal_coverage_summary(rev_out)
+
 
     # ----- Write outputs (CSV-only) -----
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -488,15 +613,11 @@ def main():
     per_dir       = OUT_DIR / "per_company"
     per_dir.mkdir(exist_ok=True)
 
-    # 1) Global review-level scores (all reviews)
     rev_out.to_csv(rev_path_csv, index=False)
-
-    # 2) Company-level aggregates
     comp.to_csv(cmp_path_csv, index=False)
 
-    # 3) Per-company review-level (trimmed)
     import re as _re
-    g_cols = [c for c in rev_out.columns if c.startswith("G_raw_") or c.startswith("G_weighted_")]
+    g_cols = [c for c in rev_out.columns if c.startswith("G_ratio_") or c.startswith("G_final_")]
     base_cols = ["review_id","company_id","S_raw"]
     keep_cols = base_cols + g_cols
 
@@ -506,17 +627,13 @@ def main():
         (per_dir / f"{safe}.csv").write_text(sub[keep_cols].to_csv(index=False))
         written_per_company.append(str(per_dir / f"{safe}.csv"))
 
-    # Run report JSON
     run_meta = {
         "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
         "batch": best_batch(),
         "max_length": 256,
-        "eps": 0.08, "tau": 0.50,
-        "gamma": 0.8, "delta": 0.3,
-        "t_w_uni": 0.7, "t_w_bi": 1.0, "cap": 3,
-        "eb_lambda_S": 80.0, "eb_lambda_G": 80.0,
-        "guard_window": 6,
-        "neg_fallback_window": 5,
+        "lexicon_match_weights": match_weights,
+        "ratio_formula": "(F - H) / (F + H + eps)",
+        "sentiment_weighting": {"eps": 0.08, "tau": 0.50, "lo": 0.3, "hi": 1.2},
         "offline_model": bool(cfg.get("offline_model", False)),
         "env": {"python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__},
         "output_files": {
@@ -536,11 +653,12 @@ def main():
             "columns_company": list(comp.columns),
             "run_meta": run_meta
         },
-        open(OUT_DIR / "run_report.json", "w"),
+        open(OUT_DIR / "run_report.json", "w", encoding="utf-8"),
         indent=2
     )
 
     print(f"[done] CSVs:\n - {rev_path_csv}\n - {cmp_path_csv}\n - per-company (trimmed) in {per_dir}")
+
 
 if __name__ == "__main__":
     main()
