@@ -95,7 +95,9 @@ python reviews_scraper.py --url https://www.glassdoor.com/Reviews/ACME-Reviews-E
 
 ## Outputs and sample visualization
 - Core outputs (under `out/`): `review_scores.csv`, `company_scores.csv`, `per_company/*.csv`, `run_report.json`.
-- Optional figures live in `out/figures/`; open `C:\Users\csshl\Desktop\4994-Scrapper\out\figures\06_company_radar_all.png` for the radar chart example.
+- Optional figures live in `out/figures/`; radar example:
+
+![Company radar](out/figures/06_company_radar_all.png)
 
 ## Tips and defaults
 - Files use absolute paths in some scripts; adjust `RAW_DIR`, `OUT_DIR`, and any hardcoded paths for your machine before running.
