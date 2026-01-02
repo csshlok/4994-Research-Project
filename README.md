@@ -30,8 +30,29 @@ Glassdoor review scoring pipeline: scrape (or load) reviews, clean them, build t
      --page-delay 4 --headless
    ```
    - Required: `--url` must be a Glassdoor company Reviews/Overview URL; the script auto-adds language + sort params.
-   - Useful flags: `--pages` (default 3), `--csv` to also write CSV, `--page-delay` to throttle, `--chrome-binary` if Chrome is not on PATH, `--profile-dir` for a custom Chromium profile, `--headless` to hide the browser.
-   - Older scrapers (`main.py`, `pydoll_client.py`) are kept for reference; use **only** `reviews_scraper.py`.
+ - Useful flags: `--pages` (default 3), `--csv` to also write CSV, `--page-delay` to throttle, `--chrome-binary` if Chrome is not on PATH, `--profile-dir` for a custom Chromium profile, `--headless` to hide the browser.
+  - Older scrapers (`main.py`, `pydoll_client.py`) are kept for reference; use **only** `reviews_scraper.py`.
+
+## Scraper CLI arguments (`reviews_scraper.py`)
+
+| Long flag       | Short | Description |
+|-----------------|-------|-------------|
+| `--url`         | `-u`  | Glassdoor company Reviews or Overview URL (required). |
+| `--pages`       | `-p`  | Number of review pages to fetch (default 3). |
+| `--csv`         | `--csv` | Optional CSV path to write alongside JSON (UTF-8). |
+| `--out`         | `-o`  | JSON output path (default `reviews.json`). |
+| `--page-delay`  | `--page-delay` | Seconds to sleep between pages after extraction (default 3.0). |
+| `--headless`    | `--headless` | Run Chrome headless. |
+| `--chrome-binary` | `--chrome-binary` | Path to Chrome/Chromium if not on PATH. |
+| `--profile-dir` | `--profile-dir` | Custom Chromium profile directory (default `chrome-profile/`). |
+| `--timeout`     | `--timeout` | Overall timeout in seconds (default 1600). |
+
+Example:
+```bash
+python reviews_scraper.py --url https://www.glassdoor.com/Reviews/ACME-Reviews-E9999.htm \
+  --pages 4 --csv OG-Reviews-CSV/reviews_acme.csv --out OG_reviews-json/reviews_acme.json \
+  --page-delay 3.5 --headless
+```
 
 2) Clean raw CSVs:
    - Open `data_cleaner.py` and set `RAW_DIR` to where your raw `reviews_<company>.csv` files live, and `OUT_DIR` to a writable folder (e.g., `cleaned_US/`).
@@ -71,6 +92,10 @@ Glassdoor review scoring pipeline: scrape (or load) reviews, clean them, build t
 - Stores a Chromium profile in `chrome-profile/` (created automatically). Delete it if you want a clean session.
 - Handles consent popups and sorts by recent (`sort.sortType=RD`).
 - If you see repeated pages or Cloudflare/captcha, increase `--page-delay` and/or switch to a fresh profile via `--profile-dir`.
+
+## Outputs and sample visualization
+- Core outputs (under `out/`): `review_scores.csv`, `company_scores.csv`, `per_company/*.csv`, `run_report.json`.
+- Optional figures live in `out/figures/`; open `C:\Users\csshl\Desktop\4994-Scrapper\out\figures\06_company_radar_all.png` for the radar chart example.
 
 ## Tips and defaults
 - Files use absolute paths in some scripts; adjust `RAW_DIR`, `OUT_DIR`, and any hardcoded paths for your machine before running.
