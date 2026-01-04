@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    /* Warm, academic palette */
+    --background: 40 30% 96%;
+    --foreground: 100 20% 15%;
+
+    --card: 40 25% 98%;
+    --card-foreground: 100 20% 15%;
+
+    --popover: 40 25% 98%;
+    --popover-foreground: 100 20% 15%;
+
+    /* Forest green primary */
+    --primary: 100 45% 25%;
+    --primary-foreground: 40 30% 96%;
+
+    /* Soft olive secondary */
+    --secondary: 80 15% 90%;
+    --secondary-foreground: 100 30% 20%;
+
+    --muted: 40 15% 92%;
+    --muted-foreground: 40 10% 45%;
+
+    /* Warm accent */
+    --accent: 35 60% 92%;
+    --accent-foreground: 100 30% 20%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 100 45% 25%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --cream: 40 35% 94%;
+    --cream-dark: 40 25% 88%;
+    --forest: 100 45% 25%;
+    --forest-light: 100 35% 35%;
+    --forest-dark: 100 50% 18%;
+    --olive: 80 25% 45%;
+    --olive-muted: 80 15% 75%;
+    --warm-gray: 40 8% 55%;
+    --text-primary: 100 20% 15%;
+    --text-secondary: 40 10% 40%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(40 35% 94%) 0%, hsl(40 25% 90%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(40 25% 98%) 0%, hsl(40 20% 95%) 100%);
+    --gradient-forest: linear-gradient(135deg, hsl(100 45% 25%) 0%, hsl(100 40% 30%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(100 20% 15% / 0.08);
+    --shadow-card: 0 2px 12px -2px hsl(100 20% 15% / 0.06);
+    --shadow-elevated: 0 8px 30px -8px hsl(100 20% 15% / 0.12);
+
+    --sidebar-background: 40 30% 96%;
+    --sidebar-foreground: 100 20% 15%;
+    --sidebar-primary: 100 45% 25%;
+    --sidebar-primary-foreground: 40 30% 96%;
+    --sidebar-accent: 80 15% 90%;
+    --sidebar-accent-foreground: 100 30% 20%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 100 45% 25%;
+  }
+
+  .dark {
+    --background: 100 15% 10%;
+    --foreground: 40 20% 92%;
+    --card: 100 12% 14%;
+    --card-foreground: 40 20% 92%;
+    --popover: 100 12% 14%;
+    --popover-foreground: 40 20% 92%;
+    --primary: 80 40% 55%;
+    --primary-foreground: 100 15% 10%;
+    --secondary: 100 10% 20%;
+    --secondary-foreground: 40 20% 92%;
+    --muted: 100 10% 18%;
+    --muted-foreground: 40 15% 60%;
+    --accent: 80 20% 25%;
+    --accent-foreground: 40 20% 92%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 40 20% 92%;
+    --border: 100 10% 20%;
+    --input: 100 10% 20%;
+    --ring: 80 40% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', Georgia, serif;
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-6;
+  }
+
+  .container-wide {
+    @apply max-w-6xl mx-auto px-6;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-forest);
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulseSlow 3s ease-in-out infinite;
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+  .stagger-6 { animation-delay: 0.6s; }
+  .stagger-7 { animation-delay: 0.7s; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
