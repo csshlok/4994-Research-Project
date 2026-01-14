@@ -116,7 +116,7 @@ def _extract_next_data_reviews(html: str) -> List[Dict[str, Any]]:
 def _apollo_index_from_html(html: str) -> Dict[str, Any]:
     """
     Return the Apollo normalized store as a dict mapping keys like
-    'JobTitle:239483' → {...}. Works whether the store is embedded as a
+    'JobTitle:239483' -> {...}. Works whether the store is embedded as a
     standalone <script> or nested inside __NEXT_DATA__.
     """
     if not html:
@@ -305,8 +305,8 @@ def _coerce_rating(v) -> Optional[float]:
 def _enrich_from_apollo(row: Dict[str, Any], apollo_idx: Dict[str, Any]) -> Dict[str, Any]:
     """
     Use Apollo's review node to fill missing/placeholder fields:
-    title ← summary, rating ← ratingOverall, date ← reviewDateTime,
-    role/location ← deref(jobTitle/location).
+    title <- summary, rating <- ratingOverall, date <- reviewDateTime,
+    role/location <- deref(jobTitle/location).
     """
     node = _find_apollo_review_node(apollo_idx, row.get("review_id"))
     if not node:
@@ -574,7 +574,7 @@ class GlassdoorReviews:
     # ---------------- main (JSON-only) ----------------
     async def scrape_reviews(self, company_url: str, pages: int = 3, csv_path: Optional[Path] = None,
                              page_delay: float = 3.0) -> List[Dict[str, Any]]:
-        log("[run] Launching Chrome…")
+        log("[run] Launching Chrome...")
         async with Chrome(options=self.opts) as browser:
             tab = await browser.start(); log("[run] Tab started")
 
@@ -613,7 +613,7 @@ class GlassdoorReviews:
             for page in range(1, max(1, pages)+1):
                 target = self._page_url(base, qd, page, page_token)
                 target = self._unwrap_url_obj(target)
-                log(f"[page] {page}/{pages} → {target}")
+                log(f"[page] {page}/{pages} -> {target}")
                 await tab.go_to(target)
                 await self._sleep_human(0.4, 0.8)
                 await self._note_challenge(tab)
@@ -658,7 +658,7 @@ class GlassdoorReviews:
                 # ---- NEW: configurable pause between pages
                 if page < pages:
                     pause = max(0.0, float(page_delay))
-                    log(f"[pace] Sleeping {pause:.1f}s before next page…")
+                    log(f"[pace] Sleeping {pause:.1f}s before next page...")
                     await asyncio.sleep(pause)
 
             dedup, seen = [], set()
@@ -674,11 +674,11 @@ class GlassdoorReviews:
                     dedup.append(r)
 
             OUT_JSON.write_text(json.dumps(dedup, indent=2, ensure_ascii=False), encoding="utf-8")
-            log(f"[run] Saved {len(dedup)} reviews → {OUT_JSON.resolve()}")
+            log(f"[run] Saved {len(dedup)} reviews -> {OUT_JSON.resolve()}")
 
             if csv_path:
                 _write_reviews_csv(dedup, Path(csv_path))
-                log(f"[run] Saved {len(dedup)} rows → {Path(csv_path).resolve()}")
+                log(f"[run] Saved {len(dedup)} rows -> {Path(csv_path).resolve()}")
 
             if dedup: log(f"[sample] {dedup[0]}")
             return dedup

@@ -1,22 +1,22 @@
-import re, glob, html, os
+import re, glob, html, os, json, argparse
 import pandas as pd
 from pathlib import Path
 
 
-RAW_DIR = Path("C:/Users/csshl/Desktop/4994-Scrapper")
-OUT_DIR = Path("C:/Users/csshl/Desktop/4994-Scrapper/cleaned_US")
-OUT_DIR.mkdir(exist_ok=True)
+ROOT = Path(__file__).resolve().parent
+DEFAULT_RAW_DIR = ROOT
+DEFAULT_OUT_DIR = ROOT / "cleaned_US"
 
 MIN_LEN = 5              
 KEEP_HYPHEN_APOS = True  
 
 
 UA_PATHS = [
-    Path(r"C:\Users\csshl\Desktop\4994-Scrapper\2025_Gaz_ua_national.txt"),
+    ROOT / "2025_Gaz_ua_national.txt",
     Path("/mnt/data/2025_Gaz_ua_national.txt"),
 ]
 SLDL_PATHS = [
-    Path(r"C:\Users\csshl\Desktop\4994-Scrapper\2025_Gaz_sldl_national.txt"),
+    ROOT / "2025_Gaz_sldl_national.txt",
     Path("/mnt/data/2025_Gaz_sldl_national.txt"),
 ]
 
@@ -139,6 +139,11 @@ def file_slug_from_path(path):
     slug = m.group(1) if m else "unknown"
     return slug.lower().replace(" ", "_")
 
+def safe_slug(text: str) -> str:
+    s = re.sub(r"[^A-Za-z0-9_]+", "_", str(text).strip().lower())
+    s = s.strip("_")
+    return s or "unknown"
+
 def normalize_date(series):
     parsed = pd.to_datetime(series, errors="coerce", utc=False)
     return parsed.dt.strftime("%Y-%m-%d")
@@ -225,7 +230,7 @@ def infer_us_from_location(loc_raw: str):
 
     return False, "fallback_nonus"
 
-def process_file(path):
+def process_file(path, out_dir: Path, slug_override=None):
     df = robust_read_csv(path)
     original_rows = len(df)
 
@@ -296,8 +301,8 @@ def process_file(path):
     if drop_in_output:
         df = df.drop(columns=drop_in_output)
 
-    comp_slug = file_slug_from_path(path)
-    out_path = OUT_DIR / f"reviews_{comp_slug}_clean.csv"
+    comp_slug = slug_override or file_slug_from_path(path)
+    out_path = out_dir / f"reviews_{comp_slug}_clean.csv"
     df.to_csv(out_path, index=False, encoding="utf-8")
 
     return {
@@ -311,19 +316,79 @@ def process_file(path):
         "output_file": str(out_path)
     }
 
-files = sorted(glob.glob(str(RAW_DIR / "reviews_*.csv")))
-print("Found:", len(files), "files")
-summary = []
+def write_clean_report(summary: list, report_path: Path, raw_dir: Path,
+                       pattern: str, job_slug: str | None):
+    totals = {
+        "total_input_files": len(summary),
+        "total_original_rows": int(sum(r.get("original_rows", 0) for r in summary)),
+        "total_final_rows": int(sum(r.get("final_rows", 0) for r in summary)),
+        "total_dropped_dupes": int(sum(r.get("dropped_dupes", 0) for r in summary)),
+        "total_dropped_empty_text": int(sum(r.get("dropped_empty_text", 0) for r in summary)),
+        "total_dropped_too_short": int(sum(r.get("dropped_too_short", 0) for r in summary)),
+    }
+    report = {
+        "raw_dir": str(raw_dir),
+        "pattern": pattern,
+        "job_slug": job_slug,
+        "files": summary,
+        "totals": totals,
+    }
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with report_path.open("w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
 
-for fp in files:
-    print("Processing:", Path(fp).name, "...")
-    rec = process_file(fp)
-    summary.append(rec)
-    print("  -> saved:", rec["output_file"], "| kept:", rec["final_rows"])
+def run_cleaning(raw_dir: Path, out_dir: Path, pattern: str | None = None,
+                 job: str | None = None, report_json: Path | None = None):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    resolved_pattern = pattern or str(raw_dir / "reviews_*.csv")
+    files = sorted(glob.glob(resolved_pattern))
+    if not files:
+        raise FileNotFoundError(f"No files matched: {resolved_pattern}")
 
-summary_df = pd.DataFrame(summary).sort_values("slug_from_file").reset_index(drop=True)
-summary_path = OUT_DIR / "phase1_2_cleaning_summary.csv"
-summary_df.to_csv(summary_path, index=False, encoding="utf-8")
+    job_slug = safe_slug(job) if job else None
+    if job_slug and len(files) != 1:
+        raise ValueError("The --job option requires exactly one input file.")
 
-print("\nSummary saved to:", summary_path)
-summary_df
+    print("Found:", len(files), "files")
+    summary = []
+
+    for fp in files:
+        print("Processing:", Path(fp).name, "...")
+        rec = process_file(fp, out_dir, slug_override=job_slug)
+        summary.append(rec)
+        print("  -> saved:", rec["output_file"], "| kept:", rec["final_rows"])
+
+    summary_df = pd.DataFrame(summary).sort_values("slug_from_file").reset_index(drop=True)
+    summary_path = out_dir / "phase1_2_cleaning_summary.csv"
+    summary_df.to_csv(summary_path, index=False, encoding="utf-8")
+
+    report_path = report_json or (out_dir / "clean_report.json")
+    write_clean_report(summary, Path(report_path), raw_dir, resolved_pattern, job_slug)
+
+    print("\nSummary saved to:", summary_path)
+    print("Report saved to:", report_path)
+
+def main():
+    ap = argparse.ArgumentParser(description="Clean raw Glassdoor review CSVs.")
+    ap.add_argument("--raw-dir", default=str(DEFAULT_RAW_DIR),
+                    help="Directory containing raw reviews_*.csv files.")
+    ap.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR),
+                    help="Directory to write cleaned CSVs.")
+    ap.add_argument("--pattern", default=None,
+                    help="Glob pattern for input CSVs (overrides --raw-dir).")
+    ap.add_argument("--job", default=None,
+                    help="Optional job slug for output naming (single input only).")
+    ap.add_argument("--report-json", default=None,
+                    help="Optional path for clean_report.json.")
+    args = ap.parse_args()
+
+    run_cleaning(
+        raw_dir=Path(args.raw_dir),
+        out_dir=Path(args.out_dir),
+        pattern=args.pattern,
+        job=args.job,
+        report_json=Path(args.report_json) if args.report_json else None
+    )
+
+if __name__ == "__main__":
+    main()

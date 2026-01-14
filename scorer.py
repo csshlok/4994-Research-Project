@@ -1,5 +1,5 @@
 from __future__ import annotations
-import os, re, json, math, random, platform, ast
+import os, re, json, math, random, platform, ast, argparse
 from pathlib import Path
 from typing import Dict, List, Tuple, Set
 from collections import defaultdict, Counter
@@ -13,23 +13,10 @@ from tqdm import tqdm
 
 # ---------------- Paths ----------------
 ROOT = Path(__file__).resolve().parent
-FEATURES_DIR = ROOT / "features_exctract"
-CONFIG_DIR   = ROOT / "config"
-OUT_DIR      = ROOT / "out"
-
-REVIEWS_PATH  = FEATURES_DIR / "combined_reviews.parquet"
-GOALS_PATH    = CONFIG_DIR / "goal_dict.json"
-CONFIG_JSON   = FEATURES_DIR / "config.json"
-
-if not CONFIG_JSON.exists() and Path("/mnt/data/config.json").exists():
-    CONFIG_JSON = Path("/mnt/data/config.json")
-
-OUT_DIR.mkdir(parents=True, exist_ok=True)
-print("[auto] Using files:")
-print("  reviews:", REVIEWS_PATH)
-print("  goals:  ", GOALS_PATH)
-print("  config: ", CONFIG_JSON)
-print("  outdir: ", OUT_DIR, flush=True)
+DEFAULT_FEATURES_DIR = ROOT / "features_exctract"
+DEFAULT_CONFIG_DIR = ROOT / "config"
+DEFAULT_GOALS_PATH = DEFAULT_CONFIG_DIR / "goal_dict.json"
+DEFAULT_OUT_DIR = ROOT / "out"
 
 
 # ---------------- Goal configuration (5-goal version) ----------------
@@ -478,11 +465,37 @@ def print_goal_coverage_summary(rev_out: pd.DataFrame):
 
 # ---------------- Main ----------------
 def main():
+    ap = argparse.ArgumentParser(description="Score sentiment + goals from extracted features.")
+    ap.add_argument("--features-dir", default=str(DEFAULT_FEATURES_DIR),
+                    help="Directory with combined_reviews.parquet and config.json.")
+    ap.add_argument("--goal-dict", default=str(DEFAULT_GOALS_PATH),
+                    help="Path to goal_dict.json.")
+    ap.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR),
+                    help="Output directory for scoring artifacts.")
+    ap.add_argument("--config", default=None,
+                    help="Optional override for config.json path.")
+    args = ap.parse_args()
+
+    features_dir = Path(args.features_dir)
+    reviews_path = features_dir / "combined_reviews.parquet"
+    config_json = Path(args.config) if args.config else (features_dir / "config.json")
+    if not config_json.exists() and Path("/mnt/data/config.json").exists():
+        config_json = Path("/mnt/data/config.json")
+    goals_path = Path(args.goal_dict)
+    out_dir = Path(args.out_dir)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    print("[auto] Using files:")
+    print("  reviews:", reviews_path)
+    print("  goals:  ", goals_path)
+    print("  config: ", config_json)
+    print("  outdir: ", out_dir, flush=True)
+
     set_seed(42)
 
-    cfg = load_config(CONFIG_JSON)
-    reviews = load_reviews(REVIEWS_PATH)
-    goals = load_goals(GOALS_PATH)
+    cfg = load_config(config_json)
+    reviews = load_reviews(reviews_path)
+    goals = load_goals(goals_path)
 
     lex = build_lexicon(goals)
     goal_keys = list(goals.keys())
@@ -607,10 +620,10 @@ def main():
 
 
     # ----- Write outputs (CSV-only) -----
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    rev_path_csv  = OUT_DIR / "review_scores.csv"
-    cmp_path_csv  = OUT_DIR / "company_scores.csv"
-    per_dir       = OUT_DIR / "per_company"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    rev_path_csv  = out_dir / "review_scores.csv"
+    cmp_path_csv  = out_dir / "company_scores.csv"
+    per_dir       = out_dir / "per_company"
     per_dir.mkdir(exist_ok=True)
 
     rev_out.to_csv(rev_path_csv, index=False)
@@ -653,7 +666,7 @@ def main():
             "columns_company": list(comp.columns),
             "run_meta": run_meta
         },
-        open(OUT_DIR / "run_report.json", "w", encoding="utf-8"),
+        open(out_dir / "run_report.json", "w", encoding="utf-8"),
         indent=2
     )
 
