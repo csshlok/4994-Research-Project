@@ -3,5 +3,8 @@ chromedriver.exe
 debug.log
 design.txt
 *.csv
+goal_dict.json
+settings.json
+
 chrome-profile/
 glassdoor_debug.html
