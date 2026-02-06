@@ -1,0 +1,63 @@
+{
+  "stop_extra": [
+    "companies",
+    "company",
+    "cons",
+    "coworker",
+    "coworkers",
+    "employee",
+    "employees",
+    "glassdoor",
+    "manager",
+    "managers",
+    "month",
+    "months",
+    "pros",
+    "review",
+    "reviews",
+    "tldr",
+    "work",
+    "worked",
+    "working",
+    "workplace",
+    "year",
+    "years"
+  ],
+  "negators": [
+    "barely",
+    "hardly",
+    "never",
+    "no",
+    "not",
+    "rarely",
+    "scarcely",
+    "seldom",
+    "without"
+  ],
+  "neg_window": 3,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "min_df": 5,
+  "max_df": 0.9,
+  "max_features": 60000,
+  "min_doc_len": 3,
+  "files": [
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_accenture_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_acme_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_bcg_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_boozallen_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_cognizant_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_deloitte_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_ey_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_kpmg_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_mckinsey_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_pwc_us_clean.csv",
+    "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\cleaned_US\\reviews_tcs_us_clean.csv"
+  ],
+  "rows": 9848,
+  "cols": 5710,
+  "id_col": "review_id",
+  "keep_numbers": true
+}
