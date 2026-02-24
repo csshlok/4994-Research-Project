@@ -8,3 +8,7 @@ settings.json
 
 chrome-profile/
 glassdoor_debug.html
+debug_html
+runs/
+OG_reviews-json/
+OG-Reviews-CSV/

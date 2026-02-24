@@ -4,6 +4,7 @@ import argparse
 import ctypes
 import glob
 import json
+import os
 import platform
 import re
 import shutil
@@ -42,6 +43,33 @@ def safe_slug(text: str) -> str:
     return s or "job"
 
 
+def overview_to_reviews_url(url: str) -> str:
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return url
+
+    if not parsed.scheme or not parsed.netloc:
+        return url
+    if "glassdoor." not in parsed.netloc.lower():
+        return url
+
+    path = parsed.path or ""
+    if "/Reviews/" in path:
+        return url
+    if "/Overview/" not in path:
+        return url
+
+    m = re.search(r"Working-at-([^-]+)-EI_IE(\d+)", path, flags=re.I)
+    if not m:
+        return url
+
+    company_slug = m.group(1)
+    employer_id = m.group(2)
+    new_path = f"/Reviews/{company_slug}-Reviews-EI_IE{employer_id}.htm"
+    return urlunparse((parsed.scheme, parsed.netloc, new_path, "", "", ""))
+
+
 def canonicalize_reviews_url(url: str) -> str:
     try:
         parsed = urlparse(url)
@@ -49,18 +77,21 @@ def canonicalize_reviews_url(url: str) -> str:
         return url
     if not parsed.scheme or not parsed.netloc:
         return url
+
     path = parsed.path or ""
     if not re.search(r"/reviews", path, flags=re.I) and not re.search(r"-reviews-e\d+", path, flags=re.I):
         return url
+
     path_base = re.sub(r"(_P\d+|_IP\d+)?\.htm.*$", "", path, flags=re.I)
     path_final = f"{path_base}.htm"
 
     qd: Dict[str, List[str]] = {}
     for k, v in parse_qsl(parsed.query, keep_blank_values=True):
         qd.setdefault(k, []).append(v)
-    qd["filter.iso3Language"] = ["eng"]
-    qd["sort.sortType"] = ["RD"]
-    qd["sort.ascending"] = ["false"]
+
+    qd.setdefault("filter.iso3Language", ["eng"])
+    qd.setdefault("sort.sortType", ["RD"])
+    qd.setdefault("sort.ascending", ["false"])
 
     query = urlencode(qd, doseq=True)
     return urlunparse((parsed.scheme, parsed.netloc, path_final, "", query, ""))
@@ -88,27 +119,12 @@ class PipelineLogger:
 
 def run_command(cmd: List[str], log_path: Path, cwd: Path) -> int:
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.setdefault("PYTHONUTF8", "1")
     with log_path.open("w", encoding="utf-8") as f:
         f.write("Command:\n  " + " ".join(cmd) + "\n\n")
-        res = subprocess.run(cmd, cwd=str(cwd), stdout=f, stderr=subprocess.STDOUT, text=True)
+        res = subprocess.run(cmd, cwd=str(cwd), stdout=f, stderr=subprocess.STDOUT, text=True, env=env)
     return res.returncode
-
-
-def wait_for_log_marker(log_path: Path, marker: str, proc: subprocess.Popen,
-                        timeout_sec: float = 60.0) -> bool:
-    start = time.time()
-    while (time.time() - start) < timeout_sec:
-        if proc.poll() is not None:
-            return False
-        try:
-            if log_path.exists():
-                data = log_path.read_text(encoding="utf-8", errors="ignore")
-                if marker in data:
-                    return True
-        except Exception:
-            pass
-        time.sleep(0.2)
-    return False
 
 
 def wait_for_pause_trigger(log_path: Path, proc: subprocess.Popen,
@@ -180,23 +196,28 @@ def run_scraper_command(cmd: List[str], log_path: Path, cwd: Path,
             trigger = wait_for_pause_trigger(log_path, proc, timeout_sec=60.0)
             if trigger and proc.poll() is None:
                 ok, err = suspend_process(proc.pid)
+                reason = {
+                    "first_page": "first page load",
+                    "challenge": "challenge detected",
+                    "base_resolved": "base resolved",
+                }.get(trigger, "pause trigger")
+
                 if ok:
-                    reason = {
-                        "first_page": "first page load",
-                        "challenge": "challenge detected",
-                        "base_resolved": "base resolved",
-                    }.get(trigger, "pause trigger")
                     if pause_until_enter:
                         logger.log(f"[scrape] Paused after {reason}; waiting for Enter.")
                         pause_for_user("Solve any captcha/login, then press Enter to continue...")
                     if pause_seconds and pause_seconds > 0:
                         logger.log(f"[scrape] Pausing {pause_seconds:.1f}s after {reason}.")
                         time.sleep(float(pause_seconds))
-                    ok, err = resume_process(proc.pid)
-                    if not ok:
-                        logger.log(f"[scrape] Resume failed; scraper may still be paused. {err}")
+                    ok2, err2 = resume_process(proc.pid)
+                    if not ok2:
+                        logger.log(f"[scrape] Resume failed; scraper may still be paused. {err2}")
                 else:
-                    logger.log(f"[scrape] Suspend failed; skipping pause. {err}")
+                    logger.log(f"[scrape] Suspend failed/unsupported; pausing without suspend after {reason}. {err}")
+                    if pause_until_enter:
+                        pause_for_user("Solve any captcha/login, then press Enter to continue...")
+                    if pause_seconds and pause_seconds > 0:
+                        time.sleep(float(pause_seconds))
             else:
                 logger.log("[scrape] Pause skipped (trigger not detected or process ended).")
 
@@ -280,12 +301,7 @@ def write_env(meta_dir: Path, logger: PipelineLogger) -> None:
 
     pip_path = meta_dir / "pip_freeze.txt"
     try:
-        res = subprocess.run(
-            [sys.executable, "-m", "pip", "freeze"],
-            capture_output=True,
-            text=True,
-            check=False
-        )
+        res = subprocess.run([sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True, check=False)
         if res.returncode == 0:
             pip_path.write_text(res.stdout, encoding="utf-8")
         else:
@@ -330,7 +346,72 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--profile-dir", default=None, help="Chrome profile dir (default: chrome-profile).")
     ap.add_argument("--timeout", type=int, default=1600, help="Overall scraper timeout (seconds).")
 
+    # NEW: forward challenge behavior into reviews_scraper.py
+    ap.add_argument("--scrape-challenge-mode", choices=["block", "log_only"], default="block",
+                    help="Forward to reviews_scraper.py --challenge-mode (block|log_only).")
+    ap.add_argument("--scrape-pause-until-enter", action="store_true",
+                    help="Forward pause-until-enter to reviews_scraper.py (block mode).")
+    ap.add_argument("--scrape-challenge-wait", type=float, default=0.0,
+                    help="Forward challenge-wait seconds to reviews_scraper.py (block mode).")
+    ap.add_argument("--scrape-challenge-max-retries", type=int, default=3,
+                    help="Forward max retries per page to reviews_scraper.py (block mode).")
+    ap.add_argument("--scrape-challenge-retry-backoff", type=float, default=3.0,
+                    help="Forward retry backoff multiplier to reviews_scraper.py (block mode).")
+    ap.add_argument("--scrape-hydrate-timeout", type=float, default=12.0,
+                    help="Forward hydrate timeout to reviews_scraper.py (seconds).")
+    ap.add_argument("--scrape-stop-on-empty-pages", type=int, default=2,
+                    help="Forward stop-on-empty-pages to reviews_scraper.py (default: 2).")
+
+
     return ap.parse_args()
+
+
+def finalize_report(run_dir: Path, meta_dir: Path,
+                    stage_results: Dict[str, Dict[str, Any]],
+                    errors: List[str]) -> None:
+    report = {"run_dir": str(run_dir), "stages": stage_results, "errors": errors}
+
+    args_path = meta_dir / "pipeline_args.json"
+    if args_path.exists():
+        try:
+            report["pipeline_args"] = json.loads(args_path.read_text(encoding="utf-8"))
+        except Exception:
+            report["pipeline_args"] = None
+
+    scrape_csv = run_dir / "01_scrape" / "reviews.csv"
+    clean_files = sorted((run_dir / "02_clean").glob("*.csv"))
+    extract_parquet = run_dir / "03_extract" / "combined_reviews.parquet"
+    review_scores = run_dir / "04_score" / "review_scores.csv"
+    company_scores = run_dir / "04_score" / "company_scores.csv"
+    fig_dir = run_dir / "05_viz" / "figures"
+
+    clean_rows_total = None
+    if clean_files and pd is not None:
+        clean_rows_total = sum([count_csv_rows(p) or 0 for p in clean_files])
+
+    report["counts"] = {
+        "scrape_reviews_csv": count_csv_rows(scrape_csv),
+        "clean_files": len(clean_files),
+        "clean_rows_total": clean_rows_total,
+        "extract_reviews": count_parquet_rows(extract_parquet),
+        "review_scores_rows": count_csv_rows(review_scores),
+        "company_scores_rows": count_csv_rows(company_scores),
+        "viz_figures": len(list(fig_dir.glob("*.png"))) if fig_dir.exists() else 0,
+    }
+
+    report["columns"] = {
+        "review_scores": read_columns(review_scores),
+        "company_scores": read_columns(company_scores),
+    }
+
+    scorer_report = run_dir / "04_score" / "run_report.json"
+    if scorer_report.exists():
+        try:
+            report["scorer_report"] = json.loads(scorer_report.read_text(encoding="utf-8"))
+        except Exception:
+            report["scorer_report"] = None
+
+    (meta_dir / "run_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
 
 def main() -> int:
@@ -373,7 +454,9 @@ def main() -> int:
 
     repo_root = Path(__file__).resolve().parent
     resolved_profile_dir = args.profile_dir or str(repo_root / "chrome-profile")
-    resolved_url = canonicalize_reviews_url(args.url) if args.url else None
+
+    base_url = overview_to_reviews_url(args.url) if args.url else None
+    resolved_url = canonicalize_reviews_url(base_url) if base_url else None
 
     args_path = meta_dir / "pipeline_args.json"
     args_payload = vars(args).copy()
@@ -381,6 +464,8 @@ def main() -> int:
     args_payload["run_id"] = run_id
     args_payload["run_dir"] = str(run_dir)
     args_payload["profile_dir_resolved"] = resolved_profile_dir
+    if base_url and args.url and base_url != args.url:
+        args_payload["url_mapped_overview_to_reviews"] = base_url
     if resolved_url:
         args_payload["url_resolved"] = resolved_url
     args_path.write_text(json.dumps(args_payload, indent=2), encoding="utf-8")
@@ -417,10 +502,7 @@ def main() -> int:
                 copy_files(raw_files, scrape_dir)
             outputs = list_files_rel(run_dir, scrape_dir)
             log_path = scrape_dir / "scrape.log"
-            log_path.write_text(
-                "scrape skipped\ninputs:\n" + "\n".join([str(p) for p in raw_files]) + "\n",
-                encoding="utf-8"
-            )
+            log_path.write_text("scrape skipped\ninputs:\n" + "\n".join([str(p) for p in raw_files]) + "\n", encoding="utf-8")
             logger.progress("scrape", "skipped", reason="user_skip", outputs=outputs)
             record_stage("scrape", "skipped", None, None, None, outputs, log_path,
                          extra={"input_sources": [str(p) for p in raw_files]})
@@ -446,6 +528,10 @@ def main() -> int:
                 "--timeout", str(args.timeout),
                 "--out", str(reviews_json),
                 "--csv", str(reviews_csv),
+                "--challenge-mode", args.scrape_challenge_mode,
+                "--hydrate-timeout", str(args.scrape_hydrate_timeout),
+                "--stop-on-empty-pages", str(args.scrape_stop_on_empty_pages),
+
             ]
             if args.headless:
                 cmd.append("--headless")
@@ -453,15 +539,18 @@ def main() -> int:
                 cmd += ["--chrome-binary", args.chrome_binary]
             cmd += ["--profile-dir", profile_dir]
 
+            # block-mode extras only
+            if args.scrape_pause_until_enter:
+                cmd.append("--pause-until-enter")
+            if args.scrape_challenge_wait and args.scrape_challenge_wait > 0:
+                cmd += ["--challenge-wait", str(args.scrape_challenge_wait)]
+            cmd += [
+                "--challenge-max-retries", str(args.scrape_challenge_max_retries),
+                "--challenge-retry-backoff", str(args.scrape_challenge_retry_backoff),
+            ]
+
             log_path = scrape_dir / "scrape.log"
-            rc = run_scraper_command(
-                cmd,
-                log_path,
-                repo_root,
-                args.pause_seconds,
-                args.pause_until_enter,
-                logger
-            )
+            rc = run_scraper_command(cmd, log_path, repo_root, args.pause_seconds, args.pause_until_enter, logger)
 
             end_ts = now_ts()
             duration = time.time() - start_time
@@ -477,59 +566,58 @@ def main() -> int:
     except Exception as e:
         errors.append(f"scrape: {e}")
         logger.log(f"[scrape][error] {e}")
-        if not args.continue_on_error:
-            finalize_report(run_dir, meta_dir, stage_results, errors)
-            return 1
+        finalize_report(run_dir, meta_dir, stage_results, errors)
+        return 1
+
+    def stage_fail_or_continue(stage_name: str, err: Exception) -> bool:
+        """
+        Returns True if we should continue, False if we should abort.
+        """
+        errors.append(f"{stage_name}: {err}")
+        logger.log(f"[{stage_name}][error] {err}")
+        if args.continue_on_error:
+            logger.log(f"[{stage_name}] continue-on-error enabled; proceeding to next stage.")
+            return True
+        finalize_report(run_dir, meta_dir, stage_results, errors)
+        return False
+
+    def maybe_cleanup_stage(dir_path: Path) -> None:
+        """
+        If keep-intermediate is false, remove intermediate dirs after success.
+        We keep 00_meta, 99_logs, 04_score, 05_viz by default because they are final outputs.
+        """
+        if args.keep_intermediate:
+            return
+        if not dir_path.exists():
+            return
+        shutil.rmtree(dir_path, ignore_errors=True)
 
     # ---------------- Clean ----------------
     try:
         if args.skip_clean:
-            clean_files = resolve_files(args.clean_glob, dir_pattern="*.csv")
-            if not clean_files:
-                raise FileNotFoundError(f"No files matched: {args.clean_glob}")
-            copy_files(clean_files, clean_dir)
-            outputs = list_files_rel(run_dir, clean_dir)
+            src_files = resolve_files(args.clean_glob)
+            if not src_files:
+                raise FileNotFoundError(f"No files matched clean-glob: {args.clean_glob}")
+            copy_files(src_files, clean_dir)
             log_path = clean_dir / "clean.log"
-            log_path.write_text(
-                "clean skipped\ninputs:\n" + "\n".join([str(p) for p in clean_files]) + "\n",
-                encoding="utf-8"
-            )
-            report_path = clean_dir / "clean_report.json"
-            if not report_path.exists():
-                report = {
-                    "raw_dir": None,
-                    "pattern": args.clean_glob,
-                    "job_slug": None,
-                    "files": [str(p) for p in clean_files],
-                    "totals": None,
-                    "note": "clean skipped; inputs staged by pipeline",
-                }
-                report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+            log_path.write_text("clean skipped\ninputs:\n" + "\n".join([str(p) for p in src_files]) + "\n", encoding="utf-8")
+            outputs = list_files_rel(run_dir, clean_dir)
             logger.progress("clean", "skipped", reason="user_skip", outputs=outputs)
             record_stage("clean", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_sources": [str(p) for p in clean_files]})
+                         extra={"input_sources": [str(p) for p in src_files]})
         else:
             logger.progress("clean", "started")
             start_ts = now_ts()
             start_time = time.time()
 
-            raw_csvs = sorted(scrape_dir.glob("*.csv"))
-            clean_job = job_slug if len(raw_csvs) == 1 else None
-            if len(raw_csvs) == 1 and (scrape_dir / "reviews.csv").exists():
-                pattern = str(scrape_dir / "reviews.csv")
-            else:
-                pattern = str(scrape_dir / "*.csv")
-
             cmd = [
                 sys.executable, "data_cleaner.py",
                 "--raw-dir", str(scrape_dir),
+                "--pattern", str(scrape_dir / "reviews.csv"),
                 "--out-dir", str(clean_dir),
-                "--pattern", pattern,
+                "--job", safe_slug(args.job),
                 "--report-json", str(clean_dir / "clean_report.json"),
             ]
-            if clean_job:
-                cmd += ["--job", clean_job]
-
             log_path = clean_dir / "clean.log"
             rc = run_command(cmd, log_path, repo_root)
 
@@ -545,51 +633,35 @@ def main() -> int:
             logger.progress("clean", "completed", outputs=outputs)
             record_stage("clean", "completed", start_ts, end_ts, duration, outputs, log_path)
     except Exception as e:
-        errors.append(f"clean: {e}")
-        logger.log(f"[clean][error] {e}")
-        if not args.continue_on_error:
-            finalize_report(run_dir, meta_dir, stage_results, errors)
+        if not stage_fail_or_continue("clean", e):
             return 1
 
     # ---------------- Extract ----------------
     try:
         if args.skip_extract:
-            copy_dir(Path(args.features_dir), extract_dir)
-            outputs = list_files_rel(run_dir, extract_dir)
+            src_dir = Path(args.features_dir)
+            copy_dir(src_dir, extract_dir)
             log_path = extract_dir / "extract.log"
-            log_path.write_text(f"extract skipped\ninput_dir: {args.features_dir}\n", encoding="utf-8")
+            log_path.write_text(f"extract skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
+            outputs = list_files_rel(run_dir, extract_dir)
             logger.progress("extract", "skipped", reason="user_skip", outputs=outputs)
             record_stage("extract", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_source_dir": args.features_dir})
+                         extra={"input_dir": str(src_dir)})
         else:
             logger.progress("extract", "started")
             start_ts = now_ts()
             start_time = time.time()
 
-            clean_pattern = str(clean_dir / "reviews_*.csv")
-            if not glob.glob(clean_pattern):
-                clean_pattern = str(clean_dir / "*.csv")
             cmd = [
                 sys.executable, "extraction.py",
-                "--in", clean_pattern,
+                "--in", str(clean_dir / "*.csv"),
                 "--out", str(extract_dir),
             ]
-
             log_path = extract_dir / "extract.log"
             rc = run_command(cmd, log_path, repo_root)
 
             end_ts = now_ts()
             duration = time.time() - start_time
-            if rc == 0:
-                tfidf_src = extract_dir / "tfidf_reviews.npz"
-                tfidf_dst = extract_dir / "tfidf.npz"
-                if tfidf_src.exists() and not tfidf_dst.exists():
-                    shutil.copy2(tfidf_src, tfidf_dst)
-                vocab_src = extract_dir / "tfidf_vocab.json"
-                vocab_dst = extract_dir / "vocab.json"
-                if vocab_src.exists() and not vocab_dst.exists():
-                    shutil.copy2(vocab_src, vocab_dst)
-
             outputs = list_files_rel(run_dir, extract_dir)
 
             if rc != 0:
@@ -600,34 +672,32 @@ def main() -> int:
             logger.progress("extract", "completed", outputs=outputs)
             record_stage("extract", "completed", start_ts, end_ts, duration, outputs, log_path)
     except Exception as e:
-        errors.append(f"extract: {e}")
-        logger.log(f"[extract][error] {e}")
-        if not args.continue_on_error:
-            finalize_report(run_dir, meta_dir, stage_results, errors)
+        if not stage_fail_or_continue("extract", e):
             return 1
 
     # ---------------- Score ----------------
     try:
         if args.skip_score:
-            copy_dir(Path(args.scored_out_dir), score_dir)
-            outputs = list_files_rel(run_dir, score_dir)
+            src_dir = Path(args.scored_out_dir)
+            copy_dir(src_dir, score_dir)
             log_path = score_dir / "score.log"
-            log_path.write_text(f"score skipped\ninput_dir: {args.scored_out_dir}\n", encoding="utf-8")
+            log_path.write_text(f"score skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
+            outputs = list_files_rel(run_dir, score_dir)
             logger.progress("score", "skipped", reason="user_skip", outputs=outputs)
             record_stage("score", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_source_dir": args.scored_out_dir})
+                         extra={"input_dir": str(src_dir)})
         else:
             logger.progress("score", "started")
             start_ts = now_ts()
             start_time = time.time()
 
-            goal_dict = args.goal_dict or str((repo_root / "config" / "goal_dict.json"))
             cmd = [
                 sys.executable, "scorer.py",
                 "--features-dir", str(extract_dir),
-                "--goal-dict", goal_dict,
                 "--out-dir", str(score_dir),
             ]
+            if args.goal_dict:
+                cmd += ["--goal-dict", str(args.goal_dict)]
 
             log_path = score_dir / "score.log"
             rc = run_command(cmd, log_path, repo_root)
@@ -644,10 +714,7 @@ def main() -> int:
             logger.progress("score", "completed", outputs=outputs)
             record_stage("score", "completed", start_ts, end_ts, duration, outputs, log_path)
     except Exception as e:
-        errors.append(f"score: {e}")
-        logger.log(f"[score][error] {e}")
-        if not args.continue_on_error:
-            finalize_report(run_dir, meta_dir, stage_results, errors)
+        if not stage_fail_or_continue("score", e):
             return 1
 
     # ---------------- Viz ----------------
@@ -655,22 +722,23 @@ def main() -> int:
         if args.skip_viz:
             log_path = viz_dir / "viz.log"
             log_path.write_text("viz skipped\n", encoding="utf-8")
-            logger.progress("viz", "skipped", reason="user_skip", outputs=[])
-            record_stage("viz", "skipped", None, None, None, [], log_path)
+            outputs = list_files_rel(run_dir, viz_dir)
+            logger.progress("viz", "skipped", reason="user_skip", outputs=outputs)
+            record_stage("viz", "skipped", None, None, None, outputs, log_path)
         else:
+            (viz_dir / "figures").mkdir(parents=True, exist_ok=True)
+
             logger.progress("viz", "started")
             start_ts = now_ts()
             start_time = time.time()
 
-            fig_dir = viz_dir / "figures"
             cmd = [
                 sys.executable, "make_viz.py",
                 "--company_csv", str(score_dir / "company_scores.csv"),
                 "--review_csv", str(score_dir / "review_scores.csv"),
                 "--per_company_dir", str(score_dir / "per_company"),
-                "--out_dir", str(fig_dir),
+                "--out_dir", str(viz_dir / "figures"),
             ]
-
             log_path = viz_dir / "viz.log"
             rc = run_command(cmd, log_path, repo_root)
 
@@ -686,73 +754,20 @@ def main() -> int:
             logger.progress("viz", "completed", outputs=outputs)
             record_stage("viz", "completed", start_ts, end_ts, duration, outputs, log_path)
     except Exception as e:
-        errors.append(f"viz: {e}")
-        logger.log(f"[viz][error] {e}")
-        if not args.continue_on_error:
-            finalize_report(run_dir, meta_dir, stage_results, errors)
+        if not stage_fail_or_continue("viz", e):
             return 1
+
+    # Optional intermediate cleanup (only after everything that depends on it is done)
+    # - scrape is only needed for clean
+    # - clean is only needed for extract
+    # - extract is only needed for score
+    maybe_cleanup_stage(scrape_dir)
+    maybe_cleanup_stage(clean_dir)
+    maybe_cleanup_stage(extract_dir)
 
     finalize_report(run_dir, meta_dir, stage_results, errors)
     logger.log("[done] pipeline finished")
-
-    if not args.keep_intermediate:
-        for d in [scrape_dir, clean_dir, extract_dir]:
-            if d.exists():
-                shutil.rmtree(d)
-                logger.log(f"[cleanup] removed {d}")
     return 0
-
-
-def finalize_report(run_dir: Path, meta_dir: Path,
-                    stage_results: Dict[str, Dict[str, Any]],
-                    errors: List[str]) -> None:
-    report = {
-        "run_dir": str(run_dir),
-        "stages": stage_results,
-        "errors": errors,
-    }
-    args_path = meta_dir / "pipeline_args.json"
-    if args_path.exists():
-        try:
-            report["pipeline_args"] = json.loads(args_path.read_text(encoding="utf-8"))
-        except Exception:
-            report["pipeline_args"] = None
-
-    # Counts and schema
-    scrape_csv = run_dir / "01_scrape" / "reviews.csv"
-    clean_files = sorted((run_dir / "02_clean").glob("*.csv"))
-    extract_parquet = run_dir / "03_extract" / "combined_reviews.parquet"
-    review_scores = run_dir / "04_score" / "review_scores.csv"
-    company_scores = run_dir / "04_score" / "company_scores.csv"
-    fig_dir = run_dir / "05_viz" / "figures"
-
-    clean_rows_total = None
-    if clean_files and pd is not None:
-        clean_rows_total = sum([count_csv_rows(p) or 0 for p in clean_files])
-
-    report["counts"] = {
-        "scrape_reviews_csv": count_csv_rows(scrape_csv),
-        "clean_files": len(clean_files),
-        "clean_rows_total": clean_rows_total,
-        "extract_reviews": count_parquet_rows(extract_parquet),
-        "review_scores_rows": count_csv_rows(review_scores),
-        "company_scores_rows": count_csv_rows(company_scores),
-        "viz_figures": len(list(fig_dir.glob("*.png"))) if fig_dir.exists() else 0,
-    }
-
-    report["columns"] = {
-        "review_scores": read_columns(review_scores),
-        "company_scores": read_columns(company_scores),
-    }
-
-    scorer_report = run_dir / "04_score" / "run_report.json"
-    if scorer_report.exists():
-        try:
-            report["scorer_report"] = json.loads(scorer_report.read_text(encoding="utf-8"))
-        except Exception:
-            report["scorer_report"] = None
-
-    (meta_dir / "run_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":

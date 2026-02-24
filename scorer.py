@@ -1,5 +1,5 @@
-from __future__ import annotations
-import os, re, json, math, random, platform, ast, argparse
+﻿from __future__ import annotations
+import os, re, json, math, random, platform, ast, argparse, sys
 from pathlib import Path
 from typing import Dict, List, Tuple, Set
 from collections import defaultdict, Counter
@@ -177,7 +177,7 @@ def load_reviews(path: Path) -> pd.DataFrame:
         df["date"] = pd.NaT
 
     df["n_tokens"] = df["tokens"].apply(len)
-    print(f"[load_reviews] rows={len(df)} companies≈{df['company_id'].nunique()} tokens_mean={df['n_tokens'].mean():.1f}")
+    print(f"[load_reviews] rows={len(df)} companies~{df['company_id'].nunique()} tokens_mean={df['n_tokens'].mean():.1f}")
     return df
 
 
@@ -456,15 +456,20 @@ def print_goal_coverage_summary(rev_out: pd.DataFrame):
 
     print("\n[goal coverage summary]")
     print(f"  total reviews           : {total}")
-    print(f"  reviews with ≥1 goal hit: {n_hit} ({n_hit/total:.1%})")
+    print(f"  reviews with >=1 goal hit: {n_hit} ({n_hit/total:.1%})")
     print(f"  reviews with 0 goals    : {n_zero} ({n_zero/total:.1%})")
     print(f"  mean sentiment (all)    : {mean_sent_all:+.3f}")
-    print(f"  mean sentiment (≥1 goal): {mean_sent_hit:+.3f}")
+    print(f"  mean sentiment (>=1 goal): {mean_sent_hit:+.3f}")
     print(f"  mean sentiment (0 goals): {mean_sent_zero:+.3f}")
 
 
 # ---------------- Main ----------------
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
     ap = argparse.ArgumentParser(description="Score sentiment + goals from extracted features.")
     ap.add_argument("--features-dir", default=str(DEFAULT_FEATURES_DIR),
                     help="Directory with combined_reviews.parquet and config.json.")
@@ -500,7 +505,7 @@ def main():
     lex = build_lexicon(goals)
     goal_keys = list(goals.keys())
 
-    print(f"[load] reviews={len(reviews)} companies≈{reviews['company_id'].nunique()} goals={goal_keys}")
+    print(f"[load] reviews={len(reviews)} companies~{reviews['company_id'].nunique()} goals={goal_keys}")
 
     sm = SentimentModel(
         model_name="cardiffnlp/twitter-roberta-base-sentiment-latest",
@@ -513,7 +518,7 @@ def main():
         for s in sents:
             all_sents.append(s); ridx.append(i); slen.append(max(1, len(s.split())))
 
-    print(f"[sent] scoring {len(all_sents)} sentences…")
+    print(f"[sent] scoring {len(all_sents)} sentences...")
     probs = sm.score(all_sents, best_batch())
     s_scalar = [sm.to_scalar(p[0], p[1], p[2]) for p in probs]
 
@@ -579,7 +584,7 @@ def main():
         rev_out[f"w_sent_{g}"] = outW[g]
         rev_out[f"G_final_{g}"] = outRw[g]
 
-    print("[aggregate] company metrics…")
+    print("[aggregate] company metrics...")
     grp = rev_out.groupby("company_id", dropna=False)
 
     comp = grp["S_raw"].agg(["count","mean","std"]).reset_index().rename(
@@ -675,3 +680,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

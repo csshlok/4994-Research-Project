@@ -1,4 +1,4 @@
-import re, os, json, glob, html, argparse, unicodedata
+﻿import re, os, json, glob, html, argparse, unicodedata
 from pathlib import Path
 from typing import List, Iterable, Dict, Any
 import numpy as np
@@ -191,7 +191,33 @@ def process_files(pattern: str, out_dir: Path):
     lens = df["tokens"].map(len)
     df = df[lens >= MIN_DOC_LEN].reset_index(drop=True)
 
-    X, vocab = vectorize_tfidf(df["tokens"].tolist())
+    if df.empty:
+        raise ValueError("No documents left after filtering token length; cannot extract features.")
+
+    n_docs = len(df)
+    min_df_eff = min(int(MIN_DF), n_docs)
+    max_df_eff = MAX_DF
+    if isinstance(max_df_eff, float) and max_df_eff * n_docs < min_df_eff:
+        max_df_eff = 1.0
+
+    try:
+        X, vocab = vectorize_tfidf(
+            df["tokens"].tolist(),
+            min_df=min_df_eff,
+            max_df=max_df_eff,
+        )
+    except ValueError as e:
+        msg = str(e).lower()
+        if "after pruning, no terms remain" in msg or "max_df corresponds to < documents than min_df" in msg:
+            min_df_eff = 1
+            max_df_eff = 1.0
+            X, vocab = vectorize_tfidf(
+                df["tokens"].tolist(),
+                min_df=min_df_eff,
+                max_df=max_df_eff,
+            )
+        else:
+            raise
 
     df_out = df[[id_col, "source_file", "text_raw", "text_norm", "tokens"]].copy()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -207,7 +233,7 @@ def process_files(pattern: str, out_dir: Path):
         negators=sorted(list(NEGATORS)),
         neg_window=NEG_WINDOW,
         ngram_range=NGRAM_RANGE,
-        min_df=MIN_DF, max_df=MAX_DF, max_features=MAX_FEATURES,
+        min_df=min_df_eff, max_df=max_df_eff, max_features=MAX_FEATURES,
         min_doc_len=MIN_DOC_LEN,
         files=files,
         rows=df_out.shape[0],
@@ -219,7 +245,7 @@ def process_files(pattern: str, out_dir: Path):
         json.dump(config, f, ensure_ascii=False, indent=2)
 
     print(f"[done] docs={config['rows']} features={config['cols']}")
-    print(f"Saved → {out_dir}")
+    print(f"Saved -> {out_dir}")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -232,3 +258,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
