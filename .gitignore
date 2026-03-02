@@ -12,3 +12,5 @@ debug_html
 runs/
 OG_reviews-json/
 OG-Reviews-CSV/
+server_jobs/
+review data/
