@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AnalysisResult } from "@/lib/analysis";
+import type { ReactNode } from "react";
 import {
   Download,
   FileSpreadsheet,
@@ -23,52 +25,89 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
+  Legend,
 } from "recharts";
 
 interface ResultsPageProps {
-  companyName: string;
+  analysis: AnalysisResult;
   onBack: () => void;
 }
 
-// Mock data for demonstration
-const domainScores = [
-  { domain: "Physiological", fulfillment: 72, hindrance: 28, short: "Phys" },
-  { domain: "Self-Protection", fulfillment: 65, hindrance: 35, short: "Prot" },
-  { domain: "Affiliation", fulfillment: 81, hindrance: 19, short: "Affil" },
-  { domain: "Status & Esteem", fulfillment: 58, hindrance: 42, short: "Status" },
-  { domain: "Family Care", fulfillment: 45, hindrance: 55, short: "Family" },
-  { domain: "Mate Acquisition", fulfillment: 68, hindrance: 32, short: "Acq" },
-  { domain: "Mate Retention", fulfillment: 62, hindrance: 38, short: "Ret" },
-];
+function DownloadCard({
+  title,
+  subtitle,
+  href,
+  icon,
+}: {
+  title: string;
+  subtitle: string;
+  href?: string;
+  icon: ReactNode;
+}) {
+  const disabled = !href;
 
-const radarData = domainScores.map((d) => ({
-  domain: d.short,
-  score: d.fulfillment,
-  fullMark: 100,
-}));
-
-export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
-  const reviewCount = Math.floor(Math.random() * 5000) + 500;
-  const analysisDate = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
-  const overallScore = Math.round(
-    domainScores.reduce((acc, d) => acc + d.fulfillment, 0) / domainScores.length
+  return (
+    <Card className="group hover:shadow-elevated transition-shadow">
+      <CardContent className="pt-6 text-center">
+        <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+          {icon}
+        </div>
+        <h3 className="font-medium mb-1">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
+        {disabled ? (
+          <Button variant="outline" size="sm" disabled className="gap-2">
+            <Download className="w-4 h-4" />
+            Unavailable
+          </Button>
+        ) : (
+          <Button variant="outline" size="sm" asChild className="gap-2">
+            <a href={href} target="_blank" rel="noreferrer">
+              <Download className="w-4 h-4" />
+              CSV
+            </a>
+          </Button>
+        )}
+      </CardContent>
+    </Card>
   );
+}
 
-  const strongestDomain = domainScores.reduce((a, b) =>
-    a.fulfillment > b.fulfillment ? a : b
+export function ResultsPage({ analysis, onBack }: ResultsPageProps) {
+  const domainScores = analysis.domainScores;
+  const overallScore = analysis.overallScore;
+  const strongestDomain = analysis.strongestDomain;
+  const weakestDomain = analysis.weakestDomain;
+  const reviewCount = analysis.reviewCount;
+  const analysisDate = analysis.analysisDate;
+
+  const barData = domainScores.map((d) => ({
+    domain: d.domain,
+    fulfillment: d.fulfillment,
+    hindrance: d.hindrance,
+    hindranceNeg: -d.hindrance,
+  }));
+
+  const radarData = domainScores.map((d) => ({
+    domain: d.short,
+    fulfillment: d.fulfillment,
+    hindrance: d.hindrance,
+  }));
+
+  const maxEvidence = Math.max(
+    1,
+    ...domainScores.map((d) => Math.max(d.fulfillment, d.hindrance))
   );
-  const weakestDomain = domainScores.reduce((a, b) =>
-    a.fulfillment < b.fulfillment ? a : b
-  );
+  const axisLimit = Math.ceil(maxEvidence * 1.2);
+
+  const overallTone =
+    overallScore >= 70
+      ? "generally positive"
+      : overallScore >= 50
+      ? "mixed"
+      : "challenging";
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container-wide py-4 flex items-center justify-between">
           <Button variant="ghost" onClick={onBack} className="gap-2">
@@ -83,21 +122,19 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
       </header>
 
       <main className="container-wide section-padding">
-        {/* Overview */}
         <section className="mb-16">
           <div className="text-center mb-8">
             <span className="inline-block text-sm font-medium text-primary uppercase tracking-wider mb-2">
               Analysis Complete
             </span>
             <h1 className="font-serif text-4xl md:text-5xl font-semibold text-foreground mb-4">
-              {companyName}
+              {analysis.companyName}
             </h1>
             <p className="text-muted-foreground">
               Based on {reviewCount.toLocaleString()} employee reviews
             </p>
           </div>
 
-          {/* Summary cards */}
           <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <Card className="text-center">
               <CardContent className="pt-6">
@@ -128,7 +165,6 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
           </div>
         </section>
 
-        {/* Summary paragraph */}
         <section className="mb-16">
           <Card>
             <CardHeader>
@@ -139,78 +175,50 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                {companyName} demonstrates strong performance in the <strong className="text-foreground">{strongestDomain.domain}</strong> domain 
-                ({strongestDomain.fulfillment}% positive sentiment), indicating employees feel particularly supported in this area. 
-                However, the analysis reveals opportunities for improvement in <strong className="text-foreground">{weakestDomain.domain}</strong> 
-                ({weakestDomain.fulfillment}% positive), where employee experiences suggest unmet needs. 
-                Overall, the company achieves an aggregate score of {overallScore}% across all seven social domains, 
-                reflecting a {overallScore >= 70 ? "generally positive" : overallScore >= 50 ? "mixed" : "challenging"} employee experience landscape.
+                {analysis.companyName} performs strongest in{" "}
+                <strong className="text-foreground">{strongestDomain.domain}</strong>{" "}
+                ({strongestDomain.scorePct.toFixed(1)}% normalized goal score). The weakest
+                signal appears in{" "}
+                <strong className="text-foreground">{weakestDomain.domain}</strong>{" "}
+                ({weakestDomain.scorePct.toFixed(1)}%). Across {domainScores.length} domains,
+                the company has an overall score of {overallScore}%, indicating a{" "}
+                {overallTone} employee experience profile.
               </p>
             </CardContent>
           </Card>
         </section>
 
-        {/* Downloads */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl font-semibold text-foreground mb-6">
             Download Data
           </h2>
           <div className="grid sm:grid-cols-3 gap-4">
-            <Card className="group hover:shadow-elevated transition-shadow cursor-pointer">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <FileSpreadsheet className="w-6 h-6" />
-                </div>
-                <h3 className="font-medium mb-1">Cleaned Reviews</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Pre-processed review data
-                </p>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  CSV
-                </Button>
-              </CardContent>
-            </Card>
-            <Card className="group hover:shadow-elevated transition-shadow cursor-pointer">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <BarChart3 className="w-6 h-6" />
-                </div>
-                <h3 className="font-medium mb-1">Review Scores</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Goal scores per review
-                </p>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  CSV
-                </Button>
-              </CardContent>
-            </Card>
-            <Card className="group hover:shadow-elevated transition-shadow cursor-pointer">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <h3 className="font-medium mb-1">Aggregated Scores</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Company-level summary
-                </p>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  CSV
-                </Button>
-              </CardContent>
-            </Card>
+            <DownloadCard
+              title="Cleaned Reviews"
+              subtitle="Pre-processed review data"
+              href={analysis.downloads.cleanedReviews}
+              icon={<FileSpreadsheet className="w-6 h-6" />}
+            />
+            <DownloadCard
+              title="Review Scores"
+              subtitle="Goal scores per review"
+              href={analysis.downloads.reviewScores}
+              icon={<BarChart3 className="w-6 h-6" />}
+            />
+            <DownloadCard
+              title="Aggregated Scores"
+              subtitle="Company-level summary"
+              href={analysis.downloads.companyScores}
+              icon={<FileText className="w-6 h-6" />}
+            />
           </div>
         </section>
 
-        {/* Visualizations */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl font-semibold text-foreground mb-6">
             Visualizations
           </h2>
           <div className="grid lg:grid-cols-2 gap-6">
-            {/* Bar chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Goal Fulfillment vs. Hindrance</CardTitle>
@@ -219,12 +227,16 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
                 <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
-                      data={domainScores}
+                      data={barData}
                       layout="vertical"
-                      margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+                      margin={{ top: 5, right: 20, left: 100, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis type="number" domain={[0, 100]} stroke="hsl(var(--muted-foreground))" />
+                      <XAxis
+                        type="number"
+                        domain={[-axisLimit, axisLimit]}
+                        stroke="hsl(var(--muted-foreground))"
+                      />
                       <YAxis
                         dataKey="domain"
                         type="category"
@@ -232,20 +244,37 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
                         tick={{ fontSize: 12 }}
                       />
                       <Tooltip
+                        formatter={(value: number, name: string) => {
+                          if (name === "Hindrance") {
+                            return [Math.abs(value).toFixed(2), name];
+                          }
+                          return [Number(value).toFixed(2), name];
+                        }}
                         contentStyle={{
                           backgroundColor: "hsl(var(--card))",
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="fulfillment" fill="hsl(var(--primary))" name="Fulfillment %" radius={[0, 4, 4, 0]} />
+                      <Legend />
+                      <Bar
+                        dataKey="fulfillment"
+                        fill="hsl(var(--primary))"
+                        name="Fulfillment"
+                        radius={[0, 4, 4, 0]}
+                      />
+                      <Bar
+                        dataKey="hindranceNeg"
+                        fill="hsl(var(--destructive))"
+                        name="Hindrance"
+                        radius={[4, 0, 0, 4]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Radar chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Domain Profile</CardTitle>
@@ -261,17 +290,26 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
                       />
                       <PolarRadiusAxis
                         angle={90}
-                        domain={[0, 100]}
+                        domain={[0, axisLimit]}
                         tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
                       />
                       <Radar
-                        name="Score"
-                        dataKey="score"
+                        name="Fulfillment"
+                        dataKey="fulfillment"
                         stroke="hsl(var(--primary))"
                         fill="hsl(var(--primary))"
                         fillOpacity={0.3}
                       />
+                      <Radar
+                        name="Hindrance"
+                        dataKey="hindrance"
+                        stroke="hsl(var(--destructive))"
+                        fill="hsl(var(--destructive))"
+                        fillOpacity={0.2}
+                      />
+                      <Legend />
                       <Tooltip
+                        formatter={(value: number) => Number(value).toFixed(2)}
                         contentStyle={{
                           backgroundColor: "hsl(var(--card))",
                           border: "1px solid hsl(var(--border))",
@@ -286,7 +324,6 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
           </div>
         </section>
 
-        {/* Interpretation */}
         <section>
           <Card className="bg-muted/30">
             <CardHeader>
@@ -294,14 +331,13 @@ export function ResultsPage({ companyName, onBack }: ResultsPageProps) {
             </CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p>
-                <strong className="text-foreground">Fulfillment scores</strong> indicate the percentage of review content 
-                expressing positive experiences related to each social domain. Higher scores suggest the company 
-                effectively supports that fundamental need.
+                <strong className="text-foreground">Fulfillment and hindrance evidence</strong>{" "}
+                are averaged from review-level goal signals and plotted per domain.
               </p>
               <p>
-                <strong className="text-foreground">Important reminder:</strong> These results reflect aggregated 
-                employee experiences as expressed in public reviews. They represent patterns in how employees 
-                communicate about their workplace, not objective ground truth about company policies or practices.
+                <strong className="text-foreground">Important reminder:</strong> These results
+                reflect aggregated employee experiences in public reviews. They show language
+                patterns, not objective ground truth about policies.
               </p>
             </CardContent>
           </Card>

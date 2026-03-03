@@ -10,7 +10,12 @@ const processingSteps = [
   "Preparing your report...",
 ];
 
-export function ProcessingAnimation() {
+interface ProcessingAnimationProps {
+  statusMessage?: string;
+  jobId?: string | null;
+}
+
+export function ProcessingAnimation({ statusMessage, jobId }: ProcessingAnimationProps) {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
@@ -56,11 +61,14 @@ export function ProcessingAnimation() {
         {/* Status text */}
         <div className="space-y-4">
           <p className="text-xl font-serif font-medium text-foreground animate-fade-in" key={currentStep}>
-            {processingSteps[currentStep]}
+            {statusMessage || processingSteps[currentStep]}
           </p>
           <p className="text-muted-foreground">
             This usually takes a few moments. We're analyzing employee experiences across multiple dimensions.
           </p>
+          {jobId ? (
+            <p className="text-xs text-muted-foreground/80">Job ID: {jobId}</p>
+          ) : null}
         </div>
 
         {/* Progress dots */}
