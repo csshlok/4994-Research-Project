@@ -6,10 +6,19 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+# Allow launching this file directly (for example, via an IDE "Run file" action).
+if __package__ in {None, ""}:
+    import sys
+
+    repo_root = Path(__file__).resolve().parents[1]
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
+
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, PlainTextResponse
 from pydantic import BaseModel
+import uvicorn
 
 from backend.job_store import JobStore
 from backend.pipeline_runner import run_cache_job
@@ -242,3 +251,7 @@ def job_download(job_id: str, path: str = Query(..., min_length=1)):
         raise HTTPException(status_code=404, detail="File not found")
 
     return FileResponse(target, filename=target.name)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
