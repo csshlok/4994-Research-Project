@@ -11,6 +11,13 @@ glassdoor_debug.html
 debug_html
 runs/
 OG_reviews-json/
+OG_reviews-json/
 OG-Reviews-CSV/
 server_jobs/
-review data/
+cleaned/
+cleaned_US/
+# Keep most generated CSVs ignored, but allow curated cache inputs to be committed.
+review data/*
+!review data/**/
+!review data/**/reviews.csv
+!review data/**/reviews.json
