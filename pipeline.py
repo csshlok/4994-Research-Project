@@ -328,6 +328,8 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--skip-extract", action="store_true")
     ap.add_argument("--skip-score", action="store_true")
     ap.add_argument("--skip-viz", action="store_true")
+    ap.add_argument("--scrape-only", action="store_true",
+                    help="Run only scrape stage, then skip clean/extract/score/viz without requiring precomputed inputs.")
 
     ap.add_argument("--raw-csv", default=None, help="Raw CSV path or glob (if skipping scrape).")
     ap.add_argument("--clean-glob", default=None, help="Cleaned CSV glob (if skipping clean).")
@@ -417,15 +419,21 @@ def finalize_report(run_dir: Path, meta_dir: Path,
 def main() -> int:
     args = parse_args()
 
+    if args.scrape_only:
+        args.skip_clean = True
+        args.skip_extract = True
+        args.skip_score = True
+        args.skip_viz = True
+
     if not args.skip_scrape and not args.url:
         raise ValueError("--url is required unless --skip-scrape is set.")
     if args.skip_scrape and not args.raw_csv:
         raise ValueError("--raw-csv is required when --skip-scrape is set.")
-    if args.skip_clean and not args.clean_glob:
+    if args.skip_clean and not args.clean_glob and not args.scrape_only:
         raise ValueError("--clean-glob is required when --skip-clean is set.")
-    if args.skip_extract and not args.features_dir:
+    if args.skip_extract and not args.features_dir and not args.scrape_only:
         raise ValueError("--features-dir is required when --skip-extract is set.")
-    if args.skip_score and not args.scored_out_dir:
+    if args.skip_score and not args.scored_out_dir and not args.scrape_only:
         raise ValueError("--scored-out-dir is required when --skip-score is set.")
 
     job_slug = safe_slug(args.job)
@@ -595,16 +603,23 @@ def main() -> int:
     # ---------------- Clean ----------------
     try:
         if args.skip_clean:
-            src_files = resolve_files(args.clean_glob)
-            if not src_files:
-                raise FileNotFoundError(f"No files matched clean-glob: {args.clean_glob}")
-            copy_files(src_files, clean_dir)
             log_path = clean_dir / "clean.log"
-            log_path.write_text("clean skipped\ninputs:\n" + "\n".join([str(p) for p in src_files]) + "\n", encoding="utf-8")
-            outputs = list_files_rel(run_dir, clean_dir)
-            logger.progress("clean", "skipped", reason="user_skip", outputs=outputs)
-            record_stage("clean", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_sources": [str(p) for p in src_files]})
+            if args.scrape_only:
+                log_path.write_text("clean skipped (scrape-only mode)\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, clean_dir)
+                logger.progress("clean", "skipped", reason="scrape_only", outputs=outputs)
+                record_stage("clean", "skipped", None, None, None, outputs, log_path,
+                             extra={"reason": "scrape_only"})
+            else:
+                src_files = resolve_files(args.clean_glob)
+                if not src_files:
+                    raise FileNotFoundError(f"No files matched clean-glob: {args.clean_glob}")
+                copy_files(src_files, clean_dir)
+                log_path.write_text("clean skipped\ninputs:\n" + "\n".join([str(p) for p in src_files]) + "\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, clean_dir)
+                logger.progress("clean", "skipped", reason="user_skip", outputs=outputs)
+                record_stage("clean", "skipped", None, None, None, outputs, log_path,
+                             extra={"input_sources": [str(p) for p in src_files]})
         else:
             logger.progress("clean", "started")
             start_ts = now_ts()
@@ -639,14 +654,21 @@ def main() -> int:
     # ---------------- Extract ----------------
     try:
         if args.skip_extract:
-            src_dir = Path(args.features_dir)
-            copy_dir(src_dir, extract_dir)
             log_path = extract_dir / "extract.log"
-            log_path.write_text(f"extract skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
-            outputs = list_files_rel(run_dir, extract_dir)
-            logger.progress("extract", "skipped", reason="user_skip", outputs=outputs)
-            record_stage("extract", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_dir": str(src_dir)})
+            if args.scrape_only:
+                log_path.write_text("extract skipped (scrape-only mode)\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, extract_dir)
+                logger.progress("extract", "skipped", reason="scrape_only", outputs=outputs)
+                record_stage("extract", "skipped", None, None, None, outputs, log_path,
+                             extra={"reason": "scrape_only"})
+            else:
+                src_dir = Path(args.features_dir)
+                copy_dir(src_dir, extract_dir)
+                log_path.write_text(f"extract skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, extract_dir)
+                logger.progress("extract", "skipped", reason="user_skip", outputs=outputs)
+                record_stage("extract", "skipped", None, None, None, outputs, log_path,
+                             extra={"input_dir": str(src_dir)})
         else:
             logger.progress("extract", "started")
             start_ts = now_ts()
@@ -678,14 +700,21 @@ def main() -> int:
     # ---------------- Score ----------------
     try:
         if args.skip_score:
-            src_dir = Path(args.scored_out_dir)
-            copy_dir(src_dir, score_dir)
             log_path = score_dir / "score.log"
-            log_path.write_text(f"score skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
-            outputs = list_files_rel(run_dir, score_dir)
-            logger.progress("score", "skipped", reason="user_skip", outputs=outputs)
-            record_stage("score", "skipped", None, None, None, outputs, log_path,
-                         extra={"input_dir": str(src_dir)})
+            if args.scrape_only:
+                log_path.write_text("score skipped (scrape-only mode)\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, score_dir)
+                logger.progress("score", "skipped", reason="scrape_only", outputs=outputs)
+                record_stage("score", "skipped", None, None, None, outputs, log_path,
+                             extra={"reason": "scrape_only"})
+            else:
+                src_dir = Path(args.scored_out_dir)
+                copy_dir(src_dir, score_dir)
+                log_path.write_text(f"score skipped\ninputs_dir:\n{src_dir}\n", encoding="utf-8")
+                outputs = list_files_rel(run_dir, score_dir)
+                logger.progress("score", "skipped", reason="user_skip", outputs=outputs)
+                record_stage("score", "skipped", None, None, None, outputs, log_path,
+                             extra={"input_dir": str(src_dir)})
         else:
             logger.progress("score", "started")
             start_ts = now_ts()
