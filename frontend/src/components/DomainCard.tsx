@@ -11,13 +11,20 @@ interface DomainCardProps {
   delay?: number;
 }
 
-export function DomainCard({ number, title, description, examples, icon, delay = 0 }: DomainCardProps) {
+export function DomainCard({
+  number,
+  title,
+  description,
+  examples,
+  icon,
+  delay = 0,
+}: DomainCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div
       className={cn(
-        "group bg-card rounded-2xl border border-border/50 shadow-card hover:shadow-elevated transition-all duration-300 overflow-hidden opacity-0 animate-fade-up",
+        "group bg-card rounded-2xl border border-border/50 shadow-card hover:shadow-elevated transition-all duration-300 overflow-hidden opacity-0 animate-fade-up flex flex-col self-start",
         isExpanded && "ring-2 ring-primary/20"
       )}
       style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
@@ -30,19 +37,23 @@ export function DomainCard({ number, title, description, examples, icon, delay =
           <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
             {icon}
           </div>
+
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Domain {number}
               </span>
             </div>
+
             <h3 className="font-serif text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
               {title}
             </h3>
-            <p className="mt-2 text-muted-foreground text-sm leading-relaxed line-clamp-2">
+
+            <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
               {description}
             </p>
           </div>
+
           <ChevronDown
             className={cn(
               "flex-shrink-0 w-5 h-5 text-muted-foreground transition-transform duration-300",

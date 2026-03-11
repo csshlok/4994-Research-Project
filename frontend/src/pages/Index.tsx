@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { HeroSection } from "@/components/HeroSection";
+import { SummarySection } from "@/components/SummarySection";
 import { DomainsSection } from "@/components/DomainsSection";
 import { CompanyInputSection } from "@/components/CompanyInputSection";
 import { ProcessingAnimation } from "@/components/ProcessingAnimation";
@@ -104,6 +105,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <HeroSection onAnalyzeClick={scrollToInput} />
+      <SummarySection />
       <DomainsSection />
       <div ref={inputRef}>
         <CompanyInputSection onSubmit={handleAnalyze} />

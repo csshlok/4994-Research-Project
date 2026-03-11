@@ -55,24 +55,6 @@ const domains = [
       "Work-life balance policies, flexible hours, parental leave, understanding of family responsibilities, remote work options.",
     icon: <Home className="w-6 h-6" />,
   },
-  {
-    number: 6,
-    title: "Mate Acquisition",
-    description:
-      "Represents signals of attractiveness, ambition, and future potential. In workplace terms, this appears through prestige and growth opportunities.",
-    examples:
-      "Company prestige, career advancement signals, competitive compensation, ambitious culture, how the job enhances life prospects.",
-    icon: <Sparkles className="w-6 h-6" />,
-  },
-  {
-    number: 7,
-    title: "Mate Retention",
-    description:
-      "Focuses on stability and long-term commitment indicators. This domain reflects whether employees feel encouraged to build a lasting career.",
-    examples:
-      "Benefits stability, organizational loyalty, long-term incentives, retention programs, encouragement to stay vs. pressure to leave.",
-    icon: <Anchor className="w-6 h-6" />,
-  },
 ];
 
 export function DomainsSection() {
@@ -84,7 +66,7 @@ export function DomainsSection() {
             The Framework
           </span>
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-4">
-            Seven Social Domains
+            Five Social Domains
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
             Our analysis maps employee experiences to fundamental human goals,
@@ -94,11 +76,15 @@ export function DomainsSection() {
 
         <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto">
           {domains.map((domain, index) => (
-            <DomainCard
+            <div
               key={domain.number}
-              {...domain}
-              delay={index * 100}
-            />
+              className={index === domains.length - 1 && domains.length % 2 !== 0 ? "md:col-span-2 md:max-w-[calc(50%-0.5rem)] md:mx-auto" : ""}
+            >
+              <DomainCard
+                {...domain}
+                delay={index * 100}
+              />
+            </div>
           ))}
         </div>
       </div>
