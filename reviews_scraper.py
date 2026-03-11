@@ -14,6 +14,45 @@ DEBUG_DIR.mkdir(exist_ok=True)
 def log(msg: str):
     print(msg, flush=True)
 
+
+def _normalize_region(region: Optional[str]) -> Optional[str]:
+    if not region:
+        return None
+    cleaned = re.sub(r"\s+", " ", str(region).strip())
+    return cleaned or None
+
+
+def _apply_region_filters_to_query(qd: Dict[str, List[str]], region: Optional[str]) -> None:
+    reg = _normalize_region(region)
+    if not reg:
+        return
+
+    qd["filter.location"] = [reg]
+
+    us_aliases = {"united states", "united states of america", "us", "u.s.", "usa", "u.s.a."}
+    if reg.casefold() in us_aliases:
+        qd["filter.locationId"] = ["1"]
+        qd["filter.locationType"] = ["N"]
+    else:
+        qd.pop("filter.locationId", None)
+        qd.pop("filter.locationType", None)
+
+
+def _with_region_filters(url: str, region: Optional[str]) -> str:
+    reg = _normalize_region(region)
+    if not reg:
+        return url
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return url
+    qd: Dict[str, List[str]] = {}
+    for k, v in parse_qsl(parsed.query, keep_blank_values=True):
+        qd.setdefault(k, []).append(v)
+    _apply_region_filters_to_query(qd, reg)
+    query = urlencode(qd, doseq=True)
+    return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, query, parsed.fragment))
+
 # ---------------- JSON extractors (HTML regex, proven) ----------------
 def _extract_apollo_state_reviews(html: str) -> List[Dict[str, Any]]:
     if not html: return []
@@ -592,6 +631,7 @@ class GlassdoorReviews:
         headless: bool = False,
         chrome_path: Optional[str] = None,
         profile_dir: Optional[Path] = None,
+        region: Optional[str] = None,
         challenge_mode: str = "block",          # block | log_only
         pause_until_enter: bool = False,         # block-mode only
         challenge_wait: float = 0.0,             # block-mode only
@@ -616,6 +656,7 @@ class GlassdoorReviews:
         if headless:
             opts.add_argument("--headless=new")
         self.opts = opts
+        self.region = _normalize_region(region)
 
         self.challenge_mode = str(challenge_mode).strip().lower()
         self.pause_until_enter = bool(pause_until_enter)
@@ -824,6 +865,7 @@ class GlassdoorReviews:
 
     async def _goto_reviews_tab(self, tab, url: str):
         url = self._overview_to_reviews_url(url)
+        url = _with_region_filters(url, self.region)
         await tab.go_to(url)
         await self._sleep_human()
         await self._accept_cookies(tab)
@@ -857,6 +899,7 @@ class GlassdoorReviews:
         qd['filter.iso3Language'] = ['eng']
         qd['sort.sortType'] = ['RD']
         qd['sort.ascending'] = ['false']
+        _apply_region_filters_to_query(qd, self.region)
 
         page_token = "IP" if re.search(r'(?:-US-Reviews|_IN\d+)', base, flags=re.I) else "P"
         return base, qd, page_token
@@ -1058,6 +1101,14 @@ class GlassdoorReviews:
 def parse_args():
     p = argparse.ArgumentParser(description="Glassdoor Reviews Scraper (restored working extraction + upgrades)")
     p.add_argument("-u","--url", required=True, help="Company Reviews or Overview URL (I'll navigate to Reviews)")
+    p.add_argument(
+        "--region",
+        default=None,
+        help=(
+            "Optional location filter (for example: 'United States'). "
+            "For United States, the scraper enforces filter.locationId=1 and filter.locationType=N."
+        ),
+    )
     p.add_argument("-p","--pages", type=int, default=3, help="Number of review pages to collect")
     p.add_argument("--headless", action="store_true", help="Run Chrome headless")
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
@@ -1102,6 +1153,7 @@ async def run_cli(args):
         headless=args.headless,
         chrome_path=args.chrome_binary,
         profile_dir=Path(args.profile_dir) if args.profile_dir else None,
+        region=args.region,
         challenge_mode=args.challenge_mode,
         pause_until_enter=args.pause_until_enter,
         challenge_wait=args.challenge_wait,

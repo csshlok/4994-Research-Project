@@ -70,7 +70,31 @@ def overview_to_reviews_url(url: str) -> str:
     return urlunparse((parsed.scheme, parsed.netloc, new_path, "", "", ""))
 
 
-def canonicalize_reviews_url(url: str) -> str:
+def _normalize_region(region: str | None) -> str | None:
+    if not region:
+        return None
+    cleaned = re.sub(r"\s+", " ", str(region).strip())
+    return cleaned or None
+
+
+def _apply_region_filters(qd: Dict[str, List[str]], region: str | None) -> None:
+    reg = _normalize_region(region)
+    if not reg:
+        return
+
+    qd["filter.location"] = [reg]
+
+    us_aliases = {"united states", "united states of america", "us", "u.s.", "usa", "u.s.a."}
+    if reg.casefold() in us_aliases:
+        qd["filter.locationId"] = ["1"]
+        qd["filter.locationType"] = ["N"]
+    else:
+        # Prevent stale IDs from conflicting with a non-US region string.
+        qd.pop("filter.locationId", None)
+        qd.pop("filter.locationType", None)
+
+
+def canonicalize_reviews_url(url: str, region: str | None = None) -> str:
     try:
         parsed = urlparse(url)
     except Exception:
@@ -92,6 +116,7 @@ def canonicalize_reviews_url(url: str) -> str:
     qd.setdefault("filter.iso3Language", ["eng"])
     qd.setdefault("sort.sortType", ["RD"])
     qd.setdefault("sort.ascending", ["false"])
+    _apply_region_filters(qd, region)
 
     query = urlencode(qd, doseq=True)
     return urlunparse((parsed.scheme, parsed.netloc, path_final, "", query, ""))
@@ -315,6 +340,14 @@ def parse_args() -> argparse.Namespace:
 
     ap.add_argument("--job", required=True, help="Job/company label (e.g., Amazon).")
     ap.add_argument("--url", default=None, help="Glassdoor Reviews/Overview URL.")
+    ap.add_argument(
+        "--region",
+        default=None,
+        help=(
+            "Optional Glassdoor location filter, for example 'United States'. "
+            "For United States, filter.locationId=1 and filter.locationType=N are enforced."
+        ),
+    )
 
     ap.add_argument("--run-root", default="runs", help="Top-level folder for runs.")
     ap.add_argument("--run-id", default=None, help="Run ID (default: YYYYMMDD_HHMMSS).")
@@ -464,7 +497,7 @@ def main() -> int:
     resolved_profile_dir = args.profile_dir or str(repo_root / "chrome-profile")
 
     base_url = overview_to_reviews_url(args.url) if args.url else None
-    resolved_url = canonicalize_reviews_url(base_url) if base_url else None
+    resolved_url = canonicalize_reviews_url(base_url, region=args.region) if base_url else None
 
     args_path = meta_dir / "pipeline_args.json"
     args_payload = vars(args).copy()
@@ -541,6 +574,8 @@ def main() -> int:
                 "--stop-on-empty-pages", str(args.scrape_stop_on_empty_pages),
 
             ]
+            if args.region:
+                cmd += ["--region", str(args.region)]
             if args.headless:
                 cmd.append("--headless")
             if args.chrome_binary:
