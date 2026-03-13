@@ -370,7 +370,12 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--scored-out-dir", default=None, help="Scoring output dir (if skipping score).")
     ap.add_argument("--goal-dict", default=None, help="Goal dictionary path (optional).")
 
-    ap.add_argument("--pages", type=int, default=3, help="Number of review pages to collect.")
+    ap.add_argument("--pages", type=int, default=3,
+                    help="Number of review pages to collect (used when --end-page is not set).")
+    ap.add_argument("--start-page", type=int, default=1,
+                    help="First review page number to scrape (default: 1).")
+    ap.add_argument("--end-page", type=int, default=None,
+                    help="Last review page number to scrape (inclusive). If set, it overrides --pages count.")
     ap.add_argument("--page-delay", type=float, default=3.0, help="Seconds to wait between pages.")
     ap.add_argument("--headless", action="store_true", help="Run Chrome headless.")
     ap.add_argument("--pause-seconds", type=float, default=0.0,
@@ -382,7 +387,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--timeout", type=int, default=1600, help="Overall scraper timeout (seconds).")
 
     # NEW: forward challenge behavior into reviews_scraper.py
-    ap.add_argument("--scrape-challenge-mode", choices=["block", "log_only"], default="block",
+    ap.add_argument("--scrape-challenge-mode", choices=["block", "log_only"], default="log_only",
                     help="Forward to reviews_scraper.py --challenge-mode (block|log_only).")
     ap.add_argument("--scrape-pause-until-enter", action="store_true",
                     help="Forward pause-until-enter to reviews_scraper.py (block mode).")
@@ -457,6 +462,13 @@ def main() -> int:
         args.skip_extract = True
         args.skip_score = True
         args.skip_viz = True
+
+    if args.pages < 1:
+        raise ValueError("--pages must be >= 1.")
+    if args.start_page < 1:
+        raise ValueError("--start-page must be >= 1.")
+    if args.end_page is not None and args.end_page < args.start_page:
+        raise ValueError("--end-page must be >= --start-page.")
 
     if not args.skip_scrape and not args.url:
         raise ValueError("--url is required unless --skip-scrape is set.")
@@ -565,6 +577,7 @@ def main() -> int:
                 sys.executable, "reviews_scraper.py",
                 "--url", url_for_scrape,
                 "--pages", str(args.pages),
+                "--start-page", str(args.start_page),
                 "--page-delay", str(args.page_delay),
                 "--timeout", str(args.timeout),
                 "--out", str(reviews_json),
@@ -574,6 +587,8 @@ def main() -> int:
                 "--stop-on-empty-pages", str(args.scrape_stop_on_empty_pages),
 
             ]
+            if args.end_page is not None:
+                cmd += ["--end-page", str(args.end_page)]
             if args.region:
                 cmd += ["--region", str(args.region)]
             if args.headless:
