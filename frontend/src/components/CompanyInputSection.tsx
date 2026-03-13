@@ -1,77 +1,189 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, ChevronDown } from "lucide-react";
+import { COMPANY_OPTIONS } from "@/lib/company-options";
 
 interface CompanyInputSectionProps {
   onSubmit: (companyName: string) => void;
 }
 
-export function CompanyInputSection({ onSubmit }: CompanyInputSectionProps) {
-  const [companyName, setCompanyName] = useState("");
+export function CompanyInputSection({
+  onSubmit,
+}: CompanyInputSectionProps) {
+  const [searchText, setSearchText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const sortedCompanies = useMemo(() => {
+    return [...COMPANY_OPTIONS].sort((a, b) =>
+      a.label.localeCompare(b.label)
+    );
+  }, []);
+
+  const filteredCompanies = useMemo(() => {
+    const query = searchText.trim().toLowerCase();
+
+    if (!query) {
+      return [];
+    }
+
+    return sortedCompanies.filter((company) =>
+      company.label.toLowerCase().startsWith(query)
+    );
+  }, [searchText, sortedCompanies]);
+
+  const exactMatch = useMemo(() => {
+    const query = searchText.trim().toLowerCase();
+
+    return sortedCompanies.find(
+      (company) => company.label.toLowerCase() === query
+    );
+  }, [searchText, sortedCompanies]);
+
+  const handleSelect = (companyLabel: string) => {
+    setSearchText(companyLabel);
+    setErrorMessage("");
+    setShowDropdown(false);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (companyName.trim()) {
-      onSubmit(companyName.trim());
+
+    const selectedCompany = sortedCompanies.find(
+      (company) => company.label.toLowerCase() === searchText.trim().toLowerCase()
+    );
+
+    if (!selectedCompany) {
+      setErrorMessage(
+        "This company has not been added to the scraped review dataset yet. Please select one of the available companies from the list."
+      );
+      return;
     }
+
+    setErrorMessage("");
+    onSubmit(selectedCompany.value);
   };
 
-  return (
-    <section id="analyze" className="section-padding">
-      <div className="container-narrow">
-        <div className="bg-card rounded-3xl border border-border/50 shadow-elevated p-8 md:p-12">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="inline-block text-sm font-medium text-primary uppercase tracking-wider mb-4">
-              Start Analysis
-            </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-4">
-              Analyze a Company
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Enter a company name to receive a comprehensive analysis of employee experiences
-              mapped to the seven social domains.
-            </p>
-          </div>
+  const hasTyped = searchText.trim().length > 0;
+  const shouldShowDropdown =
+    isFocused && showDropdown && hasTyped && filteredCompanies.length > 0;
 
-          <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-            <div
-              className={`relative flex items-center gap-3 p-2 rounded-2xl border-2 transition-all duration-300 bg-background ${
-                isFocused
-                  ? "border-primary shadow-soft"
-                  : "border-border hover:border-border/80"
-              }`}
-            >
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-secondary text-primary">
-                <Search className="w-5 h-5" />
-              </div>
+  return (
+    <section className="py-24 px-6 bg-muted/30" id="company-input">
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="inline-flex items-center rounded-full border border-border bg-background px-4 py-2 mb-6">
+          <span className="text-sm font-medium text-muted-foreground">
+            Start Analysis
+          </span>
+        </div>
+
+        <h2 className="text-4xl md:text-5xl font-display font-semibold text-foreground mb-6">
+          Analyze a Company
+        </h2>
+
+        <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+          Start typing a company name to search from the scraped company list.
+        </p>
+
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+          <div
+            className={`relative flex flex-col rounded-2xl border bg-background shadow-lg transition-all duration-300 ${
+              isFocused
+                ? "border-primary shadow-xl shadow-primary/10"
+                : "border-border hover:border-primary/50"
+            }`}
+          >
+            <div className="flex items-center px-6 py-4">
+              <Search className="w-5 h-5 text-muted-foreground mr-4 flex-shrink-0" />
+
               <Input
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                placeholder="Enter company name..."
+                value={searchText}
+                onChange={(e) => {
+                  setSearchText(e.target.value);
+                  setErrorMessage("");
+                  setShowDropdown(true);
+                }}
+                onFocus={() => {
+                  setIsFocused(true);
+                  setShowDropdown(true);
+                }}
+                onBlur={() => {
+                  window.setTimeout(() => {
+                    setIsFocused(false);
+                    setShowDropdown(false);
+                  }, 150);
+                }}
+                placeholder="Type a company name..."
                 className="flex-1 border-0 bg-transparent text-lg placeholder:text-muted-foreground/60 focus-visible:ring-0 focus-visible:ring-offset-0 h-12"
                 maxLength={100}
               />
+
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setIsFocused(true);
+                  setShowDropdown(true);
+                }}
+                className="ml-2 p-2 rounded-lg hover:bg-muted transition-colors"
+                aria-label="Search companies"
+              >
+                <ChevronDown className="w-5 h-5 text-muted-foreground" />
+              </button>
+
               <Button
                 type="submit"
-                variant="hero"
-                disabled={!companyName.trim()}
-                className="h-12 px-6"
+                size="lg"
+                className="ml-4 px-8 rounded-xl font-medium"
+                disabled={!searchText.trim()}
               >
-                <span className="hidden sm:inline">Run Analysis</span>
-                <ArrowRight className="w-5 h-5" />
+                Run Analysis
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
 
-            <p className="text-center text-sm text-muted-foreground mt-4">
-              Analysis typically takes 2-3 minutes depending on review volume
+            {shouldShowDropdown && (
+              <div className="border-t border-border px-4 py-3 max-h-80 overflow-y-auto text-left">
+                <div className="grid gap-2">
+                  {filteredCompanies.map((company) => (
+                    <button
+                      key={company.value}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => handleSelect(company.label)}
+                      className="w-full rounded-xl border border-transparent px-4 py-3 text-left transition-colors hover:bg-muted hover:border-border"
+                    >
+                      <div className="font-medium text-foreground">
+                        {company.label}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {errorMessage && (
+            <p className="text-sm text-red-500 mt-4 text-left">
+              {errorMessage}
             </p>
-          </form>
-        </div>
+          )}
+
+          {!errorMessage && hasTyped && !exactMatch && (
+            <p className="text-sm text-amber-600 mt-4 text-left">
+              No exact company match found yet. Keep typing or select one from
+              the suggestions.
+            </p>
+          )}
+
+          {!errorMessage && (
+            <p className="text-sm text-muted-foreground mt-4 text-left">
+              Suggestions appear only for companies starting with the typed characters.
+            </p>
+          )}
+        </form>
       </div>
     </section>
   );
