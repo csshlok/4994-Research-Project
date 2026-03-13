@@ -632,7 +632,7 @@ class GlassdoorReviews:
         chrome_path: Optional[str] = None,
         profile_dir: Optional[Path] = None,
         region: Optional[str] = None,
-        challenge_mode: str = "block",          # block | log_only
+        challenge_mode: str = "log_only",       # block | log_only
         pause_until_enter: bool = False,         # block-mode only
         challenge_wait: float = 0.0,             # block-mode only
         challenge_max_retries: int = 3,          # block-mode only
@@ -934,6 +934,8 @@ class GlassdoorReviews:
         self,
         company_url: str,
         pages: int = 3,
+        start_page: int = 1,
+        end_page: Optional[int] = None,
         csv_path: Optional[Path] = None,
         page_delay: float = 3.0
     ) -> List[Dict[str, Any]]:
@@ -971,15 +973,34 @@ class GlassdoorReviews:
             cur_url = await self._current_href(tab)
             base, qd, page_token = self._canonize_reviews_base(cur_url)
             base = self._unwrap_url_obj(base)
-            log(f"[nav] Base resolved: {base}.htm  | pages={pages} | mode=_{page_token}*")
+
+            start_page = int(start_page)
+            if start_page < 1:
+                raise ValueError("--start-page must be >= 1")
+
+            pages = int(pages)
+            if pages < 1:
+                raise ValueError("--pages must be >= 1")
+
+            if end_page is None:
+                end_page = start_page + pages - 1
+            else:
+                end_page = int(end_page)
+
+            if end_page < start_page:
+                raise ValueError("--end-page must be >= --start-page")
+
+            page_numbers = list(range(start_page, end_page + 1))
+            total_pages = len(page_numbers)
+            log(f"[nav] Base resolved: {base}.htm  | page_range={start_page}-{end_page} ({total_pages} pages) | mode=_{page_token}*")
 
             all_rows: List[Dict[str, Any]] = []
             empty_streak = 0
 
-            for page in range(1, max(1, pages) + 1):
+            for idx, page in enumerate(page_numbers, start=1):
                 target = self._page_url(base, qd, page, page_token)
                 target = self._unwrap_url_obj(target)
-                log(f"[page] {page}/{pages} -> {target}")
+                log(f"[page] {idx}/{total_pages} (source page {page}) -> {target}")
 
                 # soft-block retries are advisory: we retry navigation a bit, but we ALWAYS extract.
                 soft_attempt = 0
@@ -1069,7 +1090,7 @@ class GlassdoorReviews:
 
                 all_rows.extend(rows)
 
-                if page < pages:
+                if idx < total_pages:
                     pause = max(0.0, float(page_delay))
                     log(f"[pace] Sleeping {pause:.1f}s before next page...")
                     await asyncio.sleep(pause)
@@ -1109,7 +1130,12 @@ def parse_args():
             "For United States, the scraper enforces filter.locationId=1 and filter.locationType=N."
         ),
     )
-    p.add_argument("-p","--pages", type=int, default=3, help="Number of review pages to collect")
+    p.add_argument("-p","--pages", type=int, default=3,
+                   help="Number of review pages to collect (used when --end-page is not set)")
+    p.add_argument("--start-page", type=int, default=1,
+                   help="First review page number to scrape (default: 1)")
+    p.add_argument("--end-page", type=int, default=None,
+                   help="Last review page number to scrape (inclusive). If set, overrides --pages count")
     p.add_argument("--headless", action="store_true", help="Run Chrome headless")
     p.add_argument("--chrome-binary", help="Path to Chrome binary (optional)")
     p.add_argument("--profile-dir", help="Custom Chrome profile dir (optional)")
@@ -1119,7 +1145,7 @@ def parse_args():
     p.add_argument("--csv", help="Also write CSV to this path (e.g., reviews.csv)")
 
     # NEW: challenge-mode (kept)
-    p.add_argument("--challenge-mode", choices=["block", "log_only"], default="block",
+    p.add_argument("--challenge-mode", choices=["block", "log_only"], default="log_only",
                    help="block: pause/wait on captcha; log_only: log and continue extracting")
 
     # block-mode knobs (kept)
@@ -1144,7 +1170,14 @@ def parse_args():
     p.add_argument("--no-debug-html", action="store_true",
                    help="Disable saving debug_html/*.html on failures/stops")
 
-    return p.parse_args()
+    args = p.parse_args()
+    if args.pages < 1:
+        p.error("--pages must be >= 1")
+    if args.start_page < 1:
+        p.error("--start-page must be >= 1")
+    if args.end_page is not None and args.end_page < args.start_page:
+        p.error("--end-page must be >= --start-page")
+    return args
 
 async def run_cli(args):
     global OUT_JSON
@@ -1168,6 +1201,8 @@ async def run_cli(args):
     await client.scrape_reviews(
         args.url,
         pages=args.pages,
+        start_page=args.start_page,
+        end_page=args.end_page,
         csv_path=Path(args.csv) if args.csv else None,
         page_delay=args.page_delay
     )
