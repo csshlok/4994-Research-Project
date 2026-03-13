@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import ctypes
 import glob
 import json
@@ -41,6 +42,10 @@ def safe_slug(text: str) -> str:
     s = "".join(ch if ch.isalnum() or ch in {"_", "-"} else "_" for ch in str(text).strip())
     s = s.strip("_").lower()
     return s or "job"
+
+
+def _company_match_key(text: str) -> str:
+    return "".join(ch for ch in str(text).casefold() if ch.isalnum())
 
 
 def overview_to_reviews_url(url: str) -> str:
@@ -120,6 +125,155 @@ def canonicalize_reviews_url(url: str, region: str | None = None) -> str:
 
     query = urlencode(qd, doseq=True)
     return urlunparse((parsed.scheme, parsed.netloc, path_final, "", query, ""))
+
+
+def resolve_add_company_dir(add_root: Path, job_name: str) -> Path:
+    add_root = add_root.resolve()
+    add_root.mkdir(parents=True, exist_ok=True)
+
+    wanted = str(job_name or "").strip()
+    if not wanted:
+        raise ValueError("--job must be non-empty when using --add.")
+
+    dirs = [p for p in add_root.iterdir() if p.is_dir()]
+    for p in dirs:
+        if p.name == wanted:
+            return p
+
+    wanted_lower = wanted.lower()
+    for p in dirs:
+        if p.name.lower() == wanted_lower:
+            return p
+
+    wanted_slug = safe_slug(wanted)
+    for p in dirs:
+        if safe_slug(p.name) == wanted_slug:
+            return p
+
+    wanted_key = _company_match_key(wanted)
+    for p in dirs:
+        if _company_match_key(p.name) == wanted_key:
+            return p
+
+    # No match found, create a new folder with the requested name.
+    new_dir = add_root / wanted
+    new_dir.mkdir(parents=True, exist_ok=True)
+    return new_dir
+
+
+def _read_csv_rows(path: Path) -> tuple[list[dict[str, str]], list[str]]:
+    if not path.exists():
+        return [], []
+
+    with path.open("r", encoding="utf-8-sig", errors="replace", newline="") as f:
+        reader = csv.DictReader(f)
+        fields = [str(x) for x in (reader.fieldnames or []) if x]
+        rows: list[dict[str, str]] = []
+        for row in reader:
+            if not isinstance(row, dict):
+                continue
+            rec: dict[str, str] = {}
+            for k, v in row.items():
+                if k is None:
+                    continue
+                key = str(k)
+                if not key:
+                    continue
+                rec[key] = "" if v is None else str(v)
+            if rec:
+                rows.append(rec)
+    return rows, fields
+
+
+def _row_identity_key(row: dict[str, str]) -> tuple[str, str]:
+    rid = str(row.get("review_id", "")).strip()
+    if rid:
+        return ("review_id", rid)
+
+    alt_id = str(row.get("id", "")).strip()
+    if alt_id:
+        return ("id", alt_id)
+
+    parts = [
+        str(row.get("title", "")).strip().lower(),
+        str(row.get("date", "")).strip().lower(),
+        str(row.get("pros", "")).strip().lower(),
+        str(row.get("cons", "")).strip().lower(),
+        str(row.get("body", "")).strip().lower(),
+    ]
+    joined = "|".join(parts).strip("|")
+    if joined:
+        return ("text_sig", joined)
+
+    # Last-resort stable fingerprint from sorted JSON fields.
+    return ("json", json.dumps(row, sort_keys=True, ensure_ascii=False))
+
+
+def _fill_missing(dst: dict[str, str], src: dict[str, str]) -> bool:
+    changed = False
+    for k, v in src.items():
+        vtxt = str(v).strip()
+        if not vtxt:
+            continue
+        if not str(dst.get(k, "")).strip():
+            dst[k] = str(v)
+            changed = True
+    return changed
+
+
+def merge_scraped_reviews_into_cache(new_csv: Path, cache_csv: Path) -> dict[str, Any]:
+    new_rows, new_fields = _read_csv_rows(new_csv)
+    if not new_rows:
+        raise ValueError(f"No rows found in scraped CSV: {new_csv}")
+
+    old_rows, old_fields = _read_csv_rows(cache_csv)
+
+    field_order: list[str] = []
+    for f in old_fields + new_fields:
+        if f and f not in field_order:
+            field_order.append(f)
+    if not field_order:
+        raise ValueError("Cannot determine CSV header fields for merge.")
+
+    merged: list[dict[str, str]] = []
+    index: dict[tuple[str, str], int] = {}
+
+    for row in old_rows:
+        key = _row_identity_key(row)
+        if key in index:
+            _fill_missing(merged[index[key]], row)
+            continue
+        index[key] = len(merged)
+        merged.append(dict(row))
+
+    added = 0
+    updated = 0
+    for row in new_rows:
+        key = _row_identity_key(row)
+        if key in index:
+            if _fill_missing(merged[index[key]], row):
+                updated += 1
+            continue
+        index[key] = len(merged)
+        merged.append(dict(row))
+        added += 1
+
+    cache_csv.parent.mkdir(parents=True, exist_ok=True)
+    with cache_csv.open("w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=field_order, extrasaction="ignore", quoting=csv.QUOTE_ALL)
+        writer.writeheader()
+        for row in merged:
+            rec = {k: row.get(k, "") for k in field_order}
+            writer.writerow(rec)
+
+    return {
+        "cache_csv": str(cache_csv),
+        "old_rows": len(old_rows),
+        "new_rows": len(new_rows),
+        "added_rows": added,
+        "updated_rows": updated,
+        "final_rows": len(merged),
+    }
 
 
 class PipelineLogger:
@@ -363,6 +517,10 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--skip-viz", action="store_true")
     ap.add_argument("--scrape-only", action="store_true",
                     help="Run only scrape stage, then skip clean/extract/score/viz without requiring precomputed inputs.")
+    ap.add_argument("--add", action="store_true",
+                    help="After scraping, merge new reviews into <add-root>/<job>/reviews.csv (deduped).")
+    ap.add_argument("--add-root", default="review data",
+                    help="Root folder for --add merge target (default: review data).")
 
     ap.add_argument("--raw-csv", default=None, help="Raw CSV path or glob (if skipping scrape).")
     ap.add_argument("--clean-glob", default=None, help="Cleaned CSV glob (if skipping clean).")
@@ -469,6 +627,8 @@ def main() -> int:
         raise ValueError("--start-page must be >= 1.")
     if args.end_page is not None and args.end_page < args.start_page:
         raise ValueError("--end-page must be >= --start-page.")
+    if args.add and args.skip_scrape:
+        raise ValueError("--add requires scraping; do not use it with --skip-scrape.")
 
     if not args.skip_scrape and not args.url:
         raise ValueError("--url is required unless --skip-scrape is set.")
@@ -619,8 +779,30 @@ def main() -> int:
                 record_stage("scrape", "failed", start_ts, end_ts, duration, outputs, log_path)
                 raise RuntimeError(f"scrape failed (rc={rc})")
 
-            logger.progress("scrape", "completed", outputs=outputs)
-            record_stage("scrape", "completed", start_ts, end_ts, duration, outputs, log_path)
+            add_merge_info: Dict[str, Any] | None = None
+            if args.add:
+                add_root = Path(args.add_root)
+                company_dir = resolve_add_company_dir(add_root, args.job)
+                cache_csv = company_dir / "reviews.csv"
+                add_merge_info = merge_scraped_reviews_into_cache(reviews_csv, cache_csv)
+                logger.log(
+                    "[scrape][add] merged into cache: "
+                    f"old={add_merge_info['old_rows']} new={add_merge_info['new_rows']} "
+                    f"added={add_merge_info['added_rows']} updated={add_merge_info['updated_rows']} "
+                    f"final={add_merge_info['final_rows']} file={add_merge_info['cache_csv']}"
+                )
+
+            logger.progress("scrape", "completed", outputs=outputs, add_merge=add_merge_info)
+            record_stage(
+                "scrape",
+                "completed",
+                start_ts,
+                end_ts,
+                duration,
+                outputs,
+                log_path,
+                extra={"add_merge": add_merge_info} if add_merge_info else None,
+            )
     except Exception as e:
         errors.append(f"scrape: {e}")
         logger.log(f"[scrape][error] {e}")
