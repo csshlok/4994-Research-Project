@@ -38,7 +38,9 @@ Glassdoor review scoring pipeline: scrape (or load) reviews, clean them, build t
 | Long flag       | Short | Description |
 |-----------------|-------|-------------|
 | `--url`         | `-u`  | Glassdoor company Reviews or Overview URL (required). |
-| `--pages`       | `-p`  | Number of review pages to fetch (default 3). |
+| `--pages`       | `-p`  | Number of pages to fetch when `--end-page` is not set (default 3). |
+| `--start-page`  | `--start-page` | First review page number to scrape (default 1). |
+| `--end-page`    | `--end-page` | Last review page number to scrape (inclusive). Overrides `--pages`. |
 | `--csv`         | `--csv` | Optional CSV path to write alongside JSON (UTF-8). |
 | `--out`         | `-o`  | JSON output path (default `reviews.json`). |
 | `--page-delay`  | `--page-delay` | Seconds to sleep between pages after extraction (default 3.0). |
@@ -52,6 +54,12 @@ Example:
 python reviews_scraper.py --url https://www.glassdoor.com/Reviews/ACME-Reviews-E9999.htm \
   --pages 4 --csv OG-Reviews-CSV/reviews_acme.csv --out OG_reviews-json/reviews_acme.json \
   --page-delay 3.5 --headless
+```
+
+Range example (no hardcoded page URL needed):
+```bash
+python reviews_scraper.py --url https://www.glassdoor.com/Reviews/ACME-Reviews-E9999.htm \
+  --start-page 71 --end-page 91 --csv OG-Reviews-CSV/reviews_acme_p71_91.csv
 ```
 
 2) Clean raw CSVs:
