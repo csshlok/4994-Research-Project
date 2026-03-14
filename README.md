@@ -30,8 +30,8 @@ Glassdoor review scoring pipeline: scrape (or load) reviews, clean them, build t
      --page-delay 4 --headless
    ```
    - Required: `--url` must be a Glassdoor company Reviews/Overview URL; the script auto-adds language + sort params.
- - Useful flags: `--pages` (default 3), `--csv` to also write CSV, `--page-delay` to throttle, `--chrome-binary` if Chrome is not on PATH, `--profile-dir` for a custom Chromium profile, `--headless` to hide the browser.
-  - Older scrapers (`main.py`, `pydoll_client.py`) are kept for reference; use **only** `reviews_scraper.py`.
+   - Useful flags: `--pages` (default 3), `--csv` to also write CSV, `--page-delay` to throttle, `--chrome-binary` if Chrome is not on PATH, `--profile-dir` for a custom Chromium profile, `--headless` to hide the browser.
+   - `reviews_scraper.py` is the supported scraper entrypoint.
 
 ## Scraper CLI arguments (`reviews_scraper.py`)
 
