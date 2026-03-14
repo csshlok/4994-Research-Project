@@ -15,6 +15,7 @@ from typing import Any
 
 from backend.job_store import JobStore
 from backend.settings import settings
+from csv_safety import sanitize_csv_row
 
 _CACHE_LOG_LOCK = threading.Lock()
 
@@ -106,7 +107,7 @@ def reviews_csv_from_json(json_path: Path, out_csv: Path) -> Path:
                     rec[k] = ""
                 else:
                     rec[k] = v
-            writer.writerow(rec)
+            writer.writerow(sanitize_csv_row(rec))
 
     return out_csv
 

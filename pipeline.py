@@ -16,6 +16,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+from csv_safety import sanitize_csv_row
 
 try:
     import pandas as pd
@@ -264,7 +265,7 @@ def merge_scraped_reviews_into_cache(new_csv: Path, cache_csv: Path) -> dict[str
         writer.writeheader()
         for row in merged:
             rec = {k: row.get(k, "") for k in field_order}
-            writer.writerow(rec)
+            writer.writerow(sanitize_csv_row(rec))
 
     return {
         "cache_csv": str(cache_csv),

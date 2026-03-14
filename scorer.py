@@ -9,6 +9,7 @@ import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from tqdm import tqdm
+from csv_safety import sanitize_dataframe_for_csv
 
 
 # ---------------- Paths ----------------
@@ -631,8 +632,8 @@ def main():
     per_dir       = out_dir / "per_company"
     per_dir.mkdir(exist_ok=True)
 
-    rev_out.to_csv(rev_path_csv, index=False)
-    comp.to_csv(cmp_path_csv, index=False)
+    sanitize_dataframe_for_csv(rev_out).to_csv(rev_path_csv, index=False)
+    sanitize_dataframe_for_csv(comp).to_csv(cmp_path_csv, index=False)
 
     import re as _re
     g_cols = [c for c in rev_out.columns if c.startswith("G_ratio_") or c.startswith("G_final_")]
@@ -642,7 +643,8 @@ def main():
     written_per_company = []
     for cid, sub in rev_out.groupby("company_id", dropna=False):
         safe = _re.sub(r"[^A-Za-z0-9_]+", "_", str(cid)).strip("_") or "unknown"
-        (per_dir / f"{safe}.csv").write_text(sub[keep_cols].to_csv(index=False))
+        sanitized_sub = sanitize_dataframe_for_csv(sub[keep_cols])
+        (per_dir / f"{safe}.csv").write_text(sanitized_sub.to_csv(index=False))
         written_per_company.append(str(per_dir / f"{safe}.csv"))
 
     run_meta = {

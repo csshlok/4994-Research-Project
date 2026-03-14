@@ -1,6 +1,7 @@
 import re, glob, html, os, json, argparse
 import pandas as pd
 from pathlib import Path
+from csv_safety import sanitize_dataframe_for_csv
 
 
 ROOT = Path(__file__).resolve().parent
@@ -303,7 +304,7 @@ def process_file(path, out_dir: Path, slug_override=None):
 
     comp_slug = slug_override or file_slug_from_path(path)
     out_path = out_dir / f"reviews_{comp_slug}_clean.csv"
-    df.to_csv(out_path, index=False, encoding="utf-8")
+    sanitize_dataframe_for_csv(df).to_csv(out_path, index=False, encoding="utf-8")
 
     return {
         "file": Path(path).name,
@@ -360,7 +361,7 @@ def run_cleaning(raw_dir: Path, out_dir: Path, pattern: str | None = None,
 
     summary_df = pd.DataFrame(summary).sort_values("slug_from_file").reset_index(drop=True)
     summary_path = out_dir / "phase1_2_cleaning_summary.csv"
-    summary_df.to_csv(summary_path, index=False, encoding="utf-8")
+    sanitize_dataframe_for_csv(summary_df).to_csv(summary_path, index=False, encoding="utf-8")
 
     report_path = report_json or (out_dir / "clean_report.json")
     write_clean_report(summary, Path(report_path), raw_dir, resolved_pattern, job_slug)

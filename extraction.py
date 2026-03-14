@@ -6,6 +6,7 @@ import pandas as pd
 from unidecode import unidecode
 from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
+from csv_safety import sanitize_dataframe_for_csv
 
 import spacy
 nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
@@ -226,7 +227,10 @@ def process_files(pattern: str, out_dir: Path):
     sparse.save_npz(out_dir / "tfidf_reviews.npz", X)
     with open(out_dir / "tfidf_vocab.json", "w", encoding="utf-8") as f:
         json.dump({i: term for i, term in enumerate(vocab)}, f, ensure_ascii=False, indent=2)
-    df_out[[id_col, "source_file"]].to_csv(out_dir / "doc_index.csv", index=False)
+    sanitize_dataframe_for_csv(df_out[[id_col, "source_file"]]).to_csv(
+        out_dir / "doc_index.csv",
+        index=False,
+    )
 
     config = dict(
         stop_extra=sorted(list(DEFAULT_STOP_EXTRA)),

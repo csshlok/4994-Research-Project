@@ -5,6 +5,7 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 from pydoll.browser.chromium import Chrome
 from pydoll.browser.options import ChromiumOptions
+from csv_safety import sanitize_csv_cell
 
 PROFILE_DIR = Path("chrome-profile")
 OUT_JSON    = Path("reviews.json")
@@ -617,6 +618,8 @@ def _write_reviews_csv(rows: List[Dict[str, Any]], path: Path):
                 rec[k] = "" if v is None else v
             if rec["rating"] is None:
                 rec["rating"] = ""
+            for k, v in rec.items():
+                rec[k] = sanitize_csv_cell(v)
             w.writerow(rec)
 
 # ---------------- Browser client (restored workflow + updates) ----------------
