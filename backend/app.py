@@ -93,6 +93,79 @@ def _load_status_file(path: Path) -> dict[str, Any]:
         return {}
 
 
+def _iter_job_statuses() -> list[tuple[str, dict[str, Any]]]:
+    jobs_root = settings.JOBS_DIR
+    if not jobs_root.exists():
+        return []
+
+    out: list[tuple[str, dict[str, Any]]] = []
+    for job_dir in jobs_root.iterdir():
+        if not job_dir.is_dir():
+            continue
+        job_id = job_dir.name
+        status = _load_status_file(job_dir / "status.json")
+        if status:
+            out.append((job_id, status))
+    return out
+
+
+def _count_jobs_by_status() -> dict[str, int]:
+    counts = {"queued": 0, "running": 0}
+    for _job_id, status in _iter_job_statuses():
+        state = str(status.get("status") or "").strip().lower()
+        if state in counts:
+            counts[state] += 1
+    return counts
+
+
+def _pick_next_queued_job() -> tuple[str, dict[str, Any]] | None:
+    queued: list[tuple[str, dict[str, Any]]] = []
+    for job_id, status in _iter_job_statuses():
+        state = str(status.get("status") or "").strip().lower()
+        if state == "queued":
+            queued.append((job_id, status))
+    if not queued:
+        return None
+
+    queued.sort(key=lambda item: float(item[1].get("created_at") or 0.0))
+    return queued[0]
+
+
+def _job_dispatch_loop() -> None:
+    sleep_s = float(settings.JOB_DISPATCH_INTERVAL_SECONDS)
+    while True:
+        try:
+            counts = _count_jobs_by_status()
+            if counts["running"] > 0:
+                time.sleep(sleep_s)
+                continue
+
+            nxt = _pick_next_queued_job()
+            if nxt is None:
+                time.sleep(sleep_s)
+                continue
+
+            job_id, status = nxt
+            company = str(status.get("company_id_requested") or "").strip()
+            if not company:
+                store.update_status(
+                    job_id,
+                    status="failed",
+                    message="Missing company_id_requested in queued job.",
+                    rc=98,
+                )
+                time.sleep(0.1)
+                continue
+
+            # Runs synchronously here; this enforces single-job concurrency.
+            run_cache_job(store, job_id, company)
+            continue
+        except Exception:
+            pass
+
+        time.sleep(sleep_s)
+
+
 def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
     active_runs: set[Path] = set()
     jobs_root = settings.JOBS_DIR
@@ -204,6 +277,7 @@ def _tail_file(path: Path, n: int) -> str:
 app = FastAPI(title="Pipeline Backend", version="1.0.0")
 store = JobStore(settings.JOBS_DIR)
 _spawn(_cleanup_loop)
+_spawn(_job_dispatch_loop)
 
 app.add_middleware(
     CORSMiddleware,
@@ -216,6 +290,7 @@ app.add_middleware(
 
 @app.get("/api/health")
 def health() -> dict[str, Any]:
+    counts = _count_jobs_by_status()
     return {
         "ok": True,
         "repo_root": str(settings.REPO_ROOT),
@@ -226,6 +301,9 @@ def health() -> dict[str, Any]:
         "run_retention_hours": settings.RUN_RETENTION_HOURS,
         "job_retention_hours": settings.JOB_RETENTION_HOURS,
         "cleanup_interval_seconds": settings.CLEANUP_INTERVAL_SECONDS,
+        "job_dispatch_interval_seconds": settings.JOB_DISPATCH_INTERVAL_SECONDS,
+        "queue_depth": counts["queued"],
+        "running_jobs": counts["running"],
     }
 
 
@@ -271,7 +349,6 @@ def run_job(payload: RunRequest) -> dict[str, str]:
         },
     )
 
-    _spawn(run_cache_job, store, job_id, company)
     return {"job_id": job_id}
 
 

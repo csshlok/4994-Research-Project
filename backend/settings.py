@@ -37,6 +37,7 @@ class Settings:
     RUN_RETENTION_HOURS: int
     JOB_RETENTION_HOURS: int
     CLEANUP_INTERVAL_SECONDS: int
+    JOB_DISPATCH_INTERVAL_SECONDS: int
 
 
 def load_settings() -> Settings:
@@ -51,6 +52,7 @@ def load_settings() -> Settings:
     run_retention_hours = max(1, _int_env("RUN_RETENTION_HOURS", 1))
     job_retention_hours = max(1, _int_env("JOB_RETENTION_HOURS", 24))
     cleanup_interval_seconds = max(30, _int_env("CLEANUP_INTERVAL_SECONDS", 600))
+    job_dispatch_interval_seconds = max(1, _int_env("JOB_DISPATCH_INTERVAL_SECONDS", 2))
 
     return Settings(
         REPO_ROOT=repo_root,
@@ -64,6 +66,7 @@ def load_settings() -> Settings:
         RUN_RETENTION_HOURS=run_retention_hours,
         JOB_RETENTION_HOURS=job_retention_hours,
         CLEANUP_INTERVAL_SECONDS=cleanup_interval_seconds,
+        JOB_DISPATCH_INTERVAL_SECONDS=job_dispatch_interval_seconds,
     )
 
 
