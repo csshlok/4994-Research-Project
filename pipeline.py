@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import ctypes
+import gzip
 import glob
 import json
 import os
@@ -469,6 +470,70 @@ def read_columns(path: Path) -> List[str] | None:
         return None
 
 
+COMPRESSIBLE_SUFFIXES = {
+    ".csv",
+    ".json",
+    ".jsonl",
+    ".txt",
+    ".log",
+    ".parquet",
+    ".png",
+}
+
+
+def _is_compressible(path: Path) -> bool:
+    if not path.is_file():
+        return False
+    name = path.name.lower()
+    if name.endswith(".gz") or name.endswith(".zip"):
+        return False
+    return path.suffix.lower() in COMPRESSIBLE_SUFFIXES
+
+
+def _gzip_file(path: Path, level: int = 9) -> tuple[bool, int, int]:
+    src_size = int(path.stat().st_size)
+    gz_path = path.with_name(path.name + ".gz")
+    with path.open("rb") as src, gzip.open(gz_path, "wb", compresslevel=level) as dst:
+        shutil.copyfileobj(src, dst, length=1024 * 1024)
+    gz_size = int(gz_path.stat().st_size)
+
+    # Keep the smaller of the two on disk.
+    if gz_size < src_size:
+        path.unlink(missing_ok=True)
+        return True, src_size, gz_size
+
+    gz_path.unlink(missing_ok=True)
+    return False, src_size, gz_size
+
+
+def compress_run_artifacts(run_dir: Path, logger: "PipelineLogger", level: int = 9) -> dict[str, int]:
+    compressed_files = 0
+    skipped_files = 0
+    bytes_before = 0
+    bytes_after = 0
+
+    for fp in sorted(p for p in run_dir.rglob("*") if _is_compressible(p)):
+        try:
+            compressed, before, after = _gzip_file(fp, level=level)
+            bytes_before += before
+            if compressed:
+                compressed_files += 1
+                bytes_after += after
+            else:
+                skipped_files += 1
+                bytes_after += before
+        except Exception as e:
+            skipped_files += 1
+            logger.log(f"[compress] skip {fp}: {e}")
+
+    return {
+        "compressed_files": compressed_files,
+        "skipped_files": skipped_files,
+        "bytes_before": bytes_before,
+        "bytes_after": bytes_after,
+    }
+
+
 def write_env(meta_dir: Path, logger: PipelineLogger) -> None:
     env_path = meta_dir / "env.txt"
     lines = [
@@ -508,6 +573,10 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--run-id", default=None, help="Run ID (default: YYYYMMDD_HHMMSS).")
     ap.add_argument("--keep-intermediate", nargs="?", const=True, default=True, type=parse_bool,
                     help="Keep intermediate artifacts (default: true).")
+    ap.add_argument("--compress-artifacts", nargs="?", const=True, default=True, type=parse_bool,
+                    help="Compress run artifacts (.csv/.json/.txt/.log/.parquet/.png) with gzip (default: true).")
+    ap.add_argument("--compression-level", type=int, default=9,
+                    help="Gzip compression level [1-9] used when --compress-artifacts is true (default: 9).")
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing run folder.")
     ap.add_argument("--continue-on-error", action="store_true", help="Continue after stage failures.")
 
@@ -641,11 +710,13 @@ def main() -> int:
         raise ValueError("--features-dir is required when --skip-extract is set.")
     if args.skip_score and not args.scored_out_dir and not args.scrape_only:
         raise ValueError("--scored-out-dir is required when --skip-score is set.")
+    if args.compression_level < 1 or args.compression_level > 9:
+        raise ValueError("--compression-level must be in [1, 9].")
 
     job_slug = safe_slug(args.job)
     run_id = args.run_id or datetime.now().strftime("%Y%m%d_%H%M%S")
     run_root = Path(args.run_root)
-    run_dir = run_root / job_slug / run_id
+    run_dir = run_root / run_id
 
     if run_dir.exists():
         if not args.overwrite:
@@ -1028,6 +1099,13 @@ def main() -> int:
     maybe_cleanup_stage(extract_dir)
 
     finalize_report(run_dir, meta_dir, stage_results, errors)
+    if args.compress_artifacts:
+        stats = compress_run_artifacts(run_dir, logger, level=int(args.compression_level))
+        logger.log(
+            "[compress] files="
+            f"{stats['compressed_files']} skipped={stats['skipped_files']} "
+            f"bytes_before={stats['bytes_before']} bytes_after={stats['bytes_after']}"
+        )
     logger.log("[done] pipeline finished")
     return 0
 

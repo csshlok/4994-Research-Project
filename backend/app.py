@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import gzip
 import json
+import mimetypes
+import shutil
 import threading
+import time
 import uuid
 from pathlib import Path
 from typing import Any
@@ -16,7 +20,7 @@ if __package__ in {None, ""}:
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 import uvicorn
 
@@ -36,12 +40,140 @@ def _spawn(target, *args) -> None:
     t.start()
 
 
+def _gz_path(path: Path) -> Path:
+    return path.with_name(path.name + ".gz")
+
+
+def _read_text_maybe_gz(path: Path) -> str:
+    if path.exists():
+        return path.read_text(encoding="utf-8", errors="ignore")
+    gz = _gz_path(path)
+    if gz.exists():
+        with gzip.open(gz, "rt", encoding="utf-8", errors="ignore") as f:
+            return f.read()
+    return ""
+
+
+def _read_json_maybe_gz(path: Path) -> dict[str, Any] | None:
+    if path.exists():
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return None
+    gz = _gz_path(path)
+    if gz.exists():
+        try:
+            with gzip.open(gz, "rt", encoding="utf-8", errors="replace") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else None
+        except Exception:
+            return None
+    return None
+
+
+def _iter_gzip_bytes(path: Path, chunk_size: int = 1024 * 1024):
+    with gzip.open(path, "rb") as f:
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+            yield chunk
+
+
+ACTIVE_JOB_STATUSES = {"queued", "running"}
+
+
+def _load_status_file(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        return raw if isinstance(raw, dict) else {}
+    except Exception:
+        return {}
+
+
+def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
+    active_runs: set[Path] = set()
+    jobs_root = settings.JOBS_DIR
+    if not jobs_root.exists():
+        return active_runs
+
+    ttl_seconds = float(settings.JOB_RETENTION_HOURS) * 3600.0
+    for job_dir in jobs_root.iterdir():
+        if not job_dir.is_dir():
+            continue
+
+        status_path = job_dir / "status.json"
+        status = _load_status_file(status_path)
+        state = str(status.get("status") or "").strip().lower()
+        run_dir_val = status.get("run_dir")
+        if state in ACTIVE_JOB_STATUSES and isinstance(run_dir_val, str) and run_dir_val.strip():
+            active_runs.add(Path(run_dir_val).resolve())
+
+        updated_at = status.get("updated_at")
+        created_at = status.get("created_at")
+        if isinstance(updated_at, (int, float)):
+            age_ref = float(updated_at)
+        elif isinstance(created_at, (int, float)):
+            age_ref = float(created_at)
+        else:
+            age_ref = float(job_dir.stat().st_mtime)
+
+        if state in ACTIVE_JOB_STATUSES:
+            continue
+        if (now_ts - age_ref) >= ttl_seconds:
+            shutil.rmtree(job_dir, ignore_errors=True)
+
+    return active_runs
+
+
+def _cleanup_runs(now_ts: float, active_runs: set[Path]) -> None:
+    runs_root = settings.RUNS_DIR
+    if not runs_root.exists():
+        return
+
+    ttl_seconds = float(settings.RUN_RETENTION_HOURS) * 3600.0
+    for run_dir in runs_root.iterdir():
+        if not run_dir.is_dir():
+            continue
+        run_resolved = run_dir.resolve()
+        if run_resolved in active_runs:
+            continue
+        # Prefer job created_at when available so TTL is based on job creation time.
+        status_path = settings.JOBS_DIR / run_dir.name / "status.json"
+        status = _load_status_file(status_path)
+        created_at = status.get("created_at")
+        if isinstance(created_at, (int, float)):
+            age_ref = float(created_at)
+        else:
+            age_ref = float(run_dir.stat().st_mtime)
+        if (now_ts - age_ref) >= ttl_seconds:
+            shutil.rmtree(run_dir, ignore_errors=True)
+
+
+def _run_ttl_cleanup_once() -> None:
+    now_ts = time.time()
+    active_runs = _cleanup_jobs_and_collect_active_runs(now_ts)
+    _cleanup_runs(now_ts, active_runs)
+
+
+def _cleanup_loop() -> None:
+    while True:
+        try:
+            _run_ttl_cleanup_once()
+        except Exception:
+            pass
+        time.sleep(float(settings.CLEANUP_INTERVAL_SECONDS))
+
+
 def _read_progress_snapshot(progress_path: Path) -> dict[str, Any]:
-    if not progress_path.exists():
+    body = _read_text_maybe_gz(progress_path)
+    if not body:
         return {"current_stage": None, "current_status": None, "history": []}
 
     history: list[dict[str, Any]] = []
-    for line in progress_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+    for line in body.splitlines():
         line = line.strip()
         if not line:
             continue
@@ -62,14 +194,16 @@ def _read_progress_snapshot(progress_path: Path) -> dict[str, Any]:
 
 
 def _tail_file(path: Path, n: int) -> str:
-    if not path.exists():
+    body = _read_text_maybe_gz(path)
+    if not body:
         return ""
-    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    lines = body.splitlines()
     return "\n".join(lines[-max(1, n):])
 
 
 app = FastAPI(title="Pipeline Backend", version="1.0.0")
 store = JobStore(settings.JOBS_DIR)
+_spawn(_cleanup_loop)
 
 app.add_middleware(
     CORSMiddleware,
@@ -89,6 +223,9 @@ def health() -> dict[str, Any]:
         "runs_dir": str(settings.RUNS_DIR),
         "cache_usage_log": str(settings.CACHE_USAGE_LOG),
         "python_exe": str(settings.PYTHON_EXE),
+        "run_retention_hours": settings.RUN_RETENTION_HOURS,
+        "job_retention_hours": settings.JOB_RETENTION_HOURS,
+        "cleanup_interval_seconds": settings.CLEANUP_INTERVAL_SECONDS,
     }
 
 
@@ -155,16 +292,15 @@ def job_status(job_id: str) -> dict[str, Any]:
         }
 
         report_path = run_dir / "00_meta" / "run_report.json"
-        if report_path.exists():
-            try:
-                report = json.loads(report_path.read_text(encoding="utf-8"))
-                st["pipeline_report"] = {
-                    "counts": report.get("counts"),
-                    "errors": report.get("errors"),
-                    "stages": report.get("stages"),
-                }
-            except Exception:
-                st["pipeline_report"] = None
+        report = _read_json_maybe_gz(report_path)
+        if report is not None:
+            st["pipeline_report"] = {
+                "counts": report.get("counts"),
+                "errors": report.get("errors"),
+                "stages": report.get("stages"),
+            }
+        else:
+            st["pipeline_report"] = None
     return st
 
 
@@ -205,10 +341,14 @@ def job_outputs(job_id: str) -> dict[str, Any]:
     if not run_dir.exists():
         return {"files": []}
 
-    files = []
+    files: set[str] = set()
     for p in run_dir.rglob("*"):
         if p.is_file():
-            files.append(str(p.relative_to(run_dir)).replace("\\", "/"))
+            rel = str(p.relative_to(run_dir)).replace("\\", "/")
+            files.add(rel)
+            # Expose a virtual uncompressed path for *.gz artifacts.
+            if rel.endswith(".gz"):
+                files.add(rel[:-3])
 
     return {"files": sorted(files)}
 
@@ -247,10 +387,18 @@ def job_download(job_id: str, path: str = Query(..., min_length=1)):
     target = (run_dir / path).resolve()
     if run_dir not in target.parents and target != run_dir:
         raise HTTPException(status_code=400, detail="Invalid path")
-    if not target.exists() or not target.is_file():
+    if target.exists() and target.is_file():
+        return FileResponse(target, filename=target.name)
+
+    gz_target = Path(str(target) + ".gz")
+    if run_dir not in gz_target.parents and gz_target != run_dir:
+        raise HTTPException(status_code=400, detail="Invalid path")
+    if not gz_target.exists() or not gz_target.is_file():
         raise HTTPException(status_code=404, detail="File not found")
 
-    return FileResponse(target, filename=target.name)
+    media_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+    headers = {"Content-Disposition": f'attachment; filename="{target.name}"'}
+    return StreamingResponse(_iter_gzip_bytes(gz_target), media_type=media_type, headers=headers)
 
 
 if __name__ == "__main__":

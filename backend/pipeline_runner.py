@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import datetime as dt
+import gzip
 import json
 import os
 import re
@@ -160,14 +161,29 @@ def _now_iso() -> str:
     return dt.datetime.now().isoformat(timespec="seconds")
 
 
+def _exists_or_gz(path: Path) -> bool:
+    if path.exists():
+        return True
+    gz_path = path.with_name(path.name + ".gz")
+    return gz_path.exists()
+
+
 def _load_run_report(run_dir: Path) -> dict[str, Any] | None:
     report_path = run_dir / "00_meta" / "run_report.json"
-    if not report_path.exists():
-        return None
-    try:
-        return json.loads(report_path.read_text(encoding="utf-8"))
-    except Exception:
-        return None
+    if report_path.exists():
+        try:
+            return json.loads(report_path.read_text(encoding="utf-8"))
+        except Exception:
+            return None
+
+    gz_path = report_path.with_name(report_path.name + ".gz")
+    if gz_path.exists():
+        try:
+            with gzip.open(gz_path, "rt", encoding="utf-8", errors="replace") as f:
+                return json.load(f)
+        except Exception:
+            return None
+    return None
 
 
 def _collect_output_summary(run_dir: Path) -> dict[str, Any]:
@@ -196,7 +212,12 @@ def _collect_output_summary(run_dir: Path) -> dict[str, Any]:
         "figures_dir": run_dir / "05_viz" / "figures",
     }
     key_paths = {k: str(v) for k, v in key_files.items()}
-    key_exists = {k: v.exists() for k, v in key_files.items()}
+    key_exists = {
+        "run_report_json": _exists_or_gz(key_files["run_report_json"]),
+        "review_scores_csv": _exists_or_gz(key_files["review_scores_csv"]),
+        "company_scores_csv": _exists_or_gz(key_files["company_scores_csv"]),
+        "figures_dir": key_files["figures_dir"].exists(),
+    }
 
     return {
         "counts": counts,
@@ -213,7 +234,7 @@ def _missing_required_viz(run_dir: Path) -> list[str]:
         run_dir / "05_viz" / "figures" / "04_fulfillment_vs_hindrance_stacked.png",
         run_dir / "05_viz" / "figures" / "06_company_radar_all.png",
     ]
-    return [str(p.relative_to(run_dir)).replace("\\", "/") for p in required if not p.exists()]
+    return [str(p.relative_to(run_dir)).replace("\\", "/") for p in required if not _exists_or_gz(p)]
 
 
 def _append_cache_usage_log(entry: dict[str, Any]) -> None:
@@ -273,7 +294,7 @@ def run_cache_job(store: JobStore, job_id: str, company_id: str) -> None:
 
         resolved_company_name = company_dir.name
         job_slug = safe_slug(company_dir.name)
-        run_dir = settings.RUNS_DIR / job_slug / job_id
+        run_dir = settings.RUNS_DIR / job_id
         store.update_status(
             job_id,
             status="running",
@@ -299,6 +320,10 @@ def run_cache_job(store: JobStore, job_id: str, company_id: str) -> None:
             str(input_csv),
             "--goal-dict",
             str(settings.GOAL_DICT),
+            "--keep-intermediate",
+            "false",
+            "--compress-artifacts",
+            "true",
         ]
 
         env = os.environ.copy()
