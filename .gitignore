@@ -21,3 +21,5 @@ review data/*
 !review data/**/
 !review data/**/reviews.csv
 !review data/**/reviews.json
+tests/
+node_modules/
