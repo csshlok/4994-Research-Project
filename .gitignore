@@ -4,6 +4,7 @@ debug.log
 design.txt
 *.csv
 goal_dict.json
+!config/goal_dict.json
 settings.json
 
 chrome-profile/
