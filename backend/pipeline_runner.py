@@ -307,7 +307,9 @@ def run_cache_job(store: JobStore, job_id: str, company_id: str) -> None:
 
         input_csv = resolve_reviews_csv(company_dir, store.job_dir(job_id))
 
-        runtime_python = str(Path(sys.executable).resolve())
+        # Keep the active interpreter path as-is. Resolving symlinks here can
+        # collapse `.venv/bin/python` to the base interpreter and lose venv deps.
+        runtime_python = str(sys.executable)
         configured_python = str(settings.PYTHON_EXE)
         if runtime_python != configured_python:
             store.append_log(
