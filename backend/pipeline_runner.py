@@ -7,6 +7,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import threading
 import time
 import traceback
@@ -306,8 +307,17 @@ def run_cache_job(store: JobStore, job_id: str, company_id: str) -> None:
 
         input_csv = resolve_reviews_csv(company_dir, store.job_dir(job_id))
 
+        runtime_python = str(Path(sys.executable).resolve())
+        configured_python = str(settings.PYTHON_EXE)
+        if runtime_python != configured_python:
+            store.append_log(
+                job_id,
+                f"[runner][info] runtime python ({runtime_python}) differs from configured PYTHON_EXE "
+                f"({configured_python}); using runtime interpreter",
+            )
+
         cmd = [
-            str(settings.PYTHON_EXE),
+            runtime_python,
             "pipeline.py",
             "--job",
             company_dir.name,
