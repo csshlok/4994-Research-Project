@@ -38,6 +38,7 @@ class Settings:
     JOB_RETENTION_HOURS: int
     CLEANUP_INTERVAL_SECONDS: int
     JOB_DISPATCH_INTERVAL_SECONDS: int
+    MAX_QUEUE_LENGTH: int
 
 
 def load_settings() -> Settings:
@@ -53,6 +54,7 @@ def load_settings() -> Settings:
     job_retention_hours = max(1, _int_env("JOB_RETENTION_HOURS", 24))
     cleanup_interval_seconds = max(30, _int_env("CLEANUP_INTERVAL_SECONDS", 600))
     job_dispatch_interval_seconds = max(1, _int_env("JOB_DISPATCH_INTERVAL_SECONDS", 2))
+    max_queue_length = max(1, _int_env("MAX_QUEUE_LENGTH", 10))
 
     return Settings(
         REPO_ROOT=repo_root,
@@ -67,6 +69,7 @@ def load_settings() -> Settings:
         JOB_RETENTION_HOURS=job_retention_hours,
         CLEANUP_INTERVAL_SECONDS=cleanup_interval_seconds,
         JOB_DISPATCH_INTERVAL_SECONDS=job_dispatch_interval_seconds,
+        MAX_QUEUE_LENGTH=max_queue_length,
     )
 
 

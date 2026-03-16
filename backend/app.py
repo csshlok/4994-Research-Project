@@ -173,6 +173,7 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
         return active_runs
 
     ttl_seconds = float(settings.JOB_RETENTION_HOURS) * 3600.0
+    run_ttl_seconds = float(settings.RUN_RETENTION_HOURS) * 3600.0
     for job_dir in jobs_root.iterdir():
         if not job_dir.is_dir():
             continue
@@ -196,6 +197,15 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
         if state in ACTIVE_JOB_STATUSES:
             continue
         if (now_ts - age_ref) >= ttl_seconds:
+            # If the job record is expiring, opportunistically remove its run dir
+            # as well when it is already past run retention.
+            if isinstance(run_dir_val, str) and run_dir_val.strip():
+                try:
+                    run_path = Path(run_dir_val).resolve()
+                    if run_path.exists() and run_path.is_dir() and (now_ts - age_ref) >= run_ttl_seconds:
+                        shutil.rmtree(run_path, ignore_errors=True)
+                except Exception:
+                    pass
             shutil.rmtree(job_dir, ignore_errors=True)
 
     return active_runs
@@ -293,15 +303,12 @@ def health() -> dict[str, Any]:
     counts = _count_jobs_by_status()
     return {
         "ok": True,
-        "repo_root": str(settings.REPO_ROOT),
-        "review_data_dir": str(settings.REVIEW_DATA_DIR),
-        "runs_dir": str(settings.RUNS_DIR),
-        "cache_usage_log": str(settings.CACHE_USAGE_LOG),
-        "python_exe": str(settings.PYTHON_EXE),
+        "service": "pipeline-backend",
         "run_retention_hours": settings.RUN_RETENTION_HOURS,
         "job_retention_hours": settings.JOB_RETENTION_HOURS,
         "cleanup_interval_seconds": settings.CLEANUP_INTERVAL_SECONDS,
         "job_dispatch_interval_seconds": settings.JOB_DISPATCH_INTERVAL_SECONDS,
+        "max_queue_length": settings.MAX_QUEUE_LENGTH,
         "queue_depth": counts["queued"],
         "running_jobs": counts["running"],
     }
@@ -333,6 +340,13 @@ def run_job(payload: RunRequest) -> dict[str, str]:
     company = (payload.company_id or payload.company_name or "").strip()
     if not company:
         raise HTTPException(status_code=400, detail="Provide company_id (or company_name).")
+
+    counts = _count_jobs_by_status()
+    if counts["queued"] >= int(settings.MAX_QUEUE_LENGTH):
+        raise HTTPException(
+            status_code=429,
+            detail=f"Queue is full (max queued jobs={settings.MAX_QUEUE_LENGTH}). Please retry later.",
+        )
 
     job_id = uuid.uuid4().hex[:12]
     store.create_job(
