@@ -172,8 +172,8 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
     if not jobs_root.exists():
         return active_runs
 
-    ttl_seconds = float(settings.JOB_RETENTION_HOURS) * 3600.0
-    run_ttl_seconds = float(settings.RUN_RETENTION_HOURS) * 3600.0
+    ttl_seconds = float(settings.JOB_RETENTION_SECONDS)
+    run_ttl_seconds = float(settings.RUN_RETENTION_SECONDS)
     for job_dir in jobs_root.iterdir():
         if not job_dir.is_dir():
             continue
@@ -216,7 +216,7 @@ def _cleanup_runs(now_ts: float, active_runs: set[Path]) -> None:
     if not runs_root.exists():
         return
 
-    ttl_seconds = float(settings.RUN_RETENTION_HOURS) * 3600.0
+    ttl_seconds = float(settings.RUN_RETENTION_SECONDS)
     for run_dir in runs_root.iterdir():
         if not run_dir.is_dir():
             continue
@@ -304,8 +304,8 @@ def health() -> dict[str, Any]:
     return {
         "ok": True,
         "service": "pipeline-backend",
-        "run_retention_hours": settings.RUN_RETENTION_HOURS,
-        "job_retention_hours": settings.JOB_RETENTION_HOURS,
+        "run_retention_seconds": settings.RUN_RETENTION_SECONDS,
+        "job_retention_seconds": settings.JOB_RETENTION_SECONDS,
         "cleanup_interval_seconds": settings.CLEANUP_INTERVAL_SECONDS,
         "job_dispatch_interval_seconds": settings.JOB_DISPATCH_INTERVAL_SECONDS,
         "max_queue_length": settings.MAX_QUEUE_LENGTH,

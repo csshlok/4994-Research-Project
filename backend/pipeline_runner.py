@@ -333,7 +333,7 @@ def run_cache_job(store: JobStore, job_id: str, company_id: str) -> None:
             "--goal-dict",
             str(settings.GOAL_DICT),
             "--keep-intermediate",
-            "false",
+            "true",
             "--compress-artifacts",
             "true",
         ]
