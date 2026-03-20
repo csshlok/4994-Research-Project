@@ -72,19 +72,13 @@ export function CompanyInputSection({
   const shouldShowDropdown =
     isFocused &&
     showDropdown &&
-    hasTyped &&
-    filteredCompanies.length > 0;
+    hasTyped;
 
   return (
     <section className="py-16 px-6 bg-background" id="company-input">
       <div className="max-w-4xl mx-auto">
-
-        {/* Smaller white section container */}
         <div className="bg-white rounded-3xl border border-border/30 shadow-sm px-6 md:px-8 py-8 md:py-10">
-
           <div className="max-w-2xl mx-auto text-center">
-
-            {/* START ANALYSIS */}
             <p className="text-xs font-medium tracking-[0.18em] text-primary uppercase mb-4">
               Start Analysis
             </p>
@@ -99,21 +93,16 @@ export function CompanyInputSection({
             </p>
 
             <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-
               <div
                 className={`relative flex flex-col rounded-xl border bg-background shadow-sm transition-all duration-300 ${
                   isFocused ? "border-primary/40" : "border-border/60"
                 }`}
               >
-
                 <div className="flex items-center gap-2 px-3 py-2">
-
-                  {/* Search icon */}
                   <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted shrink-0">
                     <Search className="w-4 h-4 text-primary/80" />
                   </div>
 
-                  {/* Input */}
                   <Input
                     value={searchText}
                     onChange={(e) => {
@@ -136,7 +125,6 @@ export function CompanyInputSection({
                     maxLength={100}
                   />
 
-                  {/* Run button */}
                   <Button
                     type="submit"
                     size="sm"
@@ -146,29 +134,31 @@ export function CompanyInputSection({
                     Run Analysis
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
-
                 </div>
 
                 {shouldShowDropdown && (
                   <div className="border-t border-border px-3 py-2 max-h-60 overflow-y-auto text-left bg-background rounded-b-xl">
                     <div className="grid gap-1">
-
-                      {filteredCompanies.map((company) => (
-                        <button
-                          key={company.value}
-                          type="button"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleSelect(company.label)}
-                          className="w-full rounded-lg border border-transparent px-3 py-2 text-left text-sm transition-colors hover:bg-muted hover:border-border"
-                        >
-                          {company.label}
-                        </button>
-                      ))}
-
+                      {filteredCompanies.length > 0 ? (
+                        filteredCompanies.map((company) => (
+                          <button
+                            key={company.value}
+                            type="button"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => handleSelect(company.label)}
+                            className="w-full rounded-lg border border-transparent px-3 py-2 text-left text-sm transition-colors hover:bg-muted hover:border-border"
+                          >
+                            {company.label}
+                          </button>
+                        ))
+                      ) : (
+                        <div className="px-3 py-3 text-sm text-muted-foreground text-center">
+                          Don’t see your company? We haven’t added it to our review database.
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
-
               </div>
 
               {errorMessage && (
@@ -177,7 +167,7 @@ export function CompanyInputSection({
                 </p>
               )}
 
-              {!errorMessage && hasTyped && !exactMatch && (
+              {!errorMessage && hasTyped && !exactMatch && filteredCompanies.length > 0 && (
                 <p className="text-sm text-amber-600 mt-3 text-left">
                   No exact company match found yet. Keep typing or select one from
                   the suggestions.
@@ -189,13 +179,9 @@ export function CompanyInputSection({
                   Analysis typically takes 2-3 minutes depending on review volume
                 </p>
               )}
-
             </form>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

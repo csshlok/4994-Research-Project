@@ -93,12 +93,21 @@ export function ResultsPage({ analysis, onBack }: ResultsPageProps) {
     hindrance: d.hindrance,
   }));
 
-  const maxEvidence = Math.max(
-    1,
-    ...domainScores.map((d) => Math.max(d.fulfillment, d.hindrance))
-  );
-  const axisLimit = Math.ceil(maxEvidence * 1.2);
+const maxEvidence = Math.max(
+  1,
+  ...domainScores.map((d) => Math.max(d.fulfillment, d.hindrance))
+);
 
+const getRadarScaleMax = (value: number) => {
+  const whole = Math.floor(value);
+  const decimal = value - whole;
+
+  if (decimal === 0) return whole;
+  if (decimal <= 0.5) return whole + 1;
+  return whole + 2;
+};
+
+const axisLimit = getRadarScaleMax(maxEvidence);
   const overallTone =
     overallScore >= 70
       ? "generally positive"
@@ -291,7 +300,8 @@ export function ResultsPage({ analysis, onBack }: ResultsPageProps) {
                       <PolarRadiusAxis
                         angle={90}
                         domain={[0, axisLimit]}
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                      tickCount={axisLimit + 1}
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
                       />
                       <Radar
                         name="Fulfillment"
