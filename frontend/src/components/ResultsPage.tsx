@@ -88,7 +88,7 @@ export function ResultsPage({ analysis, onBack }: ResultsPageProps) {
   }));
 
   const radarData = domainScores.map((d) => ({
-    domain: d.short,
+    domain: d.domain,
     fulfillment: d.fulfillment,
     hindrance: d.hindrance,
   }));
@@ -284,53 +284,59 @@ const axisLimit = getRadarScaleMax(maxEvidence);
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Domain Profile</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                      <PolarGrid stroke="hsl(var(--border))" />
-                      <PolarAngleAxis
-                        dataKey="domain"
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                      />
-                      <PolarRadiusAxis
-                        angle={90}
-                        domain={[0, axisLimit]}
-                      tickCount={axisLimit + 1}
+          <Card>
+          <CardHeader>
+            <CardTitle>Domain Profile</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[420px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart
+                  cx="50%"
+                  cy="48%"
+                  outerRadius="82%"
+                  data={radarData}
+                  margin={{ top: 10, right: 30, bottom: 10, left: 30 }}
+                >
+                  <PolarGrid stroke="hsl(var(--border))" />
+                  <PolarAngleAxis
+                    dataKey="domain"
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  />
+                  <PolarRadiusAxis
+                    angle={90}
+                    domain={[0, axisLimit]}
+                    tickCount={axisLimit + 1}
                     tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
-                      />
-                      <Radar
-                        name="Fulfillment"
-                        dataKey="fulfillment"
-                        stroke="hsl(var(--primary))"
-                        fill="hsl(var(--primary))"
-                        fillOpacity={0.3}
-                      />
-                      <Radar
-                        name="Hindrance"
-                        dataKey="hindrance"
-                        stroke="hsl(var(--destructive))"
-                        fill="hsl(var(--destructive))"
-                        fillOpacity={0.2}
-                      />
-                      <Legend />
-                      <Tooltip
-                        formatter={(value: number) => Number(value).toFixed(2)}
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--card))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "8px",
-                        }}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+                  />
+                  <Radar
+                    name="Fulfillment"
+                    dataKey="fulfillment"
+                    stroke="hsl(var(--primary))"
+                    fill="hsl(var(--primary))"
+                    fillOpacity={0.3}
+                  />
+                  <Radar
+                    name="Hindrance"
+                    dataKey="hindrance"
+                    stroke="hsl(var(--destructive))"
+                    fill="hsl(var(--destructive))"
+                    fillOpacity={0.2}
+                  />
+                  <Legend />
+                  <Tooltip
+                    formatter={(value: number) => Number(value).toFixed(2)}
+                    contentStyle={{
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
           </div>
         </section>
 
