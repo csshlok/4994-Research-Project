@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,jacobs,870,0,0,0,870,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\jacobs\02_clean\reviews_jacobs_clean.csv

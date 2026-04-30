@@ -1,0 +1,366 @@
+﻿{
+    "source_root":  "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\review data",
+    "score_root":  "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\company scores",
+    "updated_at":  "2026-04-30T00:35:35",
+    "companies":  [
+                      "Accenture",
+                      "adobe",
+                      "american express",
+                      "apple",
+                      "bain company",
+                      "Bain Consulting Group",
+                      "barclays",
+                      "bloomberg",
+                      "Booz Allen Hamilton",
+                      "capgemini",
+                      "cisco",
+                      "cognizant",
+                      "crew carwash",
+                      "Deloitte",
+                      "delta",
+                      "epam systems",
+                      "ericsson",
+                      "EY",
+                      "fidelity investments",
+                      "ge",
+                      "Google",
+                      "heb",
+                      "houston methodist",
+                      "HPE",
+                      "in n out",
+                      "intuit",
+                      "jacobs",
+                      "johnson and johnson",
+                      "keller williams",
+                      "KPMG",
+                      "lockheed martin",
+                      "lululemon",
+                      "mars",
+                      "mastercard",
+                      "McKinsey",
+                      "microsoft",
+                      "nike",
+                      "nokia",
+                      "nvidia",
+                      "pwc",
+                      "rbc",
+                      "ryan",
+                      "sap",
+                      "service now",
+                      "siemens",
+                      "tc2s",
+                      "TCS",
+                      "thomson reuters",
+                      "tp",
+                      "unilever"
+                  ],
+    "latest_run":  {
+                       "total":  50,
+                       "succeeded":  49,
+                       "skipped":  1,
+                       "failed":  0,
+                       "dry_run":  0,
+                       "results":  [
+                                       {
+                                           "company":  "Accenture",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  97.906
+                                       },
+                                       {
+                                           "company":  "adobe",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  78.218
+                                       },
+                                       {
+                                           "company":  "american express",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  77.638
+                                       },
+                                       {
+                                           "company":  "apple",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  74.825
+                                       },
+                                       {
+                                           "company":  "bain company",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  73.824
+                                       },
+                                       {
+                                           "company":  "Bain Consulting Group",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  97.844
+                                       },
+                                       {
+                                           "company":  "barclays",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  62.004
+                                       },
+                                       {
+                                           "company":  "bloomberg",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  67.808
+                                       },
+                                       {
+                                           "company":  "Booz Allen Hamilton",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  92.695
+                                       },
+                                       {
+                                           "company":  "capgemini",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  65.066
+                                       },
+                                       {
+                                           "company":  "cisco",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  88.576
+                                       },
+                                       {
+                                           "company":  "cognizant",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  91.897
+                                       },
+                                       {
+                                           "company":  "crew carwash",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  76.968
+                                       },
+                                       {
+                                           "company":  "Deloitte",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  75.951
+                                       },
+                                       {
+                                           "company":  "delta",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  57.84
+                                       },
+                                       {
+                                           "company":  "epam systems",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  72.088
+                                       },
+                                       {
+                                           "company":  "ericsson",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  140.1
+                                       },
+                                       {
+                                           "company":  "EY",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  75.602
+                                       },
+                                       {
+                                           "company":  "fidelity investments",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  67.294
+                                       },
+                                       {
+                                           "company":  "ge",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  66.308
+                                       },
+                                       {
+                                           "company":  "Google",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  69.788
+                                       },
+                                       {
+                                           "company":  "heb",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  62.767
+                                       },
+                                       {
+                                           "company":  "houston methodist",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  66.279
+                                       },
+                                       {
+                                           "company":  "HPE",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  56.507
+                                       },
+                                       {
+                                           "company":  "in n out",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  60.792
+                                       },
+                                       {
+                                           "company":  "intuit",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  61.302
+                                       },
+                                       {
+                                           "company":  "jacobs",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  60.933
+                                       },
+                                       {
+                                           "company":  "johnson and johnson",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  63.865
+                                       },
+                                       {
+                                           "company":  "keller williams",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  65.73
+                                       },
+                                       {
+                                           "company":  "KPMG",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  72.212
+                                       },
+                                       {
+                                           "company":  "lockheed martin",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  66.672
+                                       },
+                                       {
+                                           "company":  "lululemon",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  57.669
+                                       },
+                                       {
+                                           "company":  "mars",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  69.551
+                                       },
+                                       {
+                                           "company":  "mastercard",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  66.46
+                                       },
+                                       {
+                                           "company":  "McKinsey",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  71.663
+                                       },
+                                       {
+                                           "company":  "microsoft",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  56.733
+                                       },
+                                       {
+                                           "company":  "nike",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  60.594
+                                       },
+                                       {
+                                           "company":  "nokia",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  57.563
+                                       },
+                                       {
+                                           "company":  "nvidia",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  67.42
+                                       },
+                                       {
+                                           "company":  "pwc",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  77.422
+                                       },
+                                       {
+                                           "company":  "rbc",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  69.855
+                                       },
+                                       {
+                                           "company":  "ryan",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  67.518
+                                       },
+                                       {
+                                           "company":  "sap",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  70.371
+                                       },
+                                       {
+                                           "company":  "service now",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  67.779
+                                       },
+                                       {
+                                           "company":  "siemens",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  80.884
+                                       },
+                                       {
+                                           "company":  "tc2s",
+                                           "status":  "skipped",
+                                           "message":  "Required score outputs already exist.",
+                                           "duration_sec":  0.002
+                                       },
+                                       {
+                                           "company":  "TCS",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  93.904
+                                       },
+                                       {
+                                           "company":  "thomson reuters",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  66.546
+                                       },
+                                       {
+                                           "company":  "tp",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  80.936
+                                       },
+                                       {
+                                           "company":  "unilever",
+                                           "status":  "succeeded",
+                                           "message":  "Company scores precomputed.",
+                                           "duration_sec":  68.704
+                                       }
+                                   ]
+                   }
+}

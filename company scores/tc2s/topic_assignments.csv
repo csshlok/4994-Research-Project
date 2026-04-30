@@ -1,0 +1,16 @@
+review_id,company_id,mode,goal,cluster_id,evidence_value
+102904483.0,tc2s,fulfillment,stat,fulfillment_stat,2.5
+102904143.0,tc2s,hindrance,aff,hindrance_aff,3.0
+102902842.0,tc2s,fulfillment,selfprot,fulfillment_selfprot,2.5
+102900962.0,tc2s,none,,,0.0
+102900517.0,tc2s,fulfillment,stat,fulfillment_stat,4.0
+102899995.0,tc2s,fulfillment,stat,fulfillment_stat,4.5
+102898199.0,tc2s,hindrance,stat,hindrance_stat,7.0
+102898052.0,tc2s,none,,,0.0
+102897949.0,tc2s,fulfillment,fam,fulfillment_fam,4.5
+102897848.0,tc2s,fulfillment,fam,fulfillment_fam,3.75
+102897456.0,tc2s,none,,,0.0
+102897295.0,tc2s,fulfillment,stat,fulfillment_stat,4.5
+102896843.0,tc2s,none,,,0.0
+102896731.0,tc2s,fulfillment,fam,fulfillment_fam,9.0
+102896718.0,tc2s,hindrance,fam,hindrance_fam,9.0

@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,ryan,980,0,0,0,980,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\ryan\02_clean\reviews_ryan_clean.csv

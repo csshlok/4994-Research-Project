@@ -28,6 +28,23 @@ export interface JobOutputsResponse {
   files: string[];
 }
 
+export interface ScoredCompany {
+  id: string;
+  has_review_scores: boolean;
+  has_company_scores: boolean;
+  has_cleaned_reviews: boolean;
+  has_topics: boolean;
+}
+
+export interface ScoredCompaniesResponse {
+  companies: ScoredCompany[];
+}
+
+export interface ScoredCompanyOutputsResponse {
+  company_id: string;
+  files: string[];
+}
+
 function apiUrl(path: string): string {
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
@@ -86,9 +103,29 @@ export async function downloadJobFileText(jobId: string, path: string): Promise<
   return await fetchText(url);
 }
 
+export async function getScoredCompanies(): Promise<ScoredCompaniesResponse> {
+  return await fetchJson<ScoredCompaniesResponse>("/api/scored-companies");
+}
+
+export async function getScoredCompanyOutputs(companyId: string): Promise<ScoredCompanyOutputsResponse> {
+  return await fetchJson<ScoredCompanyOutputsResponse>(
+    `/api/scored-company/${encodeURIComponent(companyId)}/outputs`
+  );
+}
+
+export function getScoredCompanyDownloadUrl(companyId: string, path: string): string {
+  return apiUrl(
+    `/api/scored-company/${encodeURIComponent(companyId)}/download?path=${encodeURIComponent(path)}`
+  );
+}
+
+export async function downloadScoredCompanyFileText(companyId: string, path: string): Promise<string> {
+  const url = `/api/scored-company/${encodeURIComponent(companyId)}/download?path=${encodeURIComponent(path)}`;
+  return await fetchText(url);
+}
+
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
   });
 }
-

@@ -33,6 +33,21 @@ export interface AnalysisDownloads {
   cleanedReviews?: string;
   reviewScores: string;
   companyScores: string;
+  topicSummary?: string;
+  topicAssignments?: string;
+}
+
+export interface TopicCluster {
+  mode: "fulfillment" | "hindrance";
+  clusterId: string;
+  label: string;
+  domain: string;
+  goal: string;
+  reviewCount: number;
+  signal: number;
+  x: number;
+  y: number;
+  terms: string[];
 }
 
 export interface AnalysisResult {
@@ -44,6 +59,7 @@ export interface AnalysisResult {
   strongestDomain: DomainScore;
   weakestDomain: DomainScore;
   domainScores: DomainScore[];
+  topicClusters: TopicCluster[];
   analysisDate: string;
   downloads: AnalysisDownloads;
 }
@@ -54,7 +70,9 @@ interface BuildArgs {
   resolvedCompanyName?: string;
   reviewCsvText: string;
   companyCsvText: string;
+  topicCsvText?: string;
   outputFiles?: string[];
+  downloads?: AnalysisDownloads;
 }
 
 type CsvRow = Record<string, string>;
@@ -236,6 +254,32 @@ function selectCleanedPath(outputFiles: string[]): string | undefined {
   return cleaned;
 }
 
+function parseTopicClusters(text?: string): TopicCluster[] {
+  if (!text?.trim()) {
+    return [];
+  }
+  return parseCsv(text)
+    .map((row) => {
+      const mode = row.mode === "hindrance" ? "hindrance" : "fulfillment";
+      return {
+        mode,
+        clusterId: row.cluster_id || "",
+        label: row.label || "Topic Cluster",
+        domain: row.domain || "",
+        goal: row.goal || "",
+        reviewCount: asNumber(row.review_count),
+        signal: asNumber(row.signal),
+        x: asNumber(row.x),
+        y: asNumber(row.y),
+        terms: (row.terms || "")
+          .split("|")
+          .map((term) => term.trim())
+          .filter(Boolean),
+      };
+    })
+    .filter((cluster) => cluster.clusterId);
+}
+
 export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
   const reviewRows = parseCsv(args.reviewCsvText);
   const companyRows = parseCsv(args.companyCsvText);
@@ -308,6 +352,8 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
   const reviewCount = activeReviewRows.length;
   const outputFiles = args.outputFiles || [];
   const cleanedPath = selectCleanedPath(outputFiles);
+  const hasTopicSummary = outputFiles.includes("topic_summary.csv");
+  const hasTopicAssignments = outputFiles.includes("topic_assignments.csv");
 
   return {
     jobId: args.jobId,
@@ -318,15 +364,18 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
     strongestDomain,
     weakestDomain,
     domainScores: nonEmptyScores,
+    topicClusters: parseTopicClusters(args.topicCsvText),
     analysisDate: new Date().toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     }),
-    downloads: {
+    downloads: args.downloads || {
       cleanedReviews: cleanedPath ? getJobDownloadUrl(args.jobId, cleanedPath) : undefined,
       reviewScores: getJobDownloadUrl(args.jobId, "04_score/review_scores.csv"),
       companyScores: getJobDownloadUrl(args.jobId, "04_score/company_scores.csv"),
+      topicSummary: hasTopicSummary ? getJobDownloadUrl(args.jobId, "topic_summary.csv") : undefined,
+      topicAssignments: hasTopicAssignments ? getJobDownloadUrl(args.jobId, "topic_assignments.csv") : undefined,
     },
   };
 }

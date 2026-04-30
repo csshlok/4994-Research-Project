@@ -1,0 +1,11 @@
+mode,cluster_id,label,domain,goal,review_count,signal,x,y,terms
+fulfillment,fulfillment_stat,Growth & Recognition,Status & Esteem,stat,236,24,48,58,promotion|recognition|valued|appreciated|advancement
+fulfillment,fulfillment_phys,Pay & Benefits,Physiological,phys,203,21,82,45,good pay|fair compensation|salary increase|bonus|benefits
+fulfillment,fulfillment_fam,Flexibility & Care,Family Care,fam,167,17,68,79,respect relationships|work life balance|work life|life balance|understanding spouse
+fulfillment,fulfillment_aff,Culture & Belonging,Affiliation,aff,122,12,22,74,teamwork|work environment|team environment|collaboration|collaborative environment
+fulfillment,fulfillment_selfprot,Safety & Fairness,Self-Protection,selfprot,53,5,50,38,safe|secure|fairness|respectful|trust
+hindrance,hindrance_phys,Burnout & Workload,Physiological,phys,115,12,24,28,low pay|low salary|underpaid|overworked|exhaustion
+hindrance,hindrance_stat,Stagnation,Status & Esteem,stat,104,11,70,24,unrecognized|overlooked|ignored|underappreciated|favoritism
+hindrance,hindrance_fam,Work-Life Pressure,Family Care,fam,72,7,82,52,no parental leave|unsupportive of parents|inflexible schedule|no childcare|guilt for family time
+hindrance,hindrance_selfprot,Unsafe or Unfair Culture,Self-Protection,selfprot,66,7,50,38,toxic|unsafe|threat|fear|harassment
+hindrance,hindrance_aff,Disconnected Culture,Affiliation,aff,50,5,62,34,isolation|disconnected|unfriendly|cliques|competition

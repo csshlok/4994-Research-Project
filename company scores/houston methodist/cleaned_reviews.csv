@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,houston_methodist,920,0,0,0,920,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\houston_methodist\02_clean\reviews_houston_methodist_clean.csv

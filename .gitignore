@@ -6,6 +6,7 @@ design.txt
 goal_dict.json
 !config/goal_dict.json
 settings.json
+.env.render
 
 chrome-profile/
 glassdoor_debug.html
@@ -22,5 +23,12 @@ review data/*
 !review data/**/
 !review data/**/reviews.csv
 !review data/**/reviews.json
+# Allow precomputed score caches to be committed when needed for deployment.
+!company scores/**/
+!company scores/**/*.csv
+!company scores/**/*.json
+!company scores/**/*.md
+!company scores/**/.gitkeep
 tests/
 node_modules/
+local_compare_outputs/

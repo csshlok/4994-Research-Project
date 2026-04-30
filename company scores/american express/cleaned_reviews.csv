@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,american_express,976,0,0,0,976,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\american_express\02_clean\reviews_american_express_clean.csv

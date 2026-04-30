@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,bain_consulting_group,960,0,0,0,960,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\bain_consulting_group\02_clean\reviews_bain_consulting_group_clean.csv

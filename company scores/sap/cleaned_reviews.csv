@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,sap,995,0,0,0,995,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\sap\02_clean\reviews_sap_clean.csv

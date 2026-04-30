@@ -80,6 +80,48 @@ def _iter_gzip_bytes(path: Path, chunk_size: int = 1024 * 1024):
             yield chunk
 
 
+def _company_match_key(text: str) -> str:
+    return "".join(ch for ch in str(text).casefold() if ch.isalnum())
+
+
+def _safe_slug(text: str) -> str:
+    s = "".join(ch if ch.isalnum() or ch in {"_", "-"} else "_" for ch in str(text).strip())
+    return s.strip("_").lower() or "company"
+
+
+def _resolve_scored_company_dir(company_id: str) -> Path | None:
+    root = settings.COMPANY_SCORES_DIR
+    wanted = str(company_id or "").strip()
+    if not wanted or not root.exists():
+        return None
+
+    dirs = [p for p in root.iterdir() if p.is_dir()]
+    if not dirs:
+        return None
+
+    for p in dirs:
+        if p.name == wanted:
+            return p
+
+    wanted_lower = wanted.lower()
+    wanted_slug = _safe_slug(wanted)
+    wanted_key = _company_match_key(wanted)
+    for p in dirs:
+        if p.name.lower() == wanted_lower:
+            return p
+    for p in dirs:
+        if _safe_slug(p.name) == wanted_slug:
+            return p
+    for p in dirs:
+        if _company_match_key(p.name) == wanted_key:
+            return p
+    return None
+
+
+def _has_required_score_files(company_dir: Path) -> bool:
+    return (company_dir / "review_scores.csv").exists() and (company_dir / "company_scores.csv").exists()
+
+
 ACTIVE_JOB_STATUSES = {"queued", "running"}
 
 
@@ -311,6 +353,7 @@ def health() -> dict[str, Any]:
         "max_queue_length": settings.MAX_QUEUE_LENGTH,
         "queue_depth": counts["queued"],
         "running_jobs": counts["running"],
+        "company_scores_dir": str(settings.COMPANY_SCORES_DIR),
     }
 
 
@@ -330,6 +373,69 @@ def list_companies() -> dict[str, Any]:
             }
         )
     return {"companies": companies}
+
+
+@app.get("/api/scored-companies")
+def list_scored_companies() -> dict[str, Any]:
+    root = settings.COMPANY_SCORES_DIR
+    if not root.exists():
+        return {"companies": []}
+
+    companies: list[dict[str, Any]] = []
+    for p in sorted([x for x in root.iterdir() if x.is_dir()], key=lambda x: x.name.lower()):
+        has_scores = _has_required_score_files(p)
+        if not has_scores:
+            continue
+        companies.append(
+            {
+                "id": p.name,
+                "has_review_scores": (p / "review_scores.csv").exists(),
+                "has_company_scores": (p / "company_scores.csv").exists(),
+                "has_cleaned_reviews": (p / "cleaned_reviews.csv").exists(),
+                "has_topics": (p / "topic_summary.csv").exists(),
+            }
+        )
+    return {"companies": companies}
+
+
+@app.get("/api/scored-company/{company_id}/outputs")
+def scored_company_outputs(company_id: str) -> dict[str, Any]:
+    company_dir = _resolve_scored_company_dir(company_id)
+    if company_dir is None or not _has_required_score_files(company_dir):
+        raise HTTPException(status_code=404, detail="Scored company not found")
+
+    files: set[str] = set()
+    for p in company_dir.rglob("*"):
+        if p.is_file():
+            rel = str(p.relative_to(company_dir)).replace("\\", "/")
+            files.add(rel)
+            if rel.endswith(".gz"):
+                files.add(rel[:-3])
+    return {"company_id": company_dir.name, "files": sorted(files)}
+
+
+@app.get("/api/scored-company/{company_id}/download")
+def scored_company_download(company_id: str, path: str = Query(..., min_length=1)):
+    company_dir = _resolve_scored_company_dir(company_id)
+    if company_dir is None or not _has_required_score_files(company_dir):
+        raise HTTPException(status_code=404, detail="Scored company not found")
+
+    root = company_dir.resolve()
+    target = (root / path).resolve()
+    if root not in target.parents and target != root:
+        raise HTTPException(status_code=400, detail="Invalid path")
+    if target.exists() and target.is_file():
+        return FileResponse(target, filename=target.name)
+
+    gz_target = Path(str(target) + ".gz")
+    if root not in gz_target.parents and gz_target != root:
+        raise HTTPException(status_code=400, detail="Invalid path")
+    if not gz_target.exists() or not gz_target.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+
+    media_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+    headers = {"Content-Disposition": f'attachment; filename="{target.name}"'}
+    return StreamingResponse(_iter_gzip_bytes(gz_target), media_type=media_type, headers=headers)
 
 
 @app.post("/api/run")

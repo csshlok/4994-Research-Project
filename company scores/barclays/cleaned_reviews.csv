@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,barclays,720,0,0,0,720,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\barclays\02_clean\reviews_barclays_clean.csv

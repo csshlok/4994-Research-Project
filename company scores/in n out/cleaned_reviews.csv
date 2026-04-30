@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,in_n_out,945,0,0,0,945,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\in_n_out\02_clean\reviews_in_n_out_clean.csv

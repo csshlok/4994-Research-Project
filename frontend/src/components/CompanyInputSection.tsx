@@ -1,17 +1,27 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, GitCompare, Check, Plus } from "lucide-react";
 import { COMPANY_OPTIONS } from "@/lib/company-options";
 
 interface CompanyInputSectionProps {
   onSubmit: (companyName: string) => void;
+  onCompareSubmit: (companyNames: string[]) => void;
+  initialCompareCompanies?: string[];
 }
 
 export function CompanyInputSection({
   onSubmit,
+  onCompareSubmit,
+  initialCompareCompanies = [],
 }: CompanyInputSectionProps) {
   const [searchText, setSearchText] = useState("");
+  const [compareSearchText, setCompareSearchText] = useState("");
+  const [mode, setMode] = useState<"single" | "compare">(
+    initialCompareCompanies.length > 0 ? "compare" : "single"
+  );
+  const [selectedCompare, setSelectedCompare] = useState<string[]>(initialCompareCompanies);
+  const [comparePage, setComparePage] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,6 +43,22 @@ export function CompanyInputSection({
       company.label.toLowerCase().startsWith(query)
     );
   }, [searchText, sortedCompanies]);
+
+  const filteredCompareCompanies = useMemo(() => {
+    const query = compareSearchText.trim().toLowerCase();
+    const base = query
+      ? sortedCompanies.filter((company) => company.label.toLowerCase().includes(query))
+      : sortedCompanies;
+    const start = query ? 0 : comparePage * 13;
+    return base.slice(start, start + 13);
+  }, [compareSearchText, sortedCompanies, comparePage]);
+
+  const compareTotalPages = useMemo(() => {
+    if (compareSearchText.trim()) {
+      return 1;
+    }
+    return Math.max(1, Math.ceil(sortedCompanies.length / 13));
+  }, [compareSearchText, sortedCompanies.length]);
 
   const exactMatch = useMemo(() => {
     const query = searchText.trim().toLowerCase();
@@ -67,6 +93,27 @@ export function CompanyInputSection({
     onSubmit(selectedCompany.value);
   };
 
+  const toggleCompareCompany = (companyValue: string) => {
+    setSelectedCompare((cur) => {
+      if (cur.includes(companyValue)) {
+        return cur.filter((value) => value !== companyValue);
+      }
+      if (cur.length >= 3) {
+        return cur;
+      }
+      return [...cur, companyValue];
+    });
+  };
+
+  const handleCompareSubmit = () => {
+    if (selectedCompare.length < 2) {
+      setErrorMessage("Select at least two companies to compare.");
+      return;
+    }
+    setErrorMessage("");
+    onCompareSubmit(selectedCompare);
+  };
+
   const hasTyped = searchText.trim().length > 0;
 
   const shouldShowDropdown =
@@ -84,14 +131,48 @@ export function CompanyInputSection({
             </p>
 
             <h2 className="text-2xl md:text-4xl font-display font-semibold text-foreground mb-4">
-              Analyze a Company
+              {mode === "single" ? "Analyze a Company" : "Compare Companies"}
             </h2>
 
             <p className="text-base text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
-              Enter a company name to receive a comprehensive analysis of employee
-              experiences mapped to the seven social domains.
+              {mode === "single"
+                ? "Enter a company name to receive a comprehensive analysis of employee experiences mapped to five human needs."
+                : "Select multiple companies to compare their scores, goal domains, and employee language clusters."}
             </p>
 
+            <div className="mb-6 inline-flex rounded-xl border border-border bg-background p-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setMode("single");
+                  setErrorMessage("");
+                }}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  mode === "single"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Analyze One
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                    setMode("compare");
+                    setComparePage(0);
+                    setErrorMessage("");
+                }}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  mode === "compare"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Compare Companies
+              </button>
+            </div>
+
+            {mode === "single" ? (
             <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
               <div
                 className={`relative flex flex-col rounded-xl border bg-background shadow-sm transition-all duration-300 ${
@@ -176,10 +257,68 @@ export function CompanyInputSection({
 
               {!errorMessage && (
                 <p className="text-sm text-muted-foreground mt-4">
-                  Analysis typically takes 2-3 minutes depending on review volume
+                  Cached analyses load in a few seconds.
                 </p>
               )}
             </form>
+            ) : (
+              <div className="max-w-3xl mx-auto text-left">
+                <div className="mb-4 flex items-center gap-2 rounded-xl border border-border bg-background px-3 py-2">
+                  <Search className="h-4 w-4 text-primary" />
+                  <Input
+                    value={compareSearchText}
+                    onChange={(event) => {
+                      setCompareSearchText(event.target.value);
+                      setComparePage(0);
+                    }}
+                    placeholder="Search companies to compare..."
+                    className="border-0 bg-transparent text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {filteredCompareCompanies.map((company) => {
+                    const selected = selectedCompare.includes(company.value);
+                    return (
+                      <button
+                        key={company.value}
+                        type="button"
+                        onClick={() => toggleCompareCompany(company.value)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors ${
+                          selected
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border bg-card hover:border-primary/40"
+                        }`}
+                      >
+                        {selected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                        {company.label}
+                      </button>
+                    );
+                  })}
+                  {!compareSearchText.trim() && compareTotalPages > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setComparePage((page) => (page + 1) % compareTotalPages)}
+                      className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                    >
+                      Next Set
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                {errorMessage && (
+                  <p className="mb-3 text-sm text-red-500">{errorMessage}</p>
+                )}
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-muted-foreground">
+                    {selectedCompare.length} selected. Choose 2-3 companies.
+                  </p>
+                  <Button onClick={handleCompareSubmit} disabled={selectedCompare.length < 2} className="gap-2">
+                    <GitCompare className="h-4 w-4" />
+                    Run Comparison
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

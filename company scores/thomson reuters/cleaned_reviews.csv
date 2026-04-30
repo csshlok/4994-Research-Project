@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,thomson_reuters,765,0,0,0,765,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\thomson_reuters\02_clean\reviews_thomson_reuters_clean.csv

@@ -1,0 +1,2 @@
+file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
+reviews.csv,nike,855,0,0,0,855,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\nike\02_clean\reviews_nike_clean.csv
