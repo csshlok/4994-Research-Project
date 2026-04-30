@@ -14,45 +14,45 @@ const domains = [
     number: 1,
     title: "Physiological Needs",
     description:
-      "Concerns whether a job supports basic survival and comfort. This domain captures the foundational requirements for employees to sustain themselves.",
+      " Provides for basic needs such as food and shelter, and supports physical and mental health.",
     examples:
-      "Pay adequacy, workload and exhaustion levels, health benefits, ability to meet basic living needs, physical working conditions.",
+      "good pay, healthcare, stability; hinders--burnout, unhealthy, fatigue",
     icon: <Heart className="w-6 h-6" />,
   },
   {
     number: 2,
     title: "Self-Protection",
     description:
-      "Relates to safety, fairness, and stability at work. This domain reflects whether employees feel secure and treated justly.",
+      " Feeling safe from people who might hurt or exploit me.",
     examples:
-      "Psychological safety, freedom from harassment, ethical leadership, job security, predictable policies, fair treatment.",
+    "thical work culture, empathy, boundaries honored; hinders-- toxic, fear, harassment",
     icon: <Shield className="w-6 h-6" />,
   },
   {
     number: 3,
     title: "Affiliation",
     description:
-      "Captures social belonging at work. This domain examines the quality of interpersonal connections and sense of community.",
+    "Fosters social connection with others and helps to make me desirable to potential friends, allies and romantic partners.",
     examples:
-      "Teamwork quality, inclusion and diversity, workplace friendships, feeling valued by peers, social support vs. isolation.",
+      " belonging, family-like, inclusive, social; hinders-- isolation, disconnected, unfriendly",
     icon: <Users className="w-6 h-6" />,
   },
   {
     number: 4,
     title: "Status & Esteem",
     description:
-      "Reflects respect, recognition, and perceived importance within the organization. This domain tracks how employees feel valued.",
+    "Feeling respected and valued for my skills and contributions.",
     examples:
-      "Promotion opportunities, recognition programs, career growth paths, leadership trust, feeling respected vs. overlooked.",
+     "prestige, leadership opportunities, education expenses; hinders-- disrespected, undervalued, no growth",
     icon: <Award className="w-6 h-6" />,
   },
   {
     number: 5,
     title: "Family Care",
     description:
-      "Concerns how well a job supports life outside of work. This domain measures the organization's respect for personal responsibilities.",
+    "Facilitates connecting with and supporting my family, including promoting a good relationship with my committed partner.",
     examples:
-      "Work-life balance policies, flexible hours, parental leave, understanding of family responsibilities, remote work options.",
+   "family-friendly, personal life respected, maternal/maternity leave; hinders-- unpredictable hours, no work-life balance, inflexible schedule",
     icon: <Home className="w-6 h-6" />,
   },
 ];
