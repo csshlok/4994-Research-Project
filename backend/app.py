@@ -113,6 +113,15 @@ def _load_env_file_if_needed() -> None:
         pass
 
 
+def _google_genai_available() -> bool:
+    try:
+        from google import genai  # noqa: F401
+        from google.genai import types  # noqa: F401
+        return True
+    except Exception:
+        return False
+
+
 def _resolve_scored_company_dir(company_id: str) -> Path | None:
     root = settings.COMPANY_SCORES_DIR
     wanted = str(company_id or "").strip()
@@ -398,9 +407,14 @@ app.add_middleware(
 @app.get("/api/health")
 def health() -> dict[str, Any]:
     counts = _count_jobs_by_status()
+    _load_env_file_if_needed()
     return {
         "ok": True,
         "service": "pipeline-backend",
+        "gemini_api_key_configured": bool(os.environ.get("GEMINI_API_KEY")),
+        "google_genai_available": _google_genai_available(),
+        "gemini_model": os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview"),
+        "gemini_fallback_model": os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite"),
         "run_retention_seconds": settings.RUN_RETENTION_SECONDS,
         "job_retention_seconds": settings.JOB_RETENTION_SECONDS,
         "cleanup_interval_seconds": settings.CLEANUP_INTERVAL_SECONDS,
@@ -730,11 +744,11 @@ def compare_rag_summary(payload: CompareRagRequest) -> dict[str, Any]:
             **meta,
             **generated,
         }
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     except Exception as exc:
         result = _fallback_compare_rag(company_dirs, error=str(exc))
 
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    cache_path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return result
 
 
