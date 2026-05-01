@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-01T02:52:48",
+  "generated_at": "2026-05-01T04:01:51",
   "review_root": "review data",
   "score_root": "company scores",
   "companies": [
@@ -21,6 +21,7 @@
     "delta",
     "epam systems",
     "ericsson",
+    "ExxonMobil",
     "EY",
     "fidelity investments",
     "ge",
@@ -58,6 +59,7 @@
   ],
   "statuses": {
     "tc2s": "completed",
-    "Optum": "completed"
+    "Optum": "completed",
+    "ExxonMobil": "completed"
   }
 }

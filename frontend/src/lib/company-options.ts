@@ -21,6 +21,7 @@ export const COMPANY_OPTIONS: CompanyOption[] = [
   { label: "Delta", value: "delta" },
   { label: "EPAM Systems", value: "epam systems" },
   { label: "Ericsson", value: "ericsson" },
+  { label: "ExxonMobil", value: "ExxonMobil" },
   { label: "Ernst & Young (EY)", value: "EY" },
   { label: "Fidelity Investments", value: "fidelity investments" },
   { label: "General Electric (GE)", value: "ge" },

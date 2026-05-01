@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "ExxonMobil",
+  "generated_at": "2026-05-01T04:02:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 890,
+    "prompt_token_count": 3377,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3377
+      }
+    ],
+    "total_token_count": 4267
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "ExxonMobil employees frequently highlight competitive compensation and benefits as primary drivers of satisfaction, contributing to a stable physiological foundation. However, these positive sentiments are often tempered by reports of demanding workloads and a challenging, high-pressure work environment.",
+    "The analysis reveals a tension between professional growth opportunities and a culture perceived by some as rigid or exclusionary. These insights are derived from patterns in review language and should be viewed as indicators of employee sentiment rather than definitive proof of every individual's experience."
+  ],
+  "key_strengths": [
+    "Competitive salary and comprehensive benefits packages",
+    "Opportunities for professional development and career growth",
+    "Presence of skilled and collaborative colleagues",
+    "Strong organizational stability"
+  ],
+  "key_risks": [
+    "Persistent challenges with work-life balance and long hours",
+    "Reports of a high-pressure or fear-based internal culture",
+    "Perceptions of favoritism and limited transparency in management",
+    "Concerns regarding stagnation and rigid bureaucratic processes"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture sentiments around pay, benefits, and basic working conditions, represent the most stable area of employee feedback.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust, is the lowest-scoring domain, reflecting concerns about toxic behaviors and internal competition."
+  }
+}

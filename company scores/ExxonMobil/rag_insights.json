@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "company": "ExxonMobil",
+  "generated_at": "2026-05-01T04:02:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 890,
+    "prompt_token_count": 3377,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3377
+      }
+    ],
+    "total_token_count": 4267
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The recurring metaphor of performance assessments being compared to a high-stakes competition",
+    "A distinct contrast between appreciation for financial rewards and frustration with the time commitment required to earn them",
+    "Widespread reports of burnout and difficulty maintaining personal boundaries",
+    "The dichotomy between valuing the company's prestige and feeling isolated by its rigid structure"
+  ]
+}

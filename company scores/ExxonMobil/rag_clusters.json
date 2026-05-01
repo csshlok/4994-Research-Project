@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "company": "ExxonMobil",
+  "generated_at": "2026-05-01T04:02:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 890,
+    "prompt_token_count": 3377,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3377
+      }
+    ],
+    "total_token_count": 4267
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees consistently praise the company for offering competitive salaries and solid benefits packages.",
+      "evidence_ids": [
+        "ExxonMobil:fulfillment_phys:55268978",
+        "ExxonMobil:fulfillment_phys:103638551",
+        "ExxonMobil:fulfillment_phys:103471322"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Feedback indicates significant concerns regarding a toxic work environment, characterized by fear and internal competition.",
+      "evidence_ids": [
+        "ExxonMobil:hindrance_selfprot:103343111",
+        "ExxonMobil:hindrance_selfprot:95076339",
+        "ExxonMobil:hindrance_selfprot:103669973"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Many staff members report difficulty balancing professional demands with personal life, often citing long hours and inflexible expectations.",
+      "evidence_ids": [
+        "ExxonMobil:hindrance_fam:99578899",
+        "ExxonMobil:hindrance_fam:90369145",
+        "ExxonMobil:hindrance_fam:62544248"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some employees value the opportunities for career advancement, others feel their contributions are overlooked or that growth is stagnant.",
+      "evidence_ids": [
+        "ExxonMobil:fulfillment_stat:83110785",
+        "ExxonMobil:fulfillment_stat:57391293",
+        "ExxonMobil:fulfillment_stat:80938543"
+      ]
+    }
+  ]
+}

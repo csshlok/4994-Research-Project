@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "ExxonMobil",
+  "score_summary": {
+    "review_count": 995,
+    "overall_score": 56,
+    "positive_share": 0.5116,
+    "negative_share": 0.393,
+    "domain_scores": {
+      "physiological": 62,
+      "self_protection": 50,
+      "affiliation": 53,
+      "status_esteem": 55,
+      "family_care": 54
+    },
+    "raw_domain_scores": {
+      "physiological": 0.23529220577268917,
+      "self_protection": 0.004324555854660179,
+      "affiliation": 0.06111775984699333,
+      "status_esteem": 0.09789940289785538,
+      "family_care": 0.08898286282184749
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 345,
+      "signal": 35,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:fulfillment_phys:55268978",
+        "ExxonMobil:fulfillment_phys:103638551",
+        "ExxonMobil:fulfillment_phys:103471322",
+        "ExxonMobil:fulfillment_phys:61218765",
+        "ExxonMobil:fulfillment_phys:78322005"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 159,
+      "signal": 16,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:fulfillment_fam:71807221",
+        "ExxonMobil:fulfillment_fam:103760806",
+        "ExxonMobil:fulfillment_fam:102213288",
+        "ExxonMobil:fulfillment_fam:93817501",
+        "ExxonMobil:fulfillment_fam:89280483"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 147,
+      "signal": 15,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:fulfillment_stat:83110785",
+        "ExxonMobil:fulfillment_stat:57391293",
+        "ExxonMobil:fulfillment_stat:80938543",
+        "ExxonMobil:fulfillment_stat:80267974",
+        "ExxonMobil:fulfillment_stat:76654277"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 130,
+      "signal": 13,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:hindrance_phys:64077612",
+        "ExxonMobil:hindrance_phys:87342334",
+        "ExxonMobil:hindrance_phys:96865550",
+        "ExxonMobil:hindrance_phys:92578301",
+        "ExxonMobil:hindrance_phys:76189652"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 118,
+      "signal": 12,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:hindrance_selfprot:103343111",
+        "ExxonMobil:hindrance_selfprot:95076339",
+        "ExxonMobil:hindrance_selfprot:103669973",
+        "ExxonMobil:hindrance_selfprot:98964685",
+        "ExxonMobil:hindrance_selfprot:92137843"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 99,
+      "signal": 10,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "ExxonMobil:hindrance_fam:99578899",
+        "ExxonMobil:hindrance_fam:90369145",
+        "ExxonMobil:hindrance_fam:62544248",
+        "ExxonMobil:hindrance_fam:59694246",
+        "ExxonMobil:hindrance_fam:73908456"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}
