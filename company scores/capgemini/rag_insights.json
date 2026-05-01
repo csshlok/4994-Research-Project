@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "capgemini",
+  "generated_at": "2026-04-30T20:22:50",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1552,
+    "prompt_token_count": 3444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3444
+      }
+    ],
+    "total_token_count": 4996
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between positive sentiment toward team collaboration and negative feedback regarding internal politics.",
+    "The significant impact of client-specific environments on individual work-life balance and job stability.",
+    "A clear divide between employees who feel supported in their growth and those who feel overlooked or micromanaged.",
+    "The reliance on external market conditions and client stability as primary drivers of employee anxiety."
+  ]
+}

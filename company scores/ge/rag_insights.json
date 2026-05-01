@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "ge",
+  "generated_at": "2026-04-30T20:27:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3251,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3251
+      }
+    ],
+    "total_token_count": 4833
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The duality of benefits, where they are praised as generous but simultaneously criticized for being mediocre or insufficient in specific contexts.",
+    "A recurring tension between the desire for flexible time off and the practical difficulty of utilizing it due to staffing levels and heavy workloads.",
+    "The contrast between employees who feel supported by their teams and those who report feelings of isolation or frustration with internal office politics.",
+    "The impact of organizational changes and future uncertainty on the daily sense of security reported by staff."
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "unilever",
+  "score_summary": {
+    "review_count": 785,
+    "overall_score": 68,
+    "positive_share": 0.651,
+    "negative_share": 0.265,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 51,
+      "affiliation": 55,
+      "status_esteem": 58,
+      "family_care": 59
+    },
+    "raw_domain_scores": {
+      "physiological": 0.1961044060684763,
+      "self_protection": 0.01187557373781644,
+      "affiliation": 0.10220670047216605,
+      "status_esteem": 0.16998499790049182,
+      "family_care": 0.18360151154347254
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 60
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 227,
+      "signal": 29,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "unilever:fulfillment_phys:7806889",
+        "unilever:fulfillment_phys:71224369",
+        "unilever:fulfillment_phys:28632336",
+        "unilever:fulfillment_phys:21665660",
+        "unilever:fulfillment_phys:98925487"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 196,
+      "signal": 25,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "unilever:fulfillment_stat:102389523",
+        "unilever:fulfillment_stat:66652657",
+        "unilever:fulfillment_stat:28827543",
+        "unilever:fulfillment_stat:67657861",
+        "unilever:fulfillment_stat:31054433"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 189,
+      "signal": 24,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "unilever:fulfillment_fam:98780907",
+        "unilever:fulfillment_fam:32273588",
+        "unilever:fulfillment_fam:96627742",
+        "unilever:fulfillment_fam:91589190",
+        "unilever:fulfillment_fam:86658096"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 83,
+      "signal": 11,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "unilever:hindrance_phys:93553986",
+        "unilever:hindrance_phys:25652931",
+        "unilever:hindrance_phys:7712416",
+        "unilever:hindrance_phys:92538722",
+        "unilever:hindrance_phys:41552466"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 71,
+      "signal": 9,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "unilever:hindrance_stat:45475961",
+        "unilever:hindrance_stat:45471822",
+        "unilever:hindrance_stat:73212651",
+        "unilever:hindrance_stat:57260167",
+        "unilever:hindrance_stat:96006215"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 65,
+      "signal": 8,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "unilever:hindrance_selfprot:15150344",
+        "unilever:hindrance_selfprot:93396767",
+        "unilever:hindrance_selfprot:15872932",
+        "unilever:hindrance_selfprot:93788609",
+        "unilever:hindrance_selfprot:75953954"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

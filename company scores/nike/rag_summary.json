@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "nike",
+  "generated_at": "2026-04-30T20:34:23",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1561,
+    "prompt_token_count": 3404,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3404
+      }
+    ],
+    "total_token_count": 4965
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Nike maintains a generally positive workplace reputation, with employees frequently highlighting strong benefits, competitive pay, and a supportive campus environment. These insights are derived from patterns in review language and represent broad signals rather than universal employee experiences.",
+    "Despite these strengths, the organization faces notable challenges regarding leadership accountability, internal politics, and inconsistent management practices. While many staff members appreciate the brand culture and flexibility, others report concerns about career stagnation and a disconnect between the company's public values and internal team dynamics."
+  ],
+  "key_strengths": [
+    "Comprehensive benefits and compensation packages",
+    "Strong brand recognition and inspiring company culture",
+    "Access to quality facilities and wellness resources",
+    "Opportunities for work-life balance in certain roles"
+  ],
+  "key_risks": [
+    "Inconsistent management and lack of leadership accountability",
+    "Perceptions of internal politics and favoritism",
+    "Limited career growth and professional stagnation",
+    "Reports of toxic team environments in specific locations"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs are the most positively discussed, driven by appreciation for the company's robust benefits, pay, and physical workplace amenities.",
+    "weakest": "Self-protection is the lowest-scoring domain, reflecting employee concerns regarding fairness, trust in management, and the presence of toxic work environments."
+  }
+}

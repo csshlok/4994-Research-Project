@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "company": "tp",
+  "generated_at": "2026-04-30T20:39:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1522,
+    "prompt_token_count": 3648,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3648
+      }
+    ],
+    "total_token_count": 5170
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The duality of remote work, which is praised as a primary benefit but also cited as a source of isolation for some employees.",
+    "A clear divide in the experience of management, where some employees report high levels of support while others describe micromanagement or a lack of empathy.",
+    "The significant impact of scheduling flexibility on employee satisfaction, acting as both a major draw and a frequent point of frustration."
+  ]
+}

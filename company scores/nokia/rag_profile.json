@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "nokia",
+  "score_summary": {
+    "review_count": 825,
+    "overall_score": 63,
+    "positive_share": 0.5891,
+    "negative_share": 0.3006,
+    "domain_scores": {
+      "physiological": 58,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 56,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.15897458848784732,
+      "self_protection": 0.02965731633355488,
+      "affiliation": 0.11866338559489856,
+      "status_esteem": 0.1215484985904767,
+      "family_care": 0.1519894099588616
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 198,
+      "signal": 24,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "nokia:fulfillment_phys:20970160",
+        "nokia:fulfillment_phys:24378244",
+        "nokia:fulfillment_phys:36455221",
+        "nokia:fulfillment_phys:35031757",
+        "nokia:fulfillment_phys:33258917"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 169,
+      "signal": 20,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "nokia:fulfillment_fam:99114450",
+        "nokia:fulfillment_fam:101157915",
+        "nokia:fulfillment_fam:56055046",
+        "nokia:fulfillment_fam:29807926",
+        "nokia:fulfillment_fam:19849729"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 153,
+      "signal": 19,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "nokia:fulfillment_stat:67673888",
+        "nokia:fulfillment_stat:32888233",
+        "nokia:fulfillment_stat:83622069",
+        "nokia:fulfillment_stat:20646576",
+        "nokia:fulfillment_stat:76725223"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 79,
+      "signal": 10,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "nokia:hindrance_phys:91393208",
+        "nokia:hindrance_phys:44629423",
+        "nokia:hindrance_phys:58289883",
+        "nokia:hindrance_phys:29084339",
+        "nokia:hindrance_phys:94781246"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 68,
+      "signal": 8,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "nokia:hindrance_stat:47800397",
+        "nokia:hindrance_stat:44214116",
+        "nokia:hindrance_stat:40093654",
+        "nokia:hindrance_stat:90051181",
+        "nokia:hindrance_stat:87325297"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 49,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "nokia:hindrance_fam:20306556",
+        "nokia:hindrance_fam:74170696",
+        "nokia:hindrance_fam:103003952",
+        "nokia:hindrance_fam:99836711",
+        "nokia:hindrance_fam:85954282"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

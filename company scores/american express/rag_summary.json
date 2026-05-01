@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "american express",
+  "generated_at": "2026-04-30T20:20:25",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 871,
+    "prompt_token_count": 3253,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3253
+      }
+    ],
+    "total_token_count": 4124
+  },
+  "attempts": [],
+  "executive_summary": [
+    "American Express maintains a generally positive employee sentiment, with staff frequently highlighting competitive benefits and a supportive work-life balance. These insights are derived from patterns in review language and represent broad signals rather than direct proof of every individual's workplace experience.",
+    "Despite these strengths, some employees report significant challenges regarding career advancement and instances of toxic management practices. These findings suggest that while the company offers strong foundational support, there are localized inconsistencies in culture and professional growth opportunities that impact overall satisfaction."
+  ],
+  "key_strengths": [
+    "Strong emphasis on work-life balance and flexible scheduling.",
+    "Competitive compensation packages and comprehensive benefits.",
+    "Collaborative and friendly team environments.",
+    "Stable and well-established organizational structure."
+  ],
+  "key_risks": [
+    "Reports of toxic management and unprofessional behavior in specific regions.",
+    "Perceived stagnation in career growth and limited advancement opportunities.",
+    "Concerns regarding heavy workloads and high-pressure performance metrics.",
+    "Inconsistencies in culture and management quality across different teams."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which reflects positive employee feedback regarding work-life balance and flexible working arrangements.",
+    "weakest": "Self-Protection, which indicates concerns regarding workplace safety, fairness, and the presence of toxic or retaliatory management behaviors."
+  }
+}

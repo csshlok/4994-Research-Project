@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "Booz Allen Hamilton",
+  "generated_at": "2026-04-30T20:22:34",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1787,
+    "prompt_token_count": 3527,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3527
+      }
+    ],
+    "total_token_count": 5314
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the firm's dedication to mentorship, training programs, and the prestige of working on complex defense and analytics projects.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_stat:97212592",
+        "Booz Allen Hamilton:fulfillment_stat:94511292",
+        "Booz Allen Hamilton:fulfillment_stat:97137756"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Staff members frequently cite the firm's supportive culture and flexible arrangements as key contributors to their ability to balance professional and personal goals.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_fam:92745554",
+        "Booz Allen Hamilton:fulfillment_fam:96118867",
+        "Booz Allen Hamilton:fulfillment_fam:92430427"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Many employees express satisfaction with the comprehensive benefits package, including healthcare and paid time off, viewing them as a core advantage of the firm.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_phys:91420215",
+        "Booz Allen Hamilton:fulfillment_phys:100654412",
+        "Booz Allen Hamilton:fulfillment_phys:94138511"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The firm is noted for its friendly, collaborative atmosphere and the pride employees take in working alongside colleagues on important national projects.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_aff:98840846",
+        "Booz Allen Hamilton:fulfillment_aff:96879088",
+        "Booz Allen Hamilton:fulfillment_aff:97502137"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Job security tied to security clearances and a generally non-competitive internal culture provide a sense of stability for many staff members.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_selfprot:92245323",
+        "Booz Allen Hamilton:fulfillment_selfprot:100072778",
+        "Booz Allen Hamilton:fulfillment_selfprot:97399748"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some employees report frustration with compensation levels and the pressure to remain billable, which can lead to concerns about job longevity.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_phys:91789410",
+        "Booz Allen Hamilton:hindrance_phys:98612928",
+        "Booz Allen Hamilton:hindrance_phys:88792690"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "A subset of the workforce feels overlooked regarding promotions and salary growth, leading some to perceive better opportunities at competing firms.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_stat:94931447",
+        "Booz Allen Hamilton:hindrance_stat:90856778",
+        "Booz Allen Hamilton:hindrance_stat:91592029"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Despite general flexibility, some staff feel that total compensation does not align with market value, creating tension for those balancing family needs.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_fam:96656006",
+        "Booz Allen Hamilton:hindrance_fam:99125866",
+        "Booz Allen Hamilton:hindrance_fam:100521722"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic leadership and fear of retaliation in specific administrative pockets highlight gaps in the firm's internal accountability.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_selfprot:97404810",
+        "Booz Allen Hamilton:hindrance_selfprot:96613500",
+        "Booz Allen Hamilton:hindrance_selfprot:92219449"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Inconsistent support from career managers and disjointed internal recruiting practices can lead to feelings of isolation for some employees.",
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_aff:93092605",
+        "Booz Allen Hamilton:hindrance_aff:91351280",
+        "Booz Allen Hamilton:hindrance_aff:96803834"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "microsoft",
+  "generated_at": "2026-04-30T20:34:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5045
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The significant variance in employee experience depending on the specific team or organization.",
+    "The tension between the company's reputation for stability and the current prevalence of layoff-related anxiety.",
+    "The contrast between strong initial benefits and concerns about long-term career growth and recognition.",
+    "The impact of leadership behavior on internal morale and the perception of a toxic environment."
+  ]
+}

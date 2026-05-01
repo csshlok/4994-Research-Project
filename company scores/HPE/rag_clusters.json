@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "HPE",
+  "generated_at": "2026-04-30T20:29:24",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1527,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4924
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently praise the company for respecting personal time and maintaining a healthy work-life balance.",
+      "evidence_ids": [
+        "HPE:fulfillment_fam:71075716",
+        "HPE:fulfillment_fam:83936366",
+        "HPE:fulfillment_fam:78772988"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff members highlight the quality of medical, retirement, and wellness benefits as a major positive.",
+      "evidence_ids": [
+        "HPE:fulfillment_phys:102975066",
+        "HPE:fulfillment_phys:97124812",
+        "HPE:fulfillment_phys:96450115"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some find the work on innovative technology rewarding, others express frustration with leadership and recognition.",
+      "evidence_ids": [
+        "HPE:fulfillment_stat:93681667",
+        "HPE:fulfillment_stat:80586874",
+        "HPE:fulfillment_stat:100980113"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many employees value the collaborative environment and the intelligence of their colleagues.",
+      "evidence_ids": [
+        "HPE:fulfillment_aff:83204813",
+        "HPE:fulfillment_aff:94482415",
+        "HPE:fulfillment_aff:91915863"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Feedback in this area is mixed, with some noting a culture of integrity while others report negative experiences with management.",
+      "evidence_ids": [
+        "HPE:fulfillment_selfprot:68237007",
+        "HPE:fulfillment_selfprot:99299453",
+        "HPE:fulfillment_selfprot:98500360"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some staff report feeling underpaid and overworked, particularly in roles where they perceive a lack of strategic direction.",
+      "evidence_ids": [
+        "HPE:hindrance_phys:96203518",
+        "HPE:hindrance_phys:93952480",
+        "HPE:hindrance_phys:76634407"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "A subset of employees reports that the workload can be overwhelming and inconsistent with work-life balance goals.",
+      "evidence_ids": [
+        "HPE:hindrance_fam:83125741",
+        "HPE:hindrance_fam:82786525",
+        "HPE:hindrance_fam:79176887"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express concerns about limited career progression and feeling undervalued in their roles.",
+      "evidence_ids": [
+        "HPE:hindrance_stat:92643768",
+        "HPE:hindrance_stat:83000165",
+        "HPE:hindrance_stat:87789024"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of internal politics, favoritism, and organizational silos negatively impact some employees' perceptions.",
+      "evidence_ids": [
+        "HPE:hindrance_selfprot:97599840",
+        "HPE:hindrance_selfprot:100754355",
+        "HPE:hindrance_selfprot:99920986"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some feedback suggests that organizational changes and competitive pressures can lead to feelings of disconnection.",
+      "evidence_ids": [
+        "HPE:hindrance_aff:92892450",
+        "HPE:hindrance_aff:76711364",
+        "HPE:hindrance_aff:97191753"
+      ]
+    }
+  ]
+}

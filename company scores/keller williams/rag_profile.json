@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "keller williams",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 76,
+    "positive_share": 0.76,
+    "negative_share": 0.163,
+    "domain_scores": {
+      "physiological": 51,
+      "self_protection": 51,
+      "affiliation": 59,
+      "status_esteem": 56,
+      "family_care": 52
+    },
+    "raw_domain_scores": {
+      "physiological": 0.012727577257656622,
+      "self_protection": 0.012618543789474674,
+      "affiliation": 0.18779915843686368,
+      "status_esteem": 0.12768746869459746,
+      "family_care": 0.04447380137984241
+    },
+    "strongest_domain": {
+      "key": "affiliation",
+      "label": "Affiliation",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 258,
+      "signal": 26,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "keller williams:fulfillment_aff:93305594",
+        "keller williams:fulfillment_aff:95836766",
+        "keller williams:fulfillment_aff:88527484",
+        "keller williams:fulfillment_aff:93310122",
+        "keller williams:fulfillment_aff:87378294"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 167,
+      "signal": 17,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "keller williams:fulfillment_stat:102462238",
+        "keller williams:fulfillment_stat:94182698",
+        "keller williams:fulfillment_stat:86821375",
+        "keller williams:fulfillment_stat:100010433",
+        "keller williams:fulfillment_stat:92628690"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 72,
+      "signal": 7,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "keller williams:fulfillment_fam:91940179",
+        "keller williams:fulfillment_fam:96363141",
+        "keller williams:fulfillment_fam:101830284",
+        "keller williams:fulfillment_fam:101183778",
+        "keller williams:fulfillment_fam:97636751"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 81,
+      "signal": 8,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "keller williams:hindrance_aff:92002940",
+        "keller williams:hindrance_aff:95879794",
+        "keller williams:hindrance_aff:100382579",
+        "keller williams:hindrance_aff:96308312",
+        "keller williams:hindrance_aff:86934028"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 60,
+      "signal": 6,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "keller williams:hindrance_phys:96521396",
+        "keller williams:hindrance_phys:88536847",
+        "keller williams:hindrance_phys:90377281",
+        "keller williams:hindrance_phys:87322397",
+        "keller williams:hindrance_phys:100198844"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 44,
+      "signal": 4,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "keller williams:hindrance_stat:99149356",
+        "keller williams:hindrance_stat:91058333",
+        "keller williams:hindrance_stat:90936870",
+        "keller williams:hindrance_stat:94301757",
+        "keller williams:hindrance_stat:95175833"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

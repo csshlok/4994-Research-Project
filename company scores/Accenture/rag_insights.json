@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "Accenture",
+  "generated_at": "2026-04-30T20:19:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1683,
+    "prompt_token_count": 3371,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3371
+      }
+    ],
+    "total_token_count": 5054
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The dual nature of the firm's scale, which provides vast opportunities while simultaneously creating feelings of isolation or being lost in the corporate structure.",
+    "A significant reliance on project-based success, where individual career progression is often tied to specific managers rather than standardized firm-wide criteria.",
+    "The contrast between high-quality learning resources and the frustration expressed regarding stagnant compensation or delayed promotion cycles.",
+    "The presence of a sink-or-swim culture that some find exhilarating for career trajectory but others find detrimental to long-term stability."
+  ]
+}

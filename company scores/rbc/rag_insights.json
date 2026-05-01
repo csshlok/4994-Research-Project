@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "rbc",
+  "generated_at": "2026-04-30T20:35:45",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1654,
+    "prompt_token_count": 3438,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3438
+      }
+    ],
+    "total_token_count": 5092
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A notable divide between the quality of formal benefits and the perceived fairness of base salary.",
+    "The significant impact of specific team dynamics on individual work-life balance and overall satisfaction.",
+    "A recurring tension between the company's stated inclusive values and the lived experience of some employees regarding discriminatory behavior.",
+    "The contrast between the prestige of the brand and the frustration caused by bureaucratic or inconsistent internal policies."
+  ]
+}

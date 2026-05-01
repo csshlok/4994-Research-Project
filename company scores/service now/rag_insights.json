@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "service now",
+  "generated_at": "2026-04-30T20:37:17",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 930,
+    "prompt_token_count": 3803,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3803
+      }
+    ],
+    "total_token_count": 4733
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The stark contrast between employees who experience a supportive, inclusive culture and those who report bullying and toxic management.",
+    "The tension between the company's stated values and the perceived reality of favoritism in career progression.",
+    "The high level of appreciation for the company's product innovation and market success."
+  ]
+}

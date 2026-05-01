@@ -28,23 +28,17 @@ export function ProcessingAnimation({ statusMessage, jobId }: ProcessingAnimatio
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="text-center max-w-lg">
-        {/* Animated circles */}
         <div className="relative w-48 h-48 mx-auto mb-12">
-          {/* Outer rotating ring */}
           <div className="absolute inset-0 rounded-full border-2 border-dashed border-olive-muted animate-spin" style={{ animationDuration: "20s" }} />
           
-          {/* Middle pulsing ring */}
           <div className="absolute inset-4 rounded-full border border-primary/30 animate-pulse" />
           
-          {/* Inner glow */}
           <div className="absolute inset-8 rounded-full bg-primary/10 animate-pulse" style={{ animationDelay: "0.5s" }} />
           
-          {/* Center orb */}
           <div className="absolute inset-16 rounded-full bg-gradient-to-br from-primary to-forest-light shadow-elevated flex items-center justify-center">
             <div className="w-8 h-8 rounded-full bg-primary-foreground/20 animate-ping" />
           </div>
 
-          {/* Floating particles */}
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
@@ -58,7 +52,6 @@ export function ProcessingAnimation({ statusMessage, jobId }: ProcessingAnimatio
           ))}
         </div>
 
-        {/* Status text */}
         <div className="space-y-4">
           <p className="text-xl font-serif font-medium text-foreground animate-fade-in" key={currentStep}>
             {statusMessage || processingSteps[currentStep]}
@@ -71,7 +64,6 @@ export function ProcessingAnimation({ statusMessage, jobId }: ProcessingAnimatio
           ) : null}
         </div>
 
-        {/* Progress dots */}
         <div className="flex items-center justify-center gap-2 mt-8">
           {processingSteps.map((_, i) => (
             <div

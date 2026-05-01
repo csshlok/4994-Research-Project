@@ -34,6 +34,7 @@ export interface ScoredCompany {
   has_company_scores: boolean;
   has_cleaned_reviews: boolean;
   has_topics: boolean;
+  has_rag?: boolean;
 }
 
 export interface ScoredCompaniesResponse {
@@ -43,6 +44,35 @@ export interface ScoredCompaniesResponse {
 export interface ScoredCompanyOutputsResponse {
   company_id: string;
   files: string[];
+}
+
+export interface ScoredCompanyRagResponse {
+  company_id: string;
+  summary?: unknown;
+  clusters?: unknown;
+  insights?: unknown;
+  evidence?: unknown;
+  profile?: unknown;
+}
+
+export interface ComparisonRagSummary {
+  schema_version?: number;
+  source?: string;
+  model?: string;
+  generated_at?: string;
+  executive_summary: string[];
+  key_differences: string[];
+  shared_risks: string[];
+  company_notes: Array<{
+    company: string;
+    strength: string;
+    risk: string;
+  }>;
+  best_fit_by_need: Array<{
+    need: string;
+    company: string;
+    reason: string;
+  }>;
 }
 
 function apiUrl(path: string): string {
@@ -111,6 +141,22 @@ export async function getScoredCompanyOutputs(companyId: string): Promise<Scored
   return await fetchJson<ScoredCompanyOutputsResponse>(
     `/api/scored-company/${encodeURIComponent(companyId)}/outputs`
   );
+}
+
+export async function getScoredCompanyRag(companyId: string): Promise<ScoredCompanyRagResponse> {
+  return await fetchJson<ScoredCompanyRagResponse>(
+    `/api/scored-company/${encodeURIComponent(companyId)}/rag`
+  );
+}
+
+export async function generateComparisonRagSummary(companies: string[]): Promise<ComparisonRagSummary> {
+  return await fetchJson<ComparisonRagSummary>("/api/compare/rag-summary", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ companies }),
+  });
 }
 
 export function getScoredCompanyDownloadUrl(companyId: string, path: string): string {

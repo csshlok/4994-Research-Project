@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "keller williams",
+  "generated_at": "2026-04-30T20:31:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1700,
+    "prompt_token_count": 3363,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3363
+      }
+    ],
+    "total_token_count": 5063
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Employees frequently highlight the collaborative nature of the company and the value of the agent community.",
+      "evidence_ids": [
+        "keller williams:fulfillment_aff:93305594",
+        "keller williams:fulfillment_aff:95836766",
+        "keller williams:fulfillment_aff:88527484"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many staff members appreciate the investment in training and coaching programs designed to foster professional development.",
+      "evidence_ids": [
+        "keller williams:fulfillment_stat:102462238",
+        "keller williams:fulfillment_stat:94182698",
+        "keller williams:fulfillment_stat:86821375"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Some employees value the flexibility of their schedules, though this is balanced against the demanding nature of the industry.",
+      "evidence_ids": [
+        "keller williams:fulfillment_fam:91940179",
+        "keller williams:fulfillment_fam:96363141",
+        "keller williams:fulfillment_fam:101830284"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "While some find the compensation structure rewarding, others report being underpaid relative to their workload.",
+      "evidence_ids": [
+        "keller williams:fulfillment_phys:96294312",
+        "keller williams:fulfillment_phys:98479863",
+        "keller williams:fulfillment_phys:91629096"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Employees often describe a supportive and accountable environment that encourages professional success.",
+      "evidence_ids": [
+        "keller williams:fulfillment_selfprot:92854595",
+        "keller williams:fulfillment_selfprot:98233167",
+        "keller williams:fulfillment_selfprot:90963466"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff report feelings of isolation or note the presence of cliques that hinder a sense of inclusion.",
+      "evidence_ids": [
+        "keller williams:hindrance_aff:92002940",
+        "keller williams:hindrance_aff:95879794",
+        "keller williams:hindrance_aff:100382579"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "There are recurring mentions of being overworked and underpaid, leading to exhaustion and dissatisfaction.",
+      "evidence_ids": [
+        "keller williams:hindrance_phys:96521396",
+        "keller williams:hindrance_phys:88536847",
+        "keller williams:hindrance_phys:90377281"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees feel unrecognized or overlooked, citing a lack of mentorship and limited growth pathways.",
+      "evidence_ids": [
+        "keller williams:hindrance_stat:99149356",
+        "keller williams:hindrance_stat:91058333",
+        "keller williams:hindrance_stat:90936870"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Employees express difficulty in maintaining work-life balance, often citing the always-on nature of the industry.",
+      "evidence_ids": [
+        "keller williams:hindrance_fam:86645509",
+        "keller williams:hindrance_fam:94636882",
+        "keller williams:hindrance_fam:88565840"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "A subset of reviews highlights concerns regarding toxic behavior and a lack of psychological safety.",
+      "evidence_ids": [
+        "keller williams:hindrance_selfprot:95045215",
+        "keller williams:hindrance_selfprot:97639055",
+        "keller williams:hindrance_selfprot:97379352"
+      ]
+    }
+  ]
+}

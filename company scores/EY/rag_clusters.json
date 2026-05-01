@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "company": "EY",
+  "generated_at": "2026-04-30T20:26:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 2957,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2957
+      }
+    ],
+    "total_token_count": 4071
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees value the competitive compensation, wellness stipends, and flexible remote work options provided by the firm.",
+      "evidence_ids": [
+        "EY:fulfillment_phys:98840296",
+        "EY:fulfillment_phys:99222864",
+        "EY:fulfillment_phys:97563799"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Staff express appreciation for hybrid schedules and wellness resources that support a better work-life balance.",
+      "evidence_ids": [
+        "EY:fulfillment_fam:96382015",
+        "EY:fulfillment_fam:99495170",
+        "EY:fulfillment_fam:97785295"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "The firm's strong market reputation is seen as a key driver for long-term career growth and professional status.",
+      "evidence_ids": [
+        "EY:fulfillment_stat:100671195",
+        "EY:fulfillment_stat:99082264",
+        "EY:fulfillment_stat:95859503"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many employees report positive experiences with team collaboration, inclusive environments, and supportive leadership.",
+      "evidence_ids": [
+        "EY:fulfillment_aff:96870879",
+        "EY:fulfillment_aff:99059105",
+        "EY:fulfillment_aff:96303300"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Significant feedback points to exhaustion caused by heavy workloads and dissatisfaction with pay and benefit quality.",
+      "evidence_ids": [
+        "EY:hindrance_phys:95769760",
+        "EY:hindrance_phys:98927798",
+        "EY:hindrance_phys:99201428"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of internal politics, favoritism, and toxic team dynamics negatively impact the sense of security and fairness.",
+      "evidence_ids": [
+        "EY:hindrance_selfprot:97883757",
+        "EY:hindrance_selfprot:96132896",
+        "EY:hindrance_selfprot:95916506"
+      ]
+    }
+  ]
+}

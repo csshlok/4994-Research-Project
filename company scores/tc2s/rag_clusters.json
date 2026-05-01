@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "company": "tc2s",
+  "generated_at": "2026-04-30T21:51:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 783,
+    "prompt_token_count": 1751,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1751
+      }
+    ],
+    "total_token_count": 2534
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the structure provided for learning and the existence of internal pathways for role advancement.",
+      "evidence_ids": [
+        "tc2s:fulfillment_stat:102899995",
+        "tc2s:fulfillment_stat:102897295",
+        "tc2s:fulfillment_stat:102900517"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members report a positive work-life balance, though this experience is not universal across all roles.",
+      "evidence_ids": [
+        "tc2s:fulfillment_fam:102896731",
+        "tc2s:fulfillment_fam:102897949",
+        "tc2s:fulfillment_fam:102897848"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees express frustration over a perceived lack of promotion opportunities and insufficient recognition for their work.",
+      "evidence_ids": [
+        "tc2s:hindrance_stat:102898199"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Feedback suggests that some staff feel treated as resources rather than valued team members, citing a lack of support from management.",
+      "evidence_ids": [
+        "tc2s:hindrance_aff:102904143"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "american express",
+  "generated_at": "2026-04-30T20:20:25",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 871,
+    "prompt_token_count": 3253,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3253
+      }
+    ],
+    "total_token_count": 4124
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently praise the company for its flexible hours and positive work-life balance.",
+      "evidence_ids": [
+        "american express:fulfillment_fam:98916437",
+        "american express:fulfillment_fam:102849098",
+        "american express:fulfillment_fam:102832067"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff highlight competitive pay, robust benefit packages, and generous time-off policies.",
+      "evidence_ids": [
+        "american express:fulfillment_phys:100670772",
+        "american express:fulfillment_phys:102538987",
+        "american express:fulfillment_phys:101953285"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees feel overlooked for promotions and report limited opportunities for professional development.",
+      "evidence_ids": [
+        "american express:hindrance_stat:100492662",
+        "american express:hindrance_stat:100155744",
+        "american express:hindrance_stat:102722688"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reviews describe instances of toxic management, bullying, and fear of retaliation in certain departments.",
+      "evidence_ids": [
+        "american express:hindrance_selfprot:101299896",
+        "american express:hindrance_selfprot:100687280",
+        "american express:hindrance_selfprot:99093196"
+      ]
+    }
+  ]
+}

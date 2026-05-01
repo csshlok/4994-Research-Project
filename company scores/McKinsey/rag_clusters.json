@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "McKinsey",
+  "generated_at": "2026-04-30T20:33:39",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 957,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3967
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the firm's elite brand, which provides significant career acceleration and exposure to high-impact work.",
+      "evidence_ids": [
+        "McKinsey:fulfillment_stat:99717400",
+        "McKinsey:fulfillment_stat:100629783",
+        "McKinsey:fulfillment_stat:95299517"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Many staff report exhaustion and difficulty maintaining a personal life due to long hours and the transient nature of client projects.",
+      "evidence_ids": [
+        "McKinsey:hindrance_phys:87512179",
+        "McKinsey:hindrance_phys:87403727",
+        "McKinsey:hindrance_phys:95634153"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees express frustration with internal politics, favoritism, and a high-pressure environment that can feel exclusionary.",
+      "evidence_ids": [
+        "McKinsey:hindrance_selfprot:93768484",
+        "McKinsey:hindrance_selfprot:92421680",
+        "McKinsey:hindrance_selfprot:100358505"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "While some appreciate the health benefits, many struggle with the lack of balance between professional responsibilities and family time.",
+      "evidence_ids": [
+        "McKinsey:fulfillment_fam:85110884",
+        "McKinsey:fulfillment_fam:99819532",
+        "McKinsey:fulfillment_fam:96207987"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "bloomberg",
+  "generated_at": "2026-04-30T20:22:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 894,
+    "prompt_token_count": 3378,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3378
+      }
+    ],
+    "total_token_count": 4272
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite competitive salary, comprehensive insurance, and generous leave policies as primary drivers of satisfaction.",
+      "evidence_ids": [
+        "bloomberg:fulfillment_phys:82805290",
+        "bloomberg:fulfillment_phys:81104624",
+        "bloomberg:fulfillment_phys:74423367"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members value the company's commitment to work-life balance and the availability of flexible working arrangements.",
+      "evidence_ids": [
+        "bloomberg:fulfillment_fam:81191392",
+        "bloomberg:fulfillment_fam:101800082",
+        "bloomberg:fulfillment_fam:98662138"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "A subset of employees expresses frustration with limited promotion opportunities and a perceived seniority ceiling that blocks advancement.",
+      "evidence_ids": [
+        "bloomberg:hindrance_stat:99257820",
+        "bloomberg:hindrance_stat:99616215",
+        "bloomberg:hindrance_stat:87042811"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some reviews highlight concerns regarding toxic management, lack of accountability, and interpersonal conflict within teams.",
+      "evidence_ids": [
+        "bloomberg:hindrance_selfprot:99562313",
+        "bloomberg:hindrance_selfprot:92374383",
+        "bloomberg:hindrance_selfprot:80440585"
+      ]
+    }
+  ]
+}

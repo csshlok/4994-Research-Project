@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "company": "lululemon",
+  "generated_at": "2026-04-30T20:32:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1565,
+    "prompt_token_count": 3547,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3547
+      }
+    ],
+    "total_token_count": 5112
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "A significant divide exists between those who find the culture energizing and those who report feeling isolated by cliques.",
+    "The high value placed on physical perks is often offset by frustration regarding base pay and the demands of the retail environment.",
+    "Management quality is frequently cited as a primary driver of either a positive or negative work experience."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "Booz Allen Hamilton",
+  "generated_at": "2026-04-30T20:22:34",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1787,
+    "prompt_token_count": 3527,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3527
+      }
+    ],
+    "total_token_count": 5314
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Booz Allen Hamilton maintains a generally positive workplace reputation, with employees frequently highlighting strong opportunities for professional development and meaningful project work. These insights are derived from patterns in review language and represent broader organizational signals rather than the universal experience of every individual employee.",
+    "While many staff members appreciate the collaborative environment and stability, some report inconsistencies in compensation and work-life balance depending on specific project assignments. The data suggests that while the firm is well-regarded for career growth, there are pockets of dissatisfaction regarding market-competitive pay and internal administrative support."
+  ],
+  "key_strengths": [
+    "Robust support for professional development and skill certification",
+    "Access to diverse and impactful government and defense projects",
+    "Collaborative and supportive team environments",
+    "High levels of job security for cleared personnel"
+  ],
+  "key_risks": [
+    "Inconsistent compensation levels that may lag behind market standards",
+    "Variability in work-life balance based on specific client contracts",
+    "Potential for isolated instances of toxic leadership or office politics",
+    "Concerns regarding career stagnation for some long-term employees"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the high value employees place on the firm's reputation, professional advancement resources, and the prestige associated with their project work.",
+    "weakest": "Self-Protection scores suggest that some employees experience anxiety related to project-based instability, inconsistent management practices, or concerns about internal fairness."
+  }
+}

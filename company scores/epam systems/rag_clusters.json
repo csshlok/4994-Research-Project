@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "company": "epam systems",
+  "generated_at": "2026-04-30T20:25:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1707,
+    "prompt_token_count": 3712,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3712
+      }
+    ],
+    "total_token_count": 5419
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees frequently highlight robust internal resources for skill development and clear paths for professional advancement.",
+      "evidence_ids": [
+        "epam systems:fulfillment_stat:101780185",
+        "epam systems:fulfillment_stat:101991164",
+        "epam systems:fulfillment_stat:100609008"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Work-life balance is highly valued but noted as being entirely dependent on the specific project and client requirements.",
+      "evidence_ids": [
+        "epam systems:fulfillment_fam:100482666",
+        "epam systems:fulfillment_fam:102910044",
+        "epam systems:fulfillment_fam:102599261"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The work environment is often described as inclusive and collaborative, fostering strong teamwork among colleagues.",
+      "evidence_ids": [
+        "epam systems:fulfillment_aff:98833764",
+        "epam systems:fulfillment_aff:102069574",
+        "epam systems:fulfillment_aff:99183290"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Many employees appreciate the health and insurance benefits provided, though satisfaction with base pay varies.",
+      "evidence_ids": [
+        "epam systems:fulfillment_phys:98861543",
+        "epam systems:fulfillment_phys:100780729",
+        "epam systems:fulfillment_phys:101398557"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some appreciate the flexibility of remote work, others express concerns about leadership and organizational safety.",
+      "evidence_ids": [
+        "epam systems:fulfillment_selfprot:100277977",
+        "epam systems:fulfillment_selfprot:99582047",
+        "epam systems:fulfillment_selfprot:100446155"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "There is recurring feedback regarding salary stagnation and the feeling of being underpaid relative to market expectations.",
+      "evidence_ids": [
+        "epam systems:hindrance_phys:99671908",
+        "epam systems:hindrance_phys:101329089",
+        "epam systems:hindrance_phys:100581696"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some staff report difficulty in achieving salary increases and express frustration with rigid or slow career progression.",
+      "evidence_ids": [
+        "epam systems:hindrance_stat:100528884",
+        "epam systems:hindrance_stat:102919705",
+        "epam systems:hindrance_stat:102575614"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Large company structures and bureaucratic processes can lead to feelings of isolation and inconsistent management support.",
+      "evidence_ids": [
+        "epam systems:hindrance_aff:100595551",
+        "epam systems:hindrance_aff:101404031",
+        "epam systems:hindrance_aff:102338517"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "High client expectations and project-specific demands can create significant stress and impact personal time.",
+      "evidence_ids": [
+        "epam systems:hindrance_fam:101998839",
+        "epam systems:hindrance_fam:100388911",
+        "epam systems:hindrance_fam:100037031"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic management and lack of support in difficult project environments highlight areas for cultural improvement.",
+      "evidence_ids": [
+        "epam systems:hindrance_selfprot:102045644",
+        "epam systems:hindrance_selfprot:98957073",
+        "epam systems:hindrance_selfprot:101572995"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "cisco",
+  "generated_at": "2026-04-30T20:23:18",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 906,
+    "prompt_token_count": 3564,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3564
+      }
+    ],
+    "total_token_count": 4470
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The duality of the employee experience, where high-quality benefits are often overshadowed by the fear of layoffs.",
+    "A reliance on the company as a resume builder, even among those who express dissatisfaction with internal culture.",
+    "The impact of frequent leadership changes on employee morale and career stability.",
+    "The contrast between the appreciation for flexible work and the reports of siloed or disconnected team environments."
+  ]
+}

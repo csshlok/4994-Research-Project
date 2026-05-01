@@ -1,7 +1,7 @@
 Glassdoor review scoring and workplace-intelligence pipeline: collect or load employee reviews, clean them, build text features, score sentiment plus five goal domains, precompute company score caches, generate RAG evidence packets, create Gemini-backed summaries on the free tier, and serve the results through a FastAPI backend and React dashboard.
 
 ## Repo map
-- `pipeline.py` - default end-to-end runner for scrape/load, clean, extract, score, and visualization.
+- `pipeline.py` - default end-to-end runner for scrape/load, clean, extract, score, visualization, deployable score cache, topic artifacts, RAG evidence, and cached Gemini summaries.
 - `reviews_scraper.py` - legacy standalone scraper entrypoint; still used internally by `pipeline.py`.
 - `data_cleaner.py` - legacy standalone cleaner; normalizes raw CSVs and keeps mostly US-located rows.
 - `extraction.py` - legacy standalone feature builder; creates normalized text, tokens, TF-IDF matrix, and extraction config.
@@ -73,13 +73,18 @@ curl http://127.0.0.1:8000/api/scored-company/microsoft/rag
 ```
 
 ## Default pipeline workflow
-`pipeline.py` is now the default operating entrypoint. It writes run-specific artifacts under `runs/` and can execute the full scrape-to-visualization flow or start from already downloaded review CSVs.
+`pipeline.py` is now the default operating entrypoint. It writes run-specific artifacts under `runs/` and, after scoring, publishes the company cache used by the dashboard under `company scores/{company}/`. A normal run now ends with cached score files, topic artifacts, RAG evidence/profile JSON, and Gemini-generated summary/cluster/insight JSON when a Gemini API key is available.
 
 Full scrape/load pipeline:
 ```bash
 .venv\Scripts\python.exe pipeline.py --job microsoft ^
   --url https://www.glassdoor.com/Reviews/Microsoft-Reviews-E1651.htm ^
   --pages 5 --region "United States" --headless
+```
+
+That command performs the full sequence:
+```text
+scrape -> clean -> extract -> score -> visualize -> cache scores -> generate topics -> build RAG evidence -> generate Gemini RAG text
 ```
 
 Run from an existing raw CSV and skip scraping:
@@ -92,6 +97,13 @@ Run only through scoring and skip visualization:
 ```bash
 .venv\Scripts\python.exe pipeline.py --job microsoft ^
   --skip-scrape --raw-csv "review data/microsoft/reviews.csv" --skip-viz
+```
+
+Rebuild a company cache and force fresh Gemini text:
+```bash
+.venv\Scripts\python.exe pipeline.py --job microsoft ^
+  --skip-scrape --raw-csv "review data/microsoft/reviews.csv" ^
+  --skip-viz --gemini-force
 ```
 
 Append newly scraped reviews into `review data/{job}/reviews.csv`:
@@ -116,6 +128,14 @@ Useful pipeline options:
 | `--skip-extract` | Reuse an existing feature directory through `--features-dir`. |
 | `--skip-score` | Reuse an existing scored output directory through `--scored-out-dir`. |
 | `--skip-viz` | Skip static figure generation. |
+| `--skip-cache` | Skip score-cache publishing and all downstream topic/RAG work. |
+| `--skip-topic-artifacts` | Skip `topic_summary.csv` and `topic_assignments.csv` generation. |
+| `--skip-rag` | Skip `rag_evidence.json` and `rag_profile.json` generation. |
+| `--skip-gemini-rag` | Skip Gemini-generated cached language files. |
+| `--score-cache-root` | Root folder for deployable company score caches. |
+| `--review-cache-root` | Root folder for source reviews used by RAG evidence generation. |
+| `--rag-max-evidence` | Maximum representative review snippets per topic cluster. |
+| `--gemini-force` | Regenerate Gemini RAG files even if cached JSON already exists. |
 | `--scrape-only` | Collect reviews only. |
 | `--add` | Merge scraped reviews into `review data/{job}/reviews.csv`. |
 | `--pages`, `--start-page`, `--end-page` | Control Glassdoor pagination. |
@@ -137,11 +157,12 @@ python make_viz.py --company_csv out/company_scores.csv --review_csv out/review_
 Use these only when isolating a specific stage. For normal runs, use `pipeline.py`.
 
 ## Company score cache
-The deployed dashboard uses precomputed company-wise caches so users do not wait for the full scoring pipeline on a single-CPU host.
+The deployed dashboard uses company-wise caches so users do not wait for the full scoring pipeline on a single-CPU host. `pipeline.py` now creates or refreshes this cache automatically after a successful score stage.
 
 Generate one company:
 ```bash
-.venv\Scripts\python.exe precompute_company_scores.py --company microsoft
+.venv\Scripts\python.exe pipeline.py --job microsoft ^
+  --skip-scrape --raw-csv "review data/microsoft/reviews.csv" --skip-viz
 ```
 
 Generate all companies from `review data/`:
@@ -149,10 +170,7 @@ Generate all companies from `review data/`:
 .venv\Scripts\python.exe precompute_company_scores.py
 ```
 
-Generate topic artifacts from scored reviews:
-```bash
-.venv\Scripts\python.exe generate_topic_artifacts.py
-```
+`precompute_company_scores.py` remains available for bulk rebuilds across the existing `review data/` folder. For a newly scraped company, use `pipeline.py` so the score cache and RAG cache are generated together.
 
 The cache layout is:
 ```text
@@ -162,6 +180,11 @@ company scores/{company}/
   cleaned_reviews.csv
   topic_summary.csv
   topic_assignments.csv
+  rag_evidence.json
+  rag_profile.json
+  rag_summary.json
+  rag_clusters.json
+  rag_insights.json
   per_company/{company}.csv
 ```
 
@@ -192,6 +215,8 @@ company scores/{company}/rag_insights.json
 ```
 
 These files power the single-company executive summary, key strengths, key risks, per-cluster descriptions, and "what stands out" section. Gemini is used during pre-cache generation so the Render backend can serve cached JSON instantly.
+
+For normal operation, these RAG commands do not need to be run manually. `pipeline.py` calls the topic generator, `RAG_generation.py`, and `Gemini_RAG_generation.py` after the score cache is published. Manual calls are mostly useful when regenerating only one layer of cached artifacts.
 
 ## Backend API surface
 - `GET /api/health` - service health and queue metadata.

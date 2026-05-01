@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "crew carwash",
+  "generated_at": "2026-04-30T20:23:41",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 4149,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 4149
+      }
+    ],
+    "total_token_count": 5263
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Crew Carwash maintains a strong overall positive sentiment among its workforce, characterized by a culture that emphasizes teamwork, professional growth, and a family-oriented atmosphere. These insights are derived from patterns in employee review language and should be viewed as indicators of workplace sentiment rather than absolute proof of every individual's experience.",
+    "While many employees report high satisfaction with the company's collaborative environment and development opportunities, some staff highlight challenges regarding work-life balance and the physical demands of the role. Addressing these operational pressures remains a key area for potential improvement to ensure long-term employee well-being and engagement."
+  ],
+  "key_strengths": [
+    "Strong sense of community and collaborative teamwork",
+    "Clear pathways for professional advancement and training",
+    "Visible and approachable leadership team",
+    "Positive perception of company values and integrity"
+  ],
+  "key_risks": [
+    "Difficulties maintaining work-life balance due to shift requirements",
+    "Physical strain and safety concerns related to extreme weather conditions",
+    "Perceived rigidity in scheduling and time-off policies",
+    "Potential for burnout among management and frontline staff"
+  ],
+  "domain_explanations": {
+    "strongest": "Affiliation: This domain reflects the high value employees place on the supportive, family-like culture and the collaborative nature of their daily interactions.",
+    "weakest": "Self-Protection: This domain captures concerns regarding physical safety in harsh weather, the pressure of high performance expectations, and occasional feelings of being undervalued."
+  }
+}

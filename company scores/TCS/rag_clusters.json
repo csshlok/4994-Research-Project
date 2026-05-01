@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "company": "TCS",
+  "generated_at": "2026-04-30T20:37:57",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 953,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3963
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the clear career progression and global exposure provided by the company.",
+      "evidence_ids": [
+        "TCS:fulfillment_stat:99675221",
+        "TCS:fulfillment_stat:89279390",
+        "TCS:fulfillment_stat:90270779"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Remote work options and supportive management are key drivers of positive work-life balance.",
+      "evidence_ids": [
+        "TCS:fulfillment_fam:85080558",
+        "TCS:fulfillment_fam:92539898",
+        "TCS:fulfillment_fam:95774426"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Comprehensive healthcare and insurance benefits contribute to a sense of stability.",
+      "evidence_ids": [
+        "TCS:fulfillment_phys:94342007",
+        "TCS:fulfillment_phys:90194965",
+        "TCS:fulfillment_phys:97484658"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Concerns regarding low salary levels and exhaustion are prevalent among some staff.",
+      "evidence_ids": [
+        "TCS:hindrance_phys:87089311",
+        "TCS:hindrance_phys:85930872",
+        "TCS:hindrance_phys:94746506"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees feel overlooked or underappreciated, citing a lack of salary hikes.",
+      "evidence_ids": [
+        "TCS:hindrance_stat:96730540",
+        "TCS:hindrance_stat:85776139",
+        "TCS:hindrance_stat:89079380"
+      ]
+    }
+  ]
+}

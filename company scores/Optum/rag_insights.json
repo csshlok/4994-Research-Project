@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "company": "Optum",
+  "generated_at": "2026-05-01T02:53:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 659,
+    "prompt_token_count": 1444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1444
+      }
+    ],
+    "total_token_count": 2103
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "A clear divide exists between those who value the flexibility provided and those who feel overwhelmed by the intensity of the workload.",
+    "The presence of both growth opportunities and stagnation signals suggests inconsistent career development experiences across different roles.",
+    "Systemic issues, such as IT delays and frequent process changes, appear to contribute significantly to employee frustration."
+  ]
+}

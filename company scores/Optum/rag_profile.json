@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "company": "Optum",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 55,
+    "positive_share": 0.494,
+    "negative_share": 0.395,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 50,
+      "affiliation": 54,
+      "status_esteem": 57,
+      "family_care": 62
+    },
+    "raw_domain_scores": {
+      "physiological": 0.19274508984567967,
+      "self_protection": 0.009794566108757563,
+      "affiliation": 0.08564892366830525,
+      "status_esteem": 0.13592381673581724,
+      "family_care": 0.24894383631852696
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 347,
+      "signal": 35,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "Optum:fulfillment_fam:103758666"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 309,
+      "signal": 31,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 218,
+      "signal": 22,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": []
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 139,
+      "signal": 14,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "Optum:hindrance_phys:103754993"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 104,
+      "signal": 10,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "Optum:hindrance_stat:103743663"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 82,
+      "signal": 8,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": []
+    }
+  ],
+  "evidence_count": 3
+}

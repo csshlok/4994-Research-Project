@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "Booz Allen Hamilton",
+  "score_summary": {
+    "review_count": 980,
+    "overall_score": 72,
+    "positive_share": 0.7194,
+    "negative_share": 0.1888,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 60,
+      "family_care": 60
+    },
+    "raw_domain_scores": {
+      "physiological": 0.18145178870583267,
+      "self_protection": 0.021348869819104926,
+      "affiliation": 0.12510437581335226,
+      "status_esteem": 0.20232838855243432,
+      "family_care": 0.20971221911854263
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 60
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 282,
+      "signal": 29,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_stat:97212592",
+        "Booz Allen Hamilton:fulfillment_stat:94511292",
+        "Booz Allen Hamilton:fulfillment_stat:97137756",
+        "Booz Allen Hamilton:fulfillment_stat:97351218",
+        "Booz Allen Hamilton:fulfillment_stat:97962582"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 279,
+      "signal": 28,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_fam:92745554",
+        "Booz Allen Hamilton:fulfillment_fam:96118867",
+        "Booz Allen Hamilton:fulfillment_fam:92430427",
+        "Booz Allen Hamilton:fulfillment_fam:95343582",
+        "Booz Allen Hamilton:fulfillment_fam:93273241"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 260,
+      "signal": 27,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:fulfillment_phys:91420215",
+        "Booz Allen Hamilton:fulfillment_phys:100654412",
+        "Booz Allen Hamilton:fulfillment_phys:94138511",
+        "Booz Allen Hamilton:fulfillment_phys:90009183",
+        "Booz Allen Hamilton:fulfillment_phys:99395430"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 98,
+      "signal": 10,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_phys:91789410",
+        "Booz Allen Hamilton:hindrance_phys:98612928",
+        "Booz Allen Hamilton:hindrance_phys:88792690",
+        "Booz Allen Hamilton:hindrance_phys:93314838",
+        "Booz Allen Hamilton:hindrance_phys:92098156"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 80,
+      "signal": 8,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_stat:94931447",
+        "Booz Allen Hamilton:hindrance_stat:90856778",
+        "Booz Allen Hamilton:hindrance_stat:91592029",
+        "Booz Allen Hamilton:hindrance_stat:90401324",
+        "Booz Allen Hamilton:hindrance_stat:96750798"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 72,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "Booz Allen Hamilton:hindrance_fam:96656006",
+        "Booz Allen Hamilton:hindrance_fam:99125866",
+        "Booz Allen Hamilton:hindrance_fam:100521722",
+        "Booz Allen Hamilton:hindrance_fam:99685629",
+        "Booz Allen Hamilton:hindrance_fam:99378294"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

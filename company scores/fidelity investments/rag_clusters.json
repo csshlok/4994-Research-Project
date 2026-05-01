@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "fidelity investments",
+  "generated_at": "2026-04-30T20:26:42",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1678,
+    "prompt_token_count": 3403,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3403
+      }
+    ],
+    "total_token_count": 5081
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently praise the comprehensive benefits, 401k matching, and overall compensation structure.",
+      "evidence_ids": [
+        "fidelity investments:fulfillment_phys:99171083",
+        "fidelity investments:fulfillment_phys:102267849",
+        "fidelity investments:fulfillment_phys:99627180"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members appreciate the work-life balance and the supportive nature of their colleagues.",
+      "evidence_ids": [
+        "fidelity investments:fulfillment_fam:101792139",
+        "fidelity investments:fulfillment_fam:102823199",
+        "fidelity investments:fulfillment_fam:101015080"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Opportunities for tuition reimbursement and career mobility are viewed as significant positive drivers.",
+      "evidence_ids": [
+        "fidelity investments:fulfillment_stat:97139986",
+        "fidelity investments:fulfillment_stat:102286976",
+        "fidelity investments:fulfillment_stat:100196651"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The company is often described as having a collaborative environment with supportive management.",
+      "evidence_ids": [
+        "fidelity investments:fulfillment_aff:100684148",
+        "fidelity investments:fulfillment_aff:103026333",
+        "fidelity investments:fulfillment_aff:99552333"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some employees value the job security and the ability to transition between internal organizations.",
+      "evidence_ids": [
+        "fidelity investments:fulfillment_selfprot:98036246",
+        "fidelity investments:fulfillment_selfprot:99625225",
+        "fidelity investments:fulfillment_selfprot:102872533"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High call volumes and rigid schedule management contribute to feelings of exhaustion and underpayment.",
+      "evidence_ids": [
+        "fidelity investments:hindrance_phys:96814700",
+        "fidelity investments:hindrance_phys:102681078",
+        "fidelity investments:hindrance_phys:101429581"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some staff feel overlooked for promotions and report a lack of meaningful feedback regarding career advancement.",
+      "evidence_ids": [
+        "fidelity investments:hindrance_stat:97210636",
+        "fidelity investments:hindrance_stat:101839510",
+        "fidelity investments:hindrance_stat:102647198"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Reduced flexibility regarding remote work and concerns about stagnant compensation relative to workload are noted.",
+      "evidence_ids": [
+        "fidelity investments:hindrance_fam:101231348",
+        "fidelity investments:hindrance_fam:95931798",
+        "fidelity investments:hindrance_fam:101986654"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees report feeling isolated or restricted by hierarchical structures and rigid advisory processes.",
+      "evidence_ids": [
+        "fidelity investments:hindrance_aff:100824193",
+        "fidelity investments:hindrance_aff:98359183",
+        "fidelity investments:hindrance_aff:101120577"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic politics, favoritism, and ineffective HR responses highlight significant cultural friction.",
+      "evidence_ids": [
+        "fidelity investments:hindrance_selfprot:96745137",
+        "fidelity investments:hindrance_selfprot:98488079",
+        "fidelity investments:hindrance_selfprot:96388178"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "lululemon",
+  "score_summary": {
+    "review_count": 800,
+    "overall_score": 75,
+    "positive_share": 0.7488,
+    "negative_share": 0.1825,
+    "domain_scores": {
+      "physiological": 64,
+      "self_protection": 51,
+      "affiliation": 59,
+      "status_esteem": 54,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.27891258026937127,
+      "self_protection": 0.015496332520467252,
+      "affiliation": 0.17672031446564054,
+      "status_esteem": 0.08578013238146523,
+      "family_care": 0.128505596199816
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 64
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 290,
+      "signal": 36,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "lululemon:fulfillment_phys:97043177",
+        "lululemon:fulfillment_phys:90022871",
+        "lululemon:fulfillment_phys:102971699",
+        "lululemon:fulfillment_phys:101434980",
+        "lululemon:fulfillment_phys:99103676"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 179,
+      "signal": 22,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "lululemon:fulfillment_aff:90360352",
+        "lululemon:fulfillment_aff:92707126",
+        "lululemon:fulfillment_aff:98733220",
+        "lululemon:fulfillment_aff:97860786",
+        "lululemon:fulfillment_aff:92824612"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 142,
+      "signal": 18,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "lululemon:fulfillment_fam:94965333",
+        "lululemon:fulfillment_fam:94108232",
+        "lululemon:fulfillment_fam:90388504",
+        "lululemon:fulfillment_fam:99023458",
+        "lululemon:fulfillment_fam:92752539"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 69,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "lululemon:hindrance_phys:92673524",
+        "lululemon:hindrance_phys:94732337",
+        "lululemon:hindrance_phys:96103421",
+        "lululemon:hindrance_phys:102762506",
+        "lululemon:hindrance_phys:96034186"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 43,
+      "signal": 5,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "lululemon:hindrance_stat:100150629",
+        "lululemon:hindrance_stat:95144322",
+        "lululemon:hindrance_stat:89989569",
+        "lululemon:hindrance_stat:101555150",
+        "lululemon:hindrance_stat:96613918"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 42,
+      "signal": 5,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "lululemon:hindrance_selfprot:93817249",
+        "lululemon:hindrance_selfprot:96058268",
+        "lululemon:hindrance_selfprot:97275503",
+        "lululemon:hindrance_selfprot:102539059",
+        "lululemon:hindrance_selfprot:101104896"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

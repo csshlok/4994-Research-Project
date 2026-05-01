@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "Accenture",
+  "generated_at": "2026-04-30T20:19:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1683,
+    "prompt_token_count": 3371,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3371
+      }
+    ],
+    "total_token_count": 5054
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Accenture maintains a generally positive employee sentiment, with a majority of reviews reflecting satisfaction regarding career exposure, learning opportunities, and professional development. These domain scores are derived from patterns in employee language and should be viewed as signals of workplace trends rather than direct proof of every individual's personal experience.",
+    "Despite these strengths, the organization faces significant challenges related to workload intensity, inconsistent promotion paths, and feelings of stagnation. Employees frequently report a tension between the benefits of a large-scale consulting environment and the difficulties of navigating corporate bureaucracy, which can impact long-term engagement and perceived fairness."
+  ],
+  "key_strengths": [
+    "Strong access to professional training, certifications, and diverse client projects.",
+    "Supportive peer networks and collaborative team environments.",
+    "Structured career pathways and brand prestige that enhance professional resumes.",
+    "Comprehensive benefits packages and flexible work options for many staff."
+  ],
+  "key_risks": [
+    "High workload demands and stressful project timelines leading to potential burnout.",
+    "Perceived lack of transparency and fairness in promotion and salary advancement processes.",
+    "Anxiety caused by the contract-based staffing model and potential for project-related instability.",
+    "Disconnected communication and hierarchical politics that can obscure leadership strategy."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, reflecting employee focus on career growth, professional recognition, and the prestige associated with the firm's brand.",
+    "weakest": "Self-Protection, indicating concerns regarding job security, organizational fairness, and the impact of internal politics on individual well-being."
+  }
+}

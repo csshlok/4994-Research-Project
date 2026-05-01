@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "cognizant",
+  "generated_at": "2026-04-30T20:23:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1742,
+    "prompt_token_count": 3460,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3460
+      }
+    ],
+    "total_token_count": 5202
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Cognizant maintains a complex workplace environment where employees report a mix of global professional opportunities and significant operational challenges. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "While many staff members value the company's global reach, training resources, and collaborative team environments, others express frustration regarding internal politics, compensation competitiveness, and work-life balance. The data highlights a tension between the benefits of a large-scale multinational structure and the difficulties associated with navigating its internal processes and management culture."
+  ],
+  "key_strengths": [
+    "Access to diverse global projects and international client exposure.",
+    "Availability of structured training programs and skill development resources.",
+    "Presence of supportive team environments and collaborative colleagues.",
+    "Comprehensive benefits packages including healthcare and paid time off."
+  ],
+  "key_risks": [
+    "Concerns regarding stagnant salary growth and competitive compensation.",
+    "Reports of internal politics and favoritism impacting career advancement.",
+    "Challenges with work-life balance and high-pressure project demands.",
+    "Instability related to project-based roles and potential for layoffs."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, which reflects employee focus on professional recognition, career progression, and the desire to be valued for their contributions.",
+    "weakest": "Self-Protection, which indicates areas of concern regarding job security, fair treatment, and the presence of a safe or transparent work environment."
+  }
+}

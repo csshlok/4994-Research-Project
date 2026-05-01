@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "mastercard",
+  "generated_at": "2026-04-30T20:33:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1700,
+    "prompt_token_count": 3572,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3572
+      }
+    ],
+    "total_token_count": 5272
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Mastercard maintains a generally positive workplace reputation, with employees frequently highlighting competitive benefits and a culture that supports work-life balance. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "Despite these strengths, the data reveals notable friction points regarding internal fairness and career progression. While many staff members appreciate the collaborative environment, others report concerns about favoritism and inconsistent management practices that can negatively impact the overall employee experience."
+  ],
+  "key_strengths": [
+    "Competitive benefits packages and retirement matching",
+    "Strong emphasis on work-life balance and flexible time off",
+    "Collaborative and innovative team environments",
+    "Supportive policies for parental leave and family care"
+  ],
+  "key_risks": [
+    "Perceptions of favoritism and office politics hindering advancement",
+    "Inconsistent management quality across different teams",
+    "Reports of toxic behavior and lack of transparency in specific departments",
+    "Concerns regarding career growth clarity and promotion pathways"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture sentiments around compensation, benefits, and basic work conditions, represent the most positive area of feedback.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust, is the lowest-scoring domain, reflecting concerns about workplace culture and interpersonal dynamics."
+  }
+}

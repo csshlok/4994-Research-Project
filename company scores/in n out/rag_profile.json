@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "in n out",
+  "score_summary": {
+    "review_count": 945,
+    "overall_score": 80,
+    "positive_share": 0.8042,
+    "negative_share": 0.1111,
+    "domain_scores": {
+      "physiological": 58,
+      "self_protection": 50,
+      "affiliation": 57,
+      "status_esteem": 54,
+      "family_care": 54
+    },
+    "raw_domain_scores": {
+      "physiological": 0.1640060424247573,
+      "self_protection": -0.00606946999478334,
+      "affiliation": 0.1457768958688417,
+      "status_esteem": 0.08188431755746216,
+      "family_care": 0.07920336614508228
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 233,
+      "signal": 25,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "in n out:fulfillment_phys:102147780",
+        "in n out:fulfillment_phys:87371152",
+        "in n out:fulfillment_phys:97397337",
+        "in n out:fulfillment_phys:102778509",
+        "in n out:fulfillment_phys:98934268"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 166,
+      "signal": 18,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "in n out:fulfillment_aff:91740854",
+        "in n out:fulfillment_aff:102589270",
+        "in n out:fulfillment_aff:100648708",
+        "in n out:fulfillment_aff:87795563",
+        "in n out:fulfillment_aff:94345616"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 118,
+      "signal": 12,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "in n out:fulfillment_fam:97032949",
+        "in n out:fulfillment_fam:101795513",
+        "in n out:fulfillment_fam:100810579",
+        "in n out:fulfillment_fam:99443873",
+        "in n out:fulfillment_fam:99275367"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 112,
+      "signal": 12,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "in n out:hindrance_phys:91678530",
+        "in n out:hindrance_phys:89158960",
+        "in n out:hindrance_phys:88024257",
+        "in n out:hindrance_phys:85190638",
+        "in n out:hindrance_phys:90031290"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 68,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "in n out:hindrance_fam:101100096",
+        "in n out:hindrance_fam:95644627",
+        "in n out:hindrance_fam:94525352",
+        "in n out:hindrance_fam:88627482",
+        "in n out:hindrance_fam:100241191"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 47,
+      "signal": 5,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "in n out:hindrance_selfprot:100128850",
+        "in n out:hindrance_selfprot:98577743",
+        "in n out:hindrance_selfprot:98799036",
+        "in n out:hindrance_selfprot:95419438",
+        "in n out:hindrance_selfprot:102723437"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

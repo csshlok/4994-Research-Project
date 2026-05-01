@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "tp",
+  "generated_at": "2026-04-30T20:39:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1522,
+    "prompt_token_count": 3648,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3648
+      }
+    ],
+    "total_token_count": 5170
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Teleperformance maintains a generally positive employee sentiment, with a majority of reviews highlighting satisfaction with remote work flexibility, professional development opportunities, and supportive management. These insights are derived from linguistic patterns in employee feedback and represent broad signals rather than universal experiences across the entire workforce.",
+    "Despite these strengths, a significant portion of the feedback identifies challenges related to work-life balance, compensation, and inconsistent management practices. These areas of concern suggest that while many employees thrive in the current environment, others experience pressure, burnout, or feelings of stagnation that impact their overall engagement."
+  ],
+  "key_strengths": [
+    "High appreciation for remote work arrangements and flexible scheduling options.",
+    "Strong emphasis on professional growth, training, and clear pathways for career advancement.",
+    "Positive reports of supportive leadership and inclusive team environments.",
+    "Recognition of competitive benefits and company-provided resources for skill development."
+  ],
+  "key_risks": [
+    "Reports of burnout and exhaustion linked to high workload expectations.",
+    "Concerns regarding stagnant pay and limited salary growth opportunities.",
+    "Inconsistent management practices leading to feelings of being undervalued or micromanaged.",
+    "Isolated reports of toxic workplace culture and challenges regarding fair treatment."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which captures employee sentiment regarding work-life balance and the ability to manage personal commitments alongside professional responsibilities.",
+    "weakest": "Self-Protection, which reflects employee perceptions of safety, fairness, and trust within the workplace environment."
+  }
+}

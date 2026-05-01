@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "company": "unilever",
+  "generated_at": "2026-04-30T20:39:19",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1024,
+    "prompt_token_count": 3495,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3495
+      }
+    ],
+    "total_token_count": 4519
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite competitive pay and comprehensive insurance as primary benefits of working at the company.",
+      "evidence_ids": [
+        "unilever:fulfillment_phys:7806889",
+        "unilever:fulfillment_phys:71224369",
+        "unilever:fulfillment_phys:28632336"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many staff members appreciate the availability of professional development resources and the ability to grow within the organization.",
+      "evidence_ids": [
+        "unilever:fulfillment_stat:102389523",
+        "unilever:fulfillment_stat:66652657",
+        "unilever:fulfillment_stat:28827543"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "A segment of the workforce values the company's flexible work arrangements and supportive culture, though this is role-dependent.",
+      "evidence_ids": [
+        "unilever:fulfillment_fam:98780907",
+        "unilever:fulfillment_fam:32273588",
+        "unilever:fulfillment_fam:96627742"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Reports of nepotism and a lack of clear, merit-based advancement paths suggest frustration with internal promotion processes.",
+      "evidence_ids": [
+        "unilever:hindrance_stat:45475961",
+        "unilever:hindrance_stat:45471822",
+        "unilever:hindrance_stat:73212651"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees express concerns regarding management favoritism, inadequate handling of harassment, and a lack of transparency in leadership.",
+      "evidence_ids": [
+        "unilever:hindrance_selfprot:15150344",
+        "unilever:hindrance_selfprot:93396767",
+        "unilever:hindrance_selfprot:15872932"
+      ]
+    }
+  ]
+}

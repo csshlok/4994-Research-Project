@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "lululemon",
+  "generated_at": "2026-04-30T20:32:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1565,
+    "prompt_token_count": 3547,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3547
+      }
+    ],
+    "total_token_count": 5112
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Lululemon maintains a generally positive employee sentiment, with staff frequently highlighting the benefits of a collaborative team environment and the value of employee perks. These insights represent broad signals derived from review language and should not be interpreted as a universal reflection of every individual's experience at the company.",
+    "While many employees appreciate the company culture and growth opportunities, there are consistent reports regarding challenges with work-life balance and compensation. Addressing these areas of friction remains essential for maintaining long-term employee satisfaction and operational stability across store locations."
+  ],
+  "key_strengths": [
+    "Collaborative and supportive team environments",
+    "Valued employee discounts and wellness perks",
+    "Opportunities for personal and professional development",
+    "Strong brand identity and engaging store culture"
+  ],
+  "key_risks": [
+    "Inconsistent work-life balance and scheduling flexibility",
+    "Reports of toxic management dynamics and internal cliques",
+    "Concerns regarding stagnant career growth and limited advancement",
+    "Dissatisfaction with compensation relative to workload"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain scores highest, reflecting the importance employees place on tangible rewards like pay, benefits, and wellness incentives.",
+    "weakest": "The Self-Protection domain scores lowest, indicating that some employees feel vulnerable due to concerns about workplace fairness, safety, and interpersonal conflict."
+  }
+}

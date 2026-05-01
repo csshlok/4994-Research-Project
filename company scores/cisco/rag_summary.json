@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "cisco",
+  "generated_at": "2026-04-30T20:23:18",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 906,
+    "prompt_token_count": 3564,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3564
+      }
+    ],
+    "total_token_count": 4470
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Cisco maintains a generally positive reputation among employees, particularly regarding compensation, benefits, and flexible work arrangements. These findings are based on linguistic signals identified in employee reviews and should be viewed as indicators of workplace sentiment rather than absolute proof of every individual's experience.",
+    "While the company is often praised for its professional environment and collaborative culture, significant concerns persist regarding job security and management consistency. Employees frequently report anxiety related to layoffs and uneven leadership quality, which can detract from the otherwise stable benefits and pay structure."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages",
+    "Strong emphasis on flexible work environments and remote options",
+    "Access to a talented and collaborative professional community",
+    "High brand recognition that serves as a valuable career credential"
+  ],
+  "key_risks": [
+    "Persistent anxiety regarding job security and frequent layoff cycles",
+    "Inconsistent management quality and high leadership turnover",
+    "Perceptions of a toxic or disconnected culture in certain departments",
+    "Limited opportunities for rapid career advancement and growth"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain reflects the highest satisfaction, driven by strong approval of pay, benefits, and the company's flexible work policies.",
+    "weakest": "The Self-Protection domain is the weakest, signaling employee concerns regarding workplace safety, fairness, and the psychological impact of organizational instability."
+  }
+}

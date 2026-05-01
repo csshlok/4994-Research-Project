@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "McKinsey",
+  "generated_at": "2026-04-30T20:33:39",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 957,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3967
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The duality of the firm's reputation as a career accelerator versus a source of significant personal exhaustion.",
+    "The reliance on a 'prestige' narrative that attracts top talent while simultaneously creating high-stakes, stressful working conditions.",
+    "A clear divide between the appreciation for professional growth and the frustration with the lack of sustainable work-life integration.",
+    "The presence of both highly supportive, collaborative team environments and pockets of exclusionary or toxic political dynamics."
+  ]
+}

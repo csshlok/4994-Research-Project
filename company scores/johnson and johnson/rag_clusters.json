@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "johnson and johnson",
+  "generated_at": "2026-04-30T20:30:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1760,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5160
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees consistently praise the company for providing strong financial compensation, bonuses, and comprehensive benefits packages.",
+      "evidence_ids": [
+        "johnson and johnson:fulfillment_phys:100666217",
+        "johnson and johnson:fulfillment_phys:99111505",
+        "johnson and johnson:fulfillment_phys:91461721"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members report a positive work-life balance and value the support provided for their personal and family well-being.",
+      "evidence_ids": [
+        "johnson and johnson:fulfillment_fam:102288226",
+        "johnson and johnson:fulfillment_fam:101835264",
+        "johnson and johnson:fulfillment_fam:88551226"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some employees feel valued through reward programs, others express frustration with slow career progression and top-down management.",
+      "evidence_ids": [
+        "johnson and johnson:fulfillment_stat:100702838",
+        "johnson and johnson:fulfillment_stat:93922081",
+        "johnson and johnson:fulfillment_stat:100673416"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The workplace is often described as collaborative and friendly, with many employees appreciating the inclusive team environment.",
+      "evidence_ids": [
+        "johnson and johnson:fulfillment_aff:97481074",
+        "johnson and johnson:fulfillment_aff:97049490",
+        "johnson and johnson:fulfillment_aff:92834611"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Employees generally feel safe in their physical work environments, though some note concerns about the consistency of fair treatment.",
+      "evidence_ids": [
+        "johnson and johnson:fulfillment_selfprot:92439170",
+        "johnson and johnson:fulfillment_selfprot:95464598",
+        "johnson and johnson:fulfillment_selfprot:100260708"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some staff report feeling overworked and suggest that wages in certain divisions do not align with the scope of their responsibilities.",
+      "evidence_ids": [
+        "johnson and johnson:hindrance_phys:97236703",
+        "johnson and johnson:hindrance_phys:98921336",
+        "johnson and johnson:hindrance_phys:93597573"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "A subset of employees highlights challenges with bureaucracy and a perceived lack of sincerity from senior leadership regarding career development.",
+      "evidence_ids": [
+        "johnson and johnson:hindrance_fam:89708005",
+        "johnson and johnson:hindrance_fam:99202817",
+        "johnson and johnson:hindrance_fam:99166838"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "There are reports of toxic leadership, political maneuvering, and a lack of loyalty toward employees in certain departments.",
+      "evidence_ids": [
+        "johnson and johnson:hindrance_selfprot:102329480",
+        "johnson and johnson:hindrance_selfprot:100659531",
+        "johnson and johnson:hindrance_selfprot:94415330"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees feel isolated or note that internal competition and a lack of value for non-scientific roles can create a sense of disconnection.",
+      "evidence_ids": [
+        "johnson and johnson:hindrance_aff:101658087",
+        "johnson and johnson:hindrance_aff:90032342",
+        "johnson and johnson:hindrance_aff:99263461"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees occasionally report feeling overlooked or ignored, citing a lack of transparency and poor management decisions as barriers to their success.",
+      "evidence_ids": [
+        "johnson and johnson:hindrance_stat:92812335",
+        "johnson and johnson:hindrance_stat:95840520",
+        "johnson and johnson:hindrance_stat:93273009"
+      ]
+    }
+  ]
+}

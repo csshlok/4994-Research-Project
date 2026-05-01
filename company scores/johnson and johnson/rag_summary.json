@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "johnson and johnson",
+  "generated_at": "2026-04-30T20:30:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1760,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5160
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Johnson & Johnson maintains a generally positive reputation among employees, with compensation and benefits serving as primary drivers of satisfaction. These insights represent patterns in review language and should be interpreted as signals of sentiment rather than direct proof of every individual's workplace experience.",
+    "While many staff appreciate the company's resources and collaborative culture, significant concerns exist regarding career progression and inconsistent management practices. Addressing these areas of friction could help balance the strong base of material support with a more unified and transparent professional environment."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages",
+    "Strong emphasis on collaborative and inclusive team environments",
+    "Availability of significant corporate resources and stability",
+    "Positive perception of physical campus safety and cleanliness"
+  ],
+  "key_risks": [
+    "Perceptions of stagnant career growth and limited advancement opportunities",
+    "Reports of toxic management behaviors and political environments in certain units",
+    "Inconsistency in work-life balance across different departments",
+    "Concerns regarding lack of transparency and appreciation from leadership"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs are the most well-supported, as employees frequently highlight satisfaction with pay, benefits, and overall material compensation.",
+    "weakest": "Self-protection is the lowest-scoring domain, reflecting employee anxieties regarding organizational fairness, trust, and the presence of toxic cultural elements."
+  }
+}

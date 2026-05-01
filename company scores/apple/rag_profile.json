@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "apple",
+  "score_summary": {
+    "review_count": 950,
+    "overall_score": 74,
+    "positive_share": 0.7337,
+    "negative_share": 0.1853,
+    "domain_scores": {
+      "physiological": 62,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 56,
+      "family_care": 57
+    },
+    "raw_domain_scores": {
+      "physiological": 0.24714308924565842,
+      "self_protection": 0.007928386611457401,
+      "affiliation": 0.11209399154859624,
+      "status_esteem": 0.1269272380519105,
+      "family_care": 0.13315529555466915
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 341,
+      "signal": 36,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "apple:fulfillment_phys:100708430",
+        "apple:fulfillment_phys:101919880",
+        "apple:fulfillment_phys:102536371",
+        "apple:fulfillment_phys:101145120",
+        "apple:fulfillment_phys:98929403"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 182,
+      "signal": 19,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "apple:fulfillment_fam:103108850",
+        "apple:fulfillment_fam:98925241",
+        "apple:fulfillment_fam:99579063",
+        "apple:fulfillment_fam:102931310",
+        "apple:fulfillment_fam:102170796"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 175,
+      "signal": 18,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "apple:fulfillment_stat:99609652",
+        "apple:fulfillment_stat:102138663",
+        "apple:fulfillment_stat:102073877",
+        "apple:fulfillment_stat:98980354",
+        "apple:fulfillment_stat:101758147"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 125,
+      "signal": 13,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "apple:hindrance_phys:99828196",
+        "apple:hindrance_phys:100237627",
+        "apple:hindrance_phys:100362529",
+        "apple:hindrance_phys:102423306",
+        "apple:hindrance_phys:102043118"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 71,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "apple:hindrance_fam:98532880",
+        "apple:hindrance_fam:102658255",
+        "apple:hindrance_fam:101584169",
+        "apple:hindrance_fam:100281997",
+        "apple:hindrance_fam:103082437"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 68,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "apple:hindrance_stat:101453893",
+        "apple:hindrance_stat:102944937",
+        "apple:hindrance_stat:101074583",
+        "apple:hindrance_stat:100496855",
+        "apple:hindrance_stat:98639252"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

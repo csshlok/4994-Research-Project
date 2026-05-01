@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "capgemini",
+  "score_summary": {
+    "review_count": 730,
+    "overall_score": 64,
+    "positive_share": 0.6096,
+    "negative_share": 0.3,
+    "domain_scores": {
+      "physiological": 56,
+      "self_protection": 51,
+      "affiliation": 55,
+      "status_esteem": 58,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.11598082389350371,
+      "self_protection": 0.022644282571469006,
+      "affiliation": 0.1096556195161397,
+      "status_esteem": 0.1579212000518642,
+      "family_care": 0.12081710312402633
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 175,
+      "signal": 24,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "capgemini:fulfillment_stat:91421508",
+        "capgemini:fulfillment_stat:79895379",
+        "capgemini:fulfillment_stat:78832995",
+        "capgemini:fulfillment_stat:94468925",
+        "capgemini:fulfillment_stat:85445130"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 132,
+      "signal": 18,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "capgemini:fulfillment_fam:94437565",
+        "capgemini:fulfillment_fam:81058731",
+        "capgemini:fulfillment_fam:90711971",
+        "capgemini:fulfillment_fam:90470338",
+        "capgemini:fulfillment_fam:81020359"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 128,
+      "signal": 18,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "capgemini:fulfillment_phys:86908941",
+        "capgemini:fulfillment_phys:83768132",
+        "capgemini:fulfillment_phys:94778958",
+        "capgemini:fulfillment_phys:91304103",
+        "capgemini:fulfillment_phys:88988442"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 71,
+      "signal": 10,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "capgemini:hindrance_stat:103088580",
+        "capgemini:hindrance_stat:78732023",
+        "capgemini:hindrance_stat:87088253",
+        "capgemini:hindrance_stat:100063017",
+        "capgemini:hindrance_stat:95481054"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 65,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "capgemini:hindrance_phys:99326772",
+        "capgemini:hindrance_phys:101561220",
+        "capgemini:hindrance_phys:96721031",
+        "capgemini:hindrance_phys:97140777",
+        "capgemini:hindrance_phys:80361427"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 52,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "capgemini:hindrance_fam:94878634",
+        "capgemini:hindrance_fam:93235681",
+        "capgemini:hindrance_fam:96322807",
+        "capgemini:hindrance_fam:93532905",
+        "capgemini:hindrance_fam:102907326"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

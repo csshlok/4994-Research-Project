@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "company": "lockheed martin",
+  "generated_at": "2026-04-30T20:32:00",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 947,
+    "prompt_token_count": 3496,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3496
+      }
+    ],
+    "total_token_count": 4443
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The contrast between high satisfaction with technical growth opportunities and frustration among non-technical staff regarding career advancement.",
+    "The recurring mention of bureaucracy as a trade-off for the stability and benefits provided by a large organization.",
+    "The dichotomy between a generally supportive culture and specific reports of exclusionary or toxic team environments."
+  ]
+}

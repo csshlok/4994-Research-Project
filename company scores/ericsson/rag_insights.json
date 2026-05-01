@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "ericsson",
+  "generated_at": "2026-04-30T20:25:48",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 933,
+    "prompt_token_count": 3635,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3635
+      }
+    ],
+    "total_token_count": 4568
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A recurring sentiment that career growth is restricted by favoritism or a lack of clear advancement paths.",
+    "The contrast between high satisfaction with work-life balance and frustration over internal processes.",
+    "The impact of leadership perception on employee morale, particularly regarding transparency and inclusion.",
+    "A disconnect between the company's stated values and the lived experience of some employees in specific departments."
+  ]
+}

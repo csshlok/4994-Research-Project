@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "lockheed martin",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 71,
+    "positive_share": 0.703,
+    "negative_share": 0.211,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 52,
+      "affiliation": 54,
+      "status_esteem": 58,
+      "family_care": 61
+    },
+    "raw_domain_scores": {
+      "physiological": 0.2037865481856187,
+      "self_protection": 0.03681744236080006,
+      "affiliation": 0.07061889108941816,
+      "status_esteem": 0.15374903626532513,
+      "family_care": 0.22223878490843996
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 61
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 52
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 293,
+      "signal": 29,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "lockheed martin:fulfillment_phys:101187541",
+        "lockheed martin:fulfillment_phys:99513862",
+        "lockheed martin:fulfillment_phys:95400460",
+        "lockheed martin:fulfillment_phys:95651632",
+        "lockheed martin:fulfillment_phys:95330392"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 293,
+      "signal": 29,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "lockheed martin:fulfillment_fam:102668458",
+        "lockheed martin:fulfillment_fam:98653349",
+        "lockheed martin:fulfillment_fam:98368992",
+        "lockheed martin:fulfillment_fam:96056761",
+        "lockheed martin:fulfillment_fam:102208537"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 205,
+      "signal": 20,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "lockheed martin:fulfillment_stat:98385934",
+        "lockheed martin:fulfillment_stat:96535111",
+        "lockheed martin:fulfillment_stat:97113845",
+        "lockheed martin:fulfillment_stat:102427636",
+        "lockheed martin:fulfillment_stat:101042466"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 98,
+      "signal": 10,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "lockheed martin:hindrance_phys:102618692",
+        "lockheed martin:hindrance_phys:97127700",
+        "lockheed martin:hindrance_phys:101850565",
+        "lockheed martin:hindrance_phys:101587312",
+        "lockheed martin:hindrance_phys:100778589"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 63,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "lockheed martin:hindrance_fam:102444115",
+        "lockheed martin:hindrance_fam:101555544",
+        "lockheed martin:hindrance_fam:101109291",
+        "lockheed martin:hindrance_fam:100024558",
+        "lockheed martin:hindrance_fam:99367825"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 49,
+      "signal": 5,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "lockheed martin:hindrance_selfprot:103021361",
+        "lockheed martin:hindrance_selfprot:102816384",
+        "lockheed martin:hindrance_selfprot:99612074",
+        "lockheed martin:hindrance_selfprot:99018300",
+        "lockheed martin:hindrance_selfprot:96987375"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

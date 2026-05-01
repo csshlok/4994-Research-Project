@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "houston methodist",
+  "generated_at": "2026-04-30T20:28:45",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1740,
+    "prompt_token_count": 3630,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3630
+      }
+    ],
+    "total_token_count": 5370
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Houston Methodist maintains a complex workplace environment where employees frequently report satisfaction with core benefits and compensation, yet encounter significant challenges regarding workload and management culture. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than universal proof of every individual's experience.",
+    "While many staff members appreciate the available wellness programs and competitive pay, there are consistent reports of understaffing and high-pressure environments that impact daily operations. Addressing concerns related to leadership accountability and interpersonal fairness remains critical to improving the overall employee experience across the system."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive wellness benefits",
+    "Strong emphasis on professional development and skill acquisition",
+    "Positive reports regarding work-life balance in specific units",
+    "Recognition of the organization's mission and brand reputation"
+  ],
+  "key_risks": [
+    "Reports of toxic work environments, including bullying and discrimination",
+    "Persistent issues with understaffing leading to employee exhaustion",
+    "Perceived lack of transparency and fairness in management practices",
+    "Limited career advancement opportunities for certain departments"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompasses compensation, benefits, and basic working conditions, represents the area where employees express the most consistent feedback.",
+    "weakest": "Self-protection, reflecting concerns about safety, fairness, and trust, is the domain with the lowest sentiment, indicating a need for improved psychological safety and equitable treatment."
+  }
+}

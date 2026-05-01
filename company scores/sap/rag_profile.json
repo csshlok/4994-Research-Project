@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "sap",
+  "score_summary": {
+    "review_count": 995,
+    "overall_score": 73,
+    "positive_share": 0.7206,
+    "negative_share": 0.196,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 57,
+      "family_care": 62
+    },
+    "raw_domain_scores": {
+      "physiological": 0.17590838673845652,
+      "self_protection": 0.011265072159432371,
+      "affiliation": 0.12315965732379539,
+      "status_esteem": 0.14229283446179394,
+      "family_care": 0.24119156800009994
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 324,
+      "signal": 33,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "sap:fulfillment_fam:102495626",
+        "sap:fulfillment_fam:102713450",
+        "sap:fulfillment_fam:102393711",
+        "sap:fulfillment_fam:102201584",
+        "sap:fulfillment_fam:101587425"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 240,
+      "signal": 24,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "sap:fulfillment_phys:98088397",
+        "sap:fulfillment_phys:100368429",
+        "sap:fulfillment_phys:102069809",
+        "sap:fulfillment_phys:102588312",
+        "sap:fulfillment_phys:100857918"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 200,
+      "signal": 20,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "sap:fulfillment_stat:100610806",
+        "sap:fulfillment_stat:101755812",
+        "sap:fulfillment_stat:98278465",
+        "sap:fulfillment_stat:101406971",
+        "sap:fulfillment_stat:100995947"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 86,
+      "signal": 9,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "sap:hindrance_fam:102527576",
+        "sap:hindrance_fam:101565498",
+        "sap:hindrance_fam:97733521",
+        "sap:hindrance_fam:101253761",
+        "sap:hindrance_fam:100142380"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 84,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "sap:hindrance_phys:98710224",
+        "sap:hindrance_phys:101803554",
+        "sap:hindrance_phys:99094016",
+        "sap:hindrance_phys:102315247",
+        "sap:hindrance_phys:100219715"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 69,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "sap:hindrance_stat:102448754",
+        "sap:hindrance_stat:101522578",
+        "sap:hindrance_stat:101146910",
+        "sap:hindrance_stat:102784174",
+        "sap:hindrance_stat:102070010"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

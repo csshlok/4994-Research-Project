@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "heb",
+  "generated_at": "2026-04-30T20:28:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1546,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4943
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Employees at H-E-B generally report a positive experience, with a strong focus on compensation and benefits as primary drivers of satisfaction. These insights are derived from patterns in employee review language and should be viewed as indicators of workplace sentiment rather than absolute proof of every individual's experience.",
+    "While many staff members appreciate the supportive team environments and competitive pay, there are consistent reports of burnout, workload pressures, and concerns regarding management fairness. Addressing these areas of friction could help improve overall employee retention and long-term engagement."
+  ],
+  "key_strengths": [
+    "Competitive pay and comprehensive benefits packages",
+    "Supportive and collaborative team-oriented culture",
+    "Opportunities for professional growth and development",
+    "Generally positive work-life balance for many roles"
+  ],
+  "key_risks": [
+    "High levels of reported burnout and excessive workloads",
+    "Perceptions of unfair management practices and favoritism",
+    "Limited career advancement pathways for some staff",
+    "Concerns regarding toxic leadership and lack of psychological safety"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain reflects the highest satisfaction, primarily driven by positive sentiment toward pay, benefits, and insurance offerings.",
+    "weakest": "The Self-Protection domain is the weakest, signaling employee concerns regarding fairness, management conduct, and workplace safety."
+  }
+}

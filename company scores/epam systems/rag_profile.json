@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "epam systems",
+  "score_summary": {
+    "review_count": 961,
+    "overall_score": 69,
+    "positive_share": 0.6701,
+    "negative_share": 0.2497,
+    "domain_scores": {
+      "physiological": 55,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 60,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.10059092738581878,
+      "self_protection": 0.02314413063365738,
+      "affiliation": 0.12880875985897466,
+      "status_esteem": 0.2071655237250548,
+      "family_care": 0.16602330482236005
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 60
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 260,
+      "signal": 27,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "epam systems:fulfillment_stat:101780185",
+        "epam systems:fulfillment_stat:101991164",
+        "epam systems:fulfillment_stat:100609008",
+        "epam systems:fulfillment_stat:100573722",
+        "epam systems:fulfillment_stat:101431011"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 205,
+      "signal": 21,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "epam systems:fulfillment_fam:100482666",
+        "epam systems:fulfillment_fam:102910044",
+        "epam systems:fulfillment_fam:102599261",
+        "epam systems:fulfillment_fam:102292435",
+        "epam systems:fulfillment_fam:101946434"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 160,
+      "signal": 17,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "epam systems:fulfillment_aff:98833764",
+        "epam systems:fulfillment_aff:102069574",
+        "epam systems:fulfillment_aff:99183290",
+        "epam systems:fulfillment_aff:100734249",
+        "epam systems:fulfillment_aff:100609511"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 90,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "epam systems:hindrance_phys:99671908",
+        "epam systems:hindrance_phys:101329089",
+        "epam systems:hindrance_phys:100581696",
+        "epam systems:hindrance_phys:100512889",
+        "epam systems:hindrance_phys:102668760"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 63,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "epam systems:hindrance_stat:100528884",
+        "epam systems:hindrance_stat:102919705",
+        "epam systems:hindrance_stat:102575614",
+        "epam systems:hindrance_stat:101473044",
+        "epam systems:hindrance_stat:102146583"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 45,
+      "signal": 5,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "epam systems:hindrance_aff:100595551",
+        "epam systems:hindrance_aff:101404031",
+        "epam systems:hindrance_aff:102338517",
+        "epam systems:hindrance_aff:101568238",
+        "epam systems:hindrance_aff:101442088"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

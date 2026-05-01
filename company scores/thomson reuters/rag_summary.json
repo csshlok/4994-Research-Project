@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "thomson reuters",
+  "generated_at": "2026-04-30T20:38:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1737,
+    "prompt_token_count": 3710,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3710
+      }
+    ],
+    "total_token_count": 5447
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Thomson Reuters maintains a workforce experience characterized by a mix of strong institutional benefits and significant concerns regarding long-term stability. These domain scores represent signals derived from employee review language and should not be interpreted as direct proof of every individual's experience.",
+    "While many employees value the company's flexible work arrangements and supportive team environments, there is a recurring narrative regarding job security and compensation growth. Addressing these underlying anxieties could help bridge the gap between the company's positive cultural offerings and the reported challenges in employee retention."
+  ],
+  "key_strengths": [
+    "Competitive and comprehensive benefits packages",
+    "Strong emphasis on flexible working arrangements",
+    "Collaborative and supportive immediate team environments",
+    "Positive recognition of the company as an industry leader"
+  ],
+  "key_risks": [
+    "Pervasive concerns regarding job security and frequent restructuring",
+    "Perceived stagnation in salary growth and career advancement",
+    "High-pressure environments leading to burnout and stress",
+    "Inconsistent management practices and perceived favoritism"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs are the most prominent, driven by the high value employees place on the company's robust benefits and flexible time-off policies.",
+    "weakest": "Self-protection scores are the lowest, reflecting deep-seated employee anxieties about job security, frequent organizational changes, and a lack of transparency."
+  }
+}

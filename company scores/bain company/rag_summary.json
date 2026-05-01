@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "bain company",
+  "generated_at": "2026-04-30T20:21:18",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1225,
+    "prompt_token_count": 3308,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3308
+      }
+    ],
+    "total_token_count": 4533
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Bain & Company maintains a strong reputation for professional development, high-impact projects, and a collaborative team environment. Employees frequently highlight the firm's commitment to mentorship, competitive compensation, and the prestige associated with its brand.",
+    "These findings are derived from linguistic signals in employee reviews and do not serve as direct proof of every individual's experience. While many report high satisfaction, significant concerns regarding long working hours, work-life balance, and occasional cultural toxicity persist across various roles."
+  ],
+  "key_strengths": [
+    "High-quality professional growth and mentorship opportunities",
+    "Strong sense of community and collaborative office culture",
+    "Competitive compensation packages and comprehensive benefits",
+    "Exposure to strategic, high-impact client projects"
+  ],
+  "key_risks": [
+    "Persistent challenges with excessive working hours and burnout",
+    "Limited flexibility for maintaining a healthy work-life balance",
+    "Reports of internal politics and unfair treatment in specific environments",
+    "Potential for stagnation if employees are not aligned with the right practice areas"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the high value employees place on the firm's prestige, career advancement opportunities, and the recognition received for their contributions.",
+    "weakest": "Self-Protection signals indicate concerns regarding workplace safety, fairness, and the presence of toxic behaviors or internal politics that undermine a secure environment."
+  }
+}

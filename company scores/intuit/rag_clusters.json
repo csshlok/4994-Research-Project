@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "intuit",
+  "generated_at": "2026-04-30T20:30:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3679,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3679
+      }
+    ],
+    "total_token_count": 5324
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently praise the company for respecting their personal lives and offering flexible work options.",
+      "evidence_ids": [
+        "intuit:fulfillment_fam:99832861",
+        "intuit:fulfillment_fam:96056162",
+        "intuit:fulfillment_fam:96239696"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Feedback on compensation is mixed, with some employees valuing the benefits package while others report stagnant pay.",
+      "evidence_ids": [
+        "intuit:fulfillment_phys:96493039",
+        "intuit:fulfillment_phys:99048640",
+        "intuit:fulfillment_phys:96487872"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many staff members feel supported in their career progression, though some note that organizational politics can hinder advancement.",
+      "evidence_ids": [
+        "intuit:fulfillment_stat:98256812",
+        "intuit:fulfillment_stat:100358447",
+        "intuit:fulfillment_stat:95955313"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The collaborative and inclusive nature of teams is a major driver of employee satisfaction.",
+      "evidence_ids": [
+        "intuit:fulfillment_aff:95301710",
+        "intuit:fulfillment_aff:101794632",
+        "intuit:fulfillment_aff:102374051"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some feel secure, others express concerns about the integrity of the work environment.",
+      "evidence_ids": [
+        "intuit:fulfillment_selfprot:100341742",
+        "intuit:fulfillment_selfprot:96664133",
+        "intuit:fulfillment_selfprot:97380916"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Fast-paced changes and high-pressure environments lead to exhaustion for some employees.",
+      "evidence_ids": [
+        "intuit:hindrance_phys:95401897",
+        "intuit:hindrance_phys:102886400",
+        "intuit:hindrance_phys:102590292"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Most employees report a positive environment, with few instances of feeling isolated or disconnected.",
+      "evidence_ids": [
+        "intuit:hindrance_aff:96245472",
+        "intuit:hindrance_aff:96238821",
+        "intuit:hindrance_aff:96404032"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees report that disorganized leadership and lack of prioritization negatively impact their work-life balance.",
+      "evidence_ids": [
+        "intuit:hindrance_fam:103072125",
+        "intuit:hindrance_fam:99494658",
+        "intuit:hindrance_fam:97863880"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Internal politics and toxic management behaviors are cited as significant barriers to a healthy work environment.",
+      "evidence_ids": [
+        "intuit:hindrance_selfprot:102583499",
+        "intuit:hindrance_selfprot:95111912",
+        "intuit:hindrance_selfprot:98704314"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees feel overlooked for growth opportunities or restricted by their specific role or site location.",
+      "evidence_ids": [
+        "intuit:hindrance_stat:95976906",
+        "intuit:hindrance_stat:99581229",
+        "intuit:hindrance_stat:96525244"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "ge",
+  "generated_at": "2026-04-30T20:27:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3251,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3251
+      }
+    ],
+    "total_token_count": 4833
+  },
+  "attempts": [],
+  "executive_summary": [
+    "General Electric maintains a moderate workplace profile with a positive sentiment share of approximately 65 percent. These findings represent broad signals derived from employee review language and should not be interpreted as absolute proof of every individual's experience at the company.",
+    "Employees frequently highlight the value of comprehensive benefits and collaborative team environments, though these positives are often balanced against concerns regarding workload intensity and career stagnation. The data suggests a workforce that appreciates foundational support while navigating challenges related to professional growth and work-life balance."
+  ],
+  "key_strengths": [
+    "Access to a wide spectrum of fringe benefits and healthcare options",
+    "Strong sense of community and collaborative team environments",
+    "Opportunities for professional development in specific technical roles",
+    "Generally positive perception of the company as a place to build a career"
+  ],
+  "key_risks": [
+    "Reports of burnout stemming from long hours and high-pressure deadlines",
+    "Perceived lack of clear pathways for career advancement and promotion",
+    "Inconsistency in work-life balance, particularly regarding leave and flexibility",
+    "Concerns about competitive compensation and market-rate salary alignment"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain represents the highest score, reflecting employee focus on the tangible aspects of employment such as compensation, benefits, and basic working conditions.",
+    "weakest": "The Self-Protection domain represents the lowest score, indicating that some employees experience anxiety regarding job security, fairness, and the overall safety of the work environment."
+  }
+}

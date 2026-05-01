@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "EY",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 70,
+    "positive_share": 0.668,
+    "negative_share": 0.205,
+    "domain_scores": {
+      "physiological": 56,
+      "self_protection": 50,
+      "affiliation": 55,
+      "status_esteem": 58,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.12408457853077455,
+      "self_protection": -0.002684034644629875,
+      "affiliation": 0.09175278087941484,
+      "status_esteem": 0.15129743625009137,
+      "family_care": 0.1222656117446864
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 273,
+      "signal": 27,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "EY:fulfillment_phys:98840296",
+        "EY:fulfillment_phys:99222864",
+        "EY:fulfillment_phys:97563799",
+        "EY:fulfillment_phys:96730087",
+        "EY:fulfillment_phys:96017233"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 263,
+      "signal": 26,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "EY:fulfillment_fam:96382015",
+        "EY:fulfillment_fam:99495170",
+        "EY:fulfillment_fam:97785295",
+        "EY:fulfillment_fam:96720843",
+        "EY:fulfillment_fam:100656813"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 209,
+      "signal": 21,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "EY:fulfillment_stat:100671195",
+        "EY:fulfillment_stat:99082264",
+        "EY:fulfillment_stat:95859503",
+        "EY:fulfillment_stat:99935615",
+        "EY:fulfillment_stat:96913367"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 252,
+      "signal": 25,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "EY:hindrance_phys:95769760",
+        "EY:hindrance_phys:98927798",
+        "EY:hindrance_phys:99201428",
+        "EY:hindrance_phys:95936576",
+        "EY:hindrance_phys:100311994"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 217,
+      "signal": 22,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "EY:hindrance_fam:99433534",
+        "EY:hindrance_fam:99298676",
+        "EY:hindrance_fam:98975251",
+        "EY:hindrance_fam:98253028",
+        "EY:hindrance_fam:98743616"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 79,
+      "signal": 8,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "EY:hindrance_selfprot:97883757",
+        "EY:hindrance_selfprot:96132896",
+        "EY:hindrance_selfprot:95916506",
+        "EY:hindrance_selfprot:99031737",
+        "EY:hindrance_selfprot:98429617"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

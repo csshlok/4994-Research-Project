@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "Accenture",
+  "generated_at": "2026-04-30T20:19:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1683,
+    "prompt_token_count": 3371,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3371
+      }
+    ],
+    "total_token_count": 5054
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the firm's brand, training programs, and exposure to large-scale projects as key drivers for their professional advancement.",
+      "evidence_ids": [
+        "Accenture:fulfillment_stat:95985256",
+        "Accenture:fulfillment_stat:96997685",
+        "Accenture:fulfillment_stat:98404797"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "While some staff appreciate the standard benefits and compensation, others find the pay insufficient relative to their responsibilities.",
+      "evidence_ids": [
+        "Accenture:fulfillment_phys:99972489",
+        "Accenture:fulfillment_phys:95147223",
+        "Accenture:fulfillment_phys:96440445"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many employees report positive experiences with remote work options and time-off policies, contributing to a manageable work-life balance.",
+      "evidence_ids": [
+        "Accenture:fulfillment_fam:97515679",
+        "Accenture:fulfillment_fam:100652334",
+        "Accenture:fulfillment_fam:100454561"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Collaborative team environments and mentorship are cited as foundational elements that help new hires integrate and develop skills.",
+      "evidence_ids": [
+        "Accenture:fulfillment_aff:98581034",
+        "Accenture:fulfillment_aff:98054787",
+        "Accenture:fulfillment_aff:97989657"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "A subset of the workforce feels secure in their roles, attributing this to the supportive nature of their specific project teams.",
+      "evidence_ids": [
+        "Accenture:fulfillment_selfprot:98048490",
+        "Accenture:fulfillment_selfprot:97904798",
+        "Accenture:fulfillment_selfprot:97303411"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High expectations and tight deadlines create a stressful environment, often exacerbated by a perceived disconnect between effort and reward.",
+      "evidence_ids": [
+        "Accenture:hindrance_phys:95208293",
+        "Accenture:hindrance_phys:95735079",
+        "Accenture:hindrance_phys:95204216"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration over stalled promotion cycles and a lack of clear career growth, often feeling overlooked by leadership.",
+      "evidence_ids": [
+        "Accenture:hindrance_stat:95901206",
+        "Accenture:hindrance_stat:97932316",
+        "Accenture:hindrance_stat:100578018"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some staff report difficulty balancing personal needs with professional demands, citing a lack of institutional support for family-related challenges.",
+      "evidence_ids": [
+        "Accenture:hindrance_fam:95258993",
+        "Accenture:hindrance_fam:95171476",
+        "Accenture:hindrance_fam:97017705"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "The sheer size of the organization can lead to feelings of isolation and confusion regarding internal processes and management direction.",
+      "evidence_ids": [
+        "Accenture:hindrance_aff:100023476",
+        "Accenture:hindrance_aff:98873271",
+        "Accenture:hindrance_aff:96961333"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Concerns regarding internal politics, hierarchical rigidity, and a lack of ethical transparency are noted as significant cultural pain points.",
+      "evidence_ids": [
+        "Accenture:hindrance_selfprot:97484933",
+        "Accenture:hindrance_selfprot:100531548",
+        "Accenture:hindrance_selfprot:100480645"
+      ]
+    }
+  ]
+}

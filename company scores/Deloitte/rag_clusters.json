@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "company": "Deloitte",
+  "generated_at": "2026-04-30T20:40:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1098,
+    "prompt_token_count": 3050,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3050
+      }
+    ],
+    "total_token_count": 4148
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite competitive salaries and robust benefit packages, including wellness subsidies, as primary positive aspects of their employment.",
+      "evidence_ids": [
+        "Deloitte:fulfillment_phys:99972323",
+        "Deloitte:fulfillment_phys:100559085",
+        "Deloitte:fulfillment_phys:100355291"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "The firm is recognized for offering flexible hybrid work schedules and generous time-off policies, which contribute to a positive work-life balance.",
+      "evidence_ids": [
+        "Deloitte:fulfillment_fam:100734334",
+        "Deloitte:fulfillment_fam:95862087",
+        "Deloitte:fulfillment_fam:96169427"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many staff value the professional development opportunities and the chance to work on diverse client projects, viewing the firm as a strong resume builder.",
+      "evidence_ids": [
+        "Deloitte:fulfillment_stat:98792464",
+        "Deloitte:fulfillment_stat:99326040",
+        "Deloitte:fulfillment_stat:98769452"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Reports of excessive workloads, chaotic team environments, and a lack of support from management highlight significant stress factors for some employees.",
+      "evidence_ids": [
+        "Deloitte:hindrance_phys:99777948",
+        "Deloitte:hindrance_phys:98712903",
+        "Deloitte:hindrance_phys:98331482"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some reviews indicate concerns regarding toxic team dynamics, excessive pressure to meet utilization goals, and a lack of transparency in organizational changes.",
+      "evidence_ids": [
+        "Deloitte:hindrance_selfprot:100215285",
+        "Deloitte:hindrance_selfprot:100211803",
+        "Deloitte:hindrance_selfprot:99899684"
+      ]
+    }
+  ]
+}

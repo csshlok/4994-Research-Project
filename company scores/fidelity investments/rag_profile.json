@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "fidelity investments",
+  "score_summary": {
+    "review_count": 999,
+    "overall_score": 74,
+    "positive_share": 0.7317,
+    "negative_share": 0.1942,
+    "domain_scores": {
+      "physiological": 66,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 58,
+      "family_care": 59
+    },
+    "raw_domain_scores": {
+      "physiological": 0.32976663623101365,
+      "self_protection": 0.01024506041482171,
+      "affiliation": 0.12780787604181282,
+      "status_esteem": 0.16204670680340905,
+      "family_care": 0.1796411004564545
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 66
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 454,
+      "signal": 45,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "fidelity investments:fulfillment_phys:99171083",
+        "fidelity investments:fulfillment_phys:102267849",
+        "fidelity investments:fulfillment_phys:99627180",
+        "fidelity investments:fulfillment_phys:96599131",
+        "fidelity investments:fulfillment_phys:98792704"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 236,
+      "signal": 24,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "fidelity investments:fulfillment_fam:101792139",
+        "fidelity investments:fulfillment_fam:102823199",
+        "fidelity investments:fulfillment_fam:101015080",
+        "fidelity investments:fulfillment_fam:100472900",
+        "fidelity investments:fulfillment_fam:99539631"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 216,
+      "signal": 22,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "fidelity investments:fulfillment_stat:97139986",
+        "fidelity investments:fulfillment_stat:102286976",
+        "fidelity investments:fulfillment_stat:100196651",
+        "fidelity investments:fulfillment_stat:101423397",
+        "fidelity investments:fulfillment_stat:96372565"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 128,
+      "signal": 13,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "fidelity investments:hindrance_phys:96814700",
+        "fidelity investments:hindrance_phys:102681078",
+        "fidelity investments:hindrance_phys:101429581",
+        "fidelity investments:hindrance_phys:96409671",
+        "fidelity investments:hindrance_phys:101006258"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 63,
+      "signal": 6,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "fidelity investments:hindrance_stat:97210636",
+        "fidelity investments:hindrance_stat:101839510",
+        "fidelity investments:hindrance_stat:102647198",
+        "fidelity investments:hindrance_stat:97342112",
+        "fidelity investments:hindrance_stat:103060825"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 58,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "fidelity investments:hindrance_fam:101231348",
+        "fidelity investments:hindrance_fam:95931798",
+        "fidelity investments:hindrance_fam:101986654",
+        "fidelity investments:hindrance_fam:101752680",
+        "fidelity investments:hindrance_fam:101694933"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

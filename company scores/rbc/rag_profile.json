@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "rbc",
+  "score_summary": {
+    "review_count": 999,
+    "overall_score": 68,
+    "positive_share": 0.6567,
+    "negative_share": 0.2482,
+    "domain_scores": {
+      "physiological": 57,
+      "self_protection": 51,
+      "affiliation": 57,
+      "status_esteem": 56,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.13016585561663527,
+      "self_protection": 0.016153866413303002,
+      "affiliation": 0.13836385860824532,
+      "status_esteem": 0.1270196300089311,
+      "family_care": 0.11332970864556889
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 57
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 220,
+      "signal": 22,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "rbc:fulfillment_phys:69832878",
+        "rbc:fulfillment_phys:1168287",
+        "rbc:fulfillment_phys:87929597",
+        "rbc:fulfillment_phys:84853572",
+        "rbc:fulfillment_phys:79895249"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 201,
+      "signal": 20,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "rbc:fulfillment_stat:82372425",
+        "rbc:fulfillment_stat:925953",
+        "rbc:fulfillment_stat:91029861",
+        "rbc:fulfillment_stat:44670615",
+        "rbc:fulfillment_stat:1318361"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 190,
+      "signal": 19,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "rbc:fulfillment_aff:10737753",
+        "rbc:fulfillment_aff:7252387",
+        "rbc:fulfillment_aff:100076907",
+        "rbc:fulfillment_aff:8956906",
+        "rbc:fulfillment_aff:99945414"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 124,
+      "signal": 12,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "rbc:hindrance_phys:48320766",
+        "rbc:hindrance_phys:32166892",
+        "rbc:hindrance_phys:2520204",
+        "rbc:hindrance_phys:99341633",
+        "rbc:hindrance_phys:74174849"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 95,
+      "signal": 10,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "rbc:hindrance_stat:2252294",
+        "rbc:hindrance_stat:67497682",
+        "rbc:hindrance_stat:23151269",
+        "rbc:hindrance_stat:50783645",
+        "rbc:hindrance_stat:43708846"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 74,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "rbc:hindrance_fam:101779172",
+        "rbc:hindrance_fam:91086817",
+        "rbc:hindrance_fam:82693603",
+        "rbc:hindrance_fam:77852990",
+        "rbc:hindrance_fam:56762874"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

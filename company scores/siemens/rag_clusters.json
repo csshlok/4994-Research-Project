@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "siemens",
+  "generated_at": "2026-04-30T20:37:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3193,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3193
+      }
+    ],
+    "total_token_count": 4775
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees generally value the financial compensation and benefits provided, though experiences regarding the consistency of these rewards vary.",
+      "evidence_ids": [
+        "siemens:fulfillment_phys:61779399",
+        "siemens:fulfillment_phys:60832677",
+        "siemens:fulfillment_phys:84470037"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members report a positive work-life balance and appreciate the flexibility offered in their roles.",
+      "evidence_ids": [
+        "siemens:fulfillment_fam:102930874",
+        "siemens:fulfillment_fam:100054979",
+        "siemens:fulfillment_fam:99205119"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "The company is seen as a strong environment for early-career growth, though some find long-term advancement opportunities limited.",
+      "evidence_ids": [
+        "siemens:fulfillment_stat:74399858",
+        "siemens:fulfillment_stat:68896283",
+        "siemens:fulfillment_stat:99298456"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Supportive and inclusive team environments are frequently mentioned as key contributors to a positive culture.",
+      "evidence_ids": [
+        "siemens:fulfillment_aff:92840956",
+        "siemens:fulfillment_aff:70558535",
+        "siemens:fulfillment_aff:74306341"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees feel secure, others express concerns about the fairness and transparency of the work environment.",
+      "evidence_ids": [
+        "siemens:fulfillment_selfprot:80858787",
+        "siemens:fulfillment_selfprot:76167146",
+        "siemens:fulfillment_selfprot:84869865"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Understaffing and tight deadlines contribute to feelings of exhaustion for some employees despite the stable pay.",
+      "evidence_ids": [
+        "siemens:hindrance_phys:70452421",
+        "siemens:hindrance_phys:77658182",
+        "siemens:hindrance_phys:100701395"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some staff report feeling overlooked or underappreciated, citing a lack of clear career progression.",
+      "evidence_ids": [
+        "siemens:hindrance_stat:65179381",
+        "siemens:hindrance_stat:82270897",
+        "siemens:hindrance_stat:62241332"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Inconsistent management and poor work-life balance are reported as significant pain points for some individuals.",
+      "evidence_ids": [
+        "siemens:hindrance_fam:66759346",
+        "siemens:hindrance_fam:96443256",
+        "siemens:hindrance_fam:70224196"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Internal silos and a lack of connection between different departments can lead to feelings of isolation.",
+      "evidence_ids": [
+        "siemens:hindrance_aff:91065842",
+        "siemens:hindrance_aff:86605818",
+        "siemens:hindrance_aff:78791662"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic environments and lack of accountability highlight challenges in maintaining a universally safe workspace.",
+      "evidence_ids": [
+        "siemens:hindrance_selfprot:62635756",
+        "siemens:hindrance_selfprot:95118696",
+        "siemens:hindrance_selfprot:75683434"
+      ]
+    }
+  ]
+}

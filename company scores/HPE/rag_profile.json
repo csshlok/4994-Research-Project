@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "HPE",
+  "score_summary": {
+    "review_count": 779,
+    "overall_score": 69,
+    "positive_share": 0.6547,
+    "negative_share": 0.249,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 56,
+      "family_care": 60
+    },
+    "raw_domain_scores": {
+      "physiological": 0.1751430489932716,
+      "self_protection": 0.0149004047181721,
+      "affiliation": 0.12203283448486382,
+      "status_esteem": 0.12923351407005138,
+      "family_care": 0.19932934150939197
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 60
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 211,
+      "signal": 27,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "HPE:fulfillment_fam:71075716",
+        "HPE:fulfillment_fam:83936366",
+        "HPE:fulfillment_fam:78772988",
+        "HPE:fulfillment_fam:75786010",
+        "HPE:fulfillment_fam:99057777"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 199,
+      "signal": 26,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "HPE:fulfillment_phys:102975066",
+        "HPE:fulfillment_phys:97124812",
+        "HPE:fulfillment_phys:96450115",
+        "HPE:fulfillment_phys:68019029",
+        "HPE:fulfillment_phys:102666724"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 145,
+      "signal": 19,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "HPE:fulfillment_stat:93681667",
+        "HPE:fulfillment_stat:80586874",
+        "HPE:fulfillment_stat:100980113",
+        "HPE:fulfillment_stat:74748019",
+        "HPE:fulfillment_stat:87593056"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 73,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "HPE:hindrance_phys:96203518",
+        "HPE:hindrance_phys:93952480",
+        "HPE:hindrance_phys:76634407",
+        "HPE:hindrance_phys:73042579",
+        "HPE:hindrance_phys:72634822"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 57,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "HPE:hindrance_fam:83125741",
+        "HPE:hindrance_fam:82786525",
+        "HPE:hindrance_fam:79176887",
+        "HPE:hindrance_fam:102305190",
+        "HPE:hindrance_fam:97112435"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 55,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "HPE:hindrance_stat:92643768",
+        "HPE:hindrance_stat:83000165",
+        "HPE:hindrance_stat:87789024",
+        "HPE:hindrance_stat:98988846",
+        "HPE:hindrance_stat:97793653"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

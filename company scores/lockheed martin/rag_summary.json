@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "lockheed martin",
+  "generated_at": "2026-04-30T20:32:00",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 947,
+    "prompt_token_count": 3496,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3496
+      }
+    ],
+    "total_token_count": 4443
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Lockheed Martin maintains a generally positive reputation among its workforce, characterized by competitive compensation, stable employment, and a strong emphasis on work-life balance. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than absolute proof of every individual's experience.",
+    "While many employees value the company's culture and professional development opportunities, some report challenges regarding bureaucratic processes, inconsistent management, and localized pockets of toxic behavior. Addressing these areas of friction remains essential for maintaining long-term employee satisfaction and operational cohesion."
+  ],
+  "key_strengths": [
+    "Competitive salary and comprehensive benefits packages.",
+    "High levels of job security and stability.",
+    "Strong support for work-life balance and flexible scheduling.",
+    "Opportunities for professional growth and exposure to complex, meaningful projects."
+  ],
+  "key_risks": [
+    "Reports of bureaucratic inefficiency and complex internal processes.",
+    "Inconsistent management practices leading to perceptions of favoritism.",
+    "Occasional instances of toxic or hostile work environments in specific departments.",
+    "Concerns regarding limited growth paths for non-technical roles."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care reflects the company's success in providing stable, flexible working conditions that allow employees to balance personal and professional responsibilities.",
+    "weakest": "Self-Protection indicates that some employees feel vulnerable due to perceived unfairness, lack of transparency, or occasional negative interpersonal dynamics."
+  }
+}

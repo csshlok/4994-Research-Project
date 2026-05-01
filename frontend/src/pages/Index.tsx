@@ -8,13 +8,16 @@ import { ResultsPage } from "@/components/ResultsPage";
 import { ComparisonResultsPage } from "@/components/ComparisonResultsPage";
 import {
   downloadScoredCompanyFileText,
+  generateComparisonRagSummary,
   downloadJobFileText,
   getScoredCompanyDownloadUrl,
   getScoredCompanyOutputs,
+  getScoredCompanyRag,
   getJobOutputs,
   getJobStatus,
   sleep,
   startPipelineJob,
+  type ComparisonRagSummary,
 } from "@/lib/backend-api";
 import { AnalysisResult, buildAnalysisResult } from "@/lib/analysis";
 import {
@@ -29,6 +32,7 @@ const Index = () => {
   const [appState, setAppState] = useState<AppState>("landing");
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [comparison, setComparison] = useState<CompanyComparisonMetric[]>([]);
+  const [comparisonRag, setComparisonRag] = useState<ComparisonRagSummary | null>(null);
   const [processingStatus, setProcessingStatus] = useState("Submitting analysis job...");
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [compareSeed, setCompareSeed] = useState<string[]>([]);
@@ -58,6 +62,9 @@ const Index = () => {
         const topicCsvText = cachedOutputs.files.includes("topic_summary.csv")
           ? await downloadScoredCompanyFileText(cachedOutputs.company_id, "topic_summary.csv")
           : undefined;
+        const rag = cachedOutputs.files.includes("rag_summary.json")
+          ? await getScoredCompanyRag(cachedOutputs.company_id)
+          : undefined;
 
         const result = buildAnalysisResult({
           jobId: `cached-${cachedOutputs.company_id}`,
@@ -66,6 +73,9 @@ const Index = () => {
           reviewCsvText,
           companyCsvText,
           topicCsvText,
+          ragSummary: rag?.summary,
+          ragClusters: rag?.clusters,
+          ragInsights: rag?.insights,
           outputFiles: cachedOutputs.files,
           downloads: {
             cleanedReviews: cachedOutputs.files.includes("cleaned_reviews.csv")
@@ -148,6 +158,7 @@ const Index = () => {
     setAppState("processing");
     setAnalysis(null);
     setComparison([]);
+    setComparisonRag(null);
     setActiveJobId(null);
     setProcessingStatus("Preparing cached company comparison...");
 
@@ -161,8 +172,11 @@ const Index = () => {
           return buildCompanyComparisonMetric(companyName, companyCsvText, topicCsvText);
         })
       );
+      setProcessingStatus("Generating comparison summary...");
+      const ragSummary = await generateComparisonRagSummary(uniqueCompanies);
       await sleep(10000);
       setComparison(metrics);
+      setComparisonRag(ragSummary);
       setAppState("comparison");
     } catch (error) {
       const description = error instanceof Error ? error.message : "Unexpected error.";
@@ -179,6 +193,7 @@ const Index = () => {
     setAppState("landing");
     setAnalysis(null);
     setComparison([]);
+    setComparisonRag(null);
     setActiveJobId(null);
     setCompareSeed([]);
     setProcessingStatus("Submitting analysis job...");
@@ -211,10 +226,12 @@ const Index = () => {
     return (
       <ComparisonResultsPage
         metrics={comparison}
+        ragSummary={comparisonRag}
         onBack={handleBack}
         onAddComparison={(seedCompanyId) => {
           setCompareSeed(seedCompanyId ? [seedCompanyId] : []);
           setComparison([]);
+          setComparisonRag(null);
           setAppState("landing");
           window.setTimeout(() => {
             inputRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -238,7 +255,6 @@ const Index = () => {
         />
       </div>
       
-      {/* Footer */}
       <footer className="py-12 border-t border-border">
         <div className="container-narrow text-center">
           <p className="text-sm text-muted-foreground">

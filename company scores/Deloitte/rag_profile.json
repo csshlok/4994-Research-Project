@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "Deloitte",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 72,
+    "positive_share": 0.708,
+    "negative_share": 0.19,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 50,
+      "affiliation": 55,
+      "status_esteem": 59,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.1809649357733697,
+      "self_protection": 0.003599715783269586,
+      "affiliation": 0.09052631359671394,
+      "status_esteem": 0.18864778601583737,
+      "family_care": 0.16369530284772477
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 297,
+      "signal": 30,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "Deloitte:fulfillment_phys:99972323",
+        "Deloitte:fulfillment_phys:100559085",
+        "Deloitte:fulfillment_phys:100355291",
+        "Deloitte:fulfillment_phys:100225889",
+        "Deloitte:fulfillment_phys:100053001"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 268,
+      "signal": 27,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "Deloitte:fulfillment_fam:100734334",
+        "Deloitte:fulfillment_fam:95862087",
+        "Deloitte:fulfillment_fam:96169427",
+        "Deloitte:fulfillment_fam:99272109",
+        "Deloitte:fulfillment_fam:97237624"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 255,
+      "signal": 26,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "Deloitte:fulfillment_stat:98792464",
+        "Deloitte:fulfillment_stat:99326040",
+        "Deloitte:fulfillment_stat:98769452",
+        "Deloitte:fulfillment_stat:96259564",
+        "Deloitte:fulfillment_stat:99870161"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 178,
+      "signal": 18,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "Deloitte:hindrance_phys:99777948",
+        "Deloitte:hindrance_phys:98712903",
+        "Deloitte:hindrance_phys:98331482",
+        "Deloitte:hindrance_phys:100268678",
+        "Deloitte:hindrance_phys:100629298"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 149,
+      "signal": 15,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "Deloitte:hindrance_fam:99602440",
+        "Deloitte:hindrance_fam:96983645",
+        "Deloitte:hindrance_fam:98718574",
+        "Deloitte:hindrance_fam:96735503",
+        "Deloitte:hindrance_fam:98278310"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 63,
+      "signal": 6,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "Deloitte:hindrance_selfprot:100215285",
+        "Deloitte:hindrance_selfprot:100211803",
+        "Deloitte:hindrance_selfprot:99899684",
+        "Deloitte:hindrance_selfprot:100684195",
+        "Deloitte:hindrance_selfprot:100625041"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

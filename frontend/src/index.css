@@ -6,7 +6,6 @@
 
 @layer base {
   :root {
-    /* Warm, academic palette */
     --background: 40 30% 96%;
     --foreground: 100 20% 15%;
 
@@ -16,18 +15,15 @@
     --popover: 40 25% 98%;
     --popover-foreground: 100 20% 15%;
 
-    /* Forest green primary */
     --primary: 100 45% 25%;
     --primary-foreground: 40 30% 96%;
 
-    /* Soft olive secondary */
     --secondary: 80 15% 90%;
     --secondary-foreground: 100 30% 20%;
 
     --muted: 40 15% 92%;
     --muted-foreground: 40 10% 45%;
 
-    /* Warm accent */
     --accent: 35 60% 92%;
     --accent-foreground: 100 30% 20%;
 
@@ -40,7 +36,6 @@
 
     --radius: 0.75rem;
 
-    /* Custom tokens */
     --cream: 40 35% 94%;
     --cream-dark: 40 25% 88%;
     --forest: 100 45% 25%;
@@ -52,12 +47,10 @@
     --text-primary: 100 20% 15%;
     --text-secondary: 40 10% 40%;
 
-    /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(40 35% 94%) 0%, hsl(40 25% 90%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(40 25% 98%) 0%, hsl(40 20% 95%) 100%);
     --gradient-forest: linear-gradient(135deg, hsl(100 45% 25%) 0%, hsl(100 40% 30%) 100%);
 
-    /* Shadows */
     --shadow-soft: 0 4px 20px -4px hsl(100 20% 15% / 0.08);
     --shadow-card: 0 2px 12px -2px hsl(100 20% 15% / 0.06);
     --shadow-elevated: 0 8px 30px -8px hsl(100 20% 15% / 0.12);

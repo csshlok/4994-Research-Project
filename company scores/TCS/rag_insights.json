@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "TCS",
+  "generated_at": "2026-04-30T20:37:57",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 953,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3963
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high appreciation for global exposure and frustration with local management practices.",
+    "A frequent mention of benefits and insurance as a primary stabilizer for employee satisfaction.",
+    "The recurring theme of salary dissatisfaction despite the availability of structured career paths.",
+    "The significant impact of remote work flexibility on positive employee sentiment."
+  ]
+}

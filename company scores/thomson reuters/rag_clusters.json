@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "thomson reuters",
+  "generated_at": "2026-04-30T20:38:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1737,
+    "prompt_token_count": 3710,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3710
+      }
+    ],
+    "total_token_count": 5447
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently highlight the quality of benefits and flexible time-off as key positive aspects of their employment.",
+      "evidence_ids": [
+        "thomson reuters:fulfillment_phys:97748157",
+        "thomson reuters:fulfillment_phys:73882686",
+        "thomson reuters:fulfillment_phys:73618874"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "The company is recognized for supporting work-life balance through hybrid work options and mental health initiatives.",
+      "evidence_ids": [
+        "thomson reuters:fulfillment_fam:74399024",
+        "thomson reuters:fulfillment_fam:102221802",
+        "thomson reuters:fulfillment_fam:58737096"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some employees appreciate the variety of professional development opportunities, others feel these are overshadowed by organizational instability.",
+      "evidence_ids": [
+        "thomson reuters:fulfillment_stat:51617098",
+        "thomson reuters:fulfillment_stat:78761123",
+        "thomson reuters:fulfillment_stat:50783030"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many employees report a collaborative and supportive team environment that fosters a sense of belonging.",
+      "evidence_ids": [
+        "thomson reuters:fulfillment_aff:93164948",
+        "thomson reuters:fulfillment_aff:86832386",
+        "thomson reuters:fulfillment_aff:55996927"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "This area reflects significant tension, as concerns about job security often outweigh the positive interpersonal relationships reported by staff.",
+      "evidence_ids": [
+        "thomson reuters:fulfillment_selfprot:75386420",
+        "thomson reuters:fulfillment_selfprot:50780963",
+        "thomson reuters:fulfillment_selfprot:81365590"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Employees report that high-stress workloads and complicated commission structures often lead to feelings of being underpaid.",
+      "evidence_ids": [
+        "thomson reuters:hindrance_phys:58381485",
+        "thomson reuters:hindrance_phys:87342568",
+        "thomson reuters:hindrance_phys:64722600"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "There is frustration regarding slow salary growth and a perceived lack of genuine support for long-term career advancement.",
+      "evidence_ids": [
+        "thomson reuters:hindrance_stat:81184890",
+        "thomson reuters:hindrance_stat:56749705",
+        "thomson reuters:hindrance_stat:99482343"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees feel isolated or disconnected due to frequent restructuring and perceived leadership changes that do not prioritize employee interests.",
+      "evidence_ids": [
+        "thomson reuters:hindrance_aff:65226304",
+        "thomson reuters:hindrance_aff:100568754",
+        "thomson reuters:hindrance_aff:90845358"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic office politics and favoritism suggest that some employees feel the environment lacks fairness and transparency.",
+      "evidence_ids": [
+        "thomson reuters:hindrance_selfprot:78826530",
+        "thomson reuters:hindrance_selfprot:96827405",
+        "thomson reuters:hindrance_selfprot:95537642"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Despite general flexibility, some roles are described as having high pressure and no work-life balance due to constant organizational changes.",
+      "evidence_ids": [
+        "thomson reuters:hindrance_fam:87326197",
+        "thomson reuters:hindrance_fam:96052113",
+        "thomson reuters:hindrance_fam:74495814"
+      ]
+    }
+  ]
+}

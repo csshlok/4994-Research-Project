@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "in n out",
+  "generated_at": "2026-04-30T20:29:38",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 960,
+    "prompt_token_count": 3423,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3423
+      }
+    ],
+    "total_token_count": 4383
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently praise the company for offering competitive wages and solid benefits, making it a desirable option for part-time or student work.",
+      "evidence_ids": [
+        "in n out:fulfillment_phys:102147780",
+        "in n out:fulfillment_phys:87371152",
+        "in n out:fulfillment_phys:97397337"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many staff members report a supportive and friendly team atmosphere that fosters a sense of belonging and effective collaboration.",
+      "evidence_ids": [
+        "in n out:fulfillment_aff:91740854",
+        "in n out:fulfillment_aff:102589270",
+        "in n out:fulfillment_aff:100648708"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "The fast-paced nature of the work, combined with high performance expectations, leads to significant stress and physical exhaustion for some associates.",
+      "evidence_ids": [
+        "in n out:hindrance_phys:91678530",
+        "in n out:hindrance_phys:89158960",
+        "in n out:hindrance_phys:88024257"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "A subset of reviews highlights serious concerns regarding toxic management, favoritism, and a lack of accountability when addressing workplace grievances.",
+      "evidence_ids": [
+        "in n out:hindrance_selfprot:100128850",
+        "in n out:hindrance_selfprot:98577743",
+        "in n out:hindrance_selfprot:98799036"
+      ]
+    }
+  ]
+}

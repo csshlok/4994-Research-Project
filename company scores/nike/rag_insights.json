@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "nike",
+  "generated_at": "2026-04-30T20:34:23",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1561,
+    "prompt_token_count": 3404,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3404
+      }
+    ],
+    "total_token_count": 4965
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A significant contrast exists between the high value placed on external brand prestige and the internal frustration with leadership behaviors.",
+    "The presence of both high praise for work-life balance and reports of micromanagement suggests a highly variable experience depending on specific teams or store locations.",
+    "Employees frequently mention the quality of the physical campus and benefits, which serves as a primary anchor for positive sentiment.",
+    "There is a recurring theme of frustration regarding career advancement, with some employees feeling overlooked despite the company's focus on innovation."
+  ]
+}

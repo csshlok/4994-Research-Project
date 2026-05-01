@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "bloomberg",
+  "generated_at": "2026-04-30T20:22:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 894,
+    "prompt_token_count": 3378,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3378
+      }
+    ],
+    "total_token_count": 4272
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with material benefits and frustration regarding long-term career stagnation.",
+    "The presence of conflicting reports where some employees praise the work-life balance while others cite burnout.",
+    "A recurring theme of internal bureaucracy acting as a barrier to employee empowerment and growth.",
+    "The significant impact of management quality on individual experiences, ranging from supportive to toxic."
+  ]
+}

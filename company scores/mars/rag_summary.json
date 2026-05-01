@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "mars",
+  "generated_at": "2026-04-30T20:32:44",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1620,
+    "prompt_token_count": 3482,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3482
+      }
+    ],
+    "total_token_count": 5102
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Mars maintains a generally positive reputation among employees, with a strong emphasis on competitive compensation and benefits packages. These findings represent signals derived from review language and should not be interpreted as direct proof of every individual's workplace experience.",
+    "While many staff members appreciate the collaborative environment and flexibility, significant concerns exist regarding career stagnation and pockets of toxic management. Addressing these inconsistencies in leadership and growth opportunities remains critical for improving overall employee sentiment."
+  ],
+  "key_strengths": [
+    "Competitive pay and comprehensive benefits packages",
+    "Supportive and collaborative team environments",
+    "Emphasis on work-life balance in many roles",
+    "Strong brand recognition and stability"
+  ],
+  "key_risks": [
+    "Reports of toxic leadership and fear-based management",
+    "Limited opportunities for career advancement and promotion",
+    "Inconsistent application of fairness and diversity initiatives",
+    "High workload demands leading to potential burnout"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass pay, benefits, and basic work conditions, represent the most favorable aspect of the employee experience.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust, is the area where employees express the most concern."
+  }
+}

@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,bain_company,849,0,0,0,849,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\bain_company\02_clean\reviews_bain_company_clean.csv
+reviews.csv,bain_company,849,0,0,0,849,cleaned_reviews.csv

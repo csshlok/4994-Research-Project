@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "KPMG",
+  "generated_at": "2026-04-30T20:31:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1557,
+    "prompt_token_count": 2934,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2934
+      }
+    ],
+    "total_token_count": 4491
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees appreciate the flexibility and benefits provided, though experiences vary regarding the actual balance achieved.",
+      "evidence_ids": [
+        "KPMG:fulfillment_fam:97950959",
+        "KPMG:fulfillment_fam:97701138",
+        "KPMG:fulfillment_fam:97301233"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "The firm is recognized for providing valuable career advancement and prestige, though some feel these benefits are offset by other workplace challenges.",
+      "evidence_ids": [
+        "KPMG:fulfillment_stat:91201701",
+        "KPMG:fulfillment_stat:90758798",
+        "KPMG:fulfillment_stat:94149121"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Many staff value the available benefits and healthcare, though satisfaction with pay levels is inconsistent.",
+      "evidence_ids": [
+        "KPMG:fulfillment_phys:98279817",
+        "KPMG:fulfillment_phys:90510207",
+        "KPMG:fulfillment_phys:100293707"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The collaborative nature of teams and supportive peer relationships are highlighted as key positive aspects of the culture.",
+      "evidence_ids": [
+        "KPMG:fulfillment_aff:89547777",
+        "KPMG:fulfillment_aff:97891663",
+        "KPMG:fulfillment_aff:90239311"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "A subset of employees reports feeling secure in their roles and supported by their immediate coworkers.",
+      "evidence_ids": [
+        "KPMG:fulfillment_selfprot:96382265",
+        "KPMG:fulfillment_selfprot:95280347",
+        "KPMG:fulfillment_selfprot:91236136"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Long hours and high-pressure work environments contribute to significant exhaustion and dissatisfaction with pay.",
+      "evidence_ids": [
+        "KPMG:hindrance_phys:90742644",
+        "KPMG:hindrance_phys:95530236",
+        "KPMG:hindrance_phys:89438353"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Concerns regarding inflexible structures and lack of support for personal life balance are prominent.",
+      "evidence_ids": [
+        "KPMG:hindrance_fam:93532037",
+        "KPMG:hindrance_fam:92189652",
+        "KPMG:hindrance_fam:93989324"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees report negative experiences involving office politics, ego-driven management, and a lack of leadership support.",
+      "evidence_ids": [
+        "KPMG:hindrance_selfprot:90706428",
+        "KPMG:hindrance_selfprot:89389398",
+        "KPMG:hindrance_selfprot:100730712"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Reports of limited growth, organizational instability, and lack of recognition indicate frustration with career progression.",
+      "evidence_ids": [
+        "KPMG:hindrance_stat:99454191",
+        "KPMG:hindrance_stat:98251953",
+        "KPMG:hindrance_stat:95282794"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff feel isolated or disconnected, noting that compensation does not always reflect the effort required in their roles.",
+      "evidence_ids": [
+        "KPMG:hindrance_aff:89207297",
+        "KPMG:hindrance_aff:93950932",
+        "KPMG:hindrance_aff:92451242"
+      ]
+    }
+  ]
+}

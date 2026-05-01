@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "nvidia",
+  "generated_at": "2026-04-30T20:35:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1560,
+    "prompt_token_count": 3430,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3430
+      }
+    ],
+    "total_token_count": 4990
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Nvidia maintains a strong overall positive sentiment among employees, characterized by high levels of satisfaction regarding compensation, benefits, and the company's technical mission. These insights are derived from linguistic patterns in employee reviews and serve as indicators of organizational health rather than absolute proof of every individual's experience.",
+    "While the company is widely praised for its stability and professional development opportunities, some employees report challenges related to work-life balance and inconsistent management experiences. Addressing these areas of friction remains essential to sustaining long-term employee engagement and cultural alignment across diverse teams."
+  ],
+  "key_strengths": [
+    "Competitive total compensation and comprehensive benefits packages.",
+    "Strong sense of stability and long-term employment security.",
+    "Opportunities for professional growth and engagement with high-impact technical challenges.",
+    "A visionary leadership culture that is frequently cited as a source of inspiration."
+  ],
+  "key_risks": [
+    "Reports of high work pressure and occasional burnout during peak periods.",
+    "Inconsistent management quality leading to varied team-level experiences.",
+    "Concerns regarding career stagnation and lack of clear advancement paths for some roles.",
+    "Isolated instances of workplace politics and perceived favoritism."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which reflects the importance employees place on work-life balance and the company's efforts to support personal well-being.",
+    "weakest": "Self-Protection, which highlights areas where employees feel less secure or concerned about fairness and organizational transparency."
+  }
+}

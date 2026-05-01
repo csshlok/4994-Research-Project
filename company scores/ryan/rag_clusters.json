@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "company": "ryan",
+  "generated_at": "2026-04-30T20:36:26",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1570,
+    "prompt_token_count": 3688,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3688
+      }
+    ],
+    "total_token_count": 5258
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently praise the company's flexible work arrangements and generous leave policies.",
+      "evidence_ids": [
+        "ryan:fulfillment_fam:74834261",
+        "ryan:fulfillment_fam:101085948",
+        "ryan:fulfillment_fam:86133503"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff members highlight competitive benefits and perks as a major advantage of working at the firm.",
+      "evidence_ids": [
+        "ryan:fulfillment_phys:73660071",
+        "ryan:fulfillment_phys:88002654",
+        "ryan:fulfillment_phys:75150244"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many employees feel valued and report clear paths for career advancement and skill development.",
+      "evidence_ids": [
+        "ryan:fulfillment_stat:39467584",
+        "ryan:fulfillment_stat:34216454",
+        "ryan:fulfillment_stat:35221870"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "A collaborative and inclusive environment is noted by many, though some report negative team dynamics.",
+      "evidence_ids": [
+        "ryan:fulfillment_aff:89122731",
+        "ryan:fulfillment_aff:81353580",
+        "ryan:fulfillment_aff:101464451"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some employees express high trust in the company's fairness, while others report a toxic atmosphere.",
+      "evidence_ids": [
+        "ryan:fulfillment_selfprot:55477194",
+        "ryan:fulfillment_selfprot:87015747",
+        "ryan:fulfillment_selfprot:80050962"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "A subset of the workforce reports feeling underpaid and exhausted by high-pressure workloads.",
+      "evidence_ids": [
+        "ryan:hindrance_phys:73657968",
+        "ryan:hindrance_phys:89214514",
+        "ryan:hindrance_phys:76921395"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees report that the reality of their workload contradicts the company's stated flexibility.",
+      "evidence_ids": [
+        "ryan:hindrance_fam:75978167",
+        "ryan:hindrance_fam:34154578",
+        "ryan:hindrance_fam:96888036"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Concerns regarding limited career growth and perceived favoritism are present in some reviews.",
+      "evidence_ids": [
+        "ryan:hindrance_stat:49026646",
+        "ryan:hindrance_stat:78218594",
+        "ryan:hindrance_stat:51726311"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "While many enjoy the culture, some report feeling isolated or experiencing high-stress environments.",
+      "evidence_ids": [
+        "ryan:hindrance_aff:96326817",
+        "ryan:hindrance_aff:47909279",
+        "ryan:hindrance_aff:88132813"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Serious allegations of unethical management, discrimination, and bullying appear in a minority of reviews.",
+      "evidence_ids": [
+        "ryan:hindrance_selfprot:69638622",
+        "ryan:hindrance_selfprot:81543393",
+        "ryan:hindrance_selfprot:87299806"
+      ]
+    }
+  ]
+}

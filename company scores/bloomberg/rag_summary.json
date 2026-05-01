@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "bloomberg",
+  "generated_at": "2026-04-30T20:22:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 894,
+    "prompt_token_count": 3378,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3378
+      }
+    ],
+    "total_token_count": 4272
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Bloomberg maintains a generally positive workplace reputation, with employees frequently highlighting strong compensation, robust benefits, and a collaborative environment. These findings are based on linguistic signals identified in employee reviews and do not represent the direct experience of every individual at the firm.",
+    "Despite these strengths, some staff report challenges related to career progression, internal bureaucracy, and instances of high-pressure or toxic workplace dynamics. These patterns suggest that while the company offers significant professional advantages, there are notable inconsistencies in the employee experience regarding growth and cultural support."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefit packages",
+    "Strong sense of collaboration and team-oriented culture",
+    "High levels of job stability and professional security",
+    "Positive work-life balance reported by many employees"
+  ],
+  "key_risks": [
+    "Perceived lack of clear career advancement and promotion pathways",
+    "Reports of toxic management practices and workplace instability",
+    "Bureaucratic processes hindering individual impact and innovation",
+    "Concerns regarding burnout and excessive workload expectations"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain reflects the highest positive sentiment, driven by employee appreciation for financial stability, competitive pay, and strong benefits packages.",
+    "weakest": "The Self-Protection domain is the weakest, indicating that some employees feel vulnerable due to concerns about fairness, management accountability, and negative workplace culture."
+  }
+}

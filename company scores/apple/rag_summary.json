@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "apple",
+  "generated_at": "2026-04-30T20:20:40",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1647,
+    "prompt_token_count": 3464,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3464
+      }
+    ],
+    "total_token_count": 5111
+  },
+  "attempts": [],
+  "executive_summary": [
+    "This analysis aggregates employee feedback to identify workplace trends, providing signals based on review language rather than direct proof of every individual's experience. The data reflects a workforce that generally values the company's brand, collaborative environment, and compensation structures.",
+    "Despite these strengths, employees frequently report challenges regarding career progression, work-life balance, and internal management practices. These insights highlight specific areas where organizational culture and operational support may be falling short of employee expectations."
+  ],
+  "key_strengths": [
+    "Strong brand reputation and market presence",
+    "Competitive compensation and benefits packages",
+    "Collaborative and supportive team environments",
+    "Access to high-quality professional development"
+  ],
+  "key_risks": [
+    "Limited opportunities for long-term career advancement",
+    "Persistent challenges with work-life balance and burnout",
+    "Perceptions of management favoritism and toxic workplace politics",
+    "Inconsistent support for professional growth across different departments"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture sentiments regarding pay, benefits, and basic working conditions, represent the most positive area of feedback.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust, is the lowest-scoring domain, indicating concerns about workplace politics and management accountability."
+  }
+}

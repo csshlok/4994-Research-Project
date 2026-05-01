@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "company": "epam systems",
+  "generated_at": "2026-04-30T20:25:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1707,
+    "prompt_token_count": 3712,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3712
+      }
+    ],
+    "total_token_count": 5419
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The significant impact of project assignment on the overall employee experience.",
+    "A clear divide between those who thrive in the company's learning-heavy environment and those who feel stagnant or underpaid.",
+    "The contrast between high technical standards and reports of bureaucratic or disconnected management structures.",
+    "The reliance on internal tools for career planning, which is highly appreciated by those who utilize them."
+  ]
+}

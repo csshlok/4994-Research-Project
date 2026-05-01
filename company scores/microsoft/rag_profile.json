@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "microsoft",
+  "score_summary": {
+    "review_count": 777,
+    "overall_score": 66,
+    "positive_share": 0.6396,
+    "negative_share": 0.269,
+    "domain_scores": {
+      "physiological": 61,
+      "self_protection": 50,
+      "affiliation": 55,
+      "status_esteem": 58,
+      "family_care": 60
+    },
+    "raw_domain_scores": {
+      "physiological": 0.22564111859456856,
+      "self_protection": 0.0021890821294084897,
+      "affiliation": 0.09809259755969142,
+      "status_esteem": 0.16860679909684478,
+      "family_care": 0.20625545749702898
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 61
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 254,
+      "signal": 33,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "microsoft:fulfillment_phys:99580261",
+        "microsoft:fulfillment_phys:102531683",
+        "microsoft:fulfillment_phys:102900281",
+        "microsoft:fulfillment_phys:100443853",
+        "microsoft:fulfillment_phys:100153028"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 210,
+      "signal": 27,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "microsoft:fulfillment_fam:99174777",
+        "microsoft:fulfillment_fam:102794534",
+        "microsoft:fulfillment_fam:100880986",
+        "microsoft:fulfillment_fam:102718731",
+        "microsoft:fulfillment_fam:102556761"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 168,
+      "signal": 22,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "microsoft:fulfillment_stat:102518799",
+        "microsoft:fulfillment_stat:101423421",
+        "microsoft:fulfillment_stat:99227632",
+        "microsoft:fulfillment_stat:102567672",
+        "microsoft:fulfillment_stat:103047616"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 83,
+      "signal": 11,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "microsoft:hindrance_phys:102546638",
+        "microsoft:hindrance_phys:100592452",
+        "microsoft:hindrance_phys:100345530",
+        "microsoft:hindrance_phys:101907377",
+        "microsoft:hindrance_phys:100571729"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 79,
+      "signal": 10,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "microsoft:hindrance_selfprot:101742451",
+        "microsoft:hindrance_selfprot:99951361",
+        "microsoft:hindrance_selfprot:99559040",
+        "microsoft:hindrance_selfprot:102329112",
+        "microsoft:hindrance_selfprot:100699712"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 49,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "microsoft:hindrance_fam:100854092",
+        "microsoft:hindrance_fam:100557367",
+        "microsoft:hindrance_fam:100499546",
+        "microsoft:hindrance_fam:103041240",
+        "microsoft:hindrance_fam:102488591"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "KPMG",
+  "generated_at": "2026-04-30T20:31:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1557,
+    "prompt_token_count": 2934,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2934
+      }
+    ],
+    "total_token_count": 4491
+  },
+  "attempts": [],
+  "executive_summary": [
+    "KPMG employees generally report a mixed experience, with positive sentiment driven by professional growth opportunities and the prestige associated with the firm. These domain scores reflect patterns in review language and should be viewed as indicators of employee sentiment rather than direct proof of every individual's experience.",
+    "Conversely, significant challenges exist regarding workload intensity and compensation structures. While many staff value the collaborative environment and career advancement, recurring themes of burnout and concerns over pay equity suggest areas where organizational support could be improved to better align with employee expectations."
+  ],
+  "key_strengths": [
+    "Strong professional reputation and brand prestige",
+    "Opportunities for career advancement and skill development",
+    "Collaborative and supportive team environments",
+    "Access to competitive benefits and resources"
+  ],
+  "key_risks": [
+    "High levels of burnout due to demanding workloads",
+    "Perceived inadequacy of compensation and salary growth",
+    "Inconsistent support for work-life balance",
+    "Reports of toxic office politics and leadership gaps"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem: Employees frequently highlight the value of the firm's reputation and the career growth opportunities it provides for their professional standing.",
+    "weakest": "Self-Protection: This domain reflects concerns regarding workplace fairness, safety, and the presence of toxic cultural elements that impact employee security."
+  }
+}

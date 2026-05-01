@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "sap",
+  "generated_at": "2026-04-30T20:37:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1682,
+    "prompt_token_count": 3735,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3735
+      }
+    ],
+    "total_token_count": 5417
+  },
+  "attempts": [],
+  "executive_summary": [
+    "SAP maintains a generally positive workplace reputation with an overall score of 73, supported by a strong emphasis on work-life balance and comprehensive employee benefits. These insights are derived from patterns in employee review language and should be viewed as signals of the organizational climate rather than definitive proof of every individual's experience.",
+    "While the company excels in providing a supportive environment, some employees report challenges regarding career progression, internal politics, and occasional workload pressures. Addressing these areas of friction could help the organization better align its internal culture with its external reputation for stability and innovation."
+  ],
+  "key_strengths": [
+    "Strong work-life balance and flexible working arrangements",
+    "Comprehensive benefits packages including health and wellness perks",
+    "Supportive and collaborative team environments",
+    "Access to large-scale, impactful enterprise projects"
+  ],
+  "key_risks": [
+    "Perceptions of limited career advancement and stagnation",
+    "Concerns regarding internal politics and management bias",
+    "Reports of high-pressure workloads and burnout in specific roles",
+    "Feedback suggesting a disconnect between company branding and internal reality"
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which reflects the high value employees place on the company's flexibility and support for their personal lives.",
+    "weakest": "Self-Protection, which highlights concerns regarding fairness, transparency, and the impact of internal politics on job security."
+  }
+}

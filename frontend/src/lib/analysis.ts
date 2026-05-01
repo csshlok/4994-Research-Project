@@ -48,6 +48,31 @@ export interface TopicCluster {
   x: number;
   y: number;
   terms: string[];
+  summary?: string;
+  evidenceIds?: string[];
+}
+
+export interface RagSummary {
+  executiveSummary: string[];
+  keyStrengths: string[];
+  keyRisks: string[];
+  domainExplanations: {
+    strongest?: string;
+    weakest?: string;
+  };
+  model?: string;
+  generatedAt?: string;
+}
+
+export interface RagInsights {
+  whatStandsOut: string[];
+  model?: string;
+  generatedAt?: string;
+}
+
+export interface RagArtifacts {
+  summary?: RagSummary;
+  insights?: RagInsights;
 }
 
 export interface AnalysisResult {
@@ -60,6 +85,7 @@ export interface AnalysisResult {
   weakestDomain: DomainScore;
   domainScores: DomainScore[];
   topicClusters: TopicCluster[];
+  rag?: RagArtifacts;
   analysisDate: string;
   downloads: AnalysisDownloads;
 }
@@ -71,6 +97,9 @@ interface BuildArgs {
   reviewCsvText: string;
   companyCsvText: string;
   topicCsvText?: string;
+  ragSummary?: unknown;
+  ragClusters?: unknown;
+  ragInsights?: unknown;
   outputFiles?: string[];
   downloads?: AnalysisDownloads;
 }
@@ -280,6 +309,71 @@ function parseTopicClusters(text?: string): TopicCluster[] {
     .filter((cluster) => cluster.clusterId);
 }
 
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
+function asStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.map((item) => String(item || "")).filter(Boolean) : [];
+}
+
+function parseRagSummary(value: unknown): RagSummary | undefined {
+  const raw = asRecord(value);
+  const executiveSummary = asStringArray(raw.executive_summary);
+  if (executiveSummary.length === 0) {
+    return undefined;
+  }
+  const domain = asRecord(raw.domain_explanations);
+  return {
+    executiveSummary,
+    keyStrengths: asStringArray(raw.key_strengths),
+    keyRisks: asStringArray(raw.key_risks),
+    domainExplanations: {
+      strongest: typeof domain.strongest === "string" ? domain.strongest : undefined,
+      weakest: typeof domain.weakest === "string" ? domain.weakest : undefined,
+    },
+    model: typeof raw.model === "string" ? raw.model : undefined,
+    generatedAt: typeof raw.generated_at === "string" ? raw.generated_at : undefined,
+  };
+}
+
+function parseRagInsights(value: unknown): RagInsights | undefined {
+  const raw = asRecord(value);
+  const whatStandsOut = asStringArray(raw.what_stands_out);
+  if (whatStandsOut.length === 0) {
+    return undefined;
+  }
+  return {
+    whatStandsOut,
+    model: typeof raw.model === "string" ? raw.model : undefined,
+    generatedAt: typeof raw.generated_at === "string" ? raw.generated_at : undefined,
+  };
+}
+
+function enrichTopicClusters(clusters: TopicCluster[], ragClusters: unknown): TopicCluster[] {
+  const raw = asRecord(ragClusters);
+  const summaries = Array.isArray(raw.cluster_summaries) ? raw.cluster_summaries : [];
+  const byId = new Map<string, { summary?: string; evidenceIds?: string[] }>();
+  for (const item of summaries) {
+    const row = asRecord(item);
+    const clusterId = typeof row.cluster_id === "string" ? row.cluster_id : "";
+    if (!clusterId) {
+      continue;
+    }
+    byId.set(clusterId, {
+      summary: typeof row.summary === "string" ? row.summary : undefined,
+      evidenceIds: asStringArray(row.evidence_ids),
+    });
+  }
+  return clusters.map((cluster) => ({
+    ...cluster,
+    summary: byId.get(cluster.clusterId)?.summary,
+    evidenceIds: byId.get(cluster.clusterId)?.evidenceIds,
+  }));
+}
+
 export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
   const reviewRows = parseCsv(args.reviewCsvText);
   const companyRows = parseCsv(args.companyCsvText);
@@ -355,6 +449,13 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
   const hasTopicSummary = outputFiles.includes("topic_summary.csv");
   const hasTopicAssignments = outputFiles.includes("topic_assignments.csv");
 
+  const topicClusters = enrichTopicClusters(
+    parseTopicClusters(args.topicCsvText),
+    args.ragClusters
+  );
+  const ragSummary = parseRagSummary(args.ragSummary);
+  const ragInsights = parseRagInsights(args.ragInsights);
+
   return {
     jobId: args.jobId,
     companyName: displayCompanyName,
@@ -364,7 +465,8 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
     strongestDomain,
     weakestDomain,
     domainScores: nonEmptyScores,
-    topicClusters: parseTopicClusters(args.topicCsvText),
+    topicClusters,
+    rag: ragSummary || ragInsights ? { summary: ragSummary, insights: ragInsights } : undefined,
     analysisDate: new Date().toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",

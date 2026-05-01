@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "thomson reuters",
+  "score_summary": {
+    "review_count": 764,
+    "overall_score": 67,
+    "positive_share": 0.6518,
+    "negative_share": 0.2474,
+    "domain_scores": {
+      "physiological": 62,
+      "self_protection": 51,
+      "affiliation": 56,
+      "status_esteem": 58,
+      "family_care": 61
+    },
+    "raw_domain_scores": {
+      "physiological": 0.23068822566422478,
+      "self_protection": 0.01576442308028743,
+      "affiliation": 0.12256115230057706,
+      "status_esteem": 0.1678738657953742,
+      "family_care": 0.22401379303940638
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 257,
+      "signal": 34,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "thomson reuters:fulfillment_phys:97748157",
+        "thomson reuters:fulfillment_phys:73882686",
+        "thomson reuters:fulfillment_phys:73618874",
+        "thomson reuters:fulfillment_phys:84041068",
+        "thomson reuters:fulfillment_phys:71645967"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 224,
+      "signal": 29,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "thomson reuters:fulfillment_fam:74399024",
+        "thomson reuters:fulfillment_fam:102221802",
+        "thomson reuters:fulfillment_fam:58737096",
+        "thomson reuters:fulfillment_fam:51667898",
+        "thomson reuters:fulfillment_fam:59765176"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 187,
+      "signal": 24,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "thomson reuters:fulfillment_stat:51617098",
+        "thomson reuters:fulfillment_stat:78761123",
+        "thomson reuters:fulfillment_stat:50783030",
+        "thomson reuters:fulfillment_stat:77156770",
+        "thomson reuters:fulfillment_stat:68215167"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 90,
+      "signal": 12,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "thomson reuters:hindrance_phys:58381485",
+        "thomson reuters:hindrance_phys:87342568",
+        "thomson reuters:hindrance_phys:64722600",
+        "thomson reuters:hindrance_phys:51733189",
+        "thomson reuters:hindrance_phys:75894584"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 67,
+      "signal": 9,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "thomson reuters:hindrance_stat:81184890",
+        "thomson reuters:hindrance_stat:56749705",
+        "thomson reuters:hindrance_stat:99482343",
+        "thomson reuters:hindrance_stat:90359161",
+        "thomson reuters:hindrance_stat:86726796"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 44,
+      "signal": 6,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "thomson reuters:hindrance_aff:65226304",
+        "thomson reuters:hindrance_aff:100568754",
+        "thomson reuters:hindrance_aff:90845358",
+        "thomson reuters:hindrance_aff:80283071",
+        "thomson reuters:hindrance_aff:69181749"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

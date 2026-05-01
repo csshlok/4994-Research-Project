@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "KPMG",
+  "generated_at": "2026-04-30T20:31:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1557,
+    "prompt_token_count": 2934,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2934
+      }
+    ],
+    "total_token_count": 4491
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The dichotomy between the firm's high professional prestige and the reality of daily burnout.",
+    "A clear tension between the value placed on career development and the frustration regarding compensation levels.",
+    "The reliance on team-level support to mitigate broader organizational stressors.",
+    "The impact of seasonal work cycles on employee perceptions of fairness and stability."
+  ]
+}

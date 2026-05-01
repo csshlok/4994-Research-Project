@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "keller williams",
+  "generated_at": "2026-04-30T20:31:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1700,
+    "prompt_token_count": 3363,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3363
+      }
+    ],
+    "total_token_count": 5063
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Keller Williams maintains a generally positive reputation among its workforce, with an overall score of 76. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "The company is most recognized for its collaborative culture and robust training programs, which foster a strong sense of community. However, some employees report challenges regarding compensation, workload management, and inconsistent leadership support across different locations."
+  ],
+  "key_strengths": [
+    "High levels of collaboration and team-oriented environments.",
+    "Extensive access to professional development and training resources.",
+    "Strong leadership support for agents focused on growth.",
+    "Positive perception of the company's commitment to agent success."
+  ],
+  "key_risks": [
+    "Reports of burnout and feeling overworked in certain roles.",
+    "Concerns regarding compensation levels and perceived lack of fair pay.",
+    "Inconsistent management quality and lack of mentorship in some areas.",
+    "Instances of toxic or exclusionary workplace behaviors."
+  ],
+  "domain_explanations": {
+    "strongest": "Affiliation, which reflects a generally positive sentiment toward the company's collaborative culture and community-focused environment.",
+    "weakest": "Physiological, which captures concerns related to compensation, benefits, and the physical or mental strain of the workload."
+  }
+}

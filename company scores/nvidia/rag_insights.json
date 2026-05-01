@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "company": "nvidia",
+  "generated_at": "2026-04-30T20:35:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1560,
+    "prompt_token_count": 3430,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3430
+      }
+    ],
+    "total_token_count": 4990
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The significant contrast between employees who value the company's stability and those who struggle with the intensity of the workload.",
+    "The heavy reliance on team-specific dynamics, where the quality of management significantly dictates the overall employee experience.",
+    "The strong alignment between the company's technical success and employee pride in their work."
+  ]
+}

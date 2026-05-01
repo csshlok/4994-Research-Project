@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "microsoft",
+  "generated_at": "2026-04-30T20:34:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5045
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees value the competitive salary, stock options, and comprehensive perks programs provided by the company.",
+      "evidence_ids": [
+        "microsoft:fulfillment_phys:99580261",
+        "microsoft:fulfillment_phys:102531683",
+        "microsoft:fulfillment_phys:102900281"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members appreciate the hybrid and remote work options, noting better balance than other major technology firms.",
+      "evidence_ids": [
+        "microsoft:fulfillment_fam:99174777",
+        "microsoft:fulfillment_fam:102794534",
+        "microsoft:fulfillment_fam:100880986"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Opportunities to work on impactful projects and take ownership are viewed as key drivers for professional development.",
+      "evidence_ids": [
+        "microsoft:fulfillment_stat:102518799",
+        "microsoft:fulfillment_stat:101423421",
+        "microsoft:fulfillment_stat:99227632"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Supportive and collaborative team environments contribute positively to the overall employee experience.",
+      "evidence_ids": [
+        "microsoft:fulfillment_aff:101707854",
+        "microsoft:fulfillment_aff:99256467",
+        "microsoft:fulfillment_aff:102635507"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees feel secure, others report a lack of empathy from leadership and concerns about the company's direction.",
+      "evidence_ids": [
+        "microsoft:fulfillment_selfprot:100973375",
+        "microsoft:fulfillment_selfprot:100101186",
+        "microsoft:fulfillment_selfprot:99611304"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some employees report feeling overworked and underpaid, with concerns that layoffs have become a standard occurrence.",
+      "evidence_ids": [
+        "microsoft:hindrance_phys:102546638",
+        "microsoft:hindrance_phys:100592452",
+        "microsoft:hindrance_phys:100345530"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic management, favoritism, and fear of job loss negatively impact morale and collaboration.",
+      "evidence_ids": [
+        "microsoft:hindrance_selfprot:101742451",
+        "microsoft:hindrance_selfprot:99951361",
+        "microsoft:hindrance_selfprot:99559040"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Experiences with work-life balance are highly inconsistent, with some reporting excessive workloads while others find the pace too slow.",
+      "evidence_ids": [
+        "microsoft:hindrance_fam:100854092",
+        "microsoft:hindrance_fam:100557367",
+        "microsoft:hindrance_fam:100499546"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration with inconsistent promotion processes and the impact of frequent reorganizations on career progression.",
+      "evidence_ids": [
+        "microsoft:hindrance_stat:102713045",
+        "microsoft:hindrance_stat:101982512",
+        "microsoft:hindrance_stat:102259020"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Instances of cut-throat leadership and micromanagement create a sense of isolation for some employees.",
+      "evidence_ids": [
+        "microsoft:hindrance_aff:101235199",
+        "microsoft:hindrance_aff:102997797",
+        "microsoft:hindrance_aff:102744162"
+      ]
+    }
+  ]
+}

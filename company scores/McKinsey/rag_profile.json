@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "McKinsey",
+  "score_summary": {
+    "review_count": 960,
+    "overall_score": 71,
+    "positive_share": 0.6948,
+    "negative_share": 0.1958,
+    "domain_scores": {
+      "physiological": 56,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 60,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.11893172809686761,
+      "self_protection": -0.0010668263803347777,
+      "affiliation": 0.11459087362047622,
+      "status_esteem": 0.2037706015775496,
+      "family_care": 0.12125285952980788
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 60
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 258,
+      "signal": 27,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "McKinsey:fulfillment_stat:99717400",
+        "McKinsey:fulfillment_stat:100629783",
+        "McKinsey:fulfillment_stat:95299517",
+        "McKinsey:fulfillment_stat:99539709",
+        "McKinsey:fulfillment_stat:96524522"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 230,
+      "signal": 24,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "McKinsey:fulfillment_phys:86160944",
+        "McKinsey:fulfillment_phys:84994644",
+        "McKinsey:fulfillment_phys:88661633",
+        "McKinsey:fulfillment_phys:90043958",
+        "McKinsey:fulfillment_phys:97097808"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 227,
+      "signal": 24,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "McKinsey:fulfillment_fam:85110884",
+        "McKinsey:fulfillment_fam:99819532",
+        "McKinsey:fulfillment_fam:96207987",
+        "McKinsey:fulfillment_fam:95274113",
+        "McKinsey:fulfillment_fam:91861526"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 212,
+      "signal": 22,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "McKinsey:hindrance_phys:87512179",
+        "McKinsey:hindrance_phys:87403727",
+        "McKinsey:hindrance_phys:95634153",
+        "McKinsey:hindrance_phys:95983476",
+        "McKinsey:hindrance_phys:100024421"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 199,
+      "signal": 21,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "McKinsey:hindrance_fam:89228184",
+        "McKinsey:hindrance_fam:98858549",
+        "McKinsey:hindrance_fam:98779516",
+        "McKinsey:hindrance_fam:98520784",
+        "McKinsey:hindrance_fam:98112723"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 52,
+      "signal": 5,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "McKinsey:hindrance_stat:92396556",
+        "McKinsey:hindrance_stat:90401937",
+        "McKinsey:hindrance_stat:97468412",
+        "McKinsey:hindrance_stat:86445381",
+        "McKinsey:hindrance_stat:86463543"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

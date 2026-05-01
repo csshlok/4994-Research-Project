@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "barclays",
+  "generated_at": "2026-04-30T20:22:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1602,
+    "prompt_token_count": 3130,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3130
+      }
+    ],
+    "total_token_count": 4732
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Barclays maintains a generally positive sentiment among its workforce, with a majority of reviews reflecting satisfaction regarding compensation and benefits. These insights are derived from linguistic patterns in employee feedback and should be viewed as indicators of workplace sentiment rather than definitive proof of every individual's experience.",
+    "Despite these strengths, the organization faces notable challenges regarding work-life balance and internal culture. While many employees value the professional environment, others report significant concerns related to workload intensity, career stagnation, and instances of toxic workplace dynamics."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages",
+    "Opportunities for professional development and skill acquisition",
+    "Supportive team environments and collaborative culture",
+    "Access to corporate perks and employee events"
+  ],
+  "key_risks": [
+    "High levels of burnout driven by excessive working hours",
+    "Perceptions of toxic management and internal politics",
+    "Inconsistent career progression and lack of recognition",
+    "Challenges in maintaining work-life balance"
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which captures employee sentiment regarding work-life balance and the flexibility to manage personal commitments.",
+    "weakest": "Self-Protection, which reflects employee concerns regarding workplace safety, fairness, and the presence of toxic or exclusionary behaviors."
+  }
+}

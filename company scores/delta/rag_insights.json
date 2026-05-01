@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "delta",
+  "generated_at": "2026-04-30T20:24:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1543,
+    "prompt_token_count": 3416,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3416
+      }
+    ],
+    "total_token_count": 4959
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with benefits and frustration with base salary levels.",
+    "A recurring pattern of employees feeling unsupported by leadership despite valuing their immediate team members.",
+    "The tension between the desire for flexible work-life balance and the operational demands of the aviation industry.",
+    "The impact of organizational structure on employees' ability to feel recognized and fairly treated."
+  ]
+}

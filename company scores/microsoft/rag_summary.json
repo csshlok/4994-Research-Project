@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "microsoft",
+  "generated_at": "2026-04-30T20:34:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5045
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Microsoft employees frequently highlight the company's strong compensation, benefits, and flexible work arrangements as primary drivers of satisfaction. These findings are based on signals derived from review language and do not serve as direct proof of every individual employee's experience.",
+    "Conversely, reports of inconsistent team cultures, concerns regarding job security, and uneven opportunities for career advancement suggest areas for improvement. These insights reflect broader sentiment patterns identified within the workforce feedback."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages",
+    "High degree of flexibility regarding remote and hybrid work options",
+    "Strong engineering culture with opportunities for professional learning",
+    "Access to impactful, large-scale projects"
+  ],
+  "key_risks": [
+    "Widespread anxiety regarding layoffs and job stability",
+    "Inconsistent management quality and team-specific culture",
+    "Perceptions of favoritism and unfair performance evaluation processes",
+    "Burnout stemming from heavy workloads in certain departments"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain represents the highest score, driven by employee appreciation for tangible rewards like pay, benefits, and perks.",
+    "weakest": "The Self-Protection domain is the lowest, reflecting employee concerns regarding job security, leadership empathy, and workplace fairness."
+  }
+}

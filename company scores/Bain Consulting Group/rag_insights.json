@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "Bain Consulting Group",
+  "generated_at": "2026-04-30T20:21:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1087,
+    "prompt_token_count": 3767,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3767
+      }
+    ],
+    "total_token_count": 4854
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The dual nature of the firm's intensity, where the same environment is described as both an inspiring bootcamp and a source of significant exhaustion.",
+    "The contrast between high-tier financial rewards and the personal cost of maintaining the required pace of work.",
+    "The reliance on individual proactivity to navigate career growth and avoid unfavorable project assignments.",
+    "The strong emphasis on an apprenticeship model that fosters collaboration despite the competitive nature of the industry."
+  ]
+}

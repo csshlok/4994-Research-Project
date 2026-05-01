@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,mastercard,953,0,0,0,953,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\mastercard\02_clean\reviews_mastercard_clean.csv
+reviews.csv,mastercard,953,0,0,0,953,cleaned_reviews.csv

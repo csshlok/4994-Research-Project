@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "Deloitte",
+  "generated_at": "2026-04-30T20:40:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1098,
+    "prompt_token_count": 3050,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3050
+      }
+    ],
+    "total_token_count": 4148
+  },
+  "attempts": [],
+  "executive_summary": [
+    "This analysis of 1,000 employee reviews identifies key workplace themes at Deloitte. These domains represent signals derived from review language and should be viewed as indicators of sentiment rather than direct proof of every individual employee's personal experience.",
+    "Overall, employees express a positive sentiment regarding compensation, benefits, and flexibility. However, feedback also highlights challenges related to workload intensity, inconsistent management practices, and concerns regarding long-term career growth and organizational transparency."
+  ],
+  "key_strengths": [
+    "Competitive compensation packages and comprehensive health benefits",
+    "Strong support for hybrid work arrangements and flexible scheduling",
+    "Access to professional development and wellness subsidies",
+    "Opportunities for career growth and diverse project experiences"
+  ],
+  "key_risks": [
+    "High workload intensity leading to potential exhaustion and burnout",
+    "Inconsistent leadership quality and project-based management variability",
+    "Perceived lack of transparency regarding internal processes and career advancement",
+    "Concerns about toxic team environments and excessive pressure to meet utilization targets"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass pay, benefits, and overall physical well-being, serve as the most positive signal in the review data.",
+    "weakest": "Self-protection, which relates to job security, fairness, and trust, represents the area with the most significant room for improvement."
+  }
+}

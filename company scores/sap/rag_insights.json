@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "sap",
+  "generated_at": "2026-04-30T20:37:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1682,
+    "prompt_token_count": 3735,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3735
+      }
+    ],
+    "total_token_count": 5417
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with physical benefits and frustration over salary growth.",
+    "The recurring mention of a disconnect between leadership's stated values and the day-to-day experience of some employees.",
+    "The significant role that flexibility plays in defining the positive aspects of the employee experience.",
+    "The emergence of internal competition and political maneuvering as a source of cultural friction."
+  ]
+}

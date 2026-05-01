@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "cisco",
+  "score_summary": {
+    "review_count": 994,
+    "overall_score": 70,
+    "positive_share": 0.6831,
+    "negative_share": 0.2153,
+    "domain_scores": {
+      "physiological": 62,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 58,
+      "family_care": 62
+    },
+    "raw_domain_scores": {
+      "physiological": 0.2382146377491885,
+      "self_protection": 0.006058882697002636,
+      "affiliation": 0.1259436543020754,
+      "status_esteem": 0.16442868846064262,
+      "family_care": 0.23488197864446472
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 314,
+      "signal": 32,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "cisco:fulfillment_phys:99512424",
+        "cisco:fulfillment_phys:92139869",
+        "cisco:fulfillment_phys:96942354",
+        "cisco:fulfillment_phys:102647394",
+        "cisco:fulfillment_phys:98948714"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 314,
+      "signal": 32,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "cisco:fulfillment_fam:99794804",
+        "cisco:fulfillment_fam:100413832",
+        "cisco:fulfillment_fam:101302106",
+        "cisco:fulfillment_fam:100674806",
+        "cisco:fulfillment_fam:98790955"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 223,
+      "signal": 22,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "cisco:fulfillment_stat:99181959",
+        "cisco:fulfillment_stat:100471738",
+        "cisco:fulfillment_stat:101106870",
+        "cisco:fulfillment_stat:100410405",
+        "cisco:fulfillment_stat:91600224"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 91,
+      "signal": 9,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "cisco:hindrance_selfprot:92511485",
+        "cisco:hindrance_selfprot:91588991",
+        "cisco:hindrance_selfprot:99367394",
+        "cisco:hindrance_selfprot:95956634",
+        "cisco:hindrance_selfprot:94007068"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 78,
+      "signal": 8,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "cisco:hindrance_fam:96805156",
+        "cisco:hindrance_fam:92184992",
+        "cisco:hindrance_fam:94858089",
+        "cisco:hindrance_fam:102116267",
+        "cisco:hindrance_fam:92212450"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 75,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "cisco:hindrance_phys:100053456",
+        "cisco:hindrance_phys:100748921",
+        "cisco:hindrance_phys:94684260",
+        "cisco:hindrance_phys:92372795",
+        "cisco:hindrance_phys:91982307"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

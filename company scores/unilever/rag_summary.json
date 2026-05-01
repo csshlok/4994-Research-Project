@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "unilever",
+  "generated_at": "2026-04-30T20:39:19",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1024,
+    "prompt_token_count": 3495,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3495
+      }
+    ],
+    "total_token_count": 4519
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Unilever maintains a generally positive workplace reputation, with employees frequently highlighting competitive compensation, comprehensive benefits, and opportunities for professional growth. These findings are derived from linguistic patterns in review data and serve as indicators of organizational culture rather than absolute proof of every individual's experience.",
+    "Despite these strengths, the organization faces challenges regarding inconsistent leadership quality and work-life balance. Some employees report concerns about internal fairness, potential favoritism, and high-pressure environments, suggesting that the employee experience varies significantly depending on specific roles and departments."
+  ],
+  "key_strengths": [
+    "Competitive financial compensation and benefits packages",
+    "Strong opportunities for professional development and career advancement",
+    "Positive recognition for employees who contribute meaningfully",
+    "Supportive infrastructure for work-life balance in many roles"
+  ],
+  "key_risks": [
+    "Perceptions of favoritism and lack of transparency in promotion processes",
+    "Inconsistent leadership effectiveness and lack of management accountability",
+    "High-pressure work environments leading to potential burnout",
+    "Concerns regarding workplace safety and the handling of interpersonal conflicts"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture sentiments regarding pay, benefits, and basic working conditions, represent the most stable aspect of the employee experience.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust within the organization, shows the lowest scores, indicating a need for improved management transparency and conflict resolution."
+  }
+}

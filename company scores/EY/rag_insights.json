@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "company": "EY",
+  "generated_at": "2026-04-30T20:26:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 2957,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2957
+      }
+    ],
+    "total_token_count": 4071
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The duality of the brand, where the prestige of working at a major firm is often offset by the reality of long, demanding hours.",
+    "A clear divide between those who value the flexibility of the work environment and those who feel the culture is disconnected or exclusionary.",
+    "The recurring mention of specific seasonal pressures that significantly impact employee well-being and work-life balance.",
+    "The contrast between the appreciation for formal learning resources and the frustration with perceived inequities in staffing and recognition."
+  ]
+}

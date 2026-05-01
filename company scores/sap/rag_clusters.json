@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "sap",
+  "generated_at": "2026-04-30T20:37:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1682,
+    "prompt_token_count": 3735,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3735
+      }
+    ],
+    "total_token_count": 5417
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently highlight the company's commitment to work-life balance and flexible scheduling as a primary driver of satisfaction.",
+      "evidence_ids": [
+        "sap:fulfillment_fam:102495626",
+        "sap:fulfillment_fam:102713450",
+        "sap:fulfillment_fam:102393711"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff appreciate the competitive compensation, health insurance, and extensive office amenities provided by the company.",
+      "evidence_ids": [
+        "sap:fulfillment_phys:98088397",
+        "sap:fulfillment_phys:100368429",
+        "sap:fulfillment_phys:102069809"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many employees value the opportunity to work on cutting-edge technology and engage with diverse, global teams.",
+      "evidence_ids": [
+        "sap:fulfillment_stat:100610806",
+        "sap:fulfillment_stat:101755812",
+        "sap:fulfillment_stat:98278465"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "A people-centered culture and supportive coworkers contribute to a sense of belonging and collaborative spirit.",
+      "evidence_ids": [
+        "sap:fulfillment_aff:99089220",
+        "sap:fulfillment_aff:98322940",
+        "sap:fulfillment_aff:100784375"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some employees express satisfaction with the company's integrity and focus on sustainable, long-term strategy.",
+      "evidence_ids": [
+        "sap:fulfillment_selfprot:99450692",
+        "sap:fulfillment_selfprot:98778385",
+        "sap:fulfillment_selfprot:102435299"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "A subset of the workforce reports inflexibility and challenges in balancing personal responsibilities with job demands.",
+      "evidence_ids": [
+        "sap:hindrance_fam:102527576",
+        "sap:hindrance_fam:101565498",
+        "sap:hindrance_fam:97733521"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High-pressure roles, such as those in DevOps, report stress from on-call rotations and concerns regarding compensation levels.",
+      "evidence_ids": [
+        "sap:hindrance_phys:98710224",
+        "sap:hindrance_phys:101803554",
+        "sap:hindrance_phys:99094016"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees note a lack of clear advancement paths and feel that their contributions are sometimes overlooked by leadership.",
+      "evidence_ids": [
+        "sap:hindrance_stat:102448754",
+        "sap:hindrance_stat:101522578",
+        "sap:hindrance_stat:101146910"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff feel isolated due to remote work dynamics or report a culture of internal competition rather than collaboration.",
+      "evidence_ids": [
+        "sap:hindrance_aff:103010148",
+        "sap:hindrance_aff:100823869",
+        "sap:hindrance_aff:100756432"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Concerns regarding management bias, office politics, and the handling of performance reviews are cited as sources of frustration.",
+      "evidence_ids": [
+        "sap:hindrance_selfprot:102979754",
+        "sap:hindrance_selfprot:102608271",
+        "sap:hindrance_selfprot:98838556"
+      ]
+    }
+  ]
+}

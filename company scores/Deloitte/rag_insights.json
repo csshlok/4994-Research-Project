@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "Deloitte",
+  "generated_at": "2026-04-30T20:40:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1098,
+    "prompt_token_count": 3050,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3050
+      }
+    ],
+    "total_token_count": 4148
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The firm is frequently viewed as a valuable career stepping stone rather than a long-term destination for all employees.",
+    "There is a notable tension between the appreciation for flexibility and the stress caused by high administrative and utilization demands.",
+    "The experience of leadership support is highly localized and varies significantly between different project teams.",
+    "While benefits are highly regarded, there is frustration regarding the lack of merit-based salary progression for long-tenured staff."
+  ]
+}

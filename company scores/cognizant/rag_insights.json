@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "cognizant",
+  "generated_at": "2026-04-30T20:23:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1742,
+    "prompt_token_count": 3460,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3460
+      }
+    ],
+    "total_token_count": 5202
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between employees who appreciate the company's global scale and those who feel isolated by its size.",
+    "A recurring theme of frustration regarding the transparency and fairness of internal promotion processes.",
+    "The significant impact of client-dependent project work on individual job security and compensation.",
+    "The divergence in sentiment regarding management, ranging from highly supportive to fear-based or disconnected."
+  ]
+}

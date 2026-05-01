@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "EY",
+  "generated_at": "2026-04-30T20:26:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 2957,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 2957
+      }
+    ],
+    "total_token_count": 4071
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "This analysis of employee feedback at EY highlights a workforce that values the firm's strong professional reputation and career development opportunities. These findings represent broad signals derived from review language and should be viewed as indicators of sentiment rather than direct proof of every individual employee's experience.",
+    "While many staff appreciate the flexibility and collaborative environment, significant concerns persist regarding high workloads and internal politics. Balancing these positive career growth prospects with the challenges of burnout and organizational culture remains a central theme in the feedback provided."
+  ],
+  "key_strengths": [
+    "Strong industry reputation that enhances professional resumes",
+    "Access to continuous learning and career development opportunities",
+    "Flexible work arrangements and hybrid scheduling options",
+    "Collaborative and supportive team environments"
+  ],
+  "key_risks": [
+    "High risk of burnout due to intense seasonal workloads",
+    "Perceptions of favoritism and internal office politics",
+    "Concerns regarding compensation and the quality of health benefits",
+    "Feelings of isolation or disconnection within a large, siloed organization"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem: Employees frequently highlight the value of the firm's brand and the opportunities for professional advancement and recognition.",
+    "weakest": "Self-Protection: This area reflects concerns regarding job security, fairness, and the presence of toxic or exclusionary office dynamics."
+  }
+}

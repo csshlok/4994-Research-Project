@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "nvidia",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 78,
+    "positive_share": 0.787,
+    "negative_share": 0.148,
+    "domain_scores": {
+      "physiological": 55,
+      "self_protection": 51,
+      "affiliation": 57,
+      "status_esteem": 56,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.10944120664662857,
+      "self_protection": 0.02471595428698016,
+      "affiliation": 0.13315511104077382,
+      "status_esteem": 0.11980541472503528,
+      "family_care": 0.15779918479040347
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 228,
+      "signal": 23,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "nvidia:fulfillment_fam:99412856",
+        "nvidia:fulfillment_fam:102061486",
+        "nvidia:fulfillment_fam:98139229",
+        "nvidia:fulfillment_fam:96532434",
+        "nvidia:fulfillment_fam:95133742"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 172,
+      "signal": 17,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "nvidia:fulfillment_aff:102965404",
+        "nvidia:fulfillment_aff:96525794",
+        "nvidia:fulfillment_aff:101454505",
+        "nvidia:fulfillment_aff:98792817",
+        "nvidia:fulfillment_aff:96863906"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 163,
+      "signal": 16,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "nvidia:fulfillment_phys:101472149",
+        "nvidia:fulfillment_phys:101593926",
+        "nvidia:fulfillment_phys:97403824",
+        "nvidia:fulfillment_phys:92204814",
+        "nvidia:fulfillment_phys:91701672"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 85,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "nvidia:hindrance_phys:100249218",
+        "nvidia:hindrance_phys:82671171",
+        "nvidia:hindrance_phys:86908779",
+        "nvidia:hindrance_phys:101365888",
+        "nvidia:hindrance_phys:99193545"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 84,
+      "signal": 8,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "nvidia:hindrance_fam:90380627",
+        "nvidia:hindrance_fam:98788393",
+        "nvidia:hindrance_fam:87584782",
+        "nvidia:hindrance_fam:95973238",
+        "nvidia:hindrance_fam:91229081"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 43,
+      "signal": 4,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "nvidia:hindrance_stat:91852580",
+        "nvidia:hindrance_stat:96667199",
+        "nvidia:hindrance_stat:87224829",
+        "nvidia:hindrance_stat:84788653",
+        "nvidia:hindrance_stat:98894492"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

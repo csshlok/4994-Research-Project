@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,tcs,980,0,0,0,980,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\tcs\02_clean\reviews_tcs_clean.csv
+reviews.csv,tcs,980,0,0,0,980,cleaned_reviews.csv

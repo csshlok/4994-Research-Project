@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "american express",
+  "score_summary": {
+    "review_count": 976,
+    "overall_score": 72,
+    "positive_share": 0.6998,
+    "negative_share": 0.2121,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 58,
+      "family_care": 62
+    },
+    "raw_domain_scores": {
+      "physiological": 0.2085525692583628,
+      "self_protection": -0.0033669052977875124,
+      "affiliation": 0.12736174255874022,
+      "status_esteem": 0.16611242289205339,
+      "family_care": 0.24428234067235985
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 322,
+      "signal": 33,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "american express:fulfillment_fam:98916437",
+        "american express:fulfillment_fam:102849098",
+        "american express:fulfillment_fam:102832067",
+        "american express:fulfillment_fam:102448831",
+        "american express:fulfillment_fam:101830444"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 276,
+      "signal": 28,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "american express:fulfillment_phys:100670772",
+        "american express:fulfillment_phys:102538987",
+        "american express:fulfillment_phys:101953285",
+        "american express:fulfillment_phys:99154816",
+        "american express:fulfillment_phys:98269767"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 236,
+      "signal": 24,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "american express:fulfillment_stat:102941589",
+        "american express:fulfillment_stat:100447739",
+        "american express:fulfillment_stat:99936869",
+        "american express:fulfillment_stat:99735207",
+        "american express:fulfillment_stat:99118240"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 87,
+      "signal": 9,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "american express:hindrance_stat:100492662",
+        "american express:hindrance_stat:100155744",
+        "american express:hindrance_stat:102722688",
+        "american express:hindrance_stat:99746058",
+        "american express:hindrance_stat:102140649"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 86,
+      "signal": 9,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "american express:hindrance_selfprot:101299896",
+        "american express:hindrance_selfprot:100687280",
+        "american express:hindrance_selfprot:99093196",
+        "american express:hindrance_selfprot:98594906",
+        "american express:hindrance_selfprot:101610720"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 81,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "american express:hindrance_phys:102560762",
+        "american express:hindrance_phys:101493966",
+        "american express:hindrance_phys:102595451",
+        "american express:hindrance_phys:100593084",
+        "american express:hindrance_phys:103001349"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

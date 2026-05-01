@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "company": "bain company",
+  "generated_at": "2026-04-30T20:21:18",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1225,
+    "prompt_token_count": 3308,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3308
+      }
+    ],
+    "total_token_count": 4533
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the firm's brand, rapid skill development, and clear paths for career advancement.",
+      "evidence_ids": [
+        "bain company:fulfillment_stat:96122167",
+        "bain company:fulfillment_stat:103105924",
+        "bain company:fulfillment_stat:102993715"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "While some appreciate available resources, many report that the firm's demands often conflict with personal life needs.",
+      "evidence_ids": [
+        "bain company:fulfillment_fam:98807900",
+        "bain company:fulfillment_fam:102220960",
+        "bain company:fulfillment_fam:101501407"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The firm is widely recognized for its inclusive, supportive, and highly collaborative office environment.",
+      "evidence_ids": [
+        "bain company:fulfillment_aff:99561487",
+        "bain company:fulfillment_aff:102511846",
+        "bain company:fulfillment_aff:97824043"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff generally express satisfaction with the comprehensive insurance, flexible benefits, and overall compensation.",
+      "evidence_ids": [
+        "bain company:fulfillment_phys:102339293",
+        "bain company:fulfillment_phys:101042268",
+        "bain company:fulfillment_phys:96224971"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Long hours and high-stress environments are frequently cited as significant drawbacks despite competitive pay.",
+      "evidence_ids": [
+        "bain company:hindrance_phys:101393322",
+        "bain company:hindrance_phys:97098636",
+        "bain company:hindrance_phys:101373565"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees report experiences with toxic politics, favoritism, and a lack of support from leadership.",
+      "evidence_ids": [
+        "bain company:hindrance_selfprot:100594868",
+        "bain company:hindrance_selfprot:100009257",
+        "bain company:hindrance_selfprot:94409221"
+      ]
+    }
+  ]
+}

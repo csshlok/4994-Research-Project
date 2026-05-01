@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "company": "tc2s",
+  "generated_at": "2026-04-30T21:51:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 783,
+    "prompt_token_count": 1751,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1751
+      }
+    ],
+    "total_token_count": 2534
+  },
+  "attempts": [],
+  "executive_summary": [
+    "The analysis of employee feedback for tc2s reveals a workplace with mixed sentiment, characterized by an overall score of 59. These insights are derived from patterns in review language and serve as indicators of employee sentiment rather than direct proof of every individual experience.",
+    "While some employees appreciate the flexibility and growth opportunities available, others report significant concerns regarding career progression and workplace culture. Addressing these divergent experiences will be essential for improving the overall employee value proposition."
+  ],
+  "key_strengths": [
+    "Opportunities for professional development and internal advancement.",
+    "Positive perceptions of work-life balance among a segment of the workforce."
+  ],
+  "key_risks": [
+    "Perceptions of limited career growth and lack of recognition.",
+    "Concerns regarding management support and employee-friendly practices.",
+    "Inconsistent experiences with job security and workplace culture."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, which reflects employee interest in professional advancement and the desire to feel valued for their contributions.",
+    "weakest": "Affiliation, which highlights a need for stronger team cohesion and a more inclusive, supportive work environment."
+  }
+}

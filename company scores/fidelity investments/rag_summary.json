@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "fidelity investments",
+  "generated_at": "2026-04-30T20:26:42",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1678,
+    "prompt_token_count": 3403,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3403
+      }
+    ],
+    "total_token_count": 5081
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Fidelity Investments maintains a generally positive reputation among employees, with many highlighting strong benefits, competitive compensation, and a collaborative work environment. These insights are derived from patterns in review language and should be viewed as indicators of sentiment rather than definitive proof of every individual's workplace experience.",
+    "Despite these strengths, some employees report challenges related to workload intensity, perceived stagnation in career progression, and concerns regarding internal culture. Addressing these areas of friction could help the organization better align its internal environment with the positive experiences shared by much of its workforce."
+  ],
+  "key_strengths": [
+    "Competitive benefits packages and profit-sharing programs",
+    "Strong culture of collaboration and teamwork",
+    "Supportive management and leadership in many departments",
+    "Opportunities for professional development and educational support"
+  ],
+  "key_risks": [
+    "Reports of burnout linked to high-volume workloads and micromanagement",
+    "Perceptions of limited career growth and stagnant promotion paths",
+    "Concerns regarding internal politics and favoritism",
+    "Erosion of trust in leadership and HR effectiveness in certain divisions"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture sentiment regarding pay, benefits, and basic working conditions, represent the most prominent positive signal in the data.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and institutional trust, is the weakest domain, reflecting concerns about toxic culture and political dynamics."
+  }
+}

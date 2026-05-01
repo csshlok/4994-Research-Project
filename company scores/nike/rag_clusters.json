@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "nike",
+  "generated_at": "2026-04-30T20:34:23",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1561,
+    "prompt_token_count": 3404,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3404
+      }
+    ],
+    "total_token_count": 4965
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite competitive compensation, generous benefits, and high-quality amenities as major positives.",
+      "evidence_ids": [
+        "nike:fulfillment_phys:90594791",
+        "nike:fulfillment_phys:88337905",
+        "nike:fulfillment_phys:100403312"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members report satisfaction with work-life balance, PTO policies, and the overall flexibility provided by the company.",
+      "evidence_ids": [
+        "nike:fulfillment_fam:99491440",
+        "nike:fulfillment_fam:100550254",
+        "nike:fulfillment_fam:99874634"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Positive feedback highlights opportunities for development and the pride associated with representing a globally respected brand.",
+      "evidence_ids": [
+        "nike:fulfillment_stat:93461810",
+        "nike:fulfillment_stat:94239558",
+        "nike:fulfillment_stat:97676837"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Employees often value the collaborative community and the diverse, inclusive environment present in many teams.",
+      "evidence_ids": [
+        "nike:fulfillment_aff:96707300",
+        "nike:fulfillment_aff:101707063",
+        "nike:fulfillment_aff:102843672"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some find the environment secure, others express concerns about the effectiveness of local management.",
+      "evidence_ids": [
+        "nike:fulfillment_selfprot:87004254",
+        "nike:fulfillment_selfprot:95943521",
+        "nike:fulfillment_selfprot:99625694"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some employees report exhaustion and dissatisfaction with pay, particularly in retail or high-pressure roles.",
+      "evidence_ids": [
+        "nike:hindrance_phys:91274842",
+        "nike:hindrance_phys:102953708",
+        "nike:hindrance_phys:98628238"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Feedback indicates frustration with limited career progression and a perception that internal politics hinder advancement.",
+      "evidence_ids": [
+        "nike:hindrance_stat:93598799",
+        "nike:hindrance_stat:98639017",
+        "nike:hindrance_stat:87704150"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic management, favoritism, and a lack of accountability are significant pain points for some staff.",
+      "evidence_ids": [
+        "nike:hindrance_selfprot:86741579",
+        "nike:hindrance_selfprot:87610145",
+        "nike:hindrance_selfprot:86691956"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees struggle with micromanagement and inflexible expectations that conflict with personal life needs.",
+      "evidence_ids": [
+        "nike:hindrance_fam:102463631",
+        "nike:hindrance_fam:95595662",
+        "nike:hindrance_fam:94694835"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Instances of isolation and inconsistent leadership quality lead to feelings of disconnection from the broader company goals.",
+      "evidence_ids": [
+        "nike:hindrance_aff:97382188",
+        "nike:hindrance_aff:91942477",
+        "nike:hindrance_aff:101313512"
+      ]
+    }
+  ]
+}

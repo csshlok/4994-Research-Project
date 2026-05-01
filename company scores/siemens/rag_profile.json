@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "siemens",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 66,
+    "positive_share": 0.626,
+    "negative_share": 0.271,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 51,
+      "affiliation": 55,
+      "status_esteem": 57,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.18826132870514717,
+      "self_protection": 0.02027321773156925,
+      "affiliation": 0.1031152598891696,
+      "status_esteem": 0.13485640782532113,
+      "family_care": 0.16074823910640737
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 278,
+      "signal": 28,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "siemens:fulfillment_phys:61779399",
+        "siemens:fulfillment_phys:60832677",
+        "siemens:fulfillment_phys:84470037",
+        "siemens:fulfillment_phys:67688014",
+        "siemens:fulfillment_phys:93307039"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 221,
+      "signal": 22,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "siemens:fulfillment_fam:102930874",
+        "siemens:fulfillment_fam:100054979",
+        "siemens:fulfillment_fam:99205119",
+        "siemens:fulfillment_fam:92815694",
+        "siemens:fulfillment_fam:76440805"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 196,
+      "signal": 20,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "siemens:fulfillment_stat:74399858",
+        "siemens:fulfillment_stat:68896283",
+        "siemens:fulfillment_stat:99298456",
+        "siemens:fulfillment_stat:96154014",
+        "siemens:fulfillment_stat:84980799"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 98,
+      "signal": 10,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "siemens:hindrance_phys:70452421",
+        "siemens:hindrance_phys:77658182",
+        "siemens:hindrance_phys:100701395",
+        "siemens:hindrance_phys:101255718",
+        "siemens:hindrance_phys:57680812"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 69,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "siemens:hindrance_stat:65179381",
+        "siemens:hindrance_stat:82270897",
+        "siemens:hindrance_stat:62241332",
+        "siemens:hindrance_stat:96891073",
+        "siemens:hindrance_stat:75314147"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 63,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "siemens:hindrance_fam:66759346",
+        "siemens:hindrance_fam:96443256",
+        "siemens:hindrance_fam:70224196",
+        "siemens:hindrance_fam:90749597",
+        "siemens:hindrance_fam:102043339"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

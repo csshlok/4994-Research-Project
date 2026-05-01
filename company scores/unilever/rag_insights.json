@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "unilever",
+  "generated_at": "2026-04-30T20:39:19",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1024,
+    "prompt_token_count": 3495,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3495
+      }
+    ],
+    "total_token_count": 4519
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The stark contrast between employees who value the company's benefits and those who feel overwhelmed by long hours.",
+    "The recurring mention of nepotism and favoritism as barriers to career progression.",
+    "The significant impact of departmental culture on the perception of work-life balance.",
+    "The disconnect between corporate-level initiatives and the daily reality of execution teams."
+  ]
+}

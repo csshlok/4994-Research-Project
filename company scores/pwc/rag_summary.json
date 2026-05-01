@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "pwc",
+  "generated_at": "2026-04-30T20:35:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1609,
+    "prompt_token_count": 3226,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3226
+      }
+    ],
+    "total_token_count": 4835
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "PwC maintains a generally positive workplace sentiment, with employees frequently highlighting strong benefits, competitive compensation, and clear opportunities for professional growth. These findings are derived from linguistic signals in employee reviews and represent broad thematic patterns rather than universal experiences across the entire workforce.",
+    "Despite these strengths, significant challenges persist regarding work-life balance, particularly during peak busy seasons. Reports of high workloads and occasional cultural friction suggest that while many staff feel valued, others experience stress and disconnection that can impact their overall perception of the firm."
+  ],
+  "key_strengths": [
+    "Comprehensive benefits packages including healthcare and retirement plans",
+    "Clear career progression pathways and opportunities for skill development",
+    "Supportive and collaborative team environments",
+    "Access to diverse client industries and complex professional challenges"
+  ],
+  "key_risks": [
+    "High levels of burnout linked to intense seasonal workloads",
+    "Perceptions of unfairness or favoritism in certain office environments",
+    "Difficulty maintaining consistent work-life balance",
+    "Bureaucratic processes that can hinder individual efficiency"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the high value employees place on the firm's clear career advancement opportunities, professional recognition, and the prestige of working on major industry projects.",
+    "weakest": "Self-Protection scores indicate that some employees feel vulnerable to corporate politics, toxic office dynamics, or a lack of psychological safety in specific team settings."
+  }
+}

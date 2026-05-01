@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "TCS",
+  "generated_at": "2026-04-30T20:37:57",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 953,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3963
+  },
+  "attempts": [],
+  "executive_summary": [
+    "TCS maintains a balanced workplace presence, with employees highlighting structured career paths, global project exposure, and robust benefit packages as core organizational strengths. These findings represent broad signals derived from review language and should not be interpreted as a universal reflection of every employee's daily experience.",
+    "Conversely, the data indicates notable challenges regarding compensation competitiveness, management styles, and work-life balance pressures. While many staff appreciate the company's stability and resources, others report concerns regarding salary growth and inconsistent leadership support across different teams."
+  ],
+  "key_strengths": [
+    "Structured career progression and advancement opportunities",
+    "Access to diverse global projects and international clients",
+    "Comprehensive healthcare benefits and insurance offerings",
+    "Established company stability and job security"
+  ],
+  "key_risks": [
+    "Perceptions of stagnant salary growth and below-market compensation",
+    "Inconsistent management quality leading to reports of unfair expectations",
+    "Work-life balance concerns and lack of support for personal time",
+    "Occasional reports of workplace politics and disconnected team environments"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the value employees place on recognition, career advancement, and feeling appreciated for their professional contributions.",
+    "weakest": "Self-Protection captures employee sentiments regarding workplace safety, fairness, trust, and protection from toxic or discriminatory environments."
+  }
+}

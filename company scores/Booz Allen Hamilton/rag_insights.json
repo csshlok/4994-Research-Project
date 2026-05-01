@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "Booz Allen Hamilton",
+  "generated_at": "2026-04-30T20:22:34",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1787,
+    "prompt_token_count": 3527,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3527
+      }
+    ],
+    "total_token_count": 5314
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The significant impact of contract-based work on individual employee experiences",
+    "The contrast between strong external professional growth and internal pay satisfaction",
+    "The reliance on security clearances as a foundational element of job security",
+    "The wide variance in administrative support quality across different internal teams"
+  ]
+}

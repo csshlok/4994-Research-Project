@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "company": "adobe",
+  "generated_at": "2026-04-30T20:20:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1666,
+    "prompt_token_count": 3598,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3598
+      }
+    ],
+    "total_token_count": 5264
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees consistently praise the company for its competitive salary, stocks, and comprehensive health and wellness benefits.",
+      "evidence_ids": [
+        "adobe:fulfillment_phys:94499149",
+        "adobe:fulfillment_phys:88664079",
+        "adobe:fulfillment_phys:95536650"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "The company is recognized for its strong support of work-life balance, hybrid scheduling, and generous parental leave policies.",
+      "evidence_ids": [
+        "adobe:fulfillment_fam:99795981",
+        "adobe:fulfillment_fam:86242321",
+        "adobe:fulfillment_fam:101920061"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some employees appreciate the culture, there is a noted tension regarding limited advancement opportunities and the need for better recognition.",
+      "evidence_ids": [
+        "adobe:fulfillment_stat:71700216",
+        "adobe:fulfillment_stat:87454508",
+        "adobe:fulfillment_stat:88583778"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many employees describe a friendly, positive, and collaborative environment that is supportive of diverse needs.",
+      "evidence_ids": [
+        "adobe:fulfillment_aff:73841318",
+        "adobe:fulfillment_aff:84651993",
+        "adobe:fulfillment_aff:94909157"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some find the work environment stable, others report concerns about the difficulty of navigating promotion paths and internal politics.",
+      "evidence_ids": [
+        "adobe:fulfillment_selfprot:98343055",
+        "adobe:fulfillment_selfprot:96017594",
+        "adobe:fulfillment_selfprot:82941844"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration over limited salary growth and reports of inequitable treatment by some members of leadership.",
+      "evidence_ids": [
+        "adobe:hindrance_stat:77165606",
+        "adobe:hindrance_stat:89445219",
+        "adobe:hindrance_stat:77229241"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Reports of inefficient processes, silos, and management disconnects contribute to feelings of exhaustion and career stagnation.",
+      "evidence_ids": [
+        "adobe:hindrance_phys:91708632",
+        "adobe:hindrance_phys:69682163",
+        "adobe:hindrance_phys:102419446"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "There are significant complaints regarding toxic management, favoritism, and a high-pressure environment that discourages long-term trust.",
+      "evidence_ids": [
+        "adobe:hindrance_selfprot:93307143",
+        "adobe:hindrance_selfprot:90348415",
+        "adobe:hindrance_selfprot:79212860"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees report feelings of isolation or disconnection, often linked to unclear vision or challenging communication across global teams.",
+      "evidence_ids": [
+        "adobe:hindrance_aff:98098716",
+        "adobe:hindrance_aff:81426477",
+        "adobe:hindrance_aff:90120529"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "While generally positive, some employees note that management responsiveness and career growth support can be inconsistent.",
+      "evidence_ids": [
+        "adobe:hindrance_fam:97070414",
+        "adobe:hindrance_fam:99297276",
+        "adobe:hindrance_fam:88412779"
+      ]
+    }
+  ]
+}

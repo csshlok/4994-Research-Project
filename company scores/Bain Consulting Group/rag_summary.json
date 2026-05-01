@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "Bain Consulting Group",
+  "generated_at": "2026-04-30T20:21:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1087,
+    "prompt_token_count": 3767,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3767
+      }
+    ],
+    "total_token_count": 4854
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Bain Consulting Group maintains a strong reputation for professional development and high-caliber compensation, with employees frequently highlighting the firm's commitment to growth and intellectual stimulation. These insights are derived from patterns in employee review language and should be viewed as indicators of sentiment rather than universal experiences.",
+    "Despite these strengths, the firm faces consistent challenges regarding work-life balance and the intensity of its high-pressure environment. While many staff members feel supported by their colleagues, others report difficulties navigating the demanding workload and the potential for burnout, suggesting that individual experiences vary significantly across the organization."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages",
+    "Exceptional opportunities for professional growth and leadership development",
+    "A collaborative culture characterized by highly intelligent and supportive peers",
+    "Strong institutional prestige that enhances long-term career prospects"
+  ],
+  "key_risks": [
+    "High risk of burnout due to demanding project timelines and long working hours",
+    "Inconsistent work-life balance that can strain personal and family commitments",
+    "Potential for career stagnation if employees are not proactive in project selection",
+    "Occasional reports of toxic leadership or unsupportive management dynamics"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the high value employees place on the firm's prestige, the quality of their colleagues, and the clear paths provided for professional advancement.",
+    "weakest": "Self-Protection scores suggest that some employees feel vulnerable regarding job security, fair treatment, or the psychological safety required to thrive in a high-intensity environment."
+  }
+}

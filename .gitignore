@@ -12,23 +12,24 @@ chrome-profile/
 glassdoor_debug.html
 debug_html
 runs/
-OG_reviews-json/
-OG_reviews-json/
-OG-Reviews-CSV/
+OG reviews/
 server_jobs/
 cleaned/
 cleaned_US/
-# Keep most generated CSVs ignored, but allow curated cache inputs to be committed.
+US Directories/
+US_reviews CSV/
+US reviews csv/
 review data/*
 !review data/**/
 !review data/**/reviews.csv
 !review data/**/reviews.json
-# Allow precomputed score caches to be committed when needed for deployment.
 !company scores/**/
 !company scores/**/*.csv
-!company scores/**/*.json
+!company scores/manifest.json
+!company scores/**/rag_*.json
 !company scores/**/*.md
 !company scores/**/.gitkeep
 tests/
 node_modules/
 local_compare_outputs/
+US Directories

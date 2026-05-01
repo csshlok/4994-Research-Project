@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "HPE",
+  "generated_at": "2026-04-30T20:29:24",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1527,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4924
+  },
+  "attempts": [],
+  "executive_summary": [
+    "HPE maintains a generally positive employee sentiment, with a majority of reviews highlighting a supportive work-life balance and a robust benefits package. These insights are derived from patterns in employee language and represent broad signals rather than universal experiences across the entire workforce.",
+    "While the company is recognized for its collaborative culture and stability, some employees report challenges regarding career stagnation and competitive compensation. These findings reflect common themes in feedback data and should be viewed as indicators of organizational trends rather than direct proof of every individual's experience."
+  ],
+  "key_strengths": [
+    "Strong emphasis on work-life balance and flexible scheduling",
+    "Comprehensive benefits and wellness programs",
+    "Collaborative and supportive team environments",
+    "Long-standing reputation for technological innovation"
+  ],
+  "key_risks": [
+    "Perceptions of stagnant career growth and limited advancement opportunities",
+    "Concerns regarding compensation competitiveness relative to the broader market",
+    "Reports of internal politics and organizational silos",
+    "Potential for burnout in specific roles or departments"
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which reflects positive sentiment toward flexibility and the company's support for personal time.",
+    "weakest": "Self-Protection, which captures concerns regarding organizational fairness, workplace safety, and internal politics."
+  }
+}

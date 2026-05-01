@@ -3,6 +3,7 @@ from __future__ import annotations
 import gzip
 import json
 import mimetypes
+import os
 import shutil
 import threading
 import time
@@ -10,7 +11,6 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-# Allow launching this file directly (for example, via an IDE "Run file" action).
 if __package__ in {None, ""}:
     import sys
 
@@ -33,6 +33,10 @@ class RunRequest(BaseModel):
     mode: str = "cache"
     company_id: str | None = None
     company_name: str | None = None
+
+
+class CompareRagRequest(BaseModel):
+    companies: list[str]
 
 
 def _spawn(target, *args) -> None:
@@ -89,6 +93,26 @@ def _safe_slug(text: str) -> str:
     return s.strip("_").lower() or "company"
 
 
+def _load_env_file_if_needed() -> None:
+    if os.environ.get("GEMINI_API_KEY"):
+        return
+    env_path = settings.REPO_ROOT / ".env.render"
+    if not env_path.exists():
+        return
+    try:
+        for raw_line in env_path.read_text(encoding="utf-8-sig").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+    except Exception:
+        pass
+
+
 def _resolve_scored_company_dir(company_id: str) -> Path | None:
     root = settings.COMPANY_SCORES_DIR
     wanted = str(company_id or "").strip()
@@ -116,6 +140,41 @@ def _resolve_scored_company_dir(company_id: str) -> Path | None:
         if _company_match_key(p.name) == wanted_key:
             return p
     return None
+
+
+def _read_company_csv_score_summary(company_dir: Path) -> dict[str, Any]:
+    text = _read_text_maybe_gz(company_dir / "company_scores.csv")
+    lines = [line for line in text.splitlines() if line.strip()]
+    if len(lines) < 2:
+        return {}
+    import csv
+    from io import StringIO
+
+    rows = list(csv.DictReader(StringIO("\n".join(lines))))
+    if not rows:
+        return {}
+    row = rows[0]
+
+    def num(name: str) -> float:
+        try:
+            return float(row.get(name) or 0)
+        except Exception:
+            return 0.0
+
+    domains = {
+        "Physiological": round((num("G_smoothed_final_phys") + 1) * 50),
+        "Self-Protection": round((num("G_smoothed_final_selfprot") + 1) * 50),
+        "Affiliation": round((num("G_smoothed_final_aff") + 1) * 50),
+        "Status & Esteem": round((num("G_smoothed_final_stat") + 1) * 50),
+        "Family Care": round((num("G_smoothed_final_fam") + 1) * 50),
+    }
+    return {
+        "review_count": round(num("n_reviews")),
+        "overall_score": round(sum(domains.values()) / max(1, len(domains))),
+        "positive_share": num("pos_share"),
+        "negative_share": num("neg_share"),
+        "domain_scores": domains,
+    }
 
 
 def _has_required_score_files(company_dir: Path) -> bool:
@@ -199,7 +258,6 @@ def _job_dispatch_loop() -> None:
                 time.sleep(0.1)
                 continue
 
-            # Runs synchronously here; this enforces single-job concurrency.
             run_cache_job(store, job_id, company)
             continue
         except Exception:
@@ -239,8 +297,6 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
         if state in ACTIVE_JOB_STATUSES:
             continue
         if (now_ts - age_ref) >= ttl_seconds:
-            # If the job record is expiring, opportunistically remove its run dir
-            # as well when it is already past run retention.
             if isinstance(run_dir_val, str) and run_dir_val.strip():
                 try:
                     run_path = Path(run_dir_val).resolve()
@@ -265,7 +321,6 @@ def _cleanup_runs(now_ts: float, active_runs: set[Path]) -> None:
         run_resolved = run_dir.resolve()
         if run_resolved in active_runs:
             continue
-        # Prefer job created_at when available so TTL is based on job creation time.
         status_path = settings.JOBS_DIR / run_dir.name / "status.json"
         status = _load_status_file(status_path)
         created_at = status.get("created_at")
@@ -393,6 +448,9 @@ def list_scored_companies() -> dict[str, Any]:
                 "has_company_scores": (p / "company_scores.csv").exists(),
                 "has_cleaned_reviews": (p / "cleaned_reviews.csv").exists(),
                 "has_topics": (p / "topic_summary.csv").exists(),
+                "has_rag": (p / "rag_summary.json").exists()
+                and (p / "rag_clusters.json").exists()
+                and (p / "rag_insights.json").exists(),
             }
         )
     return {"companies": companies}
@@ -412,6 +470,272 @@ def scored_company_outputs(company_id: str) -> dict[str, Any]:
             if rel.endswith(".gz"):
                 files.add(rel[:-3])
     return {"company_id": company_dir.name, "files": sorted(files)}
+
+
+@app.get("/api/scored-company/{company_id}/rag")
+def scored_company_rag(company_id: str) -> dict[str, Any]:
+    company_dir = _resolve_scored_company_dir(company_id)
+    if company_dir is None or not _has_required_score_files(company_dir):
+        raise HTTPException(status_code=404, detail="Scored company not found")
+
+    summary = _read_json_maybe_gz(company_dir / "rag_summary.json")
+    clusters = _read_json_maybe_gz(company_dir / "rag_clusters.json")
+    insights = _read_json_maybe_gz(company_dir / "rag_insights.json")
+    evidence = _read_json_maybe_gz(company_dir / "rag_evidence.json")
+    profile = _read_json_maybe_gz(company_dir / "rag_profile.json")
+    if not summary and not clusters and not insights:
+        raise HTTPException(status_code=404, detail="RAG artifacts not found")
+
+    return {
+        "company_id": company_dir.name,
+        "summary": summary,
+        "clusters": clusters,
+        "insights": insights,
+        "evidence": evidence,
+        "profile": profile,
+    }
+
+
+COMPARE_RAG_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "executive_summary": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 2,
+        },
+        "key_differences": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 5,
+        },
+        "shared_risks": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 4,
+        },
+        "company_notes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "company": {"type": "string"},
+                    "strength": {"type": "string"},
+                    "risk": {"type": "string"},
+                },
+                "required": ["company", "strength", "risk"],
+            },
+        },
+        "best_fit_by_need": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "need": {"type": "string"},
+                    "company": {"type": "string"},
+                    "reason": {"type": "string"},
+                },
+                "required": ["need", "company", "reason"],
+            },
+        },
+    },
+    "required": [
+        "executive_summary",
+        "key_differences",
+        "shared_risks",
+        "company_notes",
+        "best_fit_by_need",
+    ],
+}
+
+
+def _comparison_cache_dir(company_dirs: list[Path]) -> Path:
+    key = "-".join(sorted(_safe_slug(path.name) for path in company_dirs))
+    return settings.REPO_ROOT / "local_compare_outputs" / "comparison_rag" / key
+
+
+def _top_cluster_labels(payload: dict[str, Any] | None, limit: int = 3) -> list[str]:
+    clusters = payload.get("cluster_summaries", []) if isinstance(payload, dict) else []
+    if not isinstance(clusters, list):
+        return []
+    labels: list[str] = []
+    for item in clusters[:limit]:
+        if isinstance(item, dict) and isinstance(item.get("label"), str):
+            labels.append(item["label"])
+    return labels
+
+
+def _build_compare_payload(company_dirs: list[Path]) -> dict[str, Any]:
+    companies: list[dict[str, Any]] = []
+    for company_dir in company_dirs:
+        summary = _read_json_maybe_gz(company_dir / "rag_summary.json") or {}
+        insights = _read_json_maybe_gz(company_dir / "rag_insights.json") or {}
+        clusters = _read_json_maybe_gz(company_dir / "rag_clusters.json") or {}
+        profile = _read_json_maybe_gz(company_dir / "rag_profile.json") or {}
+        score_summary = profile.get("score_summary") if isinstance(profile, dict) else None
+        if not isinstance(score_summary, dict):
+            score_summary = _read_company_csv_score_summary(company_dir)
+
+        companies.append(
+            {
+                "company": company_dir.name,
+                "score_summary": score_summary,
+                "executive_summary": summary.get("executive_summary", []) if isinstance(summary, dict) else [],
+                "key_strengths": summary.get("key_strengths", []) if isinstance(summary, dict) else [],
+                "key_risks": summary.get("key_risks", []) if isinstance(summary, dict) else [],
+                "what_stands_out": insights.get("what_stands_out", []) if isinstance(insights, dict) else [],
+                "cluster_labels": _top_cluster_labels(clusters),
+            }
+        )
+    return {"companies": companies}
+
+
+def _fallback_compare_rag(company_dirs: list[Path], error: str | None = None) -> dict[str, Any]:
+    payload = _build_compare_payload(company_dirs)
+    companies = payload["companies"]
+    domain_rows: dict[str, list[tuple[str, int]]] = {}
+    for company in companies:
+        scores = company.get("score_summary", {}).get("domain_scores", {})
+        if not isinstance(scores, dict):
+            continue
+        for domain, score in scores.items():
+            try:
+                domain_rows.setdefault(str(domain), []).append((str(company["company"]), int(score)))
+            except Exception:
+                continue
+
+    differences: list[str] = []
+    for domain, rows in domain_rows.items():
+        if len(rows) < 2:
+            continue
+        rows = sorted(rows, key=lambda item: item[1], reverse=True)
+        differences.append(f"{rows[0][0]} leads {rows[-1][0]} in {domain} by {rows[0][1] - rows[-1][1]} points.")
+    differences = differences[:4]
+
+    company_names = ", ".join(str(company["company"]) for company in companies)
+    return {
+        "schema_version": 1,
+        "source": "fallback",
+        "error": error,
+        "executive_summary": [
+            f"This comparison uses cached company scores and RAG profiles for {company_names}. The model-generated comparison was unavailable, so this summary is based on deterministic score gaps and cached single-company signals.",
+            "Use the heatmap and company detail cards to inspect where each company is strongest or weakest. Larger domain gaps indicate clearer differences in how employees describe their workplace needs.",
+        ],
+        "key_differences": differences or ["The selected companies have similar final goal profiles across the compared domains."],
+        "shared_risks": [
+            "Review-derived signals should be interpreted as aggregated language patterns, not as proof of every employee's experience."
+        ],
+        "company_notes": [
+            {
+                "company": str(company["company"]),
+                "strength": "; ".join(company.get("key_strengths", [])[:1]) or "See cached company summary for the strongest signals.",
+                "risk": "; ".join(company.get("key_risks", [])[:1]) or "See cached company summary for the main risks.",
+            }
+            for company in companies
+        ],
+        "best_fit_by_need": [],
+    }
+
+
+def _call_gemini_compare(prompt: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    _load_env_file_if_needed()
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not set.")
+
+    try:
+        from google import genai
+        from google.genai import types
+    except Exception as exc:
+        raise RuntimeError(f"google-genai is not installed: {exc}") from exc
+
+    models = [
+        os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview"),
+        os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite"),
+    ]
+    models = [model for index, model in enumerate(models) if model and model not in models[:index]]
+    client = genai.Client(api_key=api_key)
+    last_error: Exception | None = None
+    attempts: list[dict[str, str]] = []
+    for model in models:
+        for attempt in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.3,
+                        response_mime_type="application/json",
+                        response_json_schema=COMPARE_RAG_SCHEMA,
+                    ),
+                )
+                text = response.text or "{}"
+                generated = json.loads(text.strip().strip("`").removeprefix("json").strip())
+                usage = getattr(response, "usage_metadata", None)
+                if hasattr(usage, "model_dump"):
+                    usage_payload = usage.model_dump(mode="json", exclude_none=True)
+                else:
+                    usage_payload = {}
+                return generated, {"model": model, "usage": usage_payload, "attempts": attempts}
+            except Exception as exc:
+                last_error = exc
+                attempts.append({"model": model, "attempt": str(attempt + 1), "error": str(exc)})
+                if attempt < 2:
+                    time.sleep(4 * (attempt + 1))
+        continue
+    raise RuntimeError(f"Gemini comparison generation failed: {last_error}; attempts={attempts}")
+
+
+@app.post("/api/compare/rag-summary")
+def compare_rag_summary(payload: CompareRagRequest) -> dict[str, Any]:
+    raw_companies = [company.strip() for company in payload.companies if company.strip()]
+    unique_companies = list(dict.fromkeys(raw_companies))[:3]
+    if len(unique_companies) < 2:
+        raise HTTPException(status_code=400, detail="Select at least two companies.")
+
+    company_dirs: list[Path] = []
+    for company in unique_companies:
+        company_dir = _resolve_scored_company_dir(company)
+        if company_dir is None or not _has_required_score_files(company_dir):
+            raise HTTPException(status_code=404, detail=f"Scored company not found: {company}")
+        company_dirs.append(company_dir)
+
+    cache_dir = _comparison_cache_dir(company_dirs)
+    cache_path = cache_dir / "rag_comparison.json"
+    cached = _read_json_maybe_gz(cache_path)
+    if cached:
+        return cached
+
+    compare_payload = _build_compare_payload(company_dirs)
+    prompt = (
+        "You are generating a RAG-backed comparison of employee review analytics.\n"
+        "Use only the supplied cached company scores, summaries, risks, strengths, and cluster labels.\n"
+        "Do not quote employee reviews verbatim. Do not invent policies, causes, or factual claims.\n"
+        "Write for a normal reader. The executive_summary must contain exactly two professional paragraphs.\n"
+        "Explain differences across companies and identify which company is strongest for specific workplace needs.\n"
+        "Return only valid JSON matching the schema.\n\n"
+        f"Input JSON:\n{json.dumps(compare_payload, ensure_ascii=False)}"
+    )
+
+    try:
+        generated, meta = _call_gemini_compare(prompt)
+        result = {
+            "schema_version": 1,
+            "source": "gemini",
+            "company_ids": [path.name for path in company_dirs],
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            **meta,
+            **generated,
+        }
+    except Exception as exc:
+        result = _fallback_compare_rag(company_dirs, error=str(exc))
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return result
 
 
 @app.get("/api/scored-company/{company_id}/download")
@@ -543,7 +867,6 @@ def job_outputs(job_id: str) -> dict[str, Any]:
         if p.is_file():
             rel = str(p.relative_to(run_dir)).replace("\\", "/")
             files.add(rel)
-            # Expose a virtual uncompressed path for *.gz artifacts.
             if rel.endswith(".gz"):
                 files.add(rel[:-3])
 

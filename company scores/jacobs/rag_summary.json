@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "jacobs",
+  "generated_at": "2026-04-30T20:30:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1544,
+    "prompt_token_count": 3299,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3299
+      }
+    ],
+    "total_token_count": 4843
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Jacobs maintains a generally positive workplace sentiment, with employees frequently highlighting competitive compensation, benefits, and a collaborative team environment. These insights are derived from patterns in review language and represent broad signals rather than universal experiences across the entire workforce.",
+    "Despite these strengths, some employees report challenges regarding career advancement, work-life balance, and occasional inconsistencies in leadership support. Addressing these areas of friction could help improve overall employee satisfaction and long-term retention."
+  ],
+  "key_strengths": [
+    "Competitive pay and comprehensive benefits packages",
+    "Collaborative and friendly team environments",
+    "Strong emphasis on workplace safety and field security",
+    "Supportive hybrid work arrangements"
+  ],
+  "key_risks": [
+    "Perceived lack of clear pathways for career growth and promotion",
+    "Inconsistent management support and potential for workplace favoritism",
+    "Workload pressures leading to burnout and stress",
+    "Limited transparency regarding salary scales and merit increases"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain reflects the highest positive engagement, driven by employee appreciation for core compensation and benefits.",
+    "weakest": "The Self-Protection domain shows the lowest score, indicating concerns regarding fairness, leadership transparency, and workplace stability."
+  }
+}

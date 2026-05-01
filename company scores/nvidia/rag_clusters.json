@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "company": "nvidia",
+  "generated_at": "2026-04-30T20:35:08",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1560,
+    "prompt_token_count": 3430,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3430
+      }
+    ],
+    "total_token_count": 4990
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees appreciate the company's benefits and stable environment, though experiences with work-life balance vary by team.",
+      "evidence_ids": [
+        "nvidia:fulfillment_fam:99412856",
+        "nvidia:fulfillment_fam:102061486",
+        "nvidia:fulfillment_fam:98139229"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "A collaborative and supportive team environment is frequently cited as a positive aspect of the workplace culture.",
+      "evidence_ids": [
+        "nvidia:fulfillment_aff:102965404",
+        "nvidia:fulfillment_aff:96525794",
+        "nvidia:fulfillment_aff:101454505"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Compensation, including salary and stock options, is consistently viewed as a major strength of the employment package.",
+      "evidence_ids": [
+        "nvidia:fulfillment_phys:101472149",
+        "nvidia:fulfillment_phys:101593926",
+        "nvidia:fulfillment_phys:97403824"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many employees feel valued through consistent feedback and opportunities for career development, though some report a lack of growth.",
+      "evidence_ids": [
+        "nvidia:fulfillment_stat:93080121",
+        "nvidia:fulfillment_stat:100257001",
+        "nvidia:fulfillment_stat:87968812"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees praise the ethical leadership and integrity, others note that management quality is a key factor in perceived fairness.",
+      "evidence_ids": [
+        "nvidia:fulfillment_selfprot:96320712",
+        "nvidia:fulfillment_selfprot:93755738",
+        "nvidia:fulfillment_selfprot:87356890"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High work pressure and stress are identified as significant challenges, despite the competitive pay.",
+      "evidence_ids": [
+        "nvidia:hindrance_phys:100249218",
+        "nvidia:hindrance_phys:82671171",
+        "nvidia:hindrance_phys:86908779"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees report difficulty maintaining work-life balance due to demanding schedules and project requirements.",
+      "evidence_ids": [
+        "nvidia:hindrance_fam:90380627",
+        "nvidia:hindrance_fam:98788393",
+        "nvidia:hindrance_fam:87584782"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "A subset of employees expresses frustration with limited career progression and perceived lack of recognition.",
+      "evidence_ids": [
+        "nvidia:hindrance_stat:91852580",
+        "nvidia:hindrance_stat:96667199",
+        "nvidia:hindrance_stat:87224829"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Minority reports indicate feelings of isolation or a lack of social connection within certain office environments.",
+      "evidence_ids": [
+        "nvidia:hindrance_aff:98386460",
+        "nvidia:hindrance_aff:93210432",
+        "nvidia:hindrance_aff:86252057"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Isolated reports mention concerns regarding office politics, favoritism, and toxic team dynamics.",
+      "evidence_ids": [
+        "nvidia:hindrance_selfprot:96381003",
+        "nvidia:hindrance_selfprot:86512792",
+        "nvidia:hindrance_selfprot:86790582"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "adobe",
+  "score_summary": {
+    "review_count": 945,
+    "overall_score": 76,
+    "positive_share": 0.7492,
+    "negative_share": 0.181,
+    "domain_scores": {
+      "physiological": 66,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 59,
+      "family_care": 61
+    },
+    "raw_domain_scores": {
+      "physiological": 0.31413725118448965,
+      "self_protection": -0.0036617388362238917,
+      "affiliation": 0.1175973442419999,
+      "status_esteem": 0.1845680484783532,
+      "family_care": 0.21511040296460546
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 66
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 379,
+      "signal": 40,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "adobe:fulfillment_phys:94499149",
+        "adobe:fulfillment_phys:88664079",
+        "adobe:fulfillment_phys:95536650",
+        "adobe:fulfillment_phys:99098455",
+        "adobe:fulfillment_phys:95857378"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 254,
+      "signal": 27,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "adobe:fulfillment_fam:99795981",
+        "adobe:fulfillment_fam:86242321",
+        "adobe:fulfillment_fam:101920061",
+        "adobe:fulfillment_fam:101144475",
+        "adobe:fulfillment_fam:96223750"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 242,
+      "signal": 26,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "adobe:fulfillment_stat:71700216",
+        "adobe:fulfillment_stat:87454508",
+        "adobe:fulfillment_stat:88583778",
+        "adobe:fulfillment_stat:95503966",
+        "adobe:fulfillment_stat:96637053"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 78,
+      "signal": 8,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "adobe:hindrance_stat:77165606",
+        "adobe:hindrance_stat:89445219",
+        "adobe:hindrance_stat:77229241",
+        "adobe:hindrance_stat:73743454",
+        "adobe:hindrance_stat:93795977"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 76,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "adobe:hindrance_phys:91708632",
+        "adobe:hindrance_phys:69682163",
+        "adobe:hindrance_phys:102419446",
+        "adobe:hindrance_phys:100833210",
+        "adobe:hindrance_phys:98768328"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 74,
+      "signal": 8,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "adobe:hindrance_selfprot:93307143",
+        "adobe:hindrance_selfprot:90348415",
+        "adobe:hindrance_selfprot:79212860",
+        "adobe:hindrance_selfprot:92530346",
+        "adobe:hindrance_selfprot:86950844"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

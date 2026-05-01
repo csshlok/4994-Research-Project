@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "capgemini",
+  "generated_at": "2026-04-30T20:22:50",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1552,
+    "prompt_token_count": 3444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3444
+      }
+    ],
+    "total_token_count": 4996
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Capgemini maintains a moderate workplace standing, with employee feedback highlighting a balance between professional growth opportunities and operational challenges. These domain scores represent signals derived from review language and should not be interpreted as direct proof of every employee's individual experience.",
+    "While many staff members appreciate the collaborative culture and available resources, others report significant friction regarding career advancement and compensation. The organization experiences a tension between its supportive team environments and the stressors associated with client-driven project stability."
+  ],
+  "key_strengths": [
+    "Access to diverse roles and professional development resources",
+    "Supportive team environments and collaborative leadership",
+    "Competitive benefits packages for many employees",
+    "Strong focus on diversity and ethical business values"
+  ],
+  "key_risks": [
+    "Perceived stagnation in career progression and promotion paths",
+    "Concerns regarding fair compensation and salary growth",
+    "High stress levels linked to client-dependent job security",
+    "Reports of burnout due to long hours and heavy workloads"
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, reflecting employee focus on professional recognition and advancement.",
+    "weakest": "Self-Protection, indicating areas of concern regarding job security and workplace fairness."
+  }
+}

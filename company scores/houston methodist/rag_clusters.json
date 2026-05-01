@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "houston methodist",
+  "generated_at": "2026-04-30T20:28:45",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1740,
+    "prompt_token_count": 3630,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3630
+      }
+    ],
+    "total_token_count": 5370
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees generally value the competitive pay, retirement plans, and wellness programs provided by the organization.",
+      "evidence_ids": [
+        "houston methodist:fulfillment_phys:99625049",
+        "houston methodist:fulfillment_phys:87417268",
+        "houston methodist:fulfillment_phys:80304031"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Some staff report a collaborative and friendly environment, though this is not consistent across all clinical units.",
+      "evidence_ids": [
+        "houston methodist:fulfillment_aff:71673474",
+        "houston methodist:fulfillment_aff:102521384",
+        "houston methodist:fulfillment_aff:82019510"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many employees appreciate opportunities for skill development, though some report limited growth paths in specific divisions.",
+      "evidence_ids": [
+        "houston methodist:fulfillment_stat:90513067",
+        "houston methodist:fulfillment_stat:73928012",
+        "houston methodist:fulfillment_stat:91220353"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "A segment of the workforce reports positive work-life balance, particularly in nursing roles.",
+      "evidence_ids": [
+        "houston methodist:fulfillment_fam:78716151",
+        "houston methodist:fulfillment_fam:73591730",
+        "houston methodist:fulfillment_fam:96500442"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees feel supported by the organization's values, others express concerns regarding trust and transparency.",
+      "evidence_ids": [
+        "houston methodist:fulfillment_selfprot:95569917",
+        "houston methodist:fulfillment_selfprot:73814381",
+        "houston methodist:fulfillment_selfprot:101963211"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Staff frequently cite understaffing and high patient volumes as primary drivers of exhaustion and dissatisfaction.",
+      "evidence_ids": [
+        "houston methodist:hindrance_phys:96079152",
+        "houston methodist:hindrance_phys:102049044",
+        "houston methodist:hindrance_phys:77241464"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Serious allegations of toxic behavior, including bullying and discrimination, highlight a critical area for management intervention.",
+      "evidence_ids": [
+        "houston methodist:hindrance_selfprot:88680390",
+        "houston methodist:hindrance_selfprot:101610040",
+        "houston methodist:hindrance_selfprot:79533001"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees report frustration with micromanagement and a lack of support for career advancement from leadership.",
+      "evidence_ids": [
+        "houston methodist:hindrance_stat:75663161",
+        "houston methodist:hindrance_stat:76764819",
+        "houston methodist:hindrance_stat:95802571"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Reports of poor communication and lack of teamwork suggest isolation in certain departments.",
+      "evidence_ids": [
+        "houston methodist:hindrance_aff:89037896",
+        "houston methodist:hindrance_aff:71452966",
+        "houston methodist:hindrance_aff:81151924"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Inflexible scheduling and the pressure to use PTO during low-census periods negatively impact work-life balance for some.",
+      "evidence_ids": [
+        "houston methodist:hindrance_fam:82614073",
+        "houston methodist:hindrance_fam:85032675",
+        "houston methodist:hindrance_fam:101867530"
+      ]
+    }
+  ]
+}

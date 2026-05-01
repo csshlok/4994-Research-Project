@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "delta",
+  "generated_at": "2026-04-30T20:24:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1543,
+    "prompt_token_count": 3416,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3416
+      }
+    ],
+    "total_token_count": 4959
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Delta employees frequently highlight the company's robust benefits package and travel perks as primary drivers of satisfaction. These insights are derived from patterns in review language and represent broader themes rather than universal experiences across the entire workforce.",
+    "Despite these strengths, significant concerns regarding leadership transparency, workload management, and career growth persist. These findings serve as signals of employee sentiment, reflecting common areas of friction that impact the overall workplace experience."
+  ],
+  "key_strengths": [
+    "Comprehensive benefits and travel perks",
+    "Positive team environments and supportive colleagues",
+    "Flexibility in scheduling for certain roles",
+    "Strong initial appeal for entry-level and early-career opportunities"
+  ],
+  "key_risks": [
+    "Perceived lack of leadership transparency and accountability",
+    "Concerns regarding stagnant career progression and recognition",
+    "Burnout driven by high workloads and demanding schedules",
+    "Limited collective bargaining power impacting fairness perceptions"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass core compensation and benefits, represent the most frequently discussed and positively rated aspect of the employee experience.",
+    "weakest": "Self-protection needs, relating to job security, fairness, and transparency, show the lowest sentiment scores, indicating a need for greater organizational clarity."
+  }
+}

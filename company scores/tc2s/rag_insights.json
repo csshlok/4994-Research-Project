@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "tc2s",
+  "generated_at": "2026-04-30T21:51:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 783,
+    "prompt_token_count": 1751,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1751
+      }
+    ],
+    "total_token_count": 2534
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between employees who find the work environment flexible and those who feel disconnected from management.",
+    "A clear divide in sentiment regarding internal mobility and promotion pathways.",
+    "The reliance on work-life balance as a primary positive driver for current and former staff."
+  ]
+}

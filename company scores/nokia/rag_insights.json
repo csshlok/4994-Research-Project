@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "nokia",
+  "generated_at": "2026-04-30T20:34:42",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1589,
+    "prompt_token_count": 3197,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3197
+      }
+    ],
+    "total_token_count": 4786
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A clear divide between the appreciation for daily work-life balance and the anxiety surrounding long-term career stagnation.",
+    "The recurring mention of constant organizational change as a primary driver for employee dissatisfaction.",
+    "A consistent recognition of the company's collaborative culture, which contrasts with reports of disconnected management.",
+    "The tension between valuing current benefits and feeling that overall compensation is not keeping pace with the broader industry."
+  ]
+}

@@ -90,9 +90,9 @@
       "numpy": "2.3.0"
     },
     "output_files": {
-      "review_csv": "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\out\\review_scores.csv",
-      "company_csv": "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\out\\company_scores.csv",
-      "per_company_dir": "C:\\Users\\csshl\\Desktop\\4994-Scrapper\\out\\per_company",
+      "review_csv": "/out/review_scores.csv",
+      "company_csv": "/out/company_scores.csv",
+      "per_company_dir": "/out/per_company",
       "per_company_files_count": 10,
       "per_company_cols": [
         "review_id",

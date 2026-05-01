@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "Accenture",
+  "score_summary": {
+    "review_count": 1000,
+    "overall_score": 69,
+    "positive_share": 0.648,
+    "negative_share": 0.234,
+    "domain_scores": {
+      "physiological": 56,
+      "self_protection": 51,
+      "affiliation": 55,
+      "status_esteem": 59,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.11239778371549901,
+      "self_protection": 0.024207521776620423,
+      "affiliation": 0.10041828286803567,
+      "status_esteem": 0.18938144306053406,
+      "family_care": 0.12768795388897006
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 282,
+      "signal": 28,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "Accenture:fulfillment_stat:95985256",
+        "Accenture:fulfillment_stat:96997685",
+        "Accenture:fulfillment_stat:98404797",
+        "Accenture:fulfillment_stat:100063363",
+        "Accenture:fulfillment_stat:99292283"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 213,
+      "signal": 21,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "Accenture:fulfillment_phys:99972489",
+        "Accenture:fulfillment_phys:95147223",
+        "Accenture:fulfillment_phys:96440445",
+        "Accenture:fulfillment_phys:100679233",
+        "Accenture:fulfillment_phys:100490984"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 207,
+      "signal": 21,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "Accenture:fulfillment_fam:97515679",
+        "Accenture:fulfillment_fam:100652334",
+        "Accenture:fulfillment_fam:100454561",
+        "Accenture:fulfillment_fam:100395099",
+        "Accenture:fulfillment_fam:98358304"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 146,
+      "signal": 15,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "Accenture:hindrance_phys:95208293",
+        "Accenture:hindrance_phys:95735079",
+        "Accenture:hindrance_phys:95204216",
+        "Accenture:hindrance_phys:97090590",
+        "Accenture:hindrance_phys:95933759"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 105,
+      "signal": 10,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "Accenture:hindrance_stat:95901206",
+        "Accenture:hindrance_stat:97932316",
+        "Accenture:hindrance_stat:100578018",
+        "Accenture:hindrance_stat:98899976",
+        "Accenture:hindrance_stat:96110454"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 91,
+      "signal": 9,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "Accenture:hindrance_fam:95258993",
+        "Accenture:hindrance_fam:95171476",
+        "Accenture:hindrance_fam:97017705",
+        "Accenture:hindrance_fam:95296730",
+        "Accenture:hindrance_fam:96766675"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

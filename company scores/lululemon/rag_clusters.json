@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "company": "lululemon",
+  "generated_at": "2026-04-30T20:32:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1565,
+    "prompt_token_count": 3547,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3547
+      }
+    ],
+    "total_token_count": 5112
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite the value of the employee discount, wellness stipends, and competitive hourly wages as key benefits.",
+      "evidence_ids": [
+        "lululemon:fulfillment_phys:97043177",
+        "lululemon:fulfillment_phys:90022871",
+        "lululemon:fulfillment_phys:102971699"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many staff members report a positive, collaborative team atmosphere that encourages personal growth and social connection.",
+      "evidence_ids": [
+        "lululemon:fulfillment_aff:90360352",
+        "lululemon:fulfillment_aff:92707126",
+        "lululemon:fulfillment_aff:98733220"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "While some appreciate the flexibility of part-time roles, others report that scheduling demands can interfere with personal life balance.",
+      "evidence_ids": [
+        "lululemon:fulfillment_fam:94965333",
+        "lululemon:fulfillment_fam:94108232",
+        "lululemon:fulfillment_fam:90388504"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value mentorship and the chance to develop leadership skills, though some feel these opportunities are limited.",
+      "evidence_ids": [
+        "lululemon:fulfillment_stat:102890919",
+        "lululemon:fulfillment_stat:91558149",
+        "lululemon:fulfillment_stat:95194348"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees highlight supportive coworkers, others express concerns regarding toxic environments and a lack of inclusivity.",
+      "evidence_ids": [
+        "lululemon:fulfillment_selfprot:102346789",
+        "lululemon:fulfillment_selfprot:98476783",
+        "lululemon:fulfillment_selfprot:95709982"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High-pressure periods and demanding customer interactions contribute to feelings of exhaustion for some staff.",
+      "evidence_ids": [
+        "lululemon:hindrance_phys:92673524",
+        "lululemon:hindrance_phys:94732337",
+        "lululemon:hindrance_phys:96103421"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees report feeling overlooked for promotions or frustrated by a perceived lack of clear career progression.",
+      "evidence_ids": [
+        "lululemon:hindrance_stat:100150629",
+        "lululemon:hindrance_stat:95144322",
+        "lululemon:hindrance_stat:89989569"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of bullying management styles and manipulative dynamics suggest a need for improved psychological safety.",
+      "evidence_ids": [
+        "lululemon:hindrance_selfprot:93817249",
+        "lululemon:hindrance_selfprot:96058268",
+        "lululemon:hindrance_selfprot:97275503"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Inflexible scheduling and concerns over livable wages are frequently mentioned as barriers to a healthy work-life balance.",
+      "evidence_ids": [
+        "lululemon:hindrance_fam:97050918",
+        "lululemon:hindrance_fam:100820070",
+        "lululemon:hindrance_fam:90325087"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees feel isolated due to workplace gossip or cliques, which can detract from the overall team experience.",
+      "evidence_ids": [
+        "lululemon:hindrance_aff:89855527",
+        "lululemon:hindrance_aff:97336676",
+        "lululemon:hindrance_aff:98062003"
+      ]
+    }
+  ]
+}

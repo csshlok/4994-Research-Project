@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "ge",
+  "generated_at": "2026-04-30T20:27:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3251,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3251
+      }
+    ],
+    "total_token_count": 4833
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees value the broad range of benefits and compensation packages offered, though perceptions of quality vary.",
+      "evidence_ids": [
+        "ge:fulfillment_phys:79590971",
+        "ge:fulfillment_phys:68413270",
+        "ge:fulfillment_phys:82382490"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members appreciate the company's approach to work-life balance and the support for professional growth.",
+      "evidence_ids": [
+        "ge:fulfillment_fam:81787519",
+        "ge:fulfillment_fam:79983597",
+        "ge:fulfillment_fam:79560697"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Some employees find the workplace challenging and rewarding, while others express frustration over limited advancement opportunities.",
+      "evidence_ids": [
+        "ge:fulfillment_stat:89606354",
+        "ge:fulfillment_stat:76144178",
+        "ge:fulfillment_stat:95404692"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "A collaborative environment and supportive team networks are frequently cited as positive aspects of the work experience.",
+      "evidence_ids": [
+        "ge:fulfillment_aff:93190720",
+        "ge:fulfillment_aff:87983270",
+        "ge:fulfillment_aff:74657138"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "While some employees feel the company prioritizes safety and stability, others report a highly negative experience.",
+      "evidence_ids": [
+        "ge:fulfillment_selfprot:75128101",
+        "ge:fulfillment_selfprot:73255823",
+        "ge:fulfillment_selfprot:102264045"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "High-pressure environments and long hours are significant sources of stress for some employees.",
+      "evidence_ids": [
+        "ge:hindrance_phys:103015793",
+        "ge:hindrance_phys:91000643",
+        "ge:hindrance_phys:80667327"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees report feeling undervalued and overlooked, particularly regarding compensation increases and career progression.",
+      "evidence_ids": [
+        "ge:hindrance_stat:75002932",
+        "ge:hindrance_stat:86984196",
+        "ge:hindrance_stat:82320207"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Inflexible scheduling and heavy workloads make it difficult for some employees to maintain a healthy work-life balance.",
+      "evidence_ids": [
+        "ge:hindrance_fam:100062701",
+        "ge:hindrance_fam:67913193",
+        "ge:hindrance_fam:89319851"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Concerns regarding favoritism, job security, and toxic office politics negatively impact some employees.",
+      "evidence_ids": [
+        "ge:hindrance_selfprot:98929813",
+        "ge:hindrance_selfprot:75029410",
+        "ge:hindrance_selfprot:77467276"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff report feelings of isolation or frustration with company policies regarding attendance and compensation.",
+      "evidence_ids": [
+        "ge:hindrance_aff:95220772",
+        "ge:hindrance_aff:85585719",
+        "ge:hindrance_aff:102868885"
+      ]
+    }
+  ]
+}

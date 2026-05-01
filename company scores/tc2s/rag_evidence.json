@@ -1,0 +1,620 @@
+{
+  "schema_version": 1,
+  "company": "tc2s",
+  "source_files": {
+    "reviews": "review data/tc2s/reviews.csv",
+    "company_scores": "company scores/tc2s/company_scores.csv",
+    "review_scores": "company scores/tc2s/review_scores.csv",
+    "topic_summary": "company scores/tc2s/topic_summary.csv",
+    "topic_assignments": "company scores/tc2s/topic_assignments.csv"
+  },
+  "score_summary": {
+    "review_count": 15,
+    "overall_score": 59,
+    "positive_share": 0.6,
+    "negative_share": 0.3333,
+    "domain_scores": {
+      "physiological": 52,
+      "self_protection": 52,
+      "affiliation": 49,
+      "status_esteem": 58,
+      "family_care": 54
+    },
+    "raw_domain_scores": {
+      "physiological": 0.043705544725376556,
+      "self_protection": 0.04460578196713456,
+      "affiliation": -0.019999993333335554,
+      "status_esteem": 0.15161756115340158,
+      "family_care": 0.08985247561446534
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "affiliation",
+      "label": "Affiliation",
+      "score": 49
+    }
+  },
+  "clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "mode": "fulfillment",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 4,
+      "signal": 27,
+      "x": 48,
+      "y": 58,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "tc2s:fulfillment_stat:102899995",
+        "tc2s:fulfillment_stat:102897295",
+        "tc2s:fulfillment_stat:102900517",
+        "tc2s:fulfillment_stat:102904483"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:fulfillment_stat:102899995",
+          "review_id": "102899995",
+          "cluster_id": "fulfillment_stat",
+          "mode": "fulfillment",
+          "goal": "stat",
+          "domain": "Status & Esteem",
+          "evidence_value": 4.5,
+          "sentiment_score": 0.7569,
+          "rating": "3.0",
+          "date": "2026-02-20T12:59:41.233",
+          "role": "Current employee - Software Engineer",
+          "location": "Pune",
+          "employment_status": "REGULAR",
+          "text": "Chill work and good wl balance Chill work"
+        },
+        {
+          "evidence_id": "tc2s:fulfillment_stat:102897295",
+          "review_id": "102897295",
+          "cluster_id": "fulfillment_stat",
+          "mode": "fulfillment",
+          "goal": "stat",
+          "domain": "Status & Esteem",
+          "evidence_value": 4.5,
+          "sentiment_score": 0.79,
+          "rating": "3.0",
+          "date": "2026-02-20T08:51:54.080",
+          "role": "Current employee - Systems Engineer",
+          "location": "HyderÄbÄd",
+          "employment_status": "REGULAR",
+          "text": "Good structure for employees and a good environment for learning Systems Engineer salary"
+        },
+        {
+          "evidence_id": "tc2s:fulfillment_stat:102900517",
+          "review_id": "102900517",
+          "cluster_id": "fulfillment_stat",
+          "mode": "fulfillment",
+          "goal": "stat",
+          "domain": "Status & Esteem",
+          "evidence_value": 4.0,
+          "sentiment_score": 0.852,
+          "rating": "5.0",
+          "date": "2026-02-20T13:49:15.897",
+          "role": "Current employee - Assistant Systems Engineer",
+          "location": "Mumbai",
+          "employment_status": "REGULAR",
+          "text": "Gets opportunity to enter into company You can convert to higher role by giving internal exams Something is better than nothing"
+        },
+        {
+          "evidence_id": "tc2s:fulfillment_stat:102904483",
+          "review_id": "102904483",
+          "cluster_id": "fulfillment_stat",
+          "mode": "fulfillment",
+          "goal": "stat",
+          "domain": "Status & Esteem",
+          "evidence_value": 2.5,
+          "sentiment_score": 0.6661,
+          "rating": "5.0",
+          "date": "2026-02-21T02:14:18.403",
+          "role": "Current employee - Software Tester",
+          "location": "Chennai",
+          "employment_status": "REGULAR",
+          "text": "Good environment to work Learning opportunities Team help QA AUTOMATION TESTING"
+        }
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "mode": "fulfillment",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 4,
+      "signal": 27,
+      "x": 68,
+      "y": 79,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "tc2s:fulfillment_fam:102896731",
+        "tc2s:fulfillment_fam:102897949",
+        "tc2s:fulfillment_fam:102897848"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:fulfillment_fam:102896731",
+          "review_id": "102896731",
+          "cluster_id": "fulfillment_fam",
+          "mode": "fulfillment",
+          "goal": "fam",
+          "domain": "Family Care",
+          "evidence_value": 9.0,
+          "sentiment_score": 0.0016,
+          "rating": "3.0",
+          "date": "2026-02-20T08:02:23.780",
+          "role": "Former employee - Software Engineer",
+          "location": "San Antonio, TX",
+          "employment_status": "REGULAR",
+          "text": "Good work life balance and chill. Junior Software Engineer"
+        },
+        {
+          "evidence_id": "tc2s:fulfillment_fam:102897949",
+          "review_id": "102897949",
+          "cluster_id": "fulfillment_fam",
+          "mode": "fulfillment",
+          "goal": "fam",
+          "domain": "Family Care",
+          "evidence_value": 4.5,
+          "sentiment_score": 0.841,
+          "rating": "3.0",
+          "date": "2026-02-20T09:46:25.647",
+          "role": "Current employee",
+          "location": "Unknown location",
+          "employment_status": "REGULAR",
+          "text": "Work life balance is good ."
+        },
+        {
+          "evidence_id": "tc2s:fulfillment_fam:102897848",
+          "review_id": "102897848",
+          "cluster_id": "fulfillment_fam",
+          "mode": "fulfillment",
+          "goal": "fam",
+          "domain": "Family Care",
+          "evidence_value": 3.75,
+          "sentiment_score": -0.896,
+          "rating": "1.0",
+          "date": "2026-02-20T09:38:19.287",
+          "role": "Former employee - Systems Engineer",
+          "location": "Calcutta",
+          "employment_status": "REGULAR",
+          "text": "Nothing such that can be mentioned Work life"
+        }
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "mode": "fulfillment",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 1,
+      "signal": 7,
+      "x": 82,
+      "y": 45,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [],
+      "evidence": []
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "mode": "fulfillment",
+      "label": "Safety & Fairness",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 1,
+      "signal": 7,
+      "x": 50,
+      "y": 38,
+      "terms": [
+        "safe",
+        "secure",
+        "fairness",
+        "respectful",
+        "trust"
+      ],
+      "evidence_ids": [
+        "tc2s:fulfillment_selfprot:102902842"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:fulfillment_selfprot:102902842",
+          "review_id": "102902842",
+          "cluster_id": "fulfillment_selfprot",
+          "mode": "fulfillment",
+          "goal": "selfprot",
+          "domain": "Self-Protection",
+          "evidence_value": 2.5,
+          "sentiment_score": -0.9413,
+          "rating": "1.0",
+          "date": "2026-02-20T19:56:12.973",
+          "role": "Current employee - Systems Engineer",
+          "location": "Bhubaneshwar",
+          "employment_status": "REGULAR",
+          "text": "There were be somewhat job security Worst"
+        }
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "mode": "fulfillment",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 0,
+      "signal": 0,
+      "x": 22,
+      "y": 74,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [],
+      "evidence": []
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "mode": "hindrance",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 4,
+      "signal": 27,
+      "x": 70,
+      "y": 24,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "tc2s:hindrance_stat:102898199"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:hindrance_stat:102898199",
+          "review_id": "102898199",
+          "cluster_id": "hindrance_stat",
+          "mode": "hindrance",
+          "goal": "stat",
+          "domain": "Status & Esteem",
+          "evidence_value": 7.0,
+          "sentiment_score": -0.8277,
+          "rating": "1.0",
+          "date": "2026-02-20T10:03:44.170",
+          "role": "Current employee - Data Engineer",
+          "location": "Bengaluru",
+          "employment_status": "REGULAR",
+          "text": "No promotion no increment no proper opportunity No such benefits limited growth"
+        }
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "mode": "hindrance",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 2,
+      "signal": 13,
+      "x": 82,
+      "y": 52,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "tc2s:hindrance_fam:102896718"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:hindrance_fam:102896718",
+          "review_id": "102896718",
+          "cluster_id": "hindrance_fam",
+          "mode": "hindrance",
+          "goal": "fam",
+          "domain": "Family Care",
+          "evidence_value": 9.0,
+          "sentiment_score": -0.8472,
+          "rating": "1.0",
+          "date": "2026-02-20T08:01:01.370",
+          "role": "Former employee - Systems Engineer",
+          "location": "Pune",
+          "employment_status": "REGULAR",
+          "text": "Low Salary. 5 Day WFO. No work life balance left. NA"
+        }
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "mode": "hindrance",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 1,
+      "signal": 7,
+      "x": 24,
+      "y": 28,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [],
+      "evidence": []
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "mode": "hindrance",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 1,
+      "signal": 7,
+      "x": 50,
+      "y": 38,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [],
+      "evidence": []
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "mode": "hindrance",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 1,
+      "signal": 7,
+      "x": 62,
+      "y": 34,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "tc2s:hindrance_aff:102904143"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "tc2s:hindrance_aff:102904143",
+          "review_id": "102904143",
+          "cluster_id": "hindrance_aff",
+          "mode": "hindrance",
+          "goal": "aff",
+          "domain": "Affiliation",
+          "evidence_value": 3.0,
+          "sentiment_score": -0.8521,
+          "rating": "3.0",
+          "date": "2026-02-21T00:58:26.293",
+          "role": "Current employee",
+          "location": "Unknown location",
+          "employment_status": "REGULAR",
+          "text": "Employees are just another resource to them Managers are the least competent and doesnt stand with their team observed in most of the projects Good opportunities but not employee friendly"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "tc2s:fulfillment_stat:102899995",
+      "review_id": "102899995",
+      "cluster_id": "fulfillment_stat",
+      "mode": "fulfillment",
+      "goal": "stat",
+      "domain": "Status & Esteem",
+      "evidence_value": 4.5,
+      "sentiment_score": 0.7569,
+      "rating": "3.0",
+      "date": "2026-02-20T12:59:41.233",
+      "role": "Current employee - Software Engineer",
+      "location": "Pune",
+      "employment_status": "REGULAR",
+      "text": "Chill work and good wl balance Chill work"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_stat:102897295",
+      "review_id": "102897295",
+      "cluster_id": "fulfillment_stat",
+      "mode": "fulfillment",
+      "goal": "stat",
+      "domain": "Status & Esteem",
+      "evidence_value": 4.5,
+      "sentiment_score": 0.79,
+      "rating": "3.0",
+      "date": "2026-02-20T08:51:54.080",
+      "role": "Current employee - Systems Engineer",
+      "location": "HyderÄbÄd",
+      "employment_status": "REGULAR",
+      "text": "Good structure for employees and a good environment for learning Systems Engineer salary"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_stat:102900517",
+      "review_id": "102900517",
+      "cluster_id": "fulfillment_stat",
+      "mode": "fulfillment",
+      "goal": "stat",
+      "domain": "Status & Esteem",
+      "evidence_value": 4.0,
+      "sentiment_score": 0.852,
+      "rating": "5.0",
+      "date": "2026-02-20T13:49:15.897",
+      "role": "Current employee - Assistant Systems Engineer",
+      "location": "Mumbai",
+      "employment_status": "REGULAR",
+      "text": "Gets opportunity to enter into company You can convert to higher role by giving internal exams Something is better than nothing"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_stat:102904483",
+      "review_id": "102904483",
+      "cluster_id": "fulfillment_stat",
+      "mode": "fulfillment",
+      "goal": "stat",
+      "domain": "Status & Esteem",
+      "evidence_value": 2.5,
+      "sentiment_score": 0.6661,
+      "rating": "5.0",
+      "date": "2026-02-21T02:14:18.403",
+      "role": "Current employee - Software Tester",
+      "location": "Chennai",
+      "employment_status": "REGULAR",
+      "text": "Good environment to work Learning opportunities Team help QA AUTOMATION TESTING"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_fam:102896731",
+      "review_id": "102896731",
+      "cluster_id": "fulfillment_fam",
+      "mode": "fulfillment",
+      "goal": "fam",
+      "domain": "Family Care",
+      "evidence_value": 9.0,
+      "sentiment_score": 0.0016,
+      "rating": "3.0",
+      "date": "2026-02-20T08:02:23.780",
+      "role": "Former employee - Software Engineer",
+      "location": "San Antonio, TX",
+      "employment_status": "REGULAR",
+      "text": "Good work life balance and chill. Junior Software Engineer"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_fam:102897949",
+      "review_id": "102897949",
+      "cluster_id": "fulfillment_fam",
+      "mode": "fulfillment",
+      "goal": "fam",
+      "domain": "Family Care",
+      "evidence_value": 4.5,
+      "sentiment_score": 0.841,
+      "rating": "3.0",
+      "date": "2026-02-20T09:46:25.647",
+      "role": "Current employee",
+      "location": "Unknown location",
+      "employment_status": "REGULAR",
+      "text": "Work life balance is good ."
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_fam:102897848",
+      "review_id": "102897848",
+      "cluster_id": "fulfillment_fam",
+      "mode": "fulfillment",
+      "goal": "fam",
+      "domain": "Family Care",
+      "evidence_value": 3.75,
+      "sentiment_score": -0.896,
+      "rating": "1.0",
+      "date": "2026-02-20T09:38:19.287",
+      "role": "Former employee - Systems Engineer",
+      "location": "Calcutta",
+      "employment_status": "REGULAR",
+      "text": "Nothing such that can be mentioned Work life"
+    },
+    {
+      "evidence_id": "tc2s:fulfillment_selfprot:102902842",
+      "review_id": "102902842",
+      "cluster_id": "fulfillment_selfprot",
+      "mode": "fulfillment",
+      "goal": "selfprot",
+      "domain": "Self-Protection",
+      "evidence_value": 2.5,
+      "sentiment_score": -0.9413,
+      "rating": "1.0",
+      "date": "2026-02-20T19:56:12.973",
+      "role": "Current employee - Systems Engineer",
+      "location": "Bhubaneshwar",
+      "employment_status": "REGULAR",
+      "text": "There were be somewhat job security Worst"
+    },
+    {
+      "evidence_id": "tc2s:hindrance_stat:102898199",
+      "review_id": "102898199",
+      "cluster_id": "hindrance_stat",
+      "mode": "hindrance",
+      "goal": "stat",
+      "domain": "Status & Esteem",
+      "evidence_value": 7.0,
+      "sentiment_score": -0.8277,
+      "rating": "1.0",
+      "date": "2026-02-20T10:03:44.170",
+      "role": "Current employee - Data Engineer",
+      "location": "Bengaluru",
+      "employment_status": "REGULAR",
+      "text": "No promotion no increment no proper opportunity No such benefits limited growth"
+    },
+    {
+      "evidence_id": "tc2s:hindrance_fam:102896718",
+      "review_id": "102896718",
+      "cluster_id": "hindrance_fam",
+      "mode": "hindrance",
+      "goal": "fam",
+      "domain": "Family Care",
+      "evidence_value": 9.0,
+      "sentiment_score": -0.8472,
+      "rating": "1.0",
+      "date": "2026-02-20T08:01:01.370",
+      "role": "Former employee - Systems Engineer",
+      "location": "Pune",
+      "employment_status": "REGULAR",
+      "text": "Low Salary. 5 Day WFO. No work life balance left. NA"
+    },
+    {
+      "evidence_id": "tc2s:hindrance_aff:102904143",
+      "review_id": "102904143",
+      "cluster_id": "hindrance_aff",
+      "mode": "hindrance",
+      "goal": "aff",
+      "domain": "Affiliation",
+      "evidence_value": 3.0,
+      "sentiment_score": -0.8521,
+      "rating": "3.0",
+      "date": "2026-02-21T00:58:26.293",
+      "role": "Current employee",
+      "location": "Unknown location",
+      "employment_status": "REGULAR",
+      "text": "Employees are just another resource to them Managers are the least competent and doesnt stand with their team observed in most of the projects Good opportunities but not employee friendly"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "jacobs",
+  "generated_at": "2026-04-30T20:30:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1544,
+    "prompt_token_count": 3299,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3299
+      }
+    ],
+    "total_token_count": 4843
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently cite competitive salary and benefits as a primary positive aspect of their tenure.",
+      "evidence_ids": [
+        "jacobs:fulfillment_phys:82135701",
+        "jacobs:fulfillment_phys:79413209",
+        "jacobs:fulfillment_phys:102912333"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Flexible scheduling and work-life balance are recognized as key contributors to a positive and inclusive work environment.",
+      "evidence_ids": [
+        "jacobs:fulfillment_fam:85649554",
+        "jacobs:fulfillment_fam:84466795",
+        "jacobs:fulfillment_fam:76815095"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some staff benefit from mentorship and clear growth paths, others report difficulty in achieving advancement.",
+      "evidence_ids": [
+        "jacobs:fulfillment_stat:71704419",
+        "jacobs:fulfillment_stat:77590083",
+        "jacobs:fulfillment_stat:75951190"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The company is noted for fostering a collaborative, relaxed, and friendly team atmosphere.",
+      "evidence_ids": [
+        "jacobs:fulfillment_aff:74472564",
+        "jacobs:fulfillment_aff:82325132",
+        "jacobs:fulfillment_aff:79563449"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Employees value the strong culture of safety in field roles and general job security, though management quality varies.",
+      "evidence_ids": [
+        "jacobs:fulfillment_selfprot:74723387",
+        "jacobs:fulfillment_selfprot:97280196",
+        "jacobs:fulfillment_selfprot:76095082"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some employees report exhaustion and frustration with the pace of work and difficulties in securing pay raises.",
+      "evidence_ids": [
+        "jacobs:hindrance_phys:85039404",
+        "jacobs:hindrance_phys:82667577",
+        "jacobs:hindrance_phys:90099045"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "A subset of the workforce feels overlooked, citing a lack of mentorship and limited opportunities for career progression.",
+      "evidence_ids": [
+        "jacobs:hindrance_stat:71166872",
+        "jacobs:hindrance_stat:91512620",
+        "jacobs:hindrance_stat:80179208"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Demanding project requirements and long hours can lead to significant stress and difficulty maintaining a healthy work-life balance.",
+      "evidence_ids": [
+        "jacobs:hindrance_fam:88910152",
+        "jacobs:hindrance_fam:100099273",
+        "jacobs:hindrance_fam:79342545"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Remote work and project-based isolation can sometimes lead to feelings of disconnection from the broader company culture.",
+      "evidence_ids": [
+        "jacobs:hindrance_aff:85550460",
+        "jacobs:hindrance_aff:78864012",
+        "jacobs:hindrance_aff:88741390"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic leadership, favoritism, and discrimination highlight critical areas for improvement in management practices.",
+      "evidence_ids": [
+        "jacobs:hindrance_selfprot:82315749",
+        "jacobs:hindrance_selfprot:89161972",
+        "jacobs:hindrance_selfprot:87726863"
+      ]
+    }
+  ]
+}

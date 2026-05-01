@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "company": "adobe",
+  "generated_at": "2026-04-30T20:20:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1666,
+    "prompt_token_count": 3598,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3598
+      }
+    ],
+    "total_token_count": 5264
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Adobe maintains a generally positive workplace reputation, largely driven by competitive compensation, comprehensive benefits packages, and a strong emphasis on work-life balance. These observations are based on patterns identified in employee review language and should be viewed as signals rather than direct proof of every individual's experience.",
+    "Despite these strengths, the organization faces significant challenges regarding internal culture and career progression. Reports of toxic management behaviors, limited advancement opportunities, and bureaucratic hurdles suggest that while the foundational benefits are highly valued, the day-to-day professional environment remains a source of friction for some employees."
+  ],
+  "key_strengths": [
+    "Competitive pay and comprehensive benefits packages",
+    "Strong support for work-life balance and flexibility",
+    "Positive and collaborative team environments",
+    "Generous leave policies and wellbeing initiatives"
+  ],
+  "key_risks": [
+    "Reports of toxic management and internal politics",
+    "Limited opportunities for career advancement and promotion",
+    "Perceived inequities in leadership and professional growth",
+    "Bureaucratic inefficiencies and siloed operations"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs are the most positively signaled domain, reflecting high employee satisfaction with base compensation, benefits, and physical workplace perks.",
+    "weakest": "Self-protection is the weakest domain, indicating that some employees feel a lack of psychological safety, fairness, and trust within the organizational culture."
+  }
+}

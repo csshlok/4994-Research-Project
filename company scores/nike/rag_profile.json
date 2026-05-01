@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "nike",
+  "score_summary": {
+    "review_count": 855,
+    "overall_score": 70,
+    "positive_share": 0.6947,
+    "negative_share": 0.2316,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 56,
+      "family_care": 57
+    },
+    "raw_domain_scores": {
+      "physiological": 0.17368430463735912,
+      "self_protection": 0.005444758943154962,
+      "affiliation": 0.12896919736113652,
+      "status_esteem": 0.11970805445615869,
+      "family_care": 0.1314518522314703
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 209,
+      "signal": 24,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "nike:fulfillment_phys:90594791",
+        "nike:fulfillment_phys:88337905",
+        "nike:fulfillment_phys:100403312",
+        "nike:fulfillment_phys:100141465",
+        "nike:fulfillment_phys:98583245"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 158,
+      "signal": 18,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "nike:fulfillment_fam:99491440",
+        "nike:fulfillment_fam:100550254",
+        "nike:fulfillment_fam:99874634",
+        "nike:fulfillment_fam:97353166",
+        "nike:fulfillment_fam:94192271"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 153,
+      "signal": 18,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "nike:fulfillment_stat:93461810",
+        "nike:fulfillment_stat:94239558",
+        "nike:fulfillment_stat:97676837",
+        "nike:fulfillment_stat:102266685",
+        "nike:fulfillment_stat:99004220"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 69,
+      "signal": 8,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "nike:hindrance_phys:91274842",
+        "nike:hindrance_phys:102953708",
+        "nike:hindrance_phys:98628238",
+        "nike:hindrance_phys:87966919",
+        "nike:hindrance_phys:101740193"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 68,
+      "signal": 8,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "nike:hindrance_stat:93598799",
+        "nike:hindrance_stat:98639017",
+        "nike:hindrance_stat:87704150",
+        "nike:hindrance_stat:87592015",
+        "nike:hindrance_stat:88985037"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 51,
+      "signal": 6,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "nike:hindrance_selfprot:86741579",
+        "nike:hindrance_selfprot:87610145",
+        "nike:hindrance_selfprot:86691956",
+        "nike:hindrance_selfprot:99897886",
+        "nike:hindrance_selfprot:98845910"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

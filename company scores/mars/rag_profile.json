@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "mars",
+  "score_summary": {
+    "review_count": 999,
+    "overall_score": 75,
+    "positive_share": 0.7397,
+    "negative_share": 0.1822,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 51,
+      "affiliation": 58,
+      "status_esteem": 58,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.18421490761078366,
+      "self_protection": 0.010894872034143339,
+      "affiliation": 0.15327271120830646,
+      "status_esteem": 0.16707843303161238,
+      "family_care": 0.15929587237236237
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 235,
+      "signal": 24,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "mars:fulfillment_phys:87055446",
+        "mars:fulfillment_phys:101193459",
+        "mars:fulfillment_phys:98222523",
+        "mars:fulfillment_phys:96486342",
+        "mars:fulfillment_phys:93809550"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 227,
+      "signal": 23,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "mars:fulfillment_stat:90502094",
+        "mars:fulfillment_stat:101228589",
+        "mars:fulfillment_stat:97860582",
+        "mars:fulfillment_stat:102447954",
+        "mars:fulfillment_stat:102312650"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 208,
+      "signal": 21,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "mars:fulfillment_fam:89103037",
+        "mars:fulfillment_fam:102922071",
+        "mars:fulfillment_fam:100573275",
+        "mars:fulfillment_fam:97621365",
+        "mars:fulfillment_fam:93430479"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 75,
+      "signal": 8,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "mars:hindrance_selfprot:102151816",
+        "mars:hindrance_selfprot:102408015",
+        "mars:hindrance_selfprot:84592538",
+        "mars:hindrance_selfprot:99510702",
+        "mars:hindrance_selfprot:99178885"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 71,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "mars:hindrance_stat:90714213",
+        "mars:hindrance_stat:95620129",
+        "mars:hindrance_stat:99823964",
+        "mars:hindrance_stat:95102581",
+        "mars:hindrance_stat:84352715"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 58,
+      "signal": 6,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "mars:hindrance_aff:99122004",
+        "mars:hindrance_aff:81552125",
+        "mars:hindrance_aff:82313971",
+        "mars:hindrance_aff:101833085",
+        "mars:hindrance_aff:99583019"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

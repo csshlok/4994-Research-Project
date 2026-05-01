@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,delta,780,0,0,0,780,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\delta\02_clean\reviews_delta_clean.csv
+reviews.csv,delta,780,0,0,0,780,cleaned_reviews.csv

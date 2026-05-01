@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "tp",
+  "score_summary": {
+    "review_count": 998,
+    "overall_score": 64,
+    "positive_share": 0.6112,
+    "negative_share": 0.2876,
+    "domain_scores": {
+      "physiological": 55,
+      "self_protection": 51,
+      "affiliation": 57,
+      "status_esteem": 56,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.10007436617175126,
+      "self_protection": 0.02925706332256766,
+      "affiliation": 0.13590755955020303,
+      "status_esteem": 0.12103117758175679,
+      "family_care": 0.16548523584489477
+    },
+    "strongest_domain": {
+      "key": "family_care",
+      "label": "Family Care",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 247,
+      "signal": 25,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "tp:fulfillment_fam:99922555",
+        "tp:fulfillment_fam:95209386",
+        "tp:fulfillment_fam:93594488",
+        "tp:fulfillment_fam:96774023",
+        "tp:fulfillment_fam:96202478"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 179,
+      "signal": 18,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "tp:fulfillment_aff:102483793",
+        "tp:fulfillment_aff:100813074",
+        "tp:fulfillment_aff:91923356",
+        "tp:fulfillment_aff:96142322",
+        "tp:fulfillment_aff:97716008"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 175,
+      "signal": 18,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "tp:fulfillment_stat:93358000",
+        "tp:fulfillment_stat:92489098",
+        "tp:fulfillment_stat:97820874",
+        "tp:fulfillment_stat:99821771",
+        "tp:fulfillment_stat:96740144"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 90,
+      "signal": 9,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "tp:hindrance_fam:100935286",
+        "tp:hindrance_fam:97572857",
+        "tp:hindrance_fam:96548993",
+        "tp:hindrance_fam:93398579",
+        "tp:hindrance_fam:99709314"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 89,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "tp:hindrance_phys:93642344",
+        "tp:hindrance_phys:92811671",
+        "tp:hindrance_phys:97825848",
+        "tp:hindrance_phys:92245255",
+        "tp:hindrance_phys:95286697"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 66,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "tp:hindrance_stat:95912032",
+        "tp:hindrance_stat:100962568",
+        "tp:hindrance_stat:97420558",
+        "tp:hindrance_stat:102254790",
+        "tp:hindrance_stat:95637726"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

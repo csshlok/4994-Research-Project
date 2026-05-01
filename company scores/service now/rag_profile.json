@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "service now",
+  "score_summary": {
+    "review_count": 685,
+    "overall_score": 75,
+    "positive_share": 0.7577,
+    "negative_share": 0.1883,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 51,
+      "affiliation": 58,
+      "status_esteem": 62,
+      "family_care": 59
+    },
+    "raw_domain_scores": {
+      "physiological": 0.19725488892896148,
+      "self_protection": 0.013667937546047773,
+      "affiliation": 0.1569388012390175,
+      "status_esteem": 0.24190811053308478,
+      "family_care": 0.18471527794814585
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 62
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 211,
+      "signal": 31,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "service now:fulfillment_stat:95714029",
+        "service now:fulfillment_stat:100341765",
+        "service now:fulfillment_stat:97662228",
+        "service now:fulfillment_stat:95319882",
+        "service now:fulfillment_stat:99530983"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 187,
+      "signal": 27,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "service now:fulfillment_phys:101121782",
+        "service now:fulfillment_phys:101500586",
+        "service now:fulfillment_phys:101501878",
+        "service now:fulfillment_phys:99007779",
+        "service now:fulfillment_phys:100493978"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 166,
+      "signal": 24,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "service now:fulfillment_fam:102580049",
+        "service now:fulfillment_fam:100390421",
+        "service now:fulfillment_fam:99435175",
+        "service now:fulfillment_fam:99114084",
+        "service now:fulfillment_fam:98695813"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 60,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "service now:hindrance_phys:100847757",
+        "service now:hindrance_phys:94025509",
+        "service now:hindrance_phys:97649003",
+        "service now:hindrance_phys:96045247",
+        "service now:hindrance_phys:94116321"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 60,
+      "signal": 9,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "service now:hindrance_selfprot:99415783",
+        "service now:hindrance_selfprot:100278715",
+        "service now:hindrance_selfprot:97569442",
+        "service now:hindrance_selfprot:102860217",
+        "service now:hindrance_selfprot:101977915"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 49,
+      "signal": 7,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "service now:hindrance_stat:99822262",
+        "service now:hindrance_stat:98291672",
+        "service now:hindrance_stat:101307628",
+        "service now:hindrance_stat:101151611",
+        "service now:hindrance_stat:102192307"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

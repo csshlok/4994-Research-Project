@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "capgemini",
+  "generated_at": "2026-04-30T20:22:50",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1552,
+    "prompt_token_count": 3444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3444
+      }
+    ],
+    "total_token_count": 4996
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the variety of roles and learning opportunities available, though some find advancement difficult.",
+      "evidence_ids": [
+        "capgemini:fulfillment_stat:91421508",
+        "capgemini:fulfillment_stat:79895379",
+        "capgemini:fulfillment_stat:78832995"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff report positive work-life balance and appreciate the company's employee-friendly approach.",
+      "evidence_ids": [
+        "capgemini:fulfillment_fam:94437565",
+        "capgemini:fulfillment_fam:81058731",
+        "capgemini:fulfillment_fam:90711971"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Benefits and office environments are frequently cited as positive aspects of the employee experience.",
+      "evidence_ids": [
+        "capgemini:fulfillment_phys:86908941",
+        "capgemini:fulfillment_phys:83768132",
+        "capgemini:fulfillment_phys:94778958"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Supportive leadership and collaborative team dynamics contribute to a positive sense of belonging.",
+      "evidence_ids": [
+        "capgemini:fulfillment_aff:84643194",
+        "capgemini:fulfillment_aff:99336446",
+        "capgemini:fulfillment_aff:79962357"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some employees express satisfaction with the ethical nature of the organization and general job security.",
+      "evidence_ids": [
+        "capgemini:fulfillment_selfprot:92040347",
+        "capgemini:fulfillment_selfprot:91993323",
+        "capgemini:fulfillment_selfprot:99887956"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "A subset of employees feels overlooked, citing limited career growth and micromanagement.",
+      "evidence_ids": [
+        "capgemini:hindrance_stat:103088580",
+        "capgemini:hindrance_stat:78732023",
+        "capgemini:hindrance_stat:87088253"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Concerns regarding long hours, inadequate pay, and poor insurance coverage are prevalent among some staff.",
+      "evidence_ids": [
+        "capgemini:hindrance_phys:99326772",
+        "capgemini:hindrance_phys:101561220",
+        "capgemini:hindrance_phys:96721031"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees report that compensation does not meet industry standards and that project uncertainty affects balance.",
+      "evidence_ids": [
+        "capgemini:hindrance_fam:94878634",
+        "capgemini:hindrance_fam:93235681",
+        "capgemini:hindrance_fam:96322807"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Reports of internal politics and a lack of support during difficult client engagements highlight cultural disconnects.",
+      "evidence_ids": [
+        "capgemini:hindrance_aff:93653122",
+        "capgemini:hindrance_aff:91623508",
+        "capgemini:hindrance_aff:97448446"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "High-stress environments and concerns about layoffs based on client stability create feelings of insecurity.",
+      "evidence_ids": [
+        "capgemini:hindrance_selfprot:78747740",
+        "capgemini:hindrance_selfprot:80899019",
+        "capgemini:hindrance_selfprot:96301118"
+      ]
+    }
+  ]
+}

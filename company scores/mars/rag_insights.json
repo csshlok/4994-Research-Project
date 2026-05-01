@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "mars",
+  "generated_at": "2026-04-30T20:32:44",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1620,
+    "prompt_token_count": 3482,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3482
+      }
+    ],
+    "total_token_count": 5102
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A notable divide between positive perceptions of benefits and negative experiences with management culture",
+    "The prevalence of political environments that hinder career progression",
+    "Strong evidence of burnout in specific departments despite overall flexibility",
+    "Disparities in how different roles and regions experience company support"
+  ]
+}

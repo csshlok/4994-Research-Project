@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "american express",
+  "generated_at": "2026-04-30T20:20:25",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 871,
+    "prompt_token_count": 3253,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3253
+      }
+    ],
+    "total_token_count": 4124
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with benefits and frustration regarding career growth.",
+    "The emergence of specific complaints about toxic leadership and bullying in certain international markets.",
+    "The divide between employees who value the company's stability and those who feel the organization struggles with modernizing.",
+    "The recurring mention of brand prestige as a factor that sometimes masks underlying cultural issues."
+  ]
+}

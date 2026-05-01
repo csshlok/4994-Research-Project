@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "company": "Optum",
+  "generated_at": "2026-05-01T02:53:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 659,
+    "prompt_token_count": 1444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1444
+      }
+    ],
+    "total_token_count": 2103
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees frequently highlight the value of flexible shifts and a supportive approach to work-life balance.",
+      "evidence_ids": [
+        "Optum:fulfillment_fam:103758666"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Some staff report exhaustion and dissatisfaction with compensation levels, impacting their overall experience.",
+      "evidence_ids": [
+        "Optum:hindrance_phys:103754993"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Reports of micromanagement and inconsistent workflows contribute to feelings of being overlooked and lacking career progression.",
+      "evidence_ids": [
+        "Optum:hindrance_stat:103743663"
+      ]
+    }
+  ]
+}

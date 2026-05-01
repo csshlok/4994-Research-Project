@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "keller williams",
+  "generated_at": "2026-04-30T20:31:13",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1700,
+    "prompt_token_count": 3363,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3363
+      }
+    ],
+    "total_token_count": 5063
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The stark contrast between agents who thrive in the independent, high-growth culture and those who feel unsupported or stagnant.",
+    "The significant role that individual office leadership plays in shaping the employee experience, leading to highly varied feedback.",
+    "A clear divide between the appreciation for training resources and the frustration regarding the lack of formal mentorship or career progression.",
+    "The tension between the flexibility inherent in real estate roles and the difficulty in maintaining a healthy work-life balance."
+  ]
+}

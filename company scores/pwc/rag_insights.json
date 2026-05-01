@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "company": "pwc",
+  "generated_at": "2026-04-30T20:35:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1609,
+    "prompt_token_count": 3226,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3226
+      }
+    ],
+    "total_token_count": 4835
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The stark contrast between praise for firm-wide benefits and criticism of the grueling nature of the busy season.",
+    "The recurring mention of social events and networking as a positive aspect of the intern and early-career experience.",
+    "The tension between the desire for flexible work arrangements and the reality of high-pressure client demands.",
+    "The presence of both highly supportive team cultures and pockets of reported toxicity or favoritism."
+  ]
+}

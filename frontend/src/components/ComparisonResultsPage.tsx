@@ -37,10 +37,11 @@ import {
   CompanyComparisonMetric,
   scoreClass,
 } from "@/lib/comparison";
-import { getScoredCompanyDownloadUrl } from "@/lib/backend-api";
+import { getScoredCompanyDownloadUrl, type ComparisonRagSummary } from "@/lib/backend-api";
 
 interface ComparisonResultsPageProps {
   metrics: CompanyComparisonMetric[];
+  ragSummary?: ComparisonRagSummary | null;
   onBack: () => void;
   onAddComparison: (seedCompanyId?: string) => void;
 }
@@ -94,6 +95,7 @@ function relativeHeatmapStyle(metrics: CompanyComparisonMetric[], domainKey: str
 
 export function ComparisonResultsPage({
   metrics,
+  ragSummary,
   onBack,
   onAddComparison,
 }: ComparisonResultsPageProps) {
@@ -240,17 +242,31 @@ export function ComparisonResultsPage({
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-muted-foreground">
-                <p>
-                  This is a rule-based summary generated from the cached comparison
-                  metrics. It uses precomputed score differences and cluster signals; a
-                  later RAG version will ground this section in retrieved review evidence
-                  and citations.
-                </p>
-                <p>
-                  Use the selected company card to focus the radar and detail view. The
-                  strongest and weakest domains show which needs are most consistently
-                  fulfilled or hindered for that company relative to peers.
-                </p>
+                {ragSummary?.executive_summary?.length ? (
+                  <>
+                    {ragSummary.executive_summary.map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                    {ragSummary.source === "fallback" ? (
+                      <p className="text-xs text-muted-foreground">
+                        Gemini was unavailable for this request, so this summary uses cached score gaps and company RAG profiles.
+                      </p>
+                    ) : null}
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      This comparison is generated from cached company metrics and RAG
+                      profiles. It uses precomputed score differences, cluster signals,
+                      and single-company summaries to explain the selected companies.
+                    </p>
+                    <p>
+                      Use the selected company card to focus the radar and detail view.
+                      The strongest and weakest domains show which needs are most
+                      consistently fulfilled or hindered for that company relative to peers.
+                    </p>
+                  </>
+                )}
               </CardContent>
             </Card>
             <Card>
@@ -258,14 +274,53 @@ export function ComparisonResultsPage({
                 <CardTitle>Key Takeaways</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
-                {spreadRows(metrics).map((row) => (
-                  <div key={row.domain} className="rounded-lg border border-border p-3">
-                    <p className="font-medium">{row.domain}</p>
-                    <p className="text-muted-foreground">{row.insight}</p>
+                {(ragSummary?.key_differences?.length ? ragSummary.key_differences : spreadRows(metrics).map((row) => row.insight)).map((insight) => (
+                  <div key={insight} className="rounded-lg border border-border p-3">
+                    <p className="text-muted-foreground">{insight}</p>
                   </div>
                 ))}
               </CardContent>
             </Card>
+
+            {ragSummary?.best_fit_by_need?.length ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Best Fit by Need</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  {ragSummary.best_fit_by_need.map((item) => (
+                    <div key={`${item.need}-${item.company}`} className="rounded-lg border border-border p-3">
+                      <div className="mb-1 flex items-center justify-between gap-3">
+                        <p className="font-medium">{item.need}</p>
+                        <Badge variant="secondary">{item.company}</Badge>
+                      </div>
+                      <p className="text-muted-foreground">{item.reason}</p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ) : null}
+
+            {ragSummary?.company_notes?.length ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Company Notes</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  {ragSummary.company_notes.map((item) => (
+                    <div key={item.company} className="rounded-lg border border-border p-3">
+                      <p className="mb-2 font-medium">{item.company}</p>
+                      <p className="text-muted-foreground">
+                        <span className="text-primary">Strength:</span> {item.strength}
+                      </p>
+                      <p className="mt-1 text-muted-foreground">
+                        <span className="text-destructive">Risk:</span> {item.risk}
+                      </p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ) : null}
           </div>
         ) : tab === "company" && selected && selectedStats ? (
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">

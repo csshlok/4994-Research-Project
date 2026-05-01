@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "company": "heb",
+  "generated_at": "2026-04-30T20:28:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1546,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4943
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "A clear divide exists between employees who value the benefits and those who feel overwhelmed by the physical and mental demands of the job.",
+    "Management style is a polarized topic, with some teams described as supportive while others are cited for toxicity and favoritism.",
+    "The company is often viewed as a great place to work, yet many employees express frustration with the sustainability of their roles over time."
+  ]
+}

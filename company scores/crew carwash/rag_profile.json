@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "crew carwash",
+  "score_summary": {
+    "review_count": 925,
+    "overall_score": 88,
+    "positive_share": 0.893,
+    "negative_share": 0.0724,
+    "domain_scores": {
+      "physiological": 60,
+      "self_protection": 53,
+      "affiliation": 66,
+      "status_esteem": 64,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.2087490255140906,
+      "self_protection": 0.0572431242840487,
+      "affiliation": 0.3147160182858766,
+      "status_esteem": 0.28330599542631985,
+      "family_care": 0.15734467895437212
+    },
+    "strongest_domain": {
+      "key": "affiliation",
+      "label": "Affiliation",
+      "score": 66
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 53
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 350,
+      "signal": 38,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "crew carwash:fulfillment_aff:80122916",
+        "crew carwash:fulfillment_aff:83534437",
+        "crew carwash:fulfillment_aff:53664095",
+        "crew carwash:fulfillment_aff:47515046",
+        "crew carwash:fulfillment_aff:80592315"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 316,
+      "signal": 34,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "crew carwash:fulfillment_stat:87577265",
+        "crew carwash:fulfillment_stat:97089698",
+        "crew carwash:fulfillment_stat:53875415",
+        "crew carwash:fulfillment_stat:100616580",
+        "crew carwash:fulfillment_stat:97132854"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 250,
+      "signal": 27,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "crew carwash:fulfillment_phys:28790627",
+        "crew carwash:fulfillment_phys:102028146",
+        "crew carwash:fulfillment_phys:97959558",
+        "crew carwash:fulfillment_phys:61217838",
+        "crew carwash:fulfillment_phys:27511821"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 87,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "crew carwash:hindrance_phys:74424373",
+        "crew carwash:hindrance_phys:17162076",
+        "crew carwash:hindrance_phys:63616509",
+        "crew carwash:hindrance_phys:22912047",
+        "crew carwash:hindrance_phys:17161530"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 81,
+      "signal": 9,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "crew carwash:hindrance_fam:81689945",
+        "crew carwash:hindrance_fam:92951603",
+        "crew carwash:hindrance_fam:41742044",
+        "crew carwash:hindrance_fam:21648019",
+        "crew carwash:hindrance_fam:98587128"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 59,
+      "signal": 6,
+      "terms": [
+        "isolation",
+        "disconnected",
+        "unfriendly",
+        "cliques",
+        "competition"
+      ],
+      "evidence_ids": [
+        "crew carwash:hindrance_aff:80105870",
+        "crew carwash:hindrance_aff:16906501",
+        "crew carwash:hindrance_aff:68645568",
+        "crew carwash:hindrance_aff:76743286",
+        "crew carwash:hindrance_aff:90883845"
+      ]
+    }
+  ],
+  "evidence_count": 48
+}

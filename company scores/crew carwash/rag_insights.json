@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "crew carwash",
+  "generated_at": "2026-04-30T20:23:41",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 4149,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 4149
+      }
+    ],
+    "total_token_count": 5263
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between the company's strong cultural values and the physical toll of the service-heavy environment.",
+    "The high level of accessibility of senior leadership, which is frequently cited as a positive differentiator.",
+    "The tension between the desire for a flexible work-life balance and the operational realities of a customer-facing, weather-dependent business.",
+    "The emphasis on structured training and promotion, which helps drive high employee engagement."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "intuit",
+  "generated_at": "2026-04-30T20:30:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3679,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3679
+      }
+    ],
+    "total_token_count": 5324
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Intuit maintains a generally positive workplace reputation, with employees frequently highlighting collaborative team environments and opportunities for professional growth. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "While many staff members appreciate the company's commitment to flexibility and supportive culture, some reports indicate challenges regarding internal politics, workload management, and inconsistent leadership practices. Addressing these areas of friction could further enhance the overall employee experience and long-term retention."
+  ],
+  "key_strengths": [
+    "Strong emphasis on collaborative and supportive team environments",
+    "Robust opportunities for career development and skill advancement",
+    "High value placed on flexibility and work-life balance",
+    "Access to modern tools and professional resources"
+  ],
+  "key_risks": [
+    "Reports of toxic workplace politics and favoritism",
+    "Inconsistent management styles impacting employee well-being",
+    "Concerns regarding high-pressure workloads and frequent organizational pivots",
+    "Perceived limitations in career progression for specific roles or locations"
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which reflects the positive sentiment surrounding the company's flexible work arrangements and understanding of personal life needs.",
+    "weakest": "Self-Protection, which highlights concerns regarding workplace safety, fairness, and the impact of internal politics on employee trust."
+  }
+}

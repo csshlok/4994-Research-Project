@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "company": "crew carwash",
+  "generated_at": "2026-04-30T20:23:41",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1114,
+    "prompt_token_count": 4149,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 4149
+      }
+    ],
+    "total_token_count": 5263
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Employees frequently praise the collaborative, family-oriented work environment and the strong support provided by teammates.",
+      "evidence_ids": [
+        "crew carwash:fulfillment_aff:80122916",
+        "crew carwash:fulfillment_aff:83534437",
+        "crew carwash:fulfillment_aff:53664095"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Staff members appreciate the company's commitment to professional development, clear advancement opportunities, and a culture that celebrates success.",
+      "evidence_ids": [
+        "crew carwash:fulfillment_stat:87577265",
+        "crew carwash:fulfillment_stat:97089698",
+        "crew carwash:fulfillment_stat:53875415"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Many employees view the compensation, healthcare benefits, and training programs as competitive and rewarding.",
+      "evidence_ids": [
+        "crew carwash:fulfillment_phys:28790627",
+        "crew carwash:fulfillment_phys:102028146",
+        "crew carwash:fulfillment_phys:97959558"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some staff report significant challenges with scheduling flexibility, blackout periods for time off, and the difficulty of balancing personal life with operational demands.",
+      "evidence_ids": [
+        "crew carwash:hindrance_fam:81689945",
+        "crew carwash:hindrance_fam:92951603",
+        "crew carwash:hindrance_fam:41742044"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "A subset of reviews highlights concerns regarding physical safety in extreme weather, exposure to hazardous materials, and feelings of being micromanaged.",
+      "evidence_ids": [
+        "crew carwash:hindrance_selfprot:77194425",
+        "crew carwash:hindrance_selfprot:40627539",
+        "crew carwash:hindrance_selfprot:5654735"
+      ]
+    }
+  ]
+}

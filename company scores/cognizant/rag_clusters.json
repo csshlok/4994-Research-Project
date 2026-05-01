@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "cognizant",
+  "generated_at": "2026-04-30T20:23:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1742,
+    "prompt_token_count": 3460,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3460
+      }
+    ],
+    "total_token_count": 5202
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the opportunities for professional advancement and the global exposure provided by the company's diverse client base.",
+      "evidence_ids": [
+        "cognizant:fulfillment_stat:88749346",
+        "cognizant:fulfillment_stat:96829894",
+        "cognizant:fulfillment_stat:95770275"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Staff frequently cite the comprehensive benefits package and access to continued education as key positive aspects of their employment.",
+      "evidence_ids": [
+        "cognizant:fulfillment_phys:97925489",
+        "cognizant:fulfillment_phys:90946573",
+        "cognizant:fulfillment_phys:94925295"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Some employees appreciate the stability and remote work options, though experiences with work-life balance vary significantly.",
+      "evidence_ids": [
+        "cognizant:fulfillment_fam:94955753",
+        "cognizant:fulfillment_fam:93109418",
+        "cognizant:fulfillment_fam:93910510"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "A portion of the workforce reports positive experiences with inclusive and supportive team environments.",
+      "evidence_ids": [
+        "cognizant:fulfillment_aff:90826294",
+        "cognizant:fulfillment_aff:96364208",
+        "cognizant:fulfillment_aff:95104704"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Employees note the relative stability of the company as a large IT services provider, though this is balanced by concerns about project continuity.",
+      "evidence_ids": [
+        "cognizant:fulfillment_selfprot:100352577",
+        "cognizant:fulfillment_selfprot:100018705",
+        "cognizant:fulfillment_selfprot:98589841"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Feedback indicates dissatisfaction with salary growth, perceived low pay, and the pressure of managing bench time.",
+      "evidence_ids": [
+        "cognizant:hindrance_phys:96850893",
+        "cognizant:hindrance_phys:98654421",
+        "cognizant:hindrance_phys:97751748"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration over internal politics and a perceived lack of transparency in promotion and leadership decisions.",
+      "evidence_ids": [
+        "cognizant:hindrance_stat:99551671",
+        "cognizant:hindrance_stat:88945066",
+        "cognizant:hindrance_stat:99982769"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Reports highlight difficulties in achieving work-life balance and concerns regarding the company's responsiveness to employee needs.",
+      "evidence_ids": [
+        "cognizant:hindrance_fam:90267879",
+        "cognizant:hindrance_fam:91173032",
+        "cognizant:hindrance_fam:90585012"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some reviews describe a fear-based management style and concerns regarding hiring practices and job security.",
+      "evidence_ids": [
+        "cognizant:hindrance_selfprot:95658224",
+        "cognizant:hindrance_selfprot:94656692",
+        "cognizant:hindrance_selfprot:94813547"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Employees report feelings of isolation and frustration with management's perceived lack of support for career development and personal needs.",
+      "evidence_ids": [
+        "cognizant:hindrance_aff:95981989",
+        "cognizant:hindrance_aff:89026541",
+        "cognizant:hindrance_aff:94642779"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "in n out",
+  "generated_at": "2026-04-30T20:29:38",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 960,
+    "prompt_token_count": 3423,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3423
+      }
+    ],
+    "total_token_count": 4383
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A significant divide between those who view the company as a positive starter job and those who experience it as a high-pressure, dead-end environment.",
+    "The heavy reliance on specific store management quality, which creates highly variable experiences across different locations.",
+    "A clear tension between the fast-paced, high-energy operational requirements and the personal well-being of the staff."
+  ]
+}

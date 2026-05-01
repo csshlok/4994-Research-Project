@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "intuit",
+  "generated_at": "2026-04-30T20:30:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1645,
+    "prompt_token_count": 3679,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3679
+      }
+    ],
+    "total_token_count": 5324
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with team-level collaboration and frustration with broader organizational politics.",
+    "The significant role that manager quality plays in determining whether an employee perceives the culture as supportive or toxic.",
+    "The recurring mention of rapid organizational change as both a driver of innovation and a source of operational stress."
+  ]
+}

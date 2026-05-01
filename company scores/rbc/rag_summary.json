@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "rbc",
+  "generated_at": "2026-04-30T20:35:45",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1654,
+    "prompt_token_count": 3438,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3438
+      }
+    ],
+    "total_token_count": 5092
+  },
+  "attempts": [],
+  "executive_summary": [
+    "RBC demonstrates a complex workplace environment where high-quality benefits and professional development opportunities are frequently contrasted with concerns regarding compensation and internal culture. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "While many employees appreciate the collaborative atmosphere and the prestige of working for a top-tier financial institution, others report challenges with workload, career stagnation, and inconsistent management practices. Balancing these positive structural offerings with the need for more equitable and supportive daily operations remains a primary area for organizational focus."
+  ],
+  "key_strengths": [
+    "Comprehensive benefits packages including competitive leave and wellness support",
+    "Strong reputation as a top-tier financial institution providing valuable industry experience",
+    "Opportunities for professional growth and collaborative teamwork in specific departments",
+    "Access to robust systems and resources that support career development"
+  ],
+  "key_risks": [
+    "Perceptions of inadequate compensation relative to industry standards",
+    "Reports of inconsistent management and internal political friction",
+    "Concerns regarding career advancement and lack of recognition for contributions",
+    "Instances of exclusionary behavior and disconnected workplace culture"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass basic compensation and physical work environment, represent the most frequent topic of discussion, reflecting the high importance employees place on pay and benefits.",
+    "weakest": "Self-Protection needs, relating to feelings of safety, fairness, and trust, show the lowest relative score, suggesting that some employees experience concerns regarding workplace politics or lack of support."
+  }
+}

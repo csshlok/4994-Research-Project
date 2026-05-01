@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "bloomberg",
+  "score_summary": {
+    "review_count": 785,
+    "overall_score": 74,
+    "positive_share": 0.7223,
+    "negative_share": 0.2051,
+    "domain_scores": {
+      "physiological": 64,
+      "self_protection": 50,
+      "affiliation": 56,
+      "status_esteem": 57,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.2820869144082273,
+      "self_protection": 0.0066009827827424135,
+      "affiliation": 0.11386708518781492,
+      "status_esteem": 0.13364718548347174,
+      "family_care": 0.15115364108944945
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 64
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 298,
+      "signal": 38,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "bloomberg:fulfillment_phys:82805290",
+        "bloomberg:fulfillment_phys:81104624",
+        "bloomberg:fulfillment_phys:74423367",
+        "bloomberg:fulfillment_phys:103033817",
+        "bloomberg:fulfillment_phys:99559786"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 168,
+      "signal": 21,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "bloomberg:fulfillment_fam:81191392",
+        "bloomberg:fulfillment_fam:101800082",
+        "bloomberg:fulfillment_fam:98662138",
+        "bloomberg:fulfillment_fam:97480839",
+        "bloomberg:fulfillment_fam:84796207"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 163,
+      "signal": 21,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "bloomberg:fulfillment_stat:73641572",
+        "bloomberg:fulfillment_stat:95538908",
+        "bloomberg:fulfillment_stat:78608433",
+        "bloomberg:fulfillment_stat:102063479",
+        "bloomberg:fulfillment_stat:100264784"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 83,
+      "signal": 11,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "bloomberg:hindrance_phys:80300097",
+        "bloomberg:hindrance_phys:98263824",
+        "bloomberg:hindrance_phys:80303837",
+        "bloomberg:hindrance_phys:99969073",
+        "bloomberg:hindrance_phys:78827216"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 77,
+      "signal": 10,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "bloomberg:hindrance_stat:99257820",
+        "bloomberg:hindrance_stat:99616215",
+        "bloomberg:hindrance_stat:87042811",
+        "bloomberg:hindrance_stat:76637917",
+        "bloomberg:hindrance_stat:73925899"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 60,
+      "signal": 8,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "bloomberg:hindrance_fam:95578191",
+        "bloomberg:hindrance_fam:77470198",
+        "bloomberg:hindrance_fam:85177581",
+        "bloomberg:hindrance_fam:93665366",
+        "bloomberg:hindrance_fam:99658322"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

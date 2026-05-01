@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "company": "ryan",
+  "generated_at": "2026-04-30T20:36:26",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1570,
+    "prompt_token_count": 3688,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3688
+      }
+    ],
+    "total_token_count": 5258
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The significant contrast between employees who praise the company's flexibility and those who feel the workload is unmanageable.",
+    "The recurring mention of 'unlimited' or generous PTO as a primary driver of employee satisfaction.",
+    "The presence of serious allegations regarding workplace culture, including discrimination and bullying, which contrast sharply with positive reports of team collaboration.",
+    "The tension between the company's rapid growth and the resulting 'growing pains' that impact daily operations."
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "TCS",
+  "score_summary": {
+    "review_count": 980,
+    "overall_score": 59,
+    "positive_share": 0.5388,
+    "negative_share": 0.3398,
+    "domain_scores": {
+      "physiological": 54,
+      "self_protection": 52,
+      "affiliation": 53,
+      "status_esteem": 56,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.08885140248846722,
+      "self_protection": 0.04948810950141656,
+      "affiliation": 0.06229988202411124,
+      "status_esteem": 0.1157390345878748,
+      "family_care": 0.11352206423385086
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 56
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 52
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 183,
+      "signal": 19,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "TCS:fulfillment_stat:99675221",
+        "TCS:fulfillment_stat:89279390",
+        "TCS:fulfillment_stat:90270779",
+        "TCS:fulfillment_stat:95581326",
+        "TCS:fulfillment_stat:88624131"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 172,
+      "signal": 18,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "TCS:fulfillment_fam:85080558",
+        "TCS:fulfillment_fam:92539898",
+        "TCS:fulfillment_fam:95774426",
+        "TCS:fulfillment_fam:85874126",
+        "TCS:fulfillment_fam:94338521"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 162,
+      "signal": 17,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "TCS:fulfillment_phys:94342007",
+        "TCS:fulfillment_phys:90194965",
+        "TCS:fulfillment_phys:97484658",
+        "TCS:fulfillment_phys:97287298",
+        "TCS:fulfillment_phys:96187939"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 119,
+      "signal": 12,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "TCS:hindrance_phys:87089311",
+        "TCS:hindrance_phys:85930872",
+        "TCS:hindrance_phys:94746506",
+        "TCS:hindrance_phys:88008739",
+        "TCS:hindrance_phys:93713044"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 88,
+      "signal": 9,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "TCS:hindrance_stat:96730540",
+        "TCS:hindrance_stat:85776139",
+        "TCS:hindrance_stat:89079380",
+        "TCS:hindrance_stat:97220902",
+        "TCS:hindrance_stat:95131677"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 79,
+      "signal": 8,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "TCS:hindrance_selfprot:84920388",
+        "TCS:hindrance_selfprot:90546856",
+        "TCS:hindrance_selfprot:96425654",
+        "TCS:hindrance_selfprot:92972768",
+        "TCS:hindrance_selfprot:91012942"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

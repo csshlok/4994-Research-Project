@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "McKinsey",
+  "generated_at": "2026-04-30T20:33:39",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 957,
+    "prompt_token_count": 3010,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3010
+      }
+    ],
+    "total_token_count": 3967
+  },
+  "attempts": [],
+  "executive_summary": [
+    "McKinsey employees frequently highlight the firm's prestige, career acceleration opportunities, and access to high-impact work as primary drivers of satisfaction. These insights are derived from patterns in review language and represent general signals rather than the universal experience of every individual at the firm.",
+    "Conversely, significant concerns exist regarding long working hours, intense pressure, and the impact of these demands on personal life balance. While these domains provide a structured view of common workplace themes, they should be interpreted as indicators of sentiment rather than direct proof of every employee's daily reality."
+  ],
+  "key_strengths": [
+    "High prestige and brand recognition that facilitates career growth.",
+    "Access to a vast network of talented colleagues and mentorship.",
+    "Competitive compensation and comprehensive health benefits.",
+    "Strong opportunities for rapid skill development and leadership exposure."
+  ],
+  "key_risks": [
+    "Persistent challenges with work-life balance and high-pressure environments.",
+    "Potential for burnout due to long hours and demanding project cycles.",
+    "Concerns regarding internal politics and perceived lack of transparency.",
+    "Risk of feeling isolated or undervalued in specific roles or team structures."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem reflects the high value employees place on the firm's reputation, professional advancement, and the prestige associated with their roles.",
+    "weakest": "Self-Protection highlights vulnerabilities related to high-pressure internal politics, transparency concerns, and the stress of competitive, performance-driven environments."
+  }
+}

@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,lululemon,800,0,0,0,800,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\lululemon\02_clean\reviews_lululemon_clean.csv
+reviews.csv,lululemon,800,0,0,0,800,cleaned_reviews.csv

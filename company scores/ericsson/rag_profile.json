@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "ericsson",
+  "score_summary": {
+    "review_count": 805,
+    "overall_score": 69,
+    "positive_share": 0.672,
+    "negative_share": 0.2547,
+    "domain_scores": {
+      "physiological": 64,
+      "self_protection": 51,
+      "affiliation": 55,
+      "status_esteem": 58,
+      "family_care": 59
+    },
+    "raw_domain_scores": {
+      "physiological": 0.27516601044048855,
+      "self_protection": 0.014719801462460436,
+      "affiliation": 0.09962755796795189,
+      "status_esteem": 0.15165255785717055,
+      "family_care": 0.18683640322204625
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 64
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 302,
+      "signal": 38,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "ericsson:fulfillment_phys:31738377",
+        "ericsson:fulfillment_phys:91690726",
+        "ericsson:fulfillment_phys:47614473",
+        "ericsson:fulfillment_phys:80817827",
+        "ericsson:fulfillment_phys:79793189"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 199,
+      "signal": 25,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "ericsson:fulfillment_fam:102406418",
+        "ericsson:fulfillment_fam:98224515",
+        "ericsson:fulfillment_fam:98189977",
+        "ericsson:fulfillment_fam:76270177",
+        "ericsson:fulfillment_fam:60693978"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 170,
+      "signal": 21,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "ericsson:fulfillment_stat:80250758",
+        "ericsson:fulfillment_stat:43963653",
+        "ericsson:fulfillment_stat:100942447",
+        "ericsson:fulfillment_stat:94245685",
+        "ericsson:fulfillment_stat:88678346"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 80,
+      "signal": 10,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "ericsson:hindrance_phys:28942089",
+        "ericsson:hindrance_phys:26051005",
+        "ericsson:hindrance_phys:17547262",
+        "ericsson:hindrance_phys:83689316",
+        "ericsson:hindrance_phys:76342968"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 61,
+      "signal": 8,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "ericsson:hindrance_stat:85798055",
+        "ericsson:hindrance_stat:86869098",
+        "ericsson:hindrance_stat:54470287",
+        "ericsson:hindrance_stat:24585701",
+        "ericsson:hindrance_stat:100771069"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 50,
+      "signal": 6,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "ericsson:hindrance_fam:29664336",
+        "ericsson:hindrance_fam:29305091",
+        "ericsson:hindrance_fam:91675423",
+        "ericsson:hindrance_fam:82691264",
+        "ericsson:hindrance_fam:72593731"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

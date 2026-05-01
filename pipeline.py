@@ -435,6 +435,161 @@ def copy_dir(src_dir: Path, dest_dir: Path) -> None:
     shutil.copytree(src_dir, dest_dir, dirs_exist_ok=True)
 
 
+def load_json_file(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def write_json_file(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def company_name_from_scores(company_scores_csv: Path, fallback: str) -> str:
+    if company_scores_csv.exists():
+        try:
+            with company_scores_csv.open("r", encoding="utf-8-sig", newline="") as f:
+                row = next(csv.DictReader(f), None)
+            if row:
+                for key in ("company_id", "company", "name"):
+                    value = str(row.get(key, "")).strip()
+                    if value:
+                        return value
+        except Exception:
+            pass
+    return str(fallback).strip() or "company"
+
+
+def resolve_company_cache_dir(score_root: Path, requested_name: str, scored_name: str) -> Path:
+    score_root.mkdir(parents=True, exist_ok=True)
+    names = [requested_name, scored_name, safe_slug(requested_name), safe_slug(scored_name)]
+    existing = [p for p in score_root.iterdir() if p.is_dir()]
+    for name in names:
+        if not name:
+            continue
+        for path in existing:
+            if path.name == name:
+                return path
+        for path in existing:
+            if path.name.casefold() == name.casefold():
+                return path
+        wanted_key = _company_match_key(name)
+        for path in existing:
+            if _company_match_key(path.name) == wanted_key:
+                return path
+    new_name = str(requested_name or scored_name).strip() or safe_slug(scored_name)
+    return score_root / new_name
+
+
+def best_cleaned_reviews_csv(clean_dir: Path) -> Path | None:
+    if not clean_dir.exists():
+        return None
+    candidates = [p for p in clean_dir.glob("*.csv") if p.is_file()]
+    if not candidates:
+        return None
+    preferred = [
+        p for p in candidates
+        if "summary" not in p.name.lower() and "report" not in p.name.lower()
+    ]
+    return sorted(preferred or candidates, key=lambda p: p.name.lower())[0]
+
+
+def copy_cache_file(src: Path, dst: Path) -> str | None:
+    if not src.exists():
+        return None
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if src.resolve() == dst.resolve():
+        return str(dst)
+    shutil.copy2(src, dst)
+    return str(dst)
+
+
+def publish_company_score_cache(run_dir: Path, cache_dir: Path) -> dict[str, Any]:
+    copied: dict[str, Any] = {}
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    copied["review_scores_csv"] = copy_cache_file(run_dir / "04_score" / "review_scores.csv", cache_dir / "review_scores.csv")
+    copied["company_scores_csv"] = copy_cache_file(run_dir / "04_score" / "company_scores.csv", cache_dir / "company_scores.csv")
+    per_company_src = run_dir / "04_score" / "per_company"
+    if per_company_src.exists():
+        per_company_dst = cache_dir / "per_company"
+        if per_company_dst.exists():
+            shutil.rmtree(per_company_dst)
+        shutil.copytree(per_company_src, per_company_dst)
+        copied["per_company_dir"] = str(per_company_dst)
+    cleaned = best_cleaned_reviews_csv(run_dir / "02_clean")
+    if cleaned:
+        copied["cleaned_reviews_csv"] = copy_cache_file(cleaned, cache_dir / "cleaned_reviews.csv")
+    missing = [key for key in ("review_scores_csv", "company_scores_csv") if not copied.get(key)]
+    if missing:
+        raise FileNotFoundError(f"Missing required score cache outputs: {', '.join(missing)}")
+    return copied
+
+
+def ensure_review_data_cache(
+    review_root: Path,
+    cache_company: str,
+    scraped_reviews_csv: Path,
+    allow_overwrite: bool,
+) -> dict[str, Any]:
+    target = review_root / cache_company / "reviews.csv"
+    if not scraped_reviews_csv.exists():
+        raise FileNotFoundError(f"Missing source reviews CSV for RAG: {scraped_reviews_csv}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    action = "kept_existing"
+    if allow_overwrite or not target.exists():
+        if target.exists() and target.resolve() == scraped_reviews_csv.resolve():
+            action = "already_current"
+        else:
+            shutil.copy2(scraped_reviews_csv, target)
+            action = "written"
+    return {"reviews_csv": str(target), "action": action}
+
+
+def update_company_score_manifest(score_root: Path, cache_company: str, status: str) -> dict[str, Any]:
+    manifest_path = score_root / "manifest.json"
+    manifest: dict[str, Any] = {}
+    if manifest_path.exists():
+        try:
+            manifest = load_json_file(manifest_path)
+        except Exception:
+            manifest = {}
+    companies = [str(name) for name in manifest.get("companies", [])]
+    if cache_company not in companies:
+        companies.append(cache_company)
+    companies = sorted(dict.fromkeys(companies), key=lambda name: name.lower())
+    statuses = manifest.get("statuses", {})
+    if not isinstance(statuses, dict):
+        statuses = {}
+    statuses[cache_company] = status
+    payload = {
+        "schema_version": manifest.get("schema_version", 1),
+        "generated_at": now_ts(),
+        "review_root": str(Path("review data")),
+        "score_root": str(Path("company scores")),
+        "companies": companies,
+        "statuses": statuses,
+    }
+    write_json_file(manifest_path, payload)
+    return payload
+
+
+def env_file_has_key(env_file: Path, key: str) -> bool:
+    if os.environ.get(key):
+        return True
+    if not env_file.exists():
+        return False
+    try:
+        for raw_line in env_file.read_text(encoding="utf-8-sig").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            env_key, value = line.split("=", 1)
+            if env_key.strip() == key and value.strip().strip('"').strip("'"):
+                return True
+    except Exception:
+        return False
+    return False
+
+
 def list_files_rel(root: Path, base: Path) -> List[str]:
     if not base.exists():
         return []
@@ -556,7 +711,7 @@ def write_env(meta_dir: Path, logger: PipelineLogger) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description="Run end-to-end pipeline (scrape -> clean -> extract -> score -> viz).")
+    ap = argparse.ArgumentParser(description="Run end-to-end pipeline (scrape -> clean -> extract -> score -> viz -> cache -> RAG).")
 
     ap.add_argument("--job", required=True, help="Job/company label (e.g., Amazon).")
     ap.add_argument("--url", default=None, help="Glassdoor Reviews/Overview URL.")
@@ -585,6 +740,14 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--skip-extract", action="store_true")
     ap.add_argument("--skip-score", action="store_true")
     ap.add_argument("--skip-viz", action="store_true")
+    ap.add_argument("--skip-cache", action="store_true",
+                    help="Skip publishing company score cache and downstream topic/RAG artifacts.")
+    ap.add_argument("--skip-topic-artifacts", action="store_true",
+                    help="Skip topic_summary.csv and topic_assignments.csv generation.")
+    ap.add_argument("--skip-rag", action="store_true",
+                    help="Skip RAG evidence/profile generation.")
+    ap.add_argument("--skip-gemini-rag", action="store_true",
+                    help="Skip Gemini-backed cached summary/cluster/insight generation.")
     ap.add_argument("--scrape-only", action="store_true",
                     help="Run only scrape stage, then skip clean/extract/score/viz without requiring precomputed inputs.")
     ap.add_argument("--add", action="store_true",
@@ -597,6 +760,16 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--features-dir", default=None, help="Features dir (if skipping extract).")
     ap.add_argument("--scored-out-dir", default=None, help="Scoring output dir (if skipping score).")
     ap.add_argument("--goal-dict", default=None, help="Goal dictionary path (optional).")
+    ap.add_argument("--score-cache-root", default="company scores",
+                    help="Root folder for deployable company score cache (default: company scores).")
+    ap.add_argument("--review-cache-root", default="review data",
+                    help="Root folder for review source cache used by RAG (default: review data).")
+    ap.add_argument("--rag-max-evidence", type=int, default=5,
+                    help="Representative review snippets per cluster for RAG evidence.")
+    ap.add_argument("--gemini-force", action="store_true",
+                    help="Regenerate Gemini RAG files even when cached files already exist.")
+    ap.add_argument("--gemini-env-file", default=".env.render",
+                    help="Env file checked by Gemini_RAG_generation.py for GEMINI_API_KEY.")
 
     ap.add_argument("--pages", type=int, default=3,
                     help="Number of review pages to collect (used when --end-page is not set).")
@@ -690,6 +863,7 @@ def main() -> int:
         args.skip_extract = True
         args.skip_score = True
         args.skip_viz = True
+        args.skip_cache = True
 
     if args.pages < 1:
         raise ValueError("--pages must be >= 1.")
@@ -712,6 +886,8 @@ def main() -> int:
         raise ValueError("--scored-out-dir is required when --skip-score is set.")
     if args.compression_level < 1 or args.compression_level > 9:
         raise ValueError("--compression-level must be in [1, 9].")
+    if args.rag_max_evidence < 1:
+        raise ValueError("--rag-max-evidence must be >= 1.")
 
     job_slug = safe_slug(args.job)
     run_id = args.run_id or datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -1088,6 +1264,122 @@ def main() -> int:
             record_stage("viz", "completed", start_ts, end_ts, duration, outputs, log_path)
     except Exception as e:
         if not stage_fail_or_continue("viz", e):
+            return 1
+
+    # ---------------- Cache + RAG ----------------
+    try:
+        if args.skip_cache:
+            log_path = logs_dir / "cache.log"
+            log_path.write_text("cache skipped\n", encoding="utf-8")
+            logger.progress("cache", "skipped", reason="user_skip")
+            record_stage("cache", "skipped", None, None, None, [], log_path)
+        else:
+            logger.progress("cache", "started")
+            start_ts = now_ts()
+            start_time = time.time()
+            log_path = logs_dir / "cache.log"
+            cache_details: dict[str, Any] = {}
+
+            score_root = Path(args.score_cache_root)
+            review_root = Path(args.review_cache_root)
+            scored_company = company_name_from_scores(score_dir / "company_scores.csv", args.job)
+            cache_dir = resolve_company_cache_dir(score_root, args.job, scored_company)
+            cache_company = cache_dir.name
+
+            published = publish_company_score_cache(run_dir, cache_dir)
+            cache_details["score_cache"] = {"company": cache_company, "path": str(cache_dir), "files": published}
+
+            review_cache = ensure_review_data_cache(
+                review_root=review_root,
+                cache_company=cache_company,
+                scraped_reviews_csv=scrape_dir / "reviews.csv",
+                allow_overwrite=bool(args.add),
+            )
+            cache_details["review_cache"] = review_cache
+
+            manifest = update_company_score_manifest(score_root, cache_company, "completed")
+            cache_details["manifest_companies"] = len(manifest.get("companies", []))
+
+            with log_path.open("w", encoding="utf-8") as f:
+                f.write(json.dumps({"started_at": start_ts, **cache_details}, indent=2, ensure_ascii=False) + "\n")
+
+            if not args.skip_topic_artifacts:
+                topic_cmd = [
+                    sys.executable,
+                    "generate_topic_artifacts.py",
+                    "--score-root",
+                    str(score_root),
+                    "--company",
+                    cache_company,
+                ]
+                if args.goal_dict:
+                    topic_cmd += ["--goal-dict", str(args.goal_dict)]
+                topic_log = logs_dir / "topic_artifacts.log"
+                topic_rc = run_command(topic_cmd, topic_log, repo_root)
+                cache_details["topic_artifacts"] = {"returncode": topic_rc, "log": str(topic_log)}
+                if topic_rc != 0:
+                    raise RuntimeError(f"topic artifact generation failed (rc={topic_rc})")
+
+            if not args.skip_rag:
+                rag_cmd = [
+                    sys.executable,
+                    "RAG_generation.py",
+                    "--review-root",
+                    str(review_root),
+                    "--score-root",
+                    str(score_root),
+                    "--manifest",
+                    str(score_root / "manifest.json"),
+                    "--company",
+                    cache_company,
+                    "--max-evidence",
+                    str(args.rag_max_evidence),
+                ]
+                rag_log = logs_dir / "rag_generation.log"
+                rag_rc = run_command(rag_cmd, rag_log, repo_root)
+                cache_details["rag_generation"] = {"returncode": rag_rc, "log": str(rag_log)}
+                if rag_rc != 0:
+                    raise RuntimeError(f"RAG evidence generation failed (rc={rag_rc})")
+
+            gemini_env_file = Path(args.gemini_env_file)
+            if args.skip_gemini_rag:
+                cache_details["gemini_rag"] = {"status": "skipped", "reason": "user_skip"}
+            elif not env_file_has_key(gemini_env_file, "GEMINI_API_KEY"):
+                cache_details["gemini_rag"] = {"status": "skipped", "reason": "missing_GEMINI_API_KEY"}
+                logger.log("[cache] Gemini RAG skipped because GEMINI_API_KEY was not found.")
+            else:
+                gemini_cmd = [
+                    sys.executable,
+                    "Gemini_RAG_generation.py",
+                    "--score-root",
+                    str(score_root),
+                    "--manifest",
+                    str(score_root / "manifest.json"),
+                    "--env-file",
+                    str(gemini_env_file),
+                    "--company",
+                    cache_company,
+                ]
+                if args.gemini_force:
+                    gemini_cmd.append("--force")
+                gemini_log = logs_dir / "gemini_rag_generation.log"
+                gemini_rc = run_command(gemini_cmd, gemini_log, repo_root)
+                cache_details["gemini_rag"] = {"returncode": gemini_rc, "log": str(gemini_log)}
+                if gemini_rc != 0:
+                    raise RuntimeError(f"Gemini RAG generation failed (rc={gemini_rc})")
+
+            end_ts = now_ts()
+            duration = time.time() - start_time
+            outputs = list_files_rel(cache_dir.parent, cache_dir)
+            cache_details["ended_at"] = end_ts
+            cache_details["duration_sec"] = duration
+            with log_path.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(cache_details, indent=2, ensure_ascii=False) + "\n")
+
+            logger.progress("cache", "completed", outputs=outputs, company=cache_company)
+            record_stage("cache", "completed", start_ts, end_ts, duration, outputs, log_path, extra=cache_details)
+    except Exception as e:
+        if not stage_fail_or_continue("cache", e):
             return 1
 
     # Optional intermediate cleanup (only after everything that depends on it is done)

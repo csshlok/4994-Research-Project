@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "Google",
+  "generated_at": "2026-04-30T20:28:07",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 948,
+    "prompt_token_count": 3326,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3326
+      }
+    ],
+    "total_token_count": 4274
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between the high value placed on material benefits and the frustration caused by organizational bureaucracy.",
+    "A recurring theme where employees praise the intelligence of their peers while simultaneously criticizing the political nature of the workplace.",
+    "The shift from a fast-paced, innovative culture to one that some employees describe as slow-moving or prone to stagnation."
+  ]
+}

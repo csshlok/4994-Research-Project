@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "company": "tp",
+  "generated_at": "2026-04-30T20:39:05",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1522,
+    "prompt_token_count": 3648,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3648
+      }
+    ],
+    "total_token_count": 5170
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Employees value remote work options and flexible schedules that support their personal lives.",
+      "evidence_ids": [
+        "tp:fulfillment_fam:99922555",
+        "tp:fulfillment_fam:95209386",
+        "tp:fulfillment_fam:93594488"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Positive feedback highlights a collaborative environment and a sense of community among teams.",
+      "evidence_ids": [
+        "tp:fulfillment_aff:102483793",
+        "tp:fulfillment_aff:100813074",
+        "tp:fulfillment_aff:91923356"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Staff appreciate investment in professional development and leadership that fosters growth.",
+      "evidence_ids": [
+        "tp:fulfillment_stat:93358000",
+        "tp:fulfillment_stat:92489098",
+        "tp:fulfillment_stat:97820874"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees report satisfaction with compensation packages and company-funded training.",
+      "evidence_ids": [
+        "tp:fulfillment_phys:96331656",
+        "tp:fulfillment_phys:98156383",
+        "tp:fulfillment_phys:91341593"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some employees feel respected and secure in their roles, noting fair treatment.",
+      "evidence_ids": [
+        "tp:fulfillment_selfprot:101672506",
+        "tp:fulfillment_selfprot:100512891",
+        "tp:fulfillment_selfprot:91611382"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Negative reviews cite inflexible schedules and a lack of support for family needs.",
+      "evidence_ids": [
+        "tp:hindrance_fam:100935286",
+        "tp:hindrance_fam:97572857",
+        "tp:hindrance_fam:96548993"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Feedback points to exhaustion and dissatisfaction with pay relative to industry standards.",
+      "evidence_ids": [
+        "tp:hindrance_phys:93642344",
+        "tp:hindrance_phys:92811671",
+        "tp:hindrance_phys:97825848"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration over limited advancement opportunities and perceived favoritism.",
+      "evidence_ids": [
+        "tp:hindrance_stat:95912032",
+        "tp:hindrance_stat:100962568",
+        "tp:hindrance_stat:97420558"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff report feelings of isolation and unprofessional management behavior.",
+      "evidence_ids": [
+        "tp:hindrance_aff:102539831",
+        "tp:hindrance_aff:99463786",
+        "tp:hindrance_aff:93950130"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic environments and high-stress conditions impact employee well-being.",
+      "evidence_ids": [
+        "tp:hindrance_selfprot:97302845",
+        "tp:hindrance_selfprot:93098858",
+        "tp:hindrance_selfprot:102541496"
+      ]
+    }
+  ]
+}

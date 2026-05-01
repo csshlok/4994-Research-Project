@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "cognizant",
+  "score_summary": {
+    "review_count": 990,
+    "overall_score": 60,
+    "positive_share": 0.5566,
+    "negative_share": 0.3182,
+    "domain_scores": {
+      "physiological": 56,
+      "self_protection": 51,
+      "affiliation": 54,
+      "status_esteem": 57,
+      "family_care": 55
+    },
+    "raw_domain_scores": {
+      "physiological": 0.12364653698105318,
+      "self_protection": 0.015771536663624196,
+      "affiliation": 0.0832932841010479,
+      "status_esteem": 0.14994804821775387,
+      "family_care": 0.10206006952988363
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 57
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 51
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 236,
+      "signal": 24,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "cognizant:fulfillment_stat:88749346",
+        "cognizant:fulfillment_stat:96829894",
+        "cognizant:fulfillment_stat:95770275",
+        "cognizant:fulfillment_stat:93951003",
+        "cognizant:fulfillment_stat:91173369"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 203,
+      "signal": 21,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "cognizant:fulfillment_phys:97925489",
+        "cognizant:fulfillment_phys:90946573",
+        "cognizant:fulfillment_phys:94925295",
+        "cognizant:fulfillment_phys:94760046",
+        "cognizant:fulfillment_phys:100383899"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 167,
+      "signal": 17,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "cognizant:fulfillment_fam:94955753",
+        "cognizant:fulfillment_fam:93109418",
+        "cognizant:fulfillment_fam:93910510",
+        "cognizant:fulfillment_fam:90503066",
+        "cognizant:fulfillment_fam:98135781"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 115,
+      "signal": 12,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "cognizant:hindrance_phys:96850893",
+        "cognizant:hindrance_phys:98654421",
+        "cognizant:hindrance_phys:97751748",
+        "cognizant:hindrance_phys:89280888",
+        "cognizant:hindrance_phys:99154082"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 104,
+      "signal": 11,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "cognizant:hindrance_stat:99551671",
+        "cognizant:hindrance_stat:88945066",
+        "cognizant:hindrance_stat:99982769",
+        "cognizant:hindrance_stat:97684154",
+        "cognizant:hindrance_stat:96183391"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 72,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "cognizant:hindrance_fam:90267879",
+        "cognizant:hindrance_fam:91173032",
+        "cognizant:hindrance_fam:90585012",
+        "cognizant:hindrance_fam:89565675",
+        "cognizant:hindrance_fam:92928447"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

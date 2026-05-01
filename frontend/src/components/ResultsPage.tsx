@@ -11,6 +11,7 @@ import {
   FileText,
   TrendingUp,
   TrendingDown,
+  Sparkles,
 } from "lucide-react";
 import {
   BarChart,
@@ -107,8 +108,7 @@ export function ResultsPage({ analysis, onBack, onCompare }: ResultsPageProps) {
 
   const radarData = domainScores.map((d) => ({
     domain: d.domain,
-    fulfillment: d.fulfillment,
-    hindrance: d.hindrance,
+    score: d.scorePct,
   }));
 
 const maxEvidence = Math.max(
@@ -132,6 +132,8 @@ const axisLimit = getRadarScaleMax(maxEvidence);
       : overallScore >= 50
       ? "mixed"
       : "challenging";
+  const ragSummary = analysis.rag?.summary;
+  const ragInsights = analysis.rag?.insights;
 
   return (
     <div className="min-h-screen bg-background">
@@ -201,16 +203,51 @@ const axisLimit = getRadarScaleMax(maxEvidence);
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">
-                {analysis.companyName} performs strongest in{" "}
-                <strong className="text-foreground">{strongestDomain.domain}</strong>{" "}
-                ({strongestDomain.scorePct.toFixed(1)}% normalized goal score). The weakest
-                signal appears in{" "}
-                <strong className="text-foreground">{weakestDomain.domain}</strong>{" "}
-                ({weakestDomain.scorePct.toFixed(1)}%). Across {domainScores.length} domains,
-                the company has an overall score of {overallScore}%, indicating a{" "}
-                {overallTone} employee experience profile.
-              </p>
+              {ragSummary ? (
+                <div className="space-y-4">
+                  {ragSummary.executiveSummary.map((paragraph, index) => (
+                    <p key={index} className="text-muted-foreground leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+
+                  {(ragSummary.keyStrengths.length > 0 || ragSummary.keyRisks.length > 0) && (
+                    <div className="grid gap-4 pt-2 md:grid-cols-2">
+                      {ragSummary.keyStrengths.length > 0 && (
+                        <div className="rounded-lg border border-border bg-primary/5 p-4">
+                          <h3 className="mb-3 text-sm font-medium text-foreground">Key strengths</h3>
+                          <ul className="space-y-2 text-sm text-muted-foreground">
+                            {ragSummary.keyStrengths.slice(0, 3).map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {ragSummary.keyRisks.length > 0 && (
+                        <div className="rounded-lg border border-border bg-destructive/5 p-4">
+                          <h3 className="mb-3 text-sm font-medium text-foreground">Key risks</h3>
+                          <ul className="space-y-2 text-sm text-muted-foreground">
+                            {ragSummary.keyRisks.slice(0, 3).map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-muted-foreground leading-relaxed">
+                  {analysis.companyName} performs strongest in{" "}
+                  <strong className="text-foreground">{strongestDomain.domain}</strong>{" "}
+                  ({strongestDomain.scorePct.toFixed(1)}% normalized goal score). The weakest
+                  signal appears in{" "}
+                  <strong className="text-foreground">{weakestDomain.domain}</strong>{" "}
+                  ({weakestDomain.scorePct.toFixed(1)}%). Across {domainScores.length} domains,
+                  the company has an overall score of {overallScore}%, indicating a{" "}
+                  {overallTone} employee experience profile.
+                </p>
+              )}
             </CardContent>
           </Card>
         </section>
@@ -310,7 +347,7 @@ const axisLimit = getRadarScaleMax(maxEvidence);
 
           <Card>
           <CardHeader>
-            <CardTitle>Domain Profile</CardTitle>
+            <CardTitle>Final Goal Score Profile</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[420px] w-full">
@@ -329,27 +366,20 @@ const axisLimit = getRadarScaleMax(maxEvidence);
                   />
                   <PolarRadiusAxis
                     angle={90}
-                    domain={[0, axisLimit]}
-                    tickCount={axisLimit + 1}
+                    domain={[0, 100]}
+                    tickCount={5}
                     tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
                   />
                   <Radar
-                    name="Fulfillment"
-                    dataKey="fulfillment"
+                    name="Final Score"
+                    dataKey="score"
                     stroke="hsl(var(--primary))"
                     fill="hsl(var(--primary))"
                     fillOpacity={0.3}
                   />
-                  <Radar
-                    name="Hindrance"
-                    dataKey="hindrance"
-                    stroke="hsl(var(--destructive))"
-                    fill="hsl(var(--destructive))"
-                    fillOpacity={0.2}
-                  />
                   <Legend />
                   <Tooltip
-                    formatter={(value: number) => Number(value).toFixed(2)}
+                    formatter={(value: number) => [`${Number(value).toFixed(1)}%`, "Final Score"]}
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
                       border: "1px solid hsl(var(--border))",
@@ -486,6 +516,24 @@ const axisLimit = getRadarScaleMax(maxEvidence);
               </Card>
 
               <div className="grid gap-4">
+                {ragInsights?.whatStandsOut.length ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <Sparkles className="h-4 w-4" />
+                        What stands out
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3 text-sm text-muted-foreground">
+                        {ragInsights.whatStandsOut.slice(0, 4).map((item) => (
+                          <p key={item}>{item}</p>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : null}
+
                 {activeClusters.map((cluster) => (
                   <Card key={cluster.clusterId}>
                     <CardContent className="pt-5">
@@ -508,6 +556,11 @@ const axisLimit = getRadarScaleMax(maxEvidence);
                           </span>
                         ))}
                       </div>
+                      {cluster.summary ? (
+                        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                          {cluster.summary}
+                        </p>
+                      ) : null}
                     </CardContent>
                   </Card>
                 ))}

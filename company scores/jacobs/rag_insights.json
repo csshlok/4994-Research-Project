@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "jacobs",
+  "generated_at": "2026-04-30T20:30:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1544,
+    "prompt_token_count": 3299,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3299
+      }
+    ],
+    "total_token_count": 4843
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with base pay and frustration over the lack of clear salary progression.",
+    "The divide in experiences regarding mentorship, where some employees find strong support while others feel overlooked.",
+    "The impact of organizational size on the consistency of management and culture across different teams.",
+    "The tension between valuing flexible work and experiencing burnout from high-demand project environments."
+  ]
+}

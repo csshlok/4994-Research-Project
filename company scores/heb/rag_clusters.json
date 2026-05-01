@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "company": "heb",
+  "generated_at": "2026-04-30T20:28:28",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1546,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4943
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently highlight competitive salary and strong insurance benefits as key positive aspects of their employment.",
+      "evidence_ids": [
+        "heb:fulfillment_phys:99106827",
+        "heb:fulfillment_phys:102379789",
+        "heb:fulfillment_phys:99012886"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members report a solid work-life balance and a low-stress culture that supports their personal needs.",
+      "evidence_ids": [
+        "heb:fulfillment_fam:98979540",
+        "heb:fulfillment_fam:101968377",
+        "heb:fulfillment_fam:99633344"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The workplace is often described as friendly and collaborative, with supportive teams and accommodating management.",
+      "evidence_ids": [
+        "heb:fulfillment_aff:97864533",
+        "heb:fulfillment_aff:101646933",
+        "heb:fulfillment_aff:95936996"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "While some employees appreciate growth structures and community presence, others find leadership disorganized.",
+      "evidence_ids": [
+        "heb:fulfillment_stat:99469748",
+        "heb:fulfillment_stat:98398506",
+        "heb:fulfillment_stat:97291157"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Sentiment is mixed, with some employees feeling secure while others report toxic management and unfair treatment.",
+      "evidence_ids": [
+        "heb:fulfillment_selfprot:101988921",
+        "heb:fulfillment_selfprot:97324386",
+        "heb:fulfillment_selfprot:97966040"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "A significant group of employees reports feeling overworked, underpaid, and exhausted by high performance expectations.",
+      "evidence_ids": [
+        "heb:hindrance_phys:101234951",
+        "heb:hindrance_phys:98816137",
+        "heb:hindrance_phys:100930817"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some staff feel overlooked for advancement or find that career growth opportunities are limited or unclear.",
+      "evidence_ids": [
+        "heb:hindrance_stat:102633207",
+        "heb:hindrance_stat:100312457",
+        "heb:hindrance_stat:102647742"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Reports of burnout and inflexible scheduling suggest that some employees struggle to maintain a healthy work-life balance.",
+      "evidence_ids": [
+        "heb:hindrance_fam:102420149",
+        "heb:hindrance_fam:100506758",
+        "heb:hindrance_fam:100435625"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Employees describe instances of toxic management, favoritism, and aggressive behavior that undermine a sense of safety.",
+      "evidence_ids": [
+        "heb:hindrance_selfprot:102084899",
+        "heb:hindrance_selfprot:102902438",
+        "heb:hindrance_selfprot:100901017"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some staff feel isolated or excluded, noting that social dynamics and cliques can negatively impact their experience.",
+      "evidence_ids": [
+        "heb:hindrance_aff:99573931",
+        "heb:hindrance_aff:100202152",
+        "heb:hindrance_aff:95820661"
+      ]
+    }
+  ]
+}

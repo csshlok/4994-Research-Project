@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "Google",
+  "generated_at": "2026-04-30T20:28:07",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 948,
+    "prompt_token_count": 3326,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3326
+      }
+    ],
+    "total_token_count": 4274
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Google maintains a generally positive workplace reputation, with employees frequently highlighting competitive compensation, comprehensive benefits, and a collaborative environment. These signals, derived from review language, reflect a workforce that largely values the company's resources and the opportunity to work alongside highly skilled peers.",
+    "Despite these strengths, some employees report challenges related to internal politics, bureaucratic stagnation, and pockets of toxic culture. These findings represent patterns in feedback rather than universal experiences, suggesting that the quality of the employee experience may vary significantly depending on specific teams and management structures."
+  ],
+  "key_strengths": [
+    "Highly competitive salary and stock compensation packages.",
+    "Extensive employee perks, including high-quality food, healthcare, and office amenities.",
+    "Opportunities to work on high-impact, innovative projects with talented colleagues.",
+    "Generally flexible work environments that support a healthy work-life balance."
+  ],
+  "key_risks": [
+    "Reports of internal political friction and favoritism impacting career progression.",
+    "Concerns regarding toxic team dynamics, bullying, or exclusionary behavior.",
+    "Perceived stagnation and slow decision-making processes in certain departments.",
+    "Variability in management quality leading to feelings of being overlooked or undervalued."
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain scores highest, driven by strong employee satisfaction with pay, benefits, and the physical work environment.",
+    "weakest": "The Self-Protection domain scores lowest, reflecting employee concerns regarding workplace politics, fairness, and the presence of toxic team cultures."
+  }
+}

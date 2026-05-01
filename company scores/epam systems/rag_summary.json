@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "epam systems",
+  "generated_at": "2026-04-30T20:25:29",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1707,
+    "prompt_token_count": 3712,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3712
+      }
+    ],
+    "total_token_count": 5419
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "EPAM Systems maintains a generally positive reputation among its workforce, with employees frequently citing strong opportunities for professional development and technical learning. These insights are derived from patterns in review language and serve as indicators of organizational sentiment rather than direct proof of every individual's experience.",
+    "While many staff members value the company's collaborative culture and engineering standards, there are notable inconsistencies regarding compensation and work-life balance. Reports of project-dependent stress and concerns over salary competitiveness suggest that employee satisfaction is significantly influenced by specific team assignments and regional market conditions."
+  ],
+  "key_strengths": [
+    "Extensive access to internal training, certifications, and mentorship programs.",
+    "Strong engineering-focused culture that encourages technical excellence.",
+    "Supportive and collaborative team environments in many project settings.",
+    "Opportunities for international exposure and work on high-profile client projects."
+  ],
+  "key_risks": [
+    "Inconsistent work-life balance that varies heavily based on project demands.",
+    "Concerns regarding salary competitiveness and the transparency of compensation growth.",
+    "Potential for isolated or toxic management experiences in certain project teams.",
+    "Bureaucratic processes that can hinder internal mobility or career progression."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, reflecting a strong emphasis on professional growth, recognition, and career advancement opportunities.",
+    "weakest": "Self-Protection, indicating that some employees feel concerns regarding job security, fairness, and the presence of toxic leadership."
+  }
+}

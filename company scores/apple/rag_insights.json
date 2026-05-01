@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "apple",
+  "generated_at": "2026-04-30T20:20:40",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1647,
+    "prompt_token_count": 3464,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3464
+      }
+    ],
+    "total_token_count": 5111
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with initial benefits and frustration with stagnant career growth.",
+    "The recurring mention of a high-pressure environment that often compromises personal time.",
+    "The divergence in experience between teams, where some report strong collaboration while others cite isolation or toxicity.",
+    "The impact of internal management practices on employee perception of fairness and job security."
+  ]
+}

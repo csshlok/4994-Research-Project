@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "HPE",
+  "generated_at": "2026-04-30T20:29:24",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1527,
+    "prompt_token_count": 3397,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3397
+      }
+    ],
+    "total_token_count": 4924
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with benefits and recurring mentions of low salary growth.",
+    "The divide between employees who value the stable, collaborative culture and those who feel isolated by internal politics.",
+    "The frequent mention of work-life balance as both a primary benefit and a point of inconsistency."
+  ]
+}

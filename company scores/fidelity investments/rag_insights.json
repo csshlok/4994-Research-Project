@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "fidelity investments",
+  "generated_at": "2026-04-30T20:26:42",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1678,
+    "prompt_token_count": 3403,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3403
+      }
+    ],
+    "total_token_count": 5081
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with benefits and frustration regarding base salary levels.",
+    "The presence of a 'good ol' boys' culture and favoritism in specific operational areas.",
+    "The divide between employees who value the stability of the firm and those who feel their career growth is capped.",
+    "The recurring mention of HR being perceived as ineffective or protective of leadership rather than employees."
+  ]
+}

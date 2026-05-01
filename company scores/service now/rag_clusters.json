@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "service now",
+  "generated_at": "2026-04-30T20:37:17",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 930,
+    "prompt_token_count": 3803,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3803
+      }
+    ],
+    "total_token_count": 4733
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the company's innovative platform and the opportunity to work on high-impact projects with talented colleagues.",
+      "evidence_ids": [
+        "service now:fulfillment_stat:95714029",
+        "service now:fulfillment_stat:100341765",
+        "service now:fulfillment_stat:97662228"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Competitive salaries, stock options, and comprehensive benefits are frequently highlighted as key advantages of working at the company.",
+      "evidence_ids": [
+        "service now:fulfillment_phys:101121782",
+        "service now:fulfillment_phys:101500586",
+        "service now:fulfillment_phys:101501878"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees report significant issues with toxic leadership, bullying, and a lack of accountability, which undermines the company's stated values.",
+      "evidence_ids": [
+        "service now:hindrance_selfprot:99415783",
+        "service now:hindrance_selfprot:100278715",
+        "service now:hindrance_selfprot:97569442"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Concerns exist regarding limited promotion opportunities and the perception that leadership absorbs credit for the work of others.",
+      "evidence_ids": [
+        "service now:hindrance_stat:99822262",
+        "service now:hindrance_stat:98291672",
+        "service now:hindrance_stat:101307628"
+      ]
+    }
+  ]
+}

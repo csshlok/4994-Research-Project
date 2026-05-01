@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "ge",
+  "score_summary": {
+    "review_count": 993,
+    "overall_score": 68,
+    "positive_share": 0.6536,
+    "negative_share": 0.2528,
+    "domain_scores": {
+      "physiological": 59,
+      "self_protection": 50,
+      "affiliation": 54,
+      "status_esteem": 57,
+      "family_care": 57
+    },
+    "raw_domain_scores": {
+      "physiological": 0.17124716614358287,
+      "self_protection": 0.0009635171051265929,
+      "affiliation": 0.07245225030670238,
+      "status_esteem": 0.13152607036804975,
+      "family_care": 0.1348094185593853
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 59
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 250,
+      "signal": 25,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "ge:fulfillment_phys:79590971",
+        "ge:fulfillment_phys:68413270",
+        "ge:fulfillment_phys:82382490",
+        "ge:fulfillment_phys:94267859",
+        "ge:fulfillment_phys:77153855"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 183,
+      "signal": 18,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "ge:fulfillment_fam:81787519",
+        "ge:fulfillment_fam:79983597",
+        "ge:fulfillment_fam:79560697",
+        "ge:fulfillment_fam:93988095",
+        "ge:fulfillment_fam:78432342"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 181,
+      "signal": 18,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "ge:fulfillment_stat:89606354",
+        "ge:fulfillment_stat:76144178",
+        "ge:fulfillment_stat:95404692",
+        "ge:fulfillment_stat:81259932",
+        "ge:fulfillment_stat:97998534"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 92,
+      "signal": 9,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "ge:hindrance_phys:103015793",
+        "ge:hindrance_phys:91000643",
+        "ge:hindrance_phys:80667327",
+        "ge:hindrance_phys:71830682",
+        "ge:hindrance_phys:100955322"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 55,
+      "signal": 6,
+      "terms": [
+        "unrecognized",
+        "overlooked",
+        "ignored",
+        "underappreciated",
+        "favoritism"
+      ],
+      "evidence_ids": [
+        "ge:hindrance_stat:75002932",
+        "ge:hindrance_stat:86984196",
+        "ge:hindrance_stat:82320207",
+        "ge:hindrance_stat:85694390",
+        "ge:hindrance_stat:88691506"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 53,
+      "signal": 5,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "ge:hindrance_fam:100062701",
+        "ge:hindrance_fam:67913193",
+        "ge:hindrance_fam:89319851",
+        "ge:hindrance_fam:87379103",
+        "ge:hindrance_fam:78466231"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

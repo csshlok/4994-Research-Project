@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "houston methodist",
+  "generated_at": "2026-04-30T20:28:45",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1740,
+    "prompt_token_count": 3630,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3630
+      }
+    ],
+    "total_token_count": 5370
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high praise for wellness resources and frequent complaints about burnout.",
+    "The disconnect between stated organizational values and the lived experience of some staff regarding workplace conduct.",
+    "The significant impact of staffing levels on both team collaboration and individual stress.",
+    "The variation in employee sentiment based on specific departments and management styles."
+  ]
+}

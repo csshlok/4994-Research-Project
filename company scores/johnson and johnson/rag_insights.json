@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "johnson and johnson",
+  "generated_at": "2026-04-30T20:30:46",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1760,
+    "prompt_token_count": 3400,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3400
+      }
+    ],
+    "total_token_count": 5160
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The contrast between high satisfaction with benefits and frustration over career stagnation.",
+    "The prevalence of 'big company, small feel' sentiment alongside complaints about bureaucratic complexity.",
+    "The disconnect between teams that experience strong collaboration and those reporting isolated or competitive environments.",
+    "The recurring mention of leadership transparency as a critical factor for employee morale."
+  ]
+}

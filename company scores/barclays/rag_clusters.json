@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "company": "barclays",
+  "generated_at": "2026-04-30T20:22:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1602,
+    "prompt_token_count": 3130,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3130
+      }
+    ],
+    "total_token_count": 4732
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently express satisfaction with their financial compensation, benefits, and the availability of corporate perks.",
+      "evidence_ids": [
+        "barclays:fulfillment_phys:94686002",
+        "barclays:fulfillment_phys:88314111",
+        "barclays:fulfillment_phys:72762259"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "This area highlights the importance of work-life balance, with many staff members appreciating the collegiate and flexible environment.",
+      "evidence_ids": [
+        "barclays:fulfillment_fam:101154668",
+        "barclays:fulfillment_fam:90690320",
+        "barclays:fulfillment_fam:89332336"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value opportunities for ownership and career advancement, though these experiences are not universal across all teams.",
+      "evidence_ids": [
+        "barclays:fulfillment_stat:96009967",
+        "barclays:fulfillment_stat:102064406",
+        "barclays:fulfillment_stat:89238748"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Supportive team environments and community engagement programs contribute to a sense of belonging for many employees.",
+      "evidence_ids": [
+        "barclays:fulfillment_aff:95573458",
+        "barclays:fulfillment_aff:98152259",
+        "barclays:fulfillment_aff:72995257"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "When the culture is perceived as inclusive and well-managed, employees report feeling secure and valued in their roles.",
+      "evidence_ids": [
+        "barclays:fulfillment_selfprot:82730973",
+        "barclays:fulfillment_selfprot:98748122",
+        "barclays:fulfillment_selfprot:89503672"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "A subset of the workforce reports exhaustion due to long hours and high-pressure demands typical of banking roles.",
+      "evidence_ids": [
+        "barclays:hindrance_phys:97924805",
+        "barclays:hindrance_phys:90013200",
+        "barclays:hindrance_phys:80600231"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Inflexible schedules and demanding workloads create significant friction for employees attempting to balance professional and personal life.",
+      "evidence_ids": [
+        "barclays:hindrance_fam:82924274",
+        "barclays:hindrance_fam:87721376",
+        "barclays:hindrance_fam:76231046"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic environments, internal politics, and favoritism negatively impact the sense of safety and trust among staff.",
+      "evidence_ids": [
+        "barclays:hindrance_selfprot:79094687",
+        "barclays:hindrance_selfprot:76014787",
+        "barclays:hindrance_selfprot:99395655"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Lack of clear career progression and poor management communication are cited as primary drivers of frustration.",
+      "evidence_ids": [
+        "barclays:hindrance_stat:92080132",
+        "barclays:hindrance_stat:99703229",
+        "barclays:hindrance_stat:69294657"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Some employees feel isolated or disconnected from the broader organization due to uneven workload distribution and internal silos.",
+      "evidence_ids": [
+        "barclays:hindrance_aff:80573074",
+        "barclays:hindrance_aff:79291319",
+        "barclays:hindrance_aff:87031389"
+      ]
+    }
+  ]
+}

@@ -43,6 +43,7 @@ export const COMPANY_OPTIONS: CompanyOption[] = [
   { label: "Nike", value: "nike" },
   { label: "Nokia", value: "nokia" },
   { label: "NVIDIA", value: "nvidia" },
+  { label: "Optum", value: "Optum" },
   { label: "PricewaterhouseCoopers (PwC)", value: "pwc" },
   { label: "Royal Bank of Canada (RBC)", value: "rbc" },
   { label: "Ryan", value: "ryan" },

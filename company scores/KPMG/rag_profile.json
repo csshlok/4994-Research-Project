@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "KPMG",
+  "score_summary": {
+    "review_count": 980,
+    "overall_score": 67,
+    "positive_share": 0.6398,
+    "negative_share": 0.249,
+    "domain_scores": {
+      "physiological": 54,
+      "self_protection": 50,
+      "affiliation": 54,
+      "status_esteem": 58,
+      "family_care": 56
+    },
+    "raw_domain_scores": {
+      "physiological": 0.07805311845801552,
+      "self_protection": -0.0031469926439218667,
+      "affiliation": 0.08500223176932682,
+      "status_esteem": 0.16457510524172034,
+      "family_care": 0.1146245954639613
+    },
+    "strongest_domain": {
+      "key": "status_esteem",
+      "label": "Status & Esteem",
+      "score": 58
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 227,
+      "signal": 23,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "KPMG:fulfillment_fam:97950959",
+        "KPMG:fulfillment_fam:97701138",
+        "KPMG:fulfillment_fam:97301233",
+        "KPMG:fulfillment_fam:95339823",
+        "KPMG:fulfillment_fam:94683755"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "domain": "Status & Esteem",
+      "goal": "stat",
+      "review_count": 211,
+      "signal": 22,
+      "terms": [
+        "promotion",
+        "recognition",
+        "valued",
+        "appreciated",
+        "advancement"
+      ],
+      "evidence_ids": [
+        "KPMG:fulfillment_stat:91201701",
+        "KPMG:fulfillment_stat:90758798",
+        "KPMG:fulfillment_stat:94149121",
+        "KPMG:fulfillment_stat:98709406",
+        "KPMG:fulfillment_stat:92314810"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 193,
+      "signal": 20,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "KPMG:fulfillment_phys:98279817",
+        "KPMG:fulfillment_phys:90510207",
+        "KPMG:fulfillment_phys:100293707",
+        "KPMG:fulfillment_phys:100078448",
+        "KPMG:fulfillment_phys:100442217"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 210,
+      "signal": 21,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "KPMG:hindrance_phys:90742644",
+        "KPMG:hindrance_phys:95530236",
+        "KPMG:hindrance_phys:89438353",
+        "KPMG:hindrance_phys:93036226",
+        "KPMG:hindrance_phys:89319482"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 191,
+      "signal": 19,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "KPMG:hindrance_fam:93532037",
+        "KPMG:hindrance_fam:92189652",
+        "KPMG:hindrance_fam:93989324",
+        "KPMG:hindrance_fam:91803613",
+        "KPMG:hindrance_fam:91416117"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 53,
+      "signal": 5,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "KPMG:hindrance_selfprot:90706428",
+        "KPMG:hindrance_selfprot:89389398",
+        "KPMG:hindrance_selfprot:100730712",
+        "KPMG:hindrance_selfprot:96671912",
+        "KPMG:hindrance_selfprot:96151400"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

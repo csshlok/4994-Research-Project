@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "company": "Bain Consulting Group",
+  "generated_at": "2026-04-30T20:21:33",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1087,
+    "prompt_token_count": 3767,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3767
+      }
+    ],
+    "total_token_count": 4854
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees consistently praise the firm's top-tier compensation, bonuses, and comprehensive health benefits.",
+      "evidence_ids": [
+        "Bain Consulting Group:fulfillment_phys:84112931",
+        "Bain Consulting Group:fulfillment_phys:92170649",
+        "Bain Consulting Group:fulfillment_phys:90674040"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "The firm is viewed as an elite environment for professional development, offering challenging projects and mentorship.",
+      "evidence_ids": [
+        "Bain Consulting Group:fulfillment_stat:91612709",
+        "Bain Consulting Group:fulfillment_stat:100559025",
+        "Bain Consulting Group:fulfillment_stat:82245515"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Staff value the collaborative, mission-driven culture and the opportunity to work with diverse, motivated peers.",
+      "evidence_ids": [
+        "Bain Consulting Group:fulfillment_aff:100206149",
+        "Bain Consulting Group:fulfillment_aff:87544586",
+        "Bain Consulting Group:fulfillment_aff:99511432"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "The high-paced nature of the work often leads to exhaustion and concerns regarding sustainable work-life balance.",
+      "evidence_ids": [
+        "Bain Consulting Group:hindrance_phys:95222087",
+        "Bain Consulting Group:hindrance_phys:92682725",
+        "Bain Consulting Group:hindrance_phys:84832149"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "Some employees report that the firm's culture can be inflexible, creating tension between professional expectations and personal life.",
+      "evidence_ids": [
+        "Bain Consulting Group:hindrance_fam:84562837",
+        "Bain Consulting Group:hindrance_fam:100359676",
+        "Bain Consulting Group:hindrance_fam:92387313"
+      ]
+    }
+  ]
+}

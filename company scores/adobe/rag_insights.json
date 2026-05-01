@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "company": "adobe",
+  "generated_at": "2026-04-30T20:20:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1666,
+    "prompt_token_count": 3598,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3598
+      }
+    ],
+    "total_token_count": 5264
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "what_stands_out": [
+    "The stark contrast between high satisfaction with material benefits and frustration regarding career growth.",
+    "The presence of recurring concerns about toxic leadership and favoritism despite a generally friendly culture.",
+    "The disconnect between upper management's stated values and the lived experience of some employees regarding internal processes.",
+    "The high value placed on flexibility and leave policies as primary drivers of employee retention."
+  ]
+}

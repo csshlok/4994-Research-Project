@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "company": "mastercard",
+  "generated_at": "2026-04-30T20:33:22",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1700,
+    "prompt_token_count": 3572,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3572
+      }
+    ],
+    "total_token_count": 5272
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently praise the company's compensation, retirement contributions, and benefits, though some note that PTO policies could be more flexible.",
+      "evidence_ids": [
+        "mastercard:fulfillment_phys:50486390",
+        "mastercard:fulfillment_phys:79405953",
+        "mastercard:fulfillment_phys:74615170"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "There is a strong consensus that the company provides a supportive environment for maintaining a healthy work-life balance.",
+      "evidence_ids": [
+        "mastercard:fulfillment_fam:86744751",
+        "mastercard:fulfillment_fam:63131695",
+        "mastercard:fulfillment_fam:102810197"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Many employees value the collaborative opportunities and learning resources, though some feel recognition and growth are inconsistent.",
+      "evidence_ids": [
+        "mastercard:fulfillment_stat:99537238",
+        "mastercard:fulfillment_stat:103134179",
+        "mastercard:fulfillment_stat:53722780"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "The company is recognized for fostering a collaborative and innovative atmosphere, though some employees report feeling disconnected or excluded.",
+      "evidence_ids": [
+        "mastercard:fulfillment_aff:102672422",
+        "mastercard:fulfillment_aff:101220670",
+        "mastercard:fulfillment_aff:96992602"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some staff feel supported by ethical management and inclusive practices, while others note that advancing requires navigating office politics.",
+      "evidence_ids": [
+        "mastercard:fulfillment_selfprot:100485593",
+        "mastercard:fulfillment_selfprot:77762553",
+        "mastercard:fulfillment_selfprot:75428685"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "While pay is generally viewed as good, some employees report high stress levels and concerns about the fairness of promotion processes.",
+      "evidence_ids": [
+        "mastercard:hindrance_phys:90955821",
+        "mastercard:hindrance_phys:97115193",
+        "mastercard:hindrance_phys:90265025"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "A subset of reviews highlights significant concerns regarding favoritism, lack of transparency, and toxic interpersonal dynamics.",
+      "evidence_ids": [
+        "mastercard:hindrance_selfprot:94189697",
+        "mastercard:hindrance_selfprot:86478116",
+        "mastercard:hindrance_selfprot:84249889"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some employees express frustration with limited development plans and a lack of clear guidance on how to achieve promotions.",
+      "evidence_ids": [
+        "mastercard:hindrance_stat:48982174",
+        "mastercard:hindrance_stat:59343059",
+        "mastercard:hindrance_stat:69128054"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "While many enjoy the balance, some employees note that compensation levels are sometimes secondary to the benefits provided.",
+      "evidence_ids": [
+        "mastercard:hindrance_fam:81391889",
+        "mastercard:hindrance_fam:67378762",
+        "mastercard:hindrance_fam:95692697"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "Feedback in this area suggests that while many have positive experiences, others feel that compensation or team dynamics can lead to feelings of isolation.",
+      "evidence_ids": [
+        "mastercard:hindrance_aff:52661901",
+        "mastercard:hindrance_aff:85900021",
+        "mastercard:hindrance_aff:98151075"
+      ]
+    }
+  ]
+}

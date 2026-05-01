@@ -9,13 +9,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# ----------------------------
-# Paths (edit if needed)
-# ----------------------------
-DEFAULT_COMPANY_CSV = r"C:/Users/csshl\Desktop/4994-Scrapper/out/company_scores.csv"
-DEFAULT_REVIEW_CSV  = r"C:/Users/csshl\Desktop/4994-Scrapper/out/review_scores.csv"
-DEFAULT_PER_COMPANY_DIR = r"C:/Users/csshl\Desktop/4994-Scrapper/out/per_company"
-DEFAULT_OUT_DIR = r"C:/Users/csshl\Desktop/4994-Scrapper/out/figures"
+DEFAULT_COMPANY_CSV = "out/company_scores.csv"
+DEFAULT_REVIEW_CSV = "out/review_scores.csv"
+DEFAULT_PER_COMPANY_DIR = "out/per_company"
+DEFAULT_OUT_DIR = "out/figures"
 
 
 # ----------------------------

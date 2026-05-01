@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "company": "siemens",
+  "generated_at": "2026-04-30T20:37:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3193,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3193
+      }
+    ],
+    "total_token_count": 4775
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A notable contrast exists between employees who value the stability of a large organization and those who feel stifled by its size and bureaucracy.",
+    "While many praise the work-life balance, a subset of employees reports significant burnout due to understaffing and high-pressure deadlines.",
+    "The company is frequently cited as an excellent starting point for careers, yet long-term employees often struggle to find clear upward mobility."
+  ]
+}

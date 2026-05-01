@@ -1,2 +1,2 @@
 file,slug_from_file,original_rows,dropped_dupes,dropped_empty_text,dropped_too_short,final_rows,output_file
-reviews.csv,crew_carwash,925,0,0,0,925,C:\Users\csshl\Desktop\4994-Scrapper\runs\company_score_precompute\crew_carwash\02_clean\reviews_crew_carwash_clean.csv
+reviews.csv,crew_carwash,925,0,0,0,925,cleaned_reviews.csv

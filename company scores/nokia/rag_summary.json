@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "nokia",
+  "generated_at": "2026-04-30T20:34:42",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1589,
+    "prompt_token_count": 3197,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3197
+      }
+    ],
+    "total_token_count": 4786
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Nokia maintains a workplace environment characterized by strong foundational support, particularly regarding flexible work arrangements and a collaborative team culture. These domains represent signals derived from employee review language and should be interpreted as general trends rather than universal experiences across the entire workforce.",
+    "Despite these strengths, employees frequently report significant challenges related to career progression and long-term job security. While the company is often praised for its work-life balance, concerns regarding stagnant growth and the impact of organizational restructuring remain prominent themes in the feedback."
+  ],
+  "key_strengths": [
+    "Flexible work arrangements and hybrid options",
+    "Collaborative and supportive team environments",
+    "Competitive benefits and vacation packages",
+    "Positive cultural emphasis on innovation"
+  ],
+  "key_risks": [
+    "Limited opportunities for career advancement and professional growth",
+    "Frequent organizational restructuring and layoffs",
+    "Perceived lack of long-term job security",
+    "Compensation levels that may lag behind industry standards"
+  ],
+  "domain_explanations": {
+    "strongest": "The Physiological domain reflects the highest positive sentiment, driven by employee appreciation for core benefits, vacation time, and flexible scheduling.",
+    "weakest": "The Self-Protection domain is the lowest scoring area, indicating that concerns regarding job stability, management support, and the impact of layoffs weigh heavily on employee sentiment."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "bain company",
+  "generated_at": "2026-04-30T20:21:18",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1225,
+    "prompt_token_count": 3308,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3308
+      }
+    ],
+    "total_token_count": 4533
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "The stark contrast between the firm's excellent reputation for career development and the frequent reports of unsustainable work demands.",
+    "A clear divide in employee sentiment where some praise the supportive culture while others report feeling isolated or subjected to competitive, unfriendly dynamics.",
+    "The recurring mention of long hours as a standard expectation, which significantly impacts the perceived quality of life for staff.",
+    "The importance of team placement, as growth and support experiences appear to vary significantly depending on the specific practice or office."
+  ]
+}

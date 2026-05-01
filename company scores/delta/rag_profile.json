@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "company": "delta",
+  "score_summary": {
+    "review_count": 780,
+    "overall_score": 72,
+    "positive_share": 0.7128,
+    "negative_share": 0.2115,
+    "domain_scores": {
+      "physiological": 67,
+      "self_protection": 50,
+      "affiliation": 55,
+      "status_esteem": 54,
+      "family_care": 58
+    },
+    "raw_domain_scores": {
+      "physiological": 0.3450711348214083,
+      "self_protection": 0.0038197034424887217,
+      "affiliation": 0.09015642880902401,
+      "status_esteem": 0.0794889275774344,
+      "family_care": 0.15071842779779387
+    },
+    "strongest_domain": {
+      "key": "physiological",
+      "label": "Physiological",
+      "score": 67
+    },
+    "weakest_domain": {
+      "key": "self_protection",
+      "label": "Self-Protection",
+      "score": 50
+    }
+  },
+  "top_fulfillment_clusters": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 380,
+      "signal": 49,
+      "terms": [
+        "good pay",
+        "fair compensation",
+        "salary increase",
+        "bonus",
+        "benefits"
+      ],
+      "evidence_ids": [
+        "delta:fulfillment_phys:95945536",
+        "delta:fulfillment_phys:87994656",
+        "delta:fulfillment_phys:102372487",
+        "delta:fulfillment_phys:99416968",
+        "delta:fulfillment_phys:96984676"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 166,
+      "signal": 21,
+      "terms": [
+        "respect relationships",
+        "work life balance",
+        "work life",
+        "life balance",
+        "understanding spouse"
+      ],
+      "evidence_ids": [
+        "delta:fulfillment_fam:94990977",
+        "delta:fulfillment_fam:92854474",
+        "delta:fulfillment_fam:97544494",
+        "delta:fulfillment_fam:88895882",
+        "delta:fulfillment_fam:86013193"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "domain": "Affiliation",
+      "goal": "aff",
+      "review_count": 88,
+      "signal": 11,
+      "terms": [
+        "teamwork",
+        "work environment",
+        "team environment",
+        "collaboration",
+        "collaborative environment"
+      ],
+      "evidence_ids": [
+        "delta:fulfillment_aff:94796296",
+        "delta:fulfillment_aff:97959998",
+        "delta:fulfillment_aff:89376454",
+        "delta:fulfillment_aff:101086600",
+        "delta:fulfillment_aff:100700218"
+      ]
+    }
+  ],
+  "top_hindrance_clusters": [
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "domain": "Physiological",
+      "goal": "phys",
+      "review_count": 111,
+      "signal": 14,
+      "terms": [
+        "low pay",
+        "low salary",
+        "underpaid",
+        "overworked",
+        "exhaustion"
+      ],
+      "evidence_ids": [
+        "delta:hindrance_phys:99435864",
+        "delta:hindrance_phys:96598217",
+        "delta:hindrance_phys:91109198",
+        "delta:hindrance_phys:89990154",
+        "delta:hindrance_phys:88355609"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "domain": "Family Care",
+      "goal": "fam",
+      "review_count": 55,
+      "signal": 7,
+      "terms": [
+        "no parental leave",
+        "unsupportive of parents",
+        "inflexible schedule",
+        "no childcare",
+        "guilt for family time"
+      ],
+      "evidence_ids": [
+        "delta:hindrance_fam:95848063",
+        "delta:hindrance_fam:101732886",
+        "delta:hindrance_fam:89617919",
+        "delta:hindrance_fam:89354894",
+        "delta:hindrance_fam:87078410"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "domain": "Self-Protection",
+      "goal": "selfprot",
+      "review_count": 38,
+      "signal": 5,
+      "terms": [
+        "toxic",
+        "unsafe",
+        "threat",
+        "fear",
+        "harassment"
+      ],
+      "evidence_ids": [
+        "delta:hindrance_selfprot:92174122",
+        "delta:hindrance_selfprot:102779731",
+        "delta:hindrance_selfprot:101397128",
+        "delta:hindrance_selfprot:100199153",
+        "delta:hindrance_selfprot:99851028"
+      ]
+    }
+  ],
+  "evidence_count": 50
+}

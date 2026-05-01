@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "service now",
+  "generated_at": "2026-04-30T20:37:17",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 930,
+    "prompt_token_count": 3803,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3803
+      }
+    ],
+    "total_token_count": 4733
+  },
+  "attempts": [],
+  "executive_summary": [
+    "ServiceNow maintains a generally positive workplace reputation, characterized by strong market positioning and a collaborative culture that many employees find fulfilling. These insights are derived from patterns in employee review language and serve as broad signals rather than direct proof of every individual's experience.",
+    "While many staff members report satisfaction with compensation and team dynamics, there are notable pockets of concern regarding leadership accountability and cultural consistency. Addressing these internal friction points is essential to maintaining the company's high-growth momentum and employee retention."
+  ],
+  "key_strengths": [
+    "Competitive compensation and comprehensive benefits packages.",
+    "A collaborative and inclusive environment that encourages cross-functional teamwork.",
+    "Strong market presence and innovative product strategy.",
+    "Supportive leadership and well-being resources for many employees."
+  ],
+  "key_risks": [
+    "Reports of toxic management behaviors and bullying in certain teams.",
+    "Perceptions of favoritism and lack of meritocracy in career advancement.",
+    "Bureaucratic layers and office politics hindering operational efficiency.",
+    "Inconsistent enforcement of ethics and company values."
+  ],
+  "domain_explanations": {
+    "strongest": "Status & Esteem, reflecting a high value placed on professional recognition and the company's market-leading reputation.",
+    "weakest": "Self-Protection, indicating that concerns regarding workplace safety, fairness, and trust are the most significant areas for improvement."
+  }
+}

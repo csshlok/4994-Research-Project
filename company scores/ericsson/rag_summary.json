@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "ericsson",
+  "generated_at": "2026-04-30T20:25:48",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 933,
+    "prompt_token_count": 3635,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3635
+      }
+    ],
+    "total_token_count": 4568
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Ericsson maintains a generally positive workplace sentiment, with employees frequently highlighting the benefits of a flexible work-life balance and a supportive, collaborative team environment. These insights are derived from patterns in employee review language and serve as indicators of the broader organizational culture rather than direct proof of every individual experience.",
+    "Despite these strengths, the organization faces notable challenges regarding career progression and perceived fairness in leadership advancement. While many staff appreciate the company's stability and resources, concerns regarding stagnant growth opportunities and inconsistent management practices suggest areas where the employee experience could be improved."
+  ],
+  "key_strengths": [
+    "Strong emphasis on work-life balance and flexible scheduling.",
+    "Positive collaborative culture within immediate teams.",
+    "Comprehensive benefits packages that are widely valued.",
+    "Access to a large, established technological portfolio."
+  ],
+  "key_risks": [
+    "Perceptions of limited career advancement and promotion bias.",
+    "Concerns regarding competitive pay and salary growth.",
+    "Reports of toxic management behaviors and internal silos.",
+    "Instability stemming from frequent organizational restructuring."
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which capture the balance between compensation, benefits, and the physical demands of the workload.",
+    "weakest": "Self-protection, which reflects employee concerns regarding fairness, safety, and the presence of toxic or exclusionary workplace behaviors."
+  }
+}

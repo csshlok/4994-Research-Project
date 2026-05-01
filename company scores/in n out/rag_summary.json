@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "in n out",
+  "generated_at": "2026-04-30T20:29:38",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 960,
+    "prompt_token_count": 3423,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3423
+      }
+    ],
+    "total_token_count": 4383
+  },
+  "attempts": [],
+  "executive_summary": [
+    "In-N-Out maintains a generally positive reputation among its workforce, with employees frequently highlighting competitive compensation and a collaborative team environment. These insights are derived from patterns in review language and represent signals of employee sentiment rather than direct proof of every individual's experience.",
+    "Despite these strengths, the organization faces challenges regarding high-pressure workloads and inconsistent management practices. Some staff report concerns about workplace culture, including instances of favoritism and limited support for work-life balance, which contrast with the otherwise favorable perceptions of pay and benefits."
+  ],
+  "key_strengths": [
+    "Competitive pay and benefits packages",
+    "Strong sense of team camaraderie and collaboration",
+    "Opportunities for professional advancement",
+    "Flexible scheduling options for many staff"
+  ],
+  "key_risks": [
+    "High-stress, fast-paced work environments leading to exhaustion",
+    "Reports of favoritism and inconsistent management support",
+    "Concerns regarding toxic social dynamics and workplace drama",
+    "Limited work-life balance and unpredictable shift quality"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass compensation and basic work conditions, represent the most positive area of employee feedback.",
+    "weakest": "Self-protection, which relates to feelings of safety, fairness, and trust in management, is the area where employees express the most concern."
+  }
+}

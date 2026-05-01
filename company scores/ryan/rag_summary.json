@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "ryan",
+  "generated_at": "2026-04-30T20:36:26",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1570,
+    "prompt_token_count": 3688,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3688
+      }
+    ],
+    "total_token_count": 5258
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Ryan maintains a generally positive reputation among its workforce, characterized by a strong emphasis on flexible work arrangements and comprehensive benefits packages. These domain signals, derived from employee review language, suggest that many staff members appreciate the company's efforts to support work-life balance and professional development.",
+    "Despite these strengths, the data highlights pockets of employee dissatisfaction related to workload intensity, compensation concerns, and reports of a challenging culture. These findings serve as indicators of potential friction points rather than direct proof of every individual employee's experience across the organization."
+  ],
+  "key_strengths": [
+    "High levels of satisfaction with flexible work-from-home options and remote support.",
+    "Strong appreciation for comprehensive benefits, including PTO, insurance, and wellness perks.",
+    "Positive sentiment regarding career advancement and learning opportunities.",
+    "Supportive leadership and collaborative team environments in many departments."
+  ],
+  "key_risks": [
+    "Reports of burnout and excessive workload expectations in certain roles.",
+    "Concerns regarding base salary competitiveness relative to market standards.",
+    "Instances of perceived toxic management, micromanagement, and hostile workplace behavior.",
+    "Feedback suggesting potential favoritism or lack of transparency in career growth."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care, which captures the positive sentiment surrounding the company's flexibility, leave policies, and support for balancing professional and personal responsibilities.",
+    "weakest": "Self-Protection, which reflects concerns regarding workplace safety, fairness, and the presence of toxic or unethical management practices."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "company": "siemens",
+  "generated_at": "2026-04-30T20:37:27",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1582,
+    "prompt_token_count": 3193,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3193
+      }
+    ],
+    "total_token_count": 4775
+  },
+  "attempts": [],
+  "executive_summary": [
+    "Siemens maintains a generally positive workplace reputation, with employees frequently highlighting the company's competitive compensation, benefits, and overall work-life balance. These insights are derived from patterns in employee review language and serve as indicators of organizational sentiment rather than absolute proof of every individual's experience.",
+    "Despite these strengths, the organization faces challenges regarding career advancement clarity and occasional cultural silos. While many staff members appreciate the supportive environment, some report concerns about stagnant growth opportunities and inconsistent management practices that can detract from the overall employee experience."
+  ],
+  "key_strengths": [
+    "Competitive pay and comprehensive benefits packages",
+    "Generally positive work-life balance and flexible scheduling",
+    "Supportive and collaborative team environments",
+    "Strong foundation for early-career development and mentorship"
+  ],
+  "key_risks": [
+    "Perceived lack of clear pathways for professional advancement",
+    "Inconsistent management support and communication",
+    "Siloed team structures leading to internal competition",
+    "Reports of toxic or understaffed work environments in specific areas"
+  ],
+  "domain_explanations": {
+    "strongest": "Physiological needs, which encompass compensation, benefits, and basic working conditions, represent the most stable area of employee satisfaction.",
+    "weakest": "Self-protection, relating to feelings of psychological safety, fairness, and trust, is the area where employees express the most concern."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "Google",
+  "generated_at": "2026-04-30T20:28:07",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 948,
+    "prompt_token_count": 3326,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3326
+      }
+    ],
+    "total_token_count": 4274
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees consistently praise the company for its generous compensation, stock options, and high-quality office perks.",
+      "evidence_ids": [
+        "Google:fulfillment_phys:102440167",
+        "Google:fulfillment_phys:101784955",
+        "Google:fulfillment_phys:102066482"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some reviews highlight significant issues with toxic behavior, bullying, and nepotism within specific teams.",
+      "evidence_ids": [
+        "Google:hindrance_selfprot:103001243",
+        "Google:hindrance_selfprot:101536288",
+        "Google:hindrance_selfprot:102993054"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members appreciate the flexible work culture and the ability to maintain a positive work-life balance.",
+      "evidence_ids": [
+        "Google:fulfillment_fam:103034679",
+        "Google:fulfillment_fam:102199620",
+        "Google:fulfillment_fam:102182642"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Employees express frustration with slow growth, frequent project re-organizations, and limited advancement opportunities.",
+      "evidence_ids": [
+        "Google:hindrance_stat:102918344",
+        "Google:hindrance_stat:102444334",
+        "Google:hindrance_stat:102298252"
+      ]
+    }
+  ]
+}

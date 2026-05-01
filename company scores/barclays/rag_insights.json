@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "company": "barclays",
+  "generated_at": "2026-04-30T20:22:12",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1602,
+    "prompt_token_count": 3130,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3130
+      }
+    ],
+    "total_token_count": 4732
+  },
+  "attempts": [],
+  "what_stands_out": [
+    "A clear divide exists between employees who feel supported by their teams and those who report feeling isolated or overlooked.",
+    "Compensation is frequently cited as a positive factor, yet it is often contrasted with complaints about excessive workload.",
+    "The organizational culture is described with high variability, ranging from highly inclusive to deeply political and stressful.",
+    "Career growth is highly dependent on team dynamics, leading to inconsistent experiences across different departments."
+  ]
+}

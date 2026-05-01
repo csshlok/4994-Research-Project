@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "company": "ericsson",
+  "generated_at": "2026-04-30T20:25:48",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 933,
+    "prompt_token_count": 3635,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3635
+      }
+    ],
+    "total_token_count": 4568
+  },
+  "attempts": [],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees generally value the comprehensive benefits and bonus structures, though some express frustration with pay competitiveness and heavy workloads.",
+      "evidence_ids": [
+        "ericsson:fulfillment_phys:31738377",
+        "ericsson:fulfillment_phys:91690726",
+        "ericsson:fulfillment_phys:47614473"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "The company is frequently praised for its supportive approach to work-life balance and hybrid work arrangements.",
+      "evidence_ids": [
+        "ericsson:fulfillment_fam:102406418",
+        "ericsson:fulfillment_fam:98224515",
+        "ericsson:fulfillment_fam:98189977"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Staff report significant barriers to promotion, often citing concerns about favoritism and a lack of clear career development pathways.",
+      "evidence_ids": [
+        "ericsson:hindrance_stat:85798055",
+        "ericsson:hindrance_stat:86869098",
+        "ericsson:hindrance_stat:54470287"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Some employees describe instances of toxic management and gaslighting, suggesting a need for greater psychological safety and transparency.",
+      "evidence_ids": [
+        "ericsson:hindrance_selfprot:65779504",
+        "ericsson:hindrance_selfprot:26120455",
+        "ericsson:hindrance_selfprot:97859323"
+      ]
+    }
+  ]
+}

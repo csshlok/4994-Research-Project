@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "company": "lockheed martin",
+  "generated_at": "2026-04-30T20:32:00",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 947,
+    "prompt_token_count": 3496,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3496
+      }
+    ],
+    "total_token_count": 4443
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently highlight competitive pay and comprehensive benefits as core advantages of working at the company.",
+      "evidence_ids": [
+        "lockheed martin:fulfillment_phys:101187541",
+        "lockheed martin:fulfillment_phys:99513862",
+        "lockheed martin:fulfillment_phys:95400460"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "Many staff members appreciate the company's commitment to maintaining a healthy work-life balance and providing a stable work environment.",
+      "evidence_ids": [
+        "lockheed martin:fulfillment_fam:102668458",
+        "lockheed martin:fulfillment_fam:98653349",
+        "lockheed martin:fulfillment_fam:98368992"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Employees value the access to challenging projects, training programs, and clear pathways for career advancement.",
+      "evidence_ids": [
+        "lockheed martin:fulfillment_stat:98385934",
+        "lockheed martin:fulfillment_stat:96535111",
+        "lockheed martin:fulfillment_stat:97113845"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "A subset of reviews points to concerns regarding management ethics, favoritism, and a lack of accountability in certain areas.",
+      "evidence_ids": [
+        "lockheed martin:hindrance_selfprot:103021361",
+        "lockheed martin:hindrance_selfprot:102816384",
+        "lockheed martin:hindrance_selfprot:99612074"
+      ]
+    }
+  ]
+}

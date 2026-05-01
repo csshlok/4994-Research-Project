@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "company": "pwc",
+  "generated_at": "2026-04-30T20:35:32",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 1609,
+    "prompt_token_count": 3226,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 3226
+      }
+    ],
+    "total_token_count": 4835
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "cluster_summaries": [
+    {
+      "cluster_id": "fulfillment_phys",
+      "label": "Pay & Benefits",
+      "summary": "Employees frequently praise the firm's compensation structure, healthcare offerings, and retirement benefits.",
+      "evidence_ids": [
+        "pwc:fulfillment_phys:95307410",
+        "pwc:fulfillment_phys:100704580",
+        "pwc:fulfillment_phys:96496280"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_fam",
+      "label": "Flexibility & Care",
+      "summary": "While some appreciate the remote work policies and firm-wide shutdowns, others note that balance is often difficult to achieve.",
+      "evidence_ids": [
+        "pwc:fulfillment_fam:97160487",
+        "pwc:fulfillment_fam:95242132",
+        "pwc:fulfillment_fam:94963458"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_stat",
+      "label": "Growth & Recognition",
+      "summary": "Staff value the clear career paths, exposure to world-class clients, and the formal recognition of hard work.",
+      "evidence_ids": [
+        "pwc:fulfillment_stat:100270946",
+        "pwc:fulfillment_stat:96598118",
+        "pwc:fulfillment_stat:99948446"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_aff",
+      "label": "Culture & Belonging",
+      "summary": "Many employees report a friendly and supportive atmosphere where colleagues are willing to share knowledge and collaborate.",
+      "evidence_ids": [
+        "pwc:fulfillment_aff:100448057",
+        "pwc:fulfillment_aff:97339412",
+        "pwc:fulfillment_aff:100676490"
+      ]
+    },
+    {
+      "cluster_id": "fulfillment_selfprot",
+      "label": "Safety & Fairness",
+      "summary": "Some team members feel secure and respected, noting that management is perceived as caring and supportive.",
+      "evidence_ids": [
+        "pwc:fulfillment_selfprot:95016743",
+        "pwc:fulfillment_selfprot:99460079",
+        "pwc:fulfillment_selfprot:95700019"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_phys",
+      "label": "Burnout & Workload",
+      "summary": "Employees describe exhaustion and frustration with high meeting volumes and the perceived incompetence of some leadership.",
+      "evidence_ids": [
+        "pwc:hindrance_phys:97139482",
+        "pwc:hindrance_phys:96785377",
+        "pwc:hindrance_phys:97169241"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_fam",
+      "label": "Work-Life Pressure",
+      "summary": "The intense demands of the busy season are a major pain point, with some feeling that personal life must be sacrificed.",
+      "evidence_ids": [
+        "pwc:hindrance_fam:95829114",
+        "pwc:hindrance_fam:98335247",
+        "pwc:hindrance_fam:97754756"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_selfprot",
+      "label": "Unsafe or Unfair Culture",
+      "summary": "Reports of toxic office politics, favoritism, and backstabbing suggest a lack of safety for some individuals.",
+      "evidence_ids": [
+        "pwc:hindrance_selfprot:97071371",
+        "pwc:hindrance_selfprot:98136960",
+        "pwc:hindrance_selfprot:98102926"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_stat",
+      "label": "Stagnation",
+      "summary": "Some staff feel that career growth is hindered by bureaucracy and that talent is occasionally overlooked in favor of politics.",
+      "evidence_ids": [
+        "pwc:hindrance_stat:99490561",
+        "pwc:hindrance_stat:96572028",
+        "pwc:hindrance_stat:99852329"
+      ]
+    },
+    {
+      "cluster_id": "hindrance_aff",
+      "label": "Disconnected Culture",
+      "summary": "A small subset of reviews mentions feelings of isolation or dissatisfaction with compensation relative to the workload.",
+      "evidence_ids": [
+        "pwc:hindrance_aff:98445318",
+        "pwc:hindrance_aff:100281577",
+        "pwc:hindrance_aff:100715228"
+      ]
+    }
+  ]
+}

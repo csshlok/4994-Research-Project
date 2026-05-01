@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "company": "Optum",
+  "generated_at": "2026-05-01T02:53:16",
+  "generator": "gemini",
+  "model": "gemini-3.1-flash-lite-preview",
+  "usage": {
+    "candidates_token_count": 659,
+    "prompt_token_count": 1444,
+    "prompt_tokens_details": [
+      {
+        "modality": "TEXT",
+        "token_count": 1444
+      }
+    ],
+    "total_token_count": 2103
+  },
+  "attempts": [
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "1",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "attempt": "2",
+      "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+    }
+  ],
+  "executive_summary": [
+    "Optum maintains a moderate overall workplace sentiment, with employees reporting a balanced mix of positive and negative experiences. These domain scores represent signals derived from review language and should not be interpreted as direct proof of every individual employee's experience.",
+    "The organization performs best in areas related to family care and flexibility, while facing significant challenges in self-protection and fairness. These insights highlight key areas where current workplace practices are either supporting or hindering employee satisfaction."
+  ],
+  "key_strengths": [
+    "High levels of flexibility regarding work schedules and life balance.",
+    "Positive feedback regarding compensation and benefits packages.",
+    "Strong emphasis on collaborative team environments.",
+    "Opportunities for professional growth and recognition."
+  ],
+  "key_risks": [
+    "Concerns regarding heavy workloads and potential employee burnout.",
+    "Reports of organizational instability and micromanagement.",
+    "Perceptions of unfairness and lack of psychological safety.",
+    "Feelings of being underappreciated or overlooked for advancement."
+  ],
+  "domain_explanations": {
+    "strongest": "Family Care represents the most positive domain, reflecting employee appreciation for flexible work arrangements and support for personal life commitments.",
+    "weakest": "Self-Protection is the lowest-scoring domain, indicating that some employees feel concerns regarding fairness, safety, and the overall respectfulness of the work environment."
+  }
+}
