@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import FeaturePreview from "./pages/FeaturePreview";
-import MatchSandbox from "./pages/MatchSandbox";
+import FeaturePreview from "./pages/labs/FeaturePreview";
+import MatchSandbox from "./pages/labs/MatchSandbox";
 
 const queryClient = new QueryClient();
 

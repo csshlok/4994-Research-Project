@@ -33,7 +33,7 @@ const Index = () => {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [comparison, setComparison] = useState<CompanyComparisonMetric[]>([]);
   const [comparisonRag, setComparisonRag] = useState<ComparisonRagSummary | null>(null);
-  const [processingStatus, setProcessingStatus] = useState("Submitting analysis job...");
+  const [processingStatus, setProcessingStatus] = useState("Preparing your analysis...");
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
   const [compareSeed, setCompareSeed] = useState<string[]>([]);
   const inputRef = useRef<HTMLDivElement>(null);
@@ -46,7 +46,7 @@ const Index = () => {
     setAppState("processing");
     setAnalysis(null);
     setActiveJobId(null);
-    setProcessingStatus("Loading precomputed company scores...");
+    setProcessingStatus("Preparing your company analysis...");
 
     try {
       try {
@@ -97,7 +97,7 @@ const Index = () => {
         setAppState("results");
         return;
       } catch {
-        setProcessingStatus("No precomputed scores found. Submitting analysis job...");
+        setProcessingStatus("Analyzing fresh review data...");
       }
 
       const run = await startPipelineJob(name);
@@ -160,7 +160,7 @@ const Index = () => {
     setComparison([]);
     setComparisonRag(null);
     setActiveJobId(null);
-    setProcessingStatus("Preparing cached company comparison...");
+    setProcessingStatus("Preparing your company comparison...");
 
     try {
       const metrics = await Promise.all(
@@ -196,7 +196,7 @@ const Index = () => {
     setComparisonRag(null);
     setActiveJobId(null);
     setCompareSeed([]);
-    setProcessingStatus("Submitting analysis job...");
+    setProcessingStatus("Preparing your analysis...");
   };
 
   const handleCompareFromResults = (companyId: string) => {
