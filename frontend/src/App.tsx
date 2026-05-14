@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import FeaturePreview from "./pages/FeaturePreview";
+import MatchSandbox from "./pages/MatchSandbox";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/preview" element={<FeaturePreview />} />
+          <Route path="/match-sandbox" element={<MatchSandbox />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
