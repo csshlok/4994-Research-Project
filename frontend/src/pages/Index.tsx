@@ -9,14 +9,10 @@ import { ComparisonResultsPage } from "@/components/ComparisonResultsPage";
 import {
   downloadScoredCompanyFileText,
   generateComparisonRagSummary,
-  downloadJobFileText,
   getScoredCompanyDownloadUrl,
   getScoredCompanyOutputs,
   getScoredCompanyRag,
-  getJobOutputs,
-  getJobStatus,
   sleep,
-  startPipelineJob,
   type ComparisonRagSummary,
 } from "@/lib/backend-api";
 import { AnalysisResult, buildAnalysisResult } from "@/lib/analysis";
@@ -49,100 +45,58 @@ const Index = () => {
     setProcessingStatus("Preparing your company analysis...");
 
     try {
-      try {
-        const cachedOutputs = await getScoredCompanyOutputs(name);
-        const reviewCsvText = await downloadScoredCompanyFileText(
-          cachedOutputs.company_id,
-          "review_scores.csv"
-        );
-        const companyCsvText = await downloadScoredCompanyFileText(
-          cachedOutputs.company_id,
-          "company_scores.csv"
-        );
-        const topicCsvText = cachedOutputs.files.includes("topic_summary.csv")
-          ? await downloadScoredCompanyFileText(cachedOutputs.company_id, "topic_summary.csv")
-          : undefined;
-        const rag = cachedOutputs.files.includes("rag_summary.json")
-          ? await getScoredCompanyRag(cachedOutputs.company_id)
-          : undefined;
-
-        const result = buildAnalysisResult({
-          jobId: `cached-${cachedOutputs.company_id}`,
-          inputCompanyName: name,
-          resolvedCompanyName: cachedOutputs.company_id,
-          reviewCsvText,
-          companyCsvText,
-          topicCsvText,
-          ragSummary: rag?.summary,
-          ragClusters: rag?.clusters,
-          ragInsights: rag?.insights,
-          outputFiles: cachedOutputs.files,
-          downloads: {
-            cleanedReviews: cachedOutputs.files.includes("cleaned_reviews.csv")
-              ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "cleaned_reviews.csv")
-              : undefined,
-            reviewScores: getScoredCompanyDownloadUrl(cachedOutputs.company_id, "review_scores.csv"),
-            companyScores: getScoredCompanyDownloadUrl(cachedOutputs.company_id, "company_scores.csv"),
-            topicSummary: cachedOutputs.files.includes("topic_summary.csv")
-              ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "topic_summary.csv")
-              : undefined,
-            topicAssignments: cachedOutputs.files.includes("topic_assignments.csv")
-              ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "topic_assignments.csv")
-              : undefined,
-          },
-        });
-
-        await sleep(10000);
-        setAnalysis(result);
-        setAppState("results");
-        return;
-      } catch {
-        setProcessingStatus("Analyzing fresh review data...");
-      }
-
-      const run = await startPipelineJob(name);
-      setActiveJobId(run.job_id);
-
-      let finalStatus = null as Awaited<ReturnType<typeof getJobStatus>> | null;
-      for (let attempt = 0; attempt < 360; attempt += 1) {
-        const st = await getJobStatus(run.job_id);
-        finalStatus = st;
-
-        const stage = st.stage?.current ? `Stage: ${st.stage.current}` : "";
-        const msg = st.message || stage || "Pipeline running";
-        setProcessingStatus(msg);
-
-        if (st.status === "succeeded") {
-          break;
-        }
-        if (st.status === "failed") {
-          throw new Error(st.message || "Pipeline failed.");
-        }
-        await sleep(2000);
-      }
-
-      if (!finalStatus || finalStatus.status !== "succeeded") {
-        throw new Error("Pipeline timed out before completion.");
-      }
-
-      const outputs = await getJobOutputs(run.job_id);
-      const reviewCsvText = await downloadJobFileText(run.job_id, "04_score/review_scores.csv");
-      const companyCsvText = await downloadJobFileText(run.job_id, "04_score/company_scores.csv");
+      const cachedOutputs = await getScoredCompanyOutputs(name);
+      const reviewCsvText = await downloadScoredCompanyFileText(
+        cachedOutputs.company_id,
+        "review_scores.csv"
+      );
+      const companyCsvText = await downloadScoredCompanyFileText(
+        cachedOutputs.company_id,
+        "company_scores.csv"
+      );
+      const topicCsvText = cachedOutputs.files.includes("topic_summary.csv")
+        ? await downloadScoredCompanyFileText(cachedOutputs.company_id, "topic_summary.csv")
+        : undefined;
+      const rag = cachedOutputs.files.includes("rag_summary.json")
+        ? await getScoredCompanyRag(cachedOutputs.company_id)
+        : undefined;
 
       const result = buildAnalysisResult({
-        jobId: run.job_id,
+        jobId: `cached-${cachedOutputs.company_id}`,
         inputCompanyName: name,
-        resolvedCompanyName: finalStatus.company_id_resolved,
+        resolvedCompanyName: cachedOutputs.company_id,
         reviewCsvText,
         companyCsvText,
-        outputFiles: outputs.files,
+        topicCsvText,
+        ragSummary: rag?.summary,
+        ragClusters: rag?.clusters,
+        ragInsights: rag?.insights,
+        outputFiles: cachedOutputs.files,
+        downloads: {
+          cleanedReviews: cachedOutputs.files.includes("cleaned_reviews.csv")
+            ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "cleaned_reviews.csv")
+            : undefined,
+          reviewScores: getScoredCompanyDownloadUrl(cachedOutputs.company_id, "review_scores.csv"),
+          companyScores: getScoredCompanyDownloadUrl(cachedOutputs.company_id, "company_scores.csv"),
+          topicSummary: cachedOutputs.files.includes("topic_summary.csv")
+            ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "topic_summary.csv")
+            : undefined,
+          topicAssignments: cachedOutputs.files.includes("topic_assignments.csv")
+            ? getScoredCompanyDownloadUrl(cachedOutputs.company_id, "topic_assignments.csv")
+            : undefined,
+        },
       });
 
       await sleep(10000);
       setAnalysis(result);
       setAppState("results");
     } catch (error) {
-      const description = error instanceof Error ? error.message : "Unexpected error.";
+      const description =
+        error instanceof Error && error.message.includes("404")
+          ? `No cached analysis is available for "${name}" yet.`
+          : error instanceof Error
+            ? error.message
+            : "Unexpected error.";
       toast({
         title: "Analysis failed",
         description,

@@ -225,10 +225,6 @@ For normal operation, these RAG commands do not need to be run manually. `pipeli
 - `GET /api/scored-company/{company_id}/outputs` - list downloadable cache files.
 - `GET /api/scored-company/{company_id}/download?path=...` - download cache artifacts.
 - `GET /api/scored-company/{company_id}/rag` - cached RAG summary, cluster, insight, evidence, and profile payloads.
-- `POST /api/run` - queue a cache-mode pipeline job when a precomputed cache is unavailable.
-- `GET /api/job/{job_id}` - job status.
-- `GET /api/job/{job_id}/outputs` - generated job outputs.
-- `GET /api/job/{job_id}/download?path=...` - download job artifacts.
 
 ## Frontend application
 The React dashboard supports:
@@ -240,7 +236,7 @@ The React dashboard supports:
 - Comparison heatmap, domain gap analysis, final goal score profile, shared cluster map, and company detail view.
 - Download links for cleaned reviews, review scores, aggregated scores, and topic clusters.
 
-Cached analyses intentionally show a short loading buffer so the user sees the same processing state as full pipeline runs.
+Cached analyses intentionally show a short loading buffer before rendering results.
 
 ## Results and generated data
 The current cached dataset contains 50 precomputed companies. Each company can include:
@@ -267,9 +263,9 @@ Optional static figures and current frontend captures live under `out/figures/`:
 
 ![Frontend landing](out/figures/frontend_landing.png)
 
-![Microsoft analysis](out/figures/frontend_microsoft_results.png)
+![Current company analysis](out/figures/frontend_microsoft_results.png)
 
-![Company comparison](out/figures/frontend_company_comparison.png)
+![Current company comparison](out/figures/frontend_company_comparison.png)
 
 ## Notes and defaults
 - `company scores/` is designed for deployable cache artifacts; report/log files are not required for serving the dashboard.
