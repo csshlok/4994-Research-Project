@@ -609,7 +609,7 @@ export function cleanReviewText(value: string): string {
     .replace(/[*#_`~]+/g, " ")
     .replace(/["“”]+/g, "")
     .replace(/[•·]+/g, " ")
-    .replace(/[\u0000-\u001f\u007f-\u009f]/g, " ")
+    .replace(/\p{Cc}+/gu, " ")
     .replace(/\.\.\.$/, "")
     .replace(/\s+/g, " ")
     .trim();

@@ -31,6 +31,7 @@ export function MatchResultsView({
   const visibleResults = results.slice(0, limit);
   const isComparison = visibleResults.length > 1;
   const topResult = visibleResults[0];
+  const firstVisibleId = visibleResults[0]?.company.id || "";
   const [selectedId, setSelectedId] = useState<string>("");
   const selectedResult =
     selectedId ? visibleResults.find((result) => result.company.id === selectedId) : undefined;
@@ -38,7 +39,7 @@ export function MatchResultsView({
 
   useEffect(() => {
     setSelectedId("");
-  }, [visibleResults[0]?.company.id]);
+  }, [firstVisibleId]);
 
   const tradeoffRows = useMemo(
     () =>
