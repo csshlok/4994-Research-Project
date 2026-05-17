@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import FeaturePreview from "./pages/labs/FeaturePreview";
 import MatchSandbox from "./pages/labs/MatchSandbox";
+import MatchReportSandbox from "./pages/labs/MatchReportSandbox";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/preview" element={<FeaturePreview />} />
           <Route path="/match-sandbox" element={<MatchSandbox />} />
+          <Route path="/match-report-sandbox" element={<MatchReportSandbox />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

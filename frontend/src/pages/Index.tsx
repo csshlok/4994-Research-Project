@@ -102,6 +102,7 @@ const Index = () => {
         topicCsvText,
         ragSummary: rag?.summary,
         ragClusters: rag?.clusters,
+        ragEvidence: rag?.evidence,
         ragInsights: rag?.insights,
         outputFiles: cachedOutputs.files,
         downloads: {

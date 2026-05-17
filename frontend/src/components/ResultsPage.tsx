@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AnalysisResult } from "@/lib/analysis";
-import { useMemo, useState, type ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
+import { getScoredCompanyRag } from "@/lib/backend-api";
+import { AnalysisResult, parseRagEvidence, type AnalysisEvidence } from "@/lib/analysis";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   Download,
   FileSpreadsheet,
@@ -87,8 +89,172 @@ const CLUSTER_COLORS = [
   "hsl(var(--warm-gray))",
 ];
 
+const POSITIVE_EVIDENCE_CUES = [
+  "supportive",
+  "safe",
+  "valued",
+  "respect",
+  "growth",
+  "opportunity",
+  "opportunities",
+  "inclusive",
+  "coaching",
+  "training",
+  "clear expectations",
+  "rewarding",
+  "team",
+  "benefits",
+  "good pay",
+  "flexible",
+  "balance",
+  "trust",
+  "appreciation",
+  "recognition",
+];
+
+const NEGATIVE_EVIDENCE_CUES = [
+  "bad",
+  "can't",
+  "cannot",
+  "no ",
+  "not ",
+  "guilty",
+  "understaffed",
+  "worn out",
+  "burnout",
+  "suffer",
+  "challenging",
+  "toxic",
+  "favoritism",
+  "sexism",
+  "racism",
+  "exploited",
+  "unappreciated",
+  "unsafe",
+  "less than",
+  "long hours",
+  "work life balance",
+  "poor management",
+  "micromanagement",
+];
+
+function splitSentences(text: string): string[] {
+  return text
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function countCueHits(sentence: string, cues: string[]): number {
+  const normalized = sentence.toLowerCase();
+  return cues.filter((cue) => normalized.includes(cue)).length;
+}
+
+function scoreEvidenceSentence(sentence: string, item: AnalysisEvidence): number {
+  const normalized = sentence.toLowerCase();
+  const termScore = item.terms.reduce((score, term) => {
+    const clean = term.toLowerCase().trim();
+    if (!clean || !normalized.includes(clean)) return score;
+    return score + Math.max(1, Math.min(4, Math.ceil(clean.length / 12)));
+  }, 0);
+  const labelScore = normalized.includes(item.label.toLowerCase()) ? 2 : 0;
+  const domainScore = item.domain && normalized.includes(item.domain.toLowerCase()) ? 1 : 0;
+  const positiveScore = countCueHits(sentence, POSITIVE_EVIDENCE_CUES);
+  const negativeScore = countCueHits(sentence, NEGATIVE_EVIDENCE_CUES);
+
+  if (item.mode === "fulfillment") {
+    return termScore + labelScore + domainScore + positiveScore * 2 - negativeScore * 3;
+  }
+
+  return termScore + labelScore + domainScore + negativeScore * 2 - positiveScore;
+}
+
+function selectCompanyEvidenceSentences(item: AnalysisEvidence): string[] {
+  const sentences = splitSentences(item.text);
+  const scored = sentences
+    .map((sentence, index) => ({ sentence, index, score: scoreEvidenceSentence(sentence, item) }))
+    .filter((row) => row.score > 0)
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, 2)
+    .sort((a, b) => a.index - b.index)
+    .map((row) => row.sentence);
+
+  if (scored.length) {
+    return scored;
+  }
+
+  const preferredFallback = sentences.filter((sentence) =>
+    item.mode === "fulfillment"
+      ? countCueHits(sentence, NEGATIVE_EVIDENCE_CUES) === 0
+      : countCueHits(sentence, NEGATIVE_EVIDENCE_CUES) > 0
+  );
+
+  return (preferredFallback.length ? preferredFallback : sentences).slice(0, 2);
+}
+
+function CompanyEvidenceCard({ item }: { item: AnalysisEvidence }) {
+  const selectedSentences = selectCompanyEvidenceSentences(item);
+  const selectedSet = new Set(selectedSentences);
+  const fullSentences = splitSentences(item.text);
+  const explanation =
+    item.mode === "fulfillment"
+      ? `This is company-level strength evidence for ${item.label.toLowerCase()}: the excerpt describes conditions employees say are working well.`
+      : `This is company-level risk evidence for ${item.label.toLowerCase()}: the excerpt describes a concrete friction employees report.`;
+
+  return (
+    <div className="rounded-lg border border-border p-5">
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <Badge variant={item.mode === "fulfillment" ? "secondary" : "outline"}>
+          {item.mode === "fulfillment" ? "fulfillment" : "hindrance"}
+        </Badge>
+        <p className="text-sm font-medium">{item.label}</p>
+        {item.domain ? <span className="text-xs text-muted-foreground">{item.domain}</span> : null}
+      </div>
+
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+          Highlighted company context
+        </p>
+        <div className="space-y-2">
+          {selectedSentences.map((sentence) => (
+            <p key={sentence} className="text-sm leading-relaxed text-foreground">
+              {sentence}
+            </p>
+          ))}
+        </div>
+        <p className="mt-3 text-xs leading-5 text-muted-foreground">{explanation}</p>
+      </div>
+
+      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+        {fullSentences.map((sentence, index) => {
+          const isSelected = selectedSet.has(sentence);
+          return (
+            <span
+              key={`${sentence}-${index}`}
+              className={isSelected ? "rounded bg-primary/10 px-1 text-foreground" : undefined}
+            >
+              {sentence}
+              {index < fullSentences.length - 1 ? " " : ""}
+            </span>
+          );
+        })}
+      </p>
+
+      {item.role || item.date || item.rating !== undefined ? (
+        <p className="mt-3 text-xs text-muted-foreground">
+          {[item.role, item.date?.slice(0, 10), item.rating !== undefined ? `${item.rating}/5` : undefined]
+            .filter(Boolean)
+            .join(" | ")}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 export function ResultsPage({ analysis, onBack, onCompare, onMatchStart }: ResultsPageProps) {
   const [clusterMode, setClusterMode] = useState<"fulfillment" | "hindrance">("fulfillment");
+  const [remoteReviewEvidence, setRemoteReviewEvidence] = useState<AnalysisEvidence[]>([]);
   const domainScores = analysis.domainScores;
   const overallScore = analysis.overallScore;
   const strongestDomain = analysis.strongestDomain;
@@ -135,6 +301,31 @@ const axisLimit = getRadarScaleMax(maxEvidence);
       : "challenging";
   const ragSummary = analysis.rag?.summary;
   const ragInsights = analysis.rag?.insights;
+  const reviewEvidence = analysis.reviewEvidence.length ? analysis.reviewEvidence : remoteReviewEvidence;
+
+  useEffect(() => {
+    setRemoteReviewEvidence([]);
+    if (analysis.reviewEvidence.length) {
+      return;
+    }
+
+    let cancelled = false;
+    void getScoredCompanyRag(analysis.companyId)
+      .then((rag) => {
+        if (!cancelled) {
+          setRemoteReviewEvidence(parseRagEvidence(rag.evidence));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setRemoteReviewEvidence([]);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [analysis.companyId, analysis.reviewEvidence.length]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -567,6 +758,35 @@ const axisLimit = getRadarScaleMax(maxEvidence);
                 ))}
               </div>
             </div>
+          </section>
+        )}
+
+        {reviewEvidence.length > 0 && (
+          <section className="mb-16">
+            <div className="mb-6">
+              <h2 className="font-serif text-2xl font-semibold text-foreground mb-3">
+                Review Evidence Behind the Signals
+              </h2>
+              <p className="text-muted-foreground max-w-3xl">
+                These excerpts connect the company-level clusters back to actual employee review text.
+                The highlighted context explains why a review is being treated as strength or risk
+                evidence for this company, not as a personalized match judgment.
+              </p>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Company review evidence
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-4 md:grid-cols-2">
+                {reviewEvidence.map((item, index) => (
+                  <CompanyEvidenceCard key={`${item.label}-${item.date}-${index}`} item={item} />
+                ))}
+              </CardContent>
+            </Card>
           </section>
         )}
 

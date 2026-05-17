@@ -52,6 +52,17 @@ export interface TopicCluster {
   evidenceIds?: string[];
 }
 
+export interface AnalysisEvidence {
+  mode: "fulfillment" | "hindrance";
+  domain: string;
+  label: string;
+  terms: string[];
+  text: string;
+  role?: string;
+  date?: string;
+  rating?: number;
+}
+
 export interface RagSummary {
   executiveSummary: string[];
   keyStrengths: string[];
@@ -85,6 +96,7 @@ export interface AnalysisResult {
   weakestDomain: DomainScore;
   domainScores: DomainScore[];
   topicClusters: TopicCluster[];
+  reviewEvidence: AnalysisEvidence[];
   rag?: RagArtifacts;
   analysisDate: string;
   downloads: AnalysisDownloads;
@@ -99,6 +111,7 @@ interface BuildArgs {
   topicCsvText?: string;
   ragSummary?: unknown;
   ragClusters?: unknown;
+  ragEvidence?: unknown;
   ragInsights?: unknown;
   outputFiles?: string[];
   downloads?: AnalysisDownloads;
@@ -352,6 +365,64 @@ function parseRagInsights(value: unknown): RagInsights | undefined {
   };
 }
 
+function cleanReviewText(value: string): string {
+  return value
+    .replace(/\uFFFD/g, "")
+    .replace(/â/g, "'")
+    .replace(/â/g, "'")
+    .replace(/â/g, '"')
+    .replace(/â/g, '"')
+    .replace(/â/g, " - ")
+    .replace(/â/g, " - ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseRating(value: unknown): number | undefined {
+  const rating = Number(value);
+  return Number.isFinite(rating) ? rating : undefined;
+}
+
+export function parseRagEvidence(value: unknown): AnalysisEvidence[] {
+  const raw = asRecord(value);
+  const nested = raw.evidence && typeof raw.evidence === "object" ? asRecord(raw.evidence) : {};
+  const payload = Array.isArray(nested.clusters) ? nested : raw;
+  const clusters = Array.isArray(payload.clusters) ? payload.clusters : [];
+  const evidence = clusters.flatMap((cluster) => {
+    const row = asRecord(cluster);
+    const mode = row.mode === "hindrance" ? "hindrance" : "fulfillment";
+    const label = typeof row.label === "string" ? row.label : "Review evidence";
+    const domain = typeof row.domain === "string" ? row.domain : "";
+    const terms = Array.isArray(row.terms)
+      ? row.terms.map((term) => String(term || "").trim()).filter(Boolean)
+      : [];
+    const items = Array.isArray(row.evidence) ? row.evidence : [];
+
+    return items
+      .map((item) => {
+        const entry = asRecord(item);
+        const text = cleanReviewText(String(entry.text || ""));
+        if (!text) return null;
+        return {
+          mode,
+          domain,
+          label,
+          terms,
+          text,
+          role: typeof entry.role === "string" ? entry.role : undefined,
+          date: typeof entry.date === "string" ? entry.date : undefined,
+          rating: parseRating(entry.rating),
+        };
+      })
+      .filter((item): item is AnalysisEvidence => Boolean(item))
+      .slice(0, 2);
+  });
+
+  const fulfillment = evidence.filter((item) => item.mode === "fulfillment").slice(0, 4);
+  const hindrance = evidence.filter((item) => item.mode === "hindrance").slice(0, 4);
+  return [...fulfillment, ...hindrance].slice(0, 8);
+}
+
 function enrichTopicClusters(clusters: TopicCluster[], ragClusters: unknown): TopicCluster[] {
   const raw = asRecord(ragClusters);
   const summaries = Array.isArray(raw.cluster_summaries) ? raw.cluster_summaries : [];
@@ -455,6 +526,7 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
   );
   const ragSummary = parseRagSummary(args.ragSummary);
   const ragInsights = parseRagInsights(args.ragInsights);
+  const reviewEvidence = parseRagEvidence(args.ragEvidence);
 
   return {
     jobId: args.jobId,
@@ -466,6 +538,7 @@ export function buildAnalysisResult(args: BuildArgs): AnalysisResult {
     weakestDomain,
     domainScores: nonEmptyScores,
     topicClusters,
+    reviewEvidence,
     rag: ragSummary || ragInsights ? { summary: ragSummary, insights: ragInsights } : undefined,
     analysisDate: new Date().toLocaleDateString("en-US", {
       year: "numeric",
