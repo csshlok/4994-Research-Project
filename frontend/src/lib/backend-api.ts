@@ -75,6 +75,31 @@ export interface ComparisonRagSummary {
   }>;
 }
 
+export interface MatchProfileInterpretation {
+  schema_version?: number;
+  source?: "gemini" | "fallback";
+  model?: string;
+  generated_at?: string;
+  summary: string;
+  likely_motivators: string[];
+  core_needs: string[];
+  risk_sensitivities: string[];
+  work_style: string;
+  confidence: number;
+}
+
+export interface MatchTopSummary {
+  schema_version?: number;
+  source?: "gemini" | "fallback";
+  model?: string;
+  generated_at?: string;
+  headline: string;
+  summary: string;
+  match_reasons: string[];
+  evidence_connections: string[];
+  caveat: string;
+}
+
 function apiUrl(path: string): string {
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
@@ -156,6 +181,35 @@ export async function generateComparisonRagSummary(companies: string[]): Promise
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ companies }),
+  });
+}
+
+export async function interpretMatchProfile(payload: {
+  narrative?: string;
+  tradeoffs: string[];
+  accepted_tradeoffs?: string[];
+  local_profile: unknown;
+}): Promise<MatchProfileInterpretation> {
+  return await fetchJson<MatchProfileInterpretation>("/api/match/profile", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function generateMatchTopSummary(payload: {
+  profile: unknown;
+  top_match: unknown;
+  evidence: unknown[];
+}): Promise<MatchTopSummary> {
+  return await fetchJson<MatchTopSummary>("/api/match/top-summary", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 }
 

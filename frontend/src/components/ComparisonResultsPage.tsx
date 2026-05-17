@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   BarChart3,
@@ -32,21 +32,36 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { MatchResultsView } from "@/components/MatchResultsView";
 import {
   COMPARISON_DOMAINS,
   CompanyComparisonMetric,
   scoreClass,
 } from "@/lib/comparison";
-import { getScoredCompanyDownloadUrl, type ComparisonRagSummary } from "@/lib/backend-api";
+import {
+  getScoredCompanyDownloadUrl,
+  type ComparisonRagSummary,
+  type MatchTopSummary,
+} from "@/lib/backend-api";
+import {
+  type CompanyMatchResult,
+  type MatchProfile,
+} from "@/lib/matching";
 
 interface ComparisonResultsPageProps {
   metrics: CompanyComparisonMetric[];
   ragSummary?: ComparisonRagSummary | null;
+  matchProfile?: MatchProfile | null;
+  matchResults?: CompanyMatchResult[];
+  matchTitle?: string;
+  matchTopSummary?: MatchTopSummary | null;
   onBack: () => void;
   onAddComparison: (seedCompanyId?: string) => void;
+  onStartMatch: (companyId?: string) => void;
+  onOpenCompany?: (companyId: string) => void;
 }
 
-type Tab = "overview" | "summary" | "company";
+type Tab = "overview" | "summary" | "company" | "fit";
 
 const COLORS = ["hsl(var(--primary))", "hsl(var(--olive))", "hsl(var(--destructive))"];
 
@@ -96,8 +111,14 @@ function relativeHeatmapStyle(metrics: CompanyComparisonMetric[], domainKey: str
 export function ComparisonResultsPage({
   metrics,
   ragSummary,
+  matchProfile,
+  matchResults = [],
+  matchTitle = "Your fit",
+  matchTopSummary,
   onBack,
   onAddComparison,
+  onStartMatch,
+  onOpenCompany,
 }: ComparisonResultsPageProps) {
   const [tab, setTab] = useState<Tab>("overview");
   const [selectedId, setSelectedId] = useState(metrics[0]?.id || "");
@@ -126,6 +147,12 @@ export function ComparisonResultsPage({
       .slice(0, 2)
       .map((topic) => ({ ...topic, company: metric.label, companyId: metric.id }))
   );
+
+  useEffect(() => {
+    if (matchProfile && matchResults.length > 0) {
+      setTab("fit");
+    }
+  }, [matchProfile, matchResults.length]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -211,6 +238,9 @@ export function ComparisonResultsPage({
               { key: "overview", label: "Overview" },
               { key: "summary", label: "Executive Summary" },
               { key: "company", label: "Company Detail" },
+              ...(matchProfile && matchResults.length > 0
+                ? [{ key: "fit", label: "Your Fit" }]
+                : []),
             ].map((item) => (
               <button
                 key={item.key}
@@ -232,7 +262,16 @@ export function ComparisonResultsPage({
           </Button>
         </div>
 
-        {tab === "summary" ? (
+        {tab === "fit" && matchProfile && matchResults.length > 0 ? (
+          <MatchResultsView
+            title={matchTitle}
+            profile={matchProfile}
+            results={matchResults}
+            limit={matchResults.length}
+            onOpenCompany={onOpenCompany}
+            topSummary={matchTopSummary}
+          />
+        ) : tab === "summary" ? (
           <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
             <Card>
               <CardHeader>
@@ -579,6 +618,48 @@ export function ComparisonResultsPage({
             </Card>
           </div>
         )}
+
+        <section className="mt-10 grid gap-4 md:grid-cols-2">
+          <Card className="bg-muted/30">
+            <CardContent className="pt-6">
+              <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div>
+                  <h2 className="font-serif text-2xl font-semibold">
+                    Match yourself to these companies
+                  </h2>
+                  <p className="mt-2 text-muted-foreground">
+                    Answer the fit questions once and rank your fit across all compared companies.
+                  </p>
+                </div>
+                <Button onClick={() => onStartMatch()} className="gap-2">
+                  <GitCompare className="h-4 w-4" />
+                  Rank My Fit
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {tab === "company" && selected ? (
+            <Card className="bg-muted/30">
+              <CardContent className="pt-6">
+                <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+                  <div>
+                    <h2 className="font-serif text-2xl font-semibold">
+                      Match yourself to {selected.label}
+                    </h2>
+                    <p className="mt-2 text-muted-foreground">
+                      Focus the fit analysis on this selected company only.
+                    </p>
+                  </div>
+                  <Button onClick={() => onStartMatch(selected.id)} variant="outline" className="gap-2">
+                    <GitCompare className="h-4 w-4" />
+                    Match This Company
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ) : null}
+        </section>
       </main>
     </div>
   );

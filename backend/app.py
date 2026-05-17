@@ -4,6 +4,7 @@ import gzip
 import json
 import mimetypes
 import os
+import re
 import shutil
 import threading
 import time
@@ -37,6 +38,19 @@ class RunRequest(BaseModel):
 
 class CompareRagRequest(BaseModel):
     companies: list[str]
+
+
+class MatchProfileRequest(BaseModel):
+    narrative: str | None = None
+    tradeoffs: list[str] = []
+    accepted_tradeoffs: list[str] = []
+    local_profile: dict[str, Any] | None = None
+
+
+class MatchTopSummaryRequest(BaseModel):
+    profile: dict[str, Any]
+    top_match: dict[str, Any]
+    evidence: list[dict[str, Any]] = []
 
 
 def _spawn(target, *args) -> None:
@@ -184,6 +198,121 @@ def _read_company_csv_score_summary(company_dir: Path) -> dict[str, Any]:
         "negative_share": num("neg_share"),
         "domain_scores": domains,
     }
+
+
+def _load_review_texts_by_id(path: Path) -> dict[str, str]:
+    text = _read_text_maybe_gz(path)
+    if not text:
+        return {}
+
+    import csv
+    from io import StringIO
+
+    try:
+        rows = list(csv.DictReader(StringIO(text)))
+    except Exception:
+        return {}
+
+    out: dict[str, str] = {}
+    for row in rows:
+        normalized_row = {
+            str(key or "").lstrip("\ufeff").strip().strip('"'): value
+            for key, value in row.items()
+        }
+        review_id = str(normalized_row.get("review_id") or normalized_row.get("id") or "").strip()
+        if review_id.endswith(".0"):
+            review_id = review_id[:-2]
+        if not review_id:
+            continue
+        parts = [
+            normalized_row.get("pros") or normalized_row.get("pros_text") or "",
+            normalized_row.get("cons") or normalized_row.get("cons_text") or "",
+            normalized_row.get("body") or "",
+            normalized_row.get("summary") or "",
+        ]
+        combined = _normalize_review_text(" ".join(str(part).strip() for part in parts if str(part).strip()))
+        if combined:
+            out[review_id] = combined
+    return out
+
+
+def _normalize_review_text(value: Any) -> str:
+    text = str(value or "")
+    replacements = {
+        "â": "'",
+        "â": "'",
+        "â": '"',
+        "â": '"',
+        "â": "-",
+        "â": "-",
+        "â¢": " ",
+        "Ã¢ÂÂ": "'",
+        "Ã¢ÂÂ": "'",
+        "Ã¢ÂÂ": '"',
+        "Ã¢ÂÂ": '"',
+        "Ã¢ÂÂ": "-",
+        "Ã¢ÂÂ": "-",
+        "Ã¢ÂÂ¢": " ",
+        "\u2019": "'",
+        "\u2018": "'",
+        "\u201c": '"',
+        "\u201d": '"',
+        "\u2014": "-",
+        "\u2013": "-",
+        "\u2022": " ",
+    }
+    for bad, good in replacements.items():
+        text = text.replace(bad, good)
+    text = re.sub(r"[*#_`~]+", " ", text)
+    text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def _enrich_rag_evidence_text(evidence: dict[str, Any] | None, company_dir: Path) -> dict[str, Any] | None:
+    if not isinstance(evidence, dict):
+        return evidence
+
+    source_files = evidence.get("source_files")
+    reviews_path: Path | None = None
+    if isinstance(source_files, dict) and isinstance(source_files.get("reviews"), str):
+        candidate = (settings.REPO_ROOT / source_files["reviews"]).resolve()
+        if candidate.exists():
+            reviews_path = candidate
+    if reviews_path is None:
+        candidate = settings.REVIEW_DATA_DIR / company_dir.name / "reviews.csv"
+        if candidate.exists():
+            reviews_path = candidate
+
+    if reviews_path is None:
+        return evidence
+
+    review_texts = _load_review_texts_by_id(reviews_path)
+    if not review_texts:
+        return evidence
+
+    def enrich_item(item: Any) -> None:
+        if not isinstance(item, dict):
+            return
+        review_id = str(item.get("review_id") or "").strip()
+        if review_id.endswith(".0"):
+            review_id = review_id[:-2]
+        full_text = review_texts.get(review_id)
+        if full_text:
+            item["text"] = full_text
+        elif item.get("text"):
+            item["text"] = _normalize_review_text(item["text"])
+
+    for cluster in evidence.get("clusters", []) if isinstance(evidence.get("clusters"), list) else []:
+        if not isinstance(cluster, dict):
+            continue
+        for item in cluster.get("evidence", []) if isinstance(cluster.get("evidence"), list) else []:
+            enrich_item(item)
+
+    for item in evidence.get("flat_evidence", []) if isinstance(evidence.get("flat_evidence"), list) else []:
+        enrich_item(item)
+
+    return evidence
 
 
 def _has_required_score_files(company_dir: Path) -> bool:
@@ -496,6 +625,7 @@ def scored_company_rag(company_id: str) -> dict[str, Any]:
     clusters = _read_json_maybe_gz(company_dir / "rag_clusters.json")
     insights = _read_json_maybe_gz(company_dir / "rag_insights.json")
     evidence = _read_json_maybe_gz(company_dir / "rag_evidence.json")
+    evidence = _enrich_rag_evidence_text(evidence, company_dir)
     profile = _read_json_maybe_gz(company_dir / "rag_profile.json")
     if not summary and not clusters and not insights:
         raise HTTPException(status_code=404, detail="RAG artifacts not found")
@@ -563,6 +693,65 @@ COMPARE_RAG_SCHEMA: dict[str, Any] = {
         "company_notes",
         "best_fit_by_need",
     ],
+}
+
+
+MATCH_PROFILE_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "summary": {"type": "string"},
+        "likely_motivators": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 5,
+        },
+        "core_needs": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 5,
+        },
+        "risk_sensitivities": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 5,
+        },
+        "work_style": {"type": "string"},
+        "confidence": {"type": "number"},
+    },
+    "required": [
+        "summary",
+        "likely_motivators",
+        "core_needs",
+        "risk_sensitivities",
+        "work_style",
+        "confidence",
+    ],
+}
+
+
+MATCH_TOP_SUMMARY_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "headline": {"type": "string"},
+        "summary": {"type": "string"},
+        "match_reasons": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 4,
+        },
+        "evidence_connections": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 1,
+            "maxItems": 4,
+        },
+        "caveat": {"type": "string"},
+    },
+    "required": ["headline", "summary", "match_reasons", "evidence_connections", "caveat"],
 }
 
 
@@ -701,6 +890,227 @@ def _call_gemini_compare(prompt: str) -> tuple[dict[str, Any], dict[str, Any]]:
                     time.sleep(4 * (attempt + 1))
         continue
     raise RuntimeError(f"Gemini comparison generation failed: {last_error}; attempts={attempts}")
+
+
+def _call_gemini_match_profile(prompt: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    _load_env_file_if_needed()
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not set.")
+
+    try:
+        from google import genai
+        from google.genai import types
+    except Exception as exc:
+        raise RuntimeError(f"google-genai is not installed: {exc}") from exc
+
+    models = [
+        os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview"),
+        os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite"),
+    ]
+    models = [model for index, model in enumerate(models) if model and model not in models[:index]]
+    client = genai.Client(api_key=api_key)
+    last_error: Exception | None = None
+    attempts: list[dict[str, str]] = []
+    for model in models:
+        for attempt in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.35,
+                        response_mime_type="application/json",
+                        response_json_schema=MATCH_PROFILE_SCHEMA,
+                    ),
+                )
+                text = response.text or "{}"
+                generated = json.loads(text.strip().strip("`").removeprefix("json").strip())
+                usage = getattr(response, "usage_metadata", None)
+                if hasattr(usage, "model_dump"):
+                    usage_payload = usage.model_dump(mode="json", exclude_none=True)
+                else:
+                    usage_payload = {}
+                return generated, {"model": model, "usage": usage_payload, "attempts": attempts}
+            except Exception as exc:
+                last_error = exc
+                attempts.append({"model": model, "attempt": str(attempt + 1), "error": str(exc)})
+                if attempt < 2:
+                    time.sleep(4 * (attempt + 1))
+        continue
+    raise RuntimeError(f"Gemini match profile generation failed: {last_error}; attempts={attempts}")
+
+
+def _call_gemini_match_top_summary(prompt: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    _load_env_file_if_needed()
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not set.")
+
+    try:
+        from google import genai
+        from google.genai import types
+    except Exception as exc:
+        raise RuntimeError(f"google-genai is not installed: {exc}") from exc
+
+    models = [
+        os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview"),
+        os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite"),
+    ]
+    models = [model for index, model in enumerate(models) if model and model not in models[:index]]
+    client = genai.Client(api_key=api_key)
+    last_error: Exception | None = None
+    attempts: list[dict[str, str]] = []
+    for model in models:
+        for attempt in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.25,
+                        response_mime_type="application/json",
+                        response_json_schema=MATCH_TOP_SUMMARY_SCHEMA,
+                    ),
+                )
+                text = response.text or "{}"
+                generated = json.loads(text.strip().strip("`").removeprefix("json").strip())
+                usage = getattr(response, "usage_metadata", None)
+                if hasattr(usage, "model_dump"):
+                    usage_payload = usage.model_dump(mode="json", exclude_none=True)
+                else:
+                    usage_payload = {}
+                return generated, {"model": model, "usage": usage_payload, "attempts": attempts}
+            except Exception as exc:
+                last_error = exc
+                attempts.append({"model": model, "attempt": str(attempt + 1), "error": str(exc)})
+                if attempt < 2:
+                    time.sleep(4 * (attempt + 1))
+        continue
+    raise RuntimeError(f"Gemini match top-summary generation failed: {last_error}; attempts={attempts}")
+
+
+def _fallback_match_profile(payload: MatchProfileRequest, error: str | None = None) -> dict[str, Any]:
+    local = payload.local_profile or {}
+    behavior = local.get("behaviorProfile") if isinstance(local, dict) else None
+    if not isinstance(behavior, dict):
+        behavior = {}
+
+    desired = local.get("desiredThemes", []) if isinstance(local, dict) else []
+    avoided = local.get("avoidThemes", []) if isinstance(local, dict) else []
+    weights = local.get("weights", {}) if isinstance(local, dict) else {}
+    core_needs = [
+        key
+        for key, _value in sorted(
+            ((str(k), float(v)) for k, v in weights.items() if isinstance(v, (int, float))),
+            key=lambda item: item[1],
+            reverse=True,
+        )
+    ][:3]
+
+    return {
+        "schema_version": 1,
+        "source": "fallback",
+        "error": error,
+        "summary": behavior.get("summary")
+        or "Your profile is based on the tradeoffs and workplace language you provided. It emphasizes the conditions you want supplied by an employer and the risks you want to avoid.",
+        "likely_motivators": desired[:5] or ["clear support", "workplace fit"],
+        "core_needs": core_needs or behavior.get("coreNeeds") or ["self-protection", "affiliation"],
+        "risk_sensitivities": avoided[:5] or ["poor fit between needs and environment"],
+        "work_style": behavior.get("workStyle")
+        or "You appear to evaluate employers by the day-to-day environment they create, not only by brand or compensation.",
+        "confidence": behavior.get("confidence") or (0.55 if not (payload.narrative or "").strip() else 0.7),
+    }
+
+
+def _fallback_match_top_summary(payload: MatchTopSummaryRequest, error: str | None = None) -> dict[str, Any]:
+    top = payload.top_match or {}
+    company = str(top.get("company") or top.get("label") or "the top match")
+    score = top.get("score")
+    evidence = [
+        str(item.get("text") or item.get("label") or "").strip()
+        for item in payload.evidence
+        if isinstance(item, dict) and str(item.get("text") or item.get("label") or "").strip()
+    ][:3]
+
+    return {
+        "schema_version": 1,
+        "source": "fallback",
+        "error": error,
+        "headline": f"{company} is currently the strongest match",
+        "summary": f"{company} ranks first because its review-derived need scores align best with the user's weighted workplace profile. Its match score is {score}%." if score is not None else f"{company} ranks first because its review-derived need scores align best with the user's weighted workplace profile.",
+        "match_reasons": [
+            "The company performs relatively well on the needs that the profile weights most heavily.",
+            "The available evidence gives the match enough review support to make it worth inspecting first.",
+        ],
+        "evidence_connections": evidence or ["Review evidence should be inspected below to validate the fit."],
+        "caveat": "This is a behavioral fit signal based on review language, not a guarantee of team-level experience.",
+    }
+
+
+@app.post("/api/match/profile")
+def match_profile(payload: MatchProfileRequest) -> dict[str, Any]:
+    if not (payload.narrative or "").strip() and not payload.tradeoffs and not payload.accepted_tradeoffs:
+        raise HTTPException(status_code=400, detail="Provide narrative text or at least one tradeoff.")
+
+    prompt_payload = {
+        "narrative": payload.narrative or "",
+        "tradeoffs": payload.tradeoffs,
+        "accepted_tradeoffs": payload.accepted_tradeoffs,
+        "local_profile": payload.local_profile or {},
+    }
+    prompt = (
+        "You are interpreting a workplace-fit profile for an employee-to-company matching tool.\n"
+        "Use behavioral science language, but do not diagnose personality or mental health.\n"
+        "Write directly to the user in second person using 'you' and 'your'.\n"
+        "Ground the interpretation in needs-supplies fit, risk sensitivity, motivation, and workplace tradeoffs.\n"
+        "The five workplace domains are physiological support, self-protection, affiliation, status/esteem, and family-care.\n"
+        "Do not rank companies. Only explain the user's likely workplace needs and risk sensitivities.\n"
+        "If narrative text is blank, infer only from selected tradeoffs and the local profile.\n"
+        "Return concise JSON matching the schema.\n\n"
+        f"Input JSON:\n{json.dumps(prompt_payload, ensure_ascii=False)}"
+    )
+
+    try:
+        generated, meta = _call_gemini_match_profile(prompt)
+        return {
+            "schema_version": 1,
+            "source": "gemini",
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            **meta,
+            **generated,
+        }
+    except Exception as exc:
+        return _fallback_match_profile(payload, error=str(exc))
+
+
+@app.post("/api/match/top-summary")
+def match_top_summary(payload: MatchTopSummaryRequest) -> dict[str, Any]:
+    prompt_payload = {
+        "profile": payload.profile,
+        "top_match": payload.top_match,
+        "evidence": payload.evidence[:6],
+    }
+    prompt = (
+        "You are writing a top-match explanation for an employee-to-company behavioral matching product.\n"
+        "Explain why the top company is the best first match for this user using needs-supplies fit, profile priorities, match score components, and review evidence.\n"
+        "Write for a normal user. Do not overclaim. Do not diagnose personality. Do not mention ATS, resumes, or hiring eligibility.\n"
+        "The explanation should make the result feel evidence-based and inspectable.\n"
+        "Return concise JSON matching the schema.\n\n"
+        f"Input JSON:\n{json.dumps(prompt_payload, ensure_ascii=False)}"
+    )
+
+    try:
+        generated, meta = _call_gemini_match_top_summary(prompt)
+        return {
+            "schema_version": 1,
+            "source": "gemini",
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            **meta,
+            **generated,
+        }
+    except Exception as exc:
+        return _fallback_match_top_summary(payload, error=str(exc))
 
 
 @app.post("/api/compare/rag-summary")

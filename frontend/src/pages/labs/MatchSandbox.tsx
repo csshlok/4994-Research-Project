@@ -246,6 +246,29 @@ const COMPANIES: CompanyProfile[] = [
 const SAMPLE_GOAL =
   "I want a company where managers are fair, people are collaborative, and I can grow without burning out. I care less about prestige and more about stability, flexibility, and feeling respected.";
 
+const MATCH_PROCESS = [
+  {
+    step: "01",
+    title: "Interpret",
+    detail: "Convert narrative and controls into a behavioral need profile.",
+  },
+  {
+    step: "02",
+    title: "Weight",
+    detail: "Balance five workplace goals and separate needs from risks.",
+  },
+  {
+    step: "03",
+    title: "Rank",
+    detail: "Compare the profile against company-level review evidence.",
+  },
+  {
+    step: "04",
+    title: "Explain",
+    detail: "Surface the matched evidence, penalties, and fit caveats.",
+  },
+];
+
 function emptyWeights(): Record<DomainKey, number> {
   return { phys: 1, selfprot: 1, aff: 1, stat: 1, fam: 1 };
 }
@@ -398,13 +421,27 @@ export default function MatchSandbox() {
             Behavioral Company Match
           </p>
           <h1 className="font-serif text-4xl font-semibold text-foreground md:text-5xl">
-            Match a person&apos;s workplace needs to employee-review evidence
+            Your matches
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            This sandbox shows the intended experience: interpret a user&apos;s goals,
-            rank companies with analytical scores, then explain fit and risk using
-            cached RAG-style evidence.
+            A local sandbox for shaping the employee-to-company match flow before
+            connecting it to the production company artifacts.
           </p>
+        </section>
+
+        <section className="mb-8 grid gap-3 md:grid-cols-4">
+          {MATCH_PROCESS.map((item) => (
+            <div key={item.step} className="rounded-lg border border-border bg-card/70 p-4 shadow-card">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                  {item.step}
+                </span>
+                <span className="h-2 w-2 rounded-full bg-primary" />
+              </div>
+              <h2 className="mb-2 font-serif text-xl font-semibold text-foreground">{item.title}</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{item.detail}</p>
+            </div>
+          ))}
         </section>
 
         <section className="mb-8 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">

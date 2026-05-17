@@ -24,14 +24,14 @@ export function DomainCard({
   return (
     <div
       className={cn(
-        "group bg-card rounded-2xl border border-border/50 shadow-card hover:shadow-elevated transition-all duration-300 overflow-hidden opacity-0 animate-fade-up flex flex-col self-start",
+        "group min-h-[188px] w-full bg-card rounded-2xl border border-border/50 shadow-card hover:shadow-elevated transition-all duration-300 overflow-hidden opacity-0 animate-fade-up flex flex-col self-stretch",
         isExpanded && "ring-2 ring-primary/20"
       )}
       style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
     >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full text-left p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+        className="w-full flex-1 text-left p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
       >
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">

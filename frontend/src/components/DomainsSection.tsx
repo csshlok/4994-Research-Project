@@ -78,7 +78,11 @@ export function DomainsSection() {
           {domains.map((domain, index) => (
             <div
               key={domain.number}
-              className={index === domains.length - 1 && domains.length % 2 !== 0 ? "md:col-span-2 md:max-w-[calc(50%-0.5rem)] md:mx-auto" : ""}
+              className={`flex ${
+                index === domains.length - 1 && domains.length % 2 !== 0
+                  ? "md:col-span-2 md:max-w-[calc(50%-0.5rem)] md:mx-auto"
+                  : ""
+              }`}
             >
               <DomainCard
                 {...domain}

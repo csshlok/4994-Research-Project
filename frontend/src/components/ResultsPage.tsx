@@ -37,6 +37,7 @@ interface ResultsPageProps {
   analysis: AnalysisResult;
   onBack: () => void;
   onCompare?: (companyId: string) => void;
+  onMatchStart?: () => void;
 }
 
 function DownloadCard({
@@ -86,7 +87,7 @@ const CLUSTER_COLORS = [
   "hsl(var(--warm-gray))",
 ];
 
-export function ResultsPage({ analysis, onBack, onCompare }: ResultsPageProps) {
+export function ResultsPage({ analysis, onBack, onCompare, onMatchStart }: ResultsPageProps) {
   const [clusterMode, setClusterMode] = useState<"fulfillment" | "hindrance">("fulfillment");
   const domainScores = analysis.domainScores;
   const overallScore = analysis.overallScore;
@@ -570,6 +571,25 @@ const axisLimit = getRadarScaleMax(maxEvidence);
         )}
 
         <section>
+          <Card className="mb-8 bg-muted/30">
+            <CardContent className="pt-6">
+              <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
+                <div>
+                  <h3 className="font-serif text-2xl font-semibold">
+                    Match yourself to {analysis.companyName}
+                  </h3>
+                  <p className="mt-2 text-muted-foreground">
+                    Answer the same workplace fit questions and see how your profile matches this company.
+                  </p>
+                </div>
+                <Button onClick={onMatchStart} className="gap-2">
+                  <Sparkles className="h-4 w-4" />
+                  Show My Match
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card className="mb-8 bg-muted/30">
             <CardContent className="pt-6">
               <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">

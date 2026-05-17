@@ -49,7 +49,7 @@ export function HeroSection({ onAnalyzeClick }: HeroSectionProps) {
           </div>
 
           <p className="mt-12 text-sm text-muted-foreground opacity-0 animate-fade-up stagger-4">
-            Grounded in behavioral science • No account required
+            Grounded in behavioral science - no account required
           </p>
         </div>
       </div>
