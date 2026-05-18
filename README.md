@@ -1,4 +1,4 @@
-Glassdoor review scoring and workplace-intelligence pipeline: collect or load employee reviews, clean them, build text features, score sentiment plus five goal domains, precompute company score caches, generate RAG evidence packets, create Gemini-backed summaries on the free tier, and serve the results through a FastAPI backend and React dashboard.
+Glassdoor review scoring and workplace-intelligence pipeline: collect or load employee reviews, clean them, build text features, score sentiment plus five goal domains, precompute company score caches, generate RAG evidence packets, create Gemini-backed summaries on the free tier, serve the results through a FastAPI backend and React dashboard, and run behavioral employee-to-company matching against cached company evidence.
 
 ## Repo map
 - `pipeline.py` - default end-to-end runner for scrape/load, clean, extract, score, visualization, deployable score cache, topic artifacts, RAG evidence, and cached Gemini summaries.
@@ -11,8 +11,8 @@ Glassdoor review scoring and workplace-intelligence pipeline: collect or load em
 - `generate_topic_artifacts.py` - creates topic cluster summaries and review-to-cluster assignments.
 - `RAG_generation.py` - joins scored reviews, topic clusters, and raw review text into model-ready RAG evidence packets.
 - `Gemini_RAG_generation.py` - calls the Gemini API free tier to generate cached summaries, cluster explanations, and insight text.
-- `backend/` - FastAPI service for pipeline jobs, score caches, downloads, RAG artifacts, and local/hosted deployment.
-- `frontend/` - React/Vite dashboard for single-company analysis, comparison mode, topic maps, and cached RAG summaries.
+- `backend/` - FastAPI service for pipeline jobs, score caches, downloads, RAG artifacts, match interpretation, and local/hosted deployment.
+- `frontend/` - React/Vite dashboard for single-company analysis, comparison mode, topic maps, cached RAG summaries, and employee-to-company matching.
 - `config/goal_dict.json` - five-domain fulfillment/hindrance lexicon.
 - Data folders: `review data/`, `company scores/`, `features_exctract/`, `out/`, `runs/`, `server_jobs/`.
 
@@ -25,6 +25,15 @@ The scoring model maps employee language to five workplace-need domains:
 - `family_care` - flexibility, work-life support, scheduling, and care obligations.
 
 Each review receives sentiment, fulfillment, hindrance, and final goal-domain signals. Company summaries aggregate those signals into domain scores, topic clusters, radar/heatmap views, and evidence-backed natural-language explanations.
+
+## Behavioral matching
+The matching flow is behavioral fit, not ATS ranking. It does not match a resume to a job description. It takes a user's workplace narrative and selected goal/tradeoff preferences, builds a behavioral profile across the five goal domains, and compares that profile against review-derived company evidence.
+
+The matching stack uses two layers:
+- Local deterministic scoring maps the user's text and selected tradeoffs to domain weights, desired themes, risk sensitivities, and confidence signals using the goal dictionary and matching heuristics.
+- Optional Gemini interpretation turns the same input into a psychology-oriented profile, top-match explanation, and evidence-backed fit summary. If the model call is unavailable, the frontend keeps using the local profile and cached review evidence.
+
+Company fit is scored from cached artifacts: final goal-domain scores, review-level evidence, topic clusters, RAG packets, theme overlap, risk penalties, and confidence from the amount and consistency of evidence. Match results show the top four companies, the user's behavior profile, the top-match reasoning, an interactive score explanation, a confidence meter, tradeoff comparisons, contextual review evidence, and "why not these companies" explanations.
 
 ## Prerequisites
 - Python 3.10+.
@@ -71,6 +80,8 @@ curl http://127.0.0.1:8000/api/health
 curl http://127.0.0.1:8000/api/scored-companies
 curl http://127.0.0.1:8000/api/scored-company/microsoft/rag
 ```
+
+The frontend uses the same cached company endpoints for both company analysis and matching. Match profile generation can call the backend model endpoint when configured, then falls back to local scoring if no model response is available.
 
 ## Default pipeline workflow
 `pipeline.py` is now the default operating entrypoint. It writes run-specific artifacts under `runs/` and, after scoring, publishes the company cache used by the dashboard under `company scores/{company}/`. A normal run now ends with cached score files, topic artifacts, RAG evidence/profile JSON, and Gemini-generated summary/cluster/insight JSON when a Gemini API key is available.
@@ -225,15 +236,33 @@ For normal operation, these RAG commands do not need to be run manually. `pipeli
 - `GET /api/scored-company/{company_id}/outputs` - list downloadable cache files.
 - `GET /api/scored-company/{company_id}/download?path=...` - download cache artifacts.
 - `GET /api/scored-company/{company_id}/rag` - cached RAG summary, cluster, insight, evidence, and profile payloads.
+- `POST /api/match/profile` - interpret a user workplace narrative, selected goals, and tradeoffs into a behavioral match profile.
+- `POST /api/match/top-summary` - generate an evidence-backed explanation for why the highest-ranked company fits the user's profile.
+
+## Matching data flow
+The matching flow is designed to reuse the same cache files as the analysis dashboard:
+```text
+user narrative + goal/tradeoff buttons
+  -> local profile and optional Gemini profile interpretation
+  -> company score-cache comparison
+  -> RAG/review evidence attachment
+  -> top-four overview and selected-company fit detail
+```
+
+The profile layer tracks domain weights, desired themes, avoid themes, risk sensitivities, likely motivators, and confidence. The company layer tracks match score, domain alignment, theme bonus, risk penalty, evidence confidence, review snippets, tradeoff comparisons, and selected-company explanations.
 
 ## Frontend application
 The React dashboard supports:
 - Single-company analysis from the landing page.
 - Company comparison from the landing page.
+- Match Yourself flow from the landing page.
+- Single-company "Show My Match" flow that sends the user to a separate match-input page.
+- Comparison-dashboard matching for all compared companies or for the currently selected company.
 - Compare-from-results flow for a selected company.
 - Cached executive summaries from RAG artifacts.
 - Goal-domain cards, bar/radar charts, topic bubble maps, and cluster explanation cards.
 - Comparison heatmap, domain gap analysis, final goal score profile, shared cluster map, and company detail view.
+- Match overview with ranked company cards, behavior profile, top-match explanation, confidence meter, interactive score explanation, contextual review evidence, tradeoff graphics, and "why not these companies" explanations.
 - Download links for cleaned reviews, review scores, aggregated scores, and topic clusters.
 
 Cached analyses intentionally show a short loading buffer before rendering results.
@@ -246,6 +275,8 @@ The current cached dataset contains 50 precomputed companies. Each company can i
 - representative evidence snippets for each cluster;
 - Gemini-generated executive summary, strengths, risks, cluster explanations, and "what stands out" observations.
 
+The same review evidence is reused by both analysis and matching. Single-company pages show evidence below the clusters, while match pages use contextual highlighted sentences to explain why a company supports or conflicts with the user's stated needs.
+
 Core scored outputs:
 - `review_scores.csv` - per-review sentiment and goal signals.
 - `company_scores.csv` - company-level aggregate metrics.
@@ -256,6 +287,8 @@ Core scored outputs:
 - `rag_summary.json` - executive summary, strengths, risks, and domain explanations.
 - `rag_clusters.json` - cluster summaries.
 - `rag_insights.json` - "what stands out" observations.
+
+Match reports are generated at runtime from these cached score and RAG artifacts. They are not currently saved as persistent report files.
 
 Optional static figures and current frontend captures live under `out/figures/`:
 
@@ -271,4 +304,5 @@ Optional static figures and current frontend captures live under `out/figures/`:
 - `company scores/` is designed for deployable cache artifacts; report/log files are not required for serving the dashboard.
 - `local_compare_outputs/`, `server_jobs/`, and `runs/` are local runtime folders and should stay ignored.
 - The scoring pipeline can run on CPU; precomputing company scores keeps Render deployment practical.
-- Gemini text should be cached before deployment where possible. Live model calls should be reserved for user-selected comparisons or future employee-to-company matching flows.
+- Gemini text should be cached before deployment where possible. Live model calls are currently reserved for user-selected comparisons, match profile interpretation, and top-match explanations.
+- Matching is a behavioral evidence fit estimate. It should be presented as decision support, not as hiring eligibility, employee screening, or a definitive workplace outcome prediction.
