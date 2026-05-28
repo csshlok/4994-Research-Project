@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import gzip
+import hmac
 import json
 import mimetypes
 import os
@@ -19,7 +20,7 @@ if __package__ in {None, ""}:
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
@@ -320,6 +321,43 @@ def _has_required_score_files(company_dir: Path) -> bool:
 
 
 ACTIVE_JOB_STATUSES = {"queued", "running"}
+JOB_ID_RE = re.compile(r"^[a-f0-9]{12}$")
+
+
+def _require_api_token(authorization: str | None = Header(default=None)) -> None:
+    expected = settings.PIPELINE_API_TOKEN
+    if not expected:
+        return
+
+    scheme, _, token = (authorization or "").partition(" ")
+    if scheme.lower() != "bearer" or not hmac.compare_digest(token, expected):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing or invalid API token",
+        )
+
+
+def _validate_job_id(job_id: str) -> str:
+    if not JOB_ID_RE.fullmatch(str(job_id or "")):
+        raise HTTPException(status_code=400, detail="Invalid job id")
+    return job_id
+
+
+def _is_relative_to(path: Path, root: Path) -> bool:
+    try:
+        path.resolve().relative_to(root.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def _trusted_run_dir(raw: Any) -> Path | None:
+    if not isinstance(raw, str) or not raw.strip():
+        return None
+    run_dir = Path(raw).resolve()
+    if not _is_relative_to(run_dir, settings.RUNS_DIR):
+        raise HTTPException(status_code=400, detail="Invalid run directory")
+    return run_dir
 
 
 def _load_status_file(path: Path) -> dict[str, Any]:
@@ -421,7 +459,9 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
         state = str(status.get("status") or "").strip().lower()
         run_dir_val = status.get("run_dir")
         if state in ACTIVE_JOB_STATUSES and isinstance(run_dir_val, str) and run_dir_val.strip():
-            active_runs.add(Path(run_dir_val).resolve())
+            run_path = Path(run_dir_val).resolve()
+            if _is_relative_to(run_path, settings.RUNS_DIR):
+                active_runs.add(run_path)
 
         updated_at = status.get("updated_at")
         created_at = status.get("created_at")
@@ -438,7 +478,12 @@ def _cleanup_jobs_and_collect_active_runs(now_ts: float) -> set[Path]:
             if isinstance(run_dir_val, str) and run_dir_val.strip():
                 try:
                     run_path = Path(run_dir_val).resolve()
-                    if run_path.exists() and run_path.is_dir() and (now_ts - age_ref) >= run_ttl_seconds:
+                    if (
+                        _is_relative_to(run_path, settings.RUNS_DIR)
+                        and run_path.exists()
+                        and run_path.is_dir()
+                        and (now_ts - age_ref) >= run_ttl_seconds
+                    ):
                         shutil.rmtree(run_path, ignore_errors=True)
                 except Exception:
                     pass
@@ -527,7 +572,7 @@ _spawn(_job_dispatch_loop)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=list(settings.ALLOWED_ORIGINS),
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -599,7 +644,7 @@ def list_scored_companies() -> dict[str, Any]:
     return {"companies": companies}
 
 
-@app.get("/api/scored-company/{company_id}/outputs")
+@app.get("/api/scored-company/{company_id}/outputs", dependencies=[Depends(_require_api_token)])
 def scored_company_outputs(company_id: str) -> dict[str, Any]:
     company_dir = _resolve_scored_company_dir(company_id)
     if company_dir is None or not _has_required_score_files(company_dir):
@@ -615,7 +660,7 @@ def scored_company_outputs(company_id: str) -> dict[str, Any]:
     return {"company_id": company_dir.name, "files": sorted(files)}
 
 
-@app.get("/api/scored-company/{company_id}/rag")
+@app.get("/api/scored-company/{company_id}/rag", dependencies=[Depends(_require_api_token)])
 def scored_company_rag(company_id: str) -> dict[str, Any]:
     company_dir = _resolve_scored_company_dir(company_id)
     if company_dir is None or not _has_required_score_files(company_dir):
@@ -1048,7 +1093,7 @@ def _fallback_match_top_summary(payload: MatchTopSummaryRequest, error: str | No
     }
 
 
-@app.post("/api/match/profile")
+@app.post("/api/match/profile", dependencies=[Depends(_require_api_token)])
 def match_profile(payload: MatchProfileRequest) -> dict[str, Any]:
     if not (payload.narrative or "").strip() and not payload.tradeoffs and not payload.accepted_tradeoffs:
         raise HTTPException(status_code=400, detail="Provide narrative text or at least one tradeoff.")
@@ -1084,7 +1129,7 @@ def match_profile(payload: MatchProfileRequest) -> dict[str, Any]:
         return _fallback_match_profile(payload, error=str(exc))
 
 
-@app.post("/api/match/top-summary")
+@app.post("/api/match/top-summary", dependencies=[Depends(_require_api_token)])
 def match_top_summary(payload: MatchTopSummaryRequest) -> dict[str, Any]:
     prompt_payload = {
         "profile": payload.profile,
@@ -1113,7 +1158,7 @@ def match_top_summary(payload: MatchTopSummaryRequest) -> dict[str, Any]:
         return _fallback_match_top_summary(payload, error=str(exc))
 
 
-@app.post("/api/compare/rag-summary")
+@app.post("/api/compare/rag-summary", dependencies=[Depends(_require_api_token)])
 def compare_rag_summary(payload: CompareRagRequest) -> dict[str, Any]:
     raw_companies = [company.strip() for company in payload.companies if company.strip()]
     unique_companies = list(dict.fromkeys(raw_companies))[:3]
@@ -1162,7 +1207,7 @@ def compare_rag_summary(payload: CompareRagRequest) -> dict[str, Any]:
     return result
 
 
-@app.get("/api/scored-company/{company_id}/download")
+@app.get("/api/scored-company/{company_id}/download", dependencies=[Depends(_require_api_token)])
 def scored_company_download(company_id: str, path: str = Query(..., min_length=1)):
     company_dir = _resolve_scored_company_dir(company_id)
     if company_dir is None or not _has_required_score_files(company_dir):
@@ -1186,7 +1231,7 @@ def scored_company_download(company_id: str, path: str = Query(..., min_length=1
     return StreamingResponse(_iter_gzip_bytes(gz_target), media_type=media_type, headers=headers)
 
 
-@app.post("/api/run")
+@app.post("/api/run", dependencies=[Depends(_require_api_token)])
 def run_job(payload: RunRequest) -> dict[str, str]:
     if payload.mode != "cache":
         raise HTTPException(status_code=400, detail="Only mode='cache' is supported right now.")
@@ -1220,15 +1265,18 @@ def run_job(payload: RunRequest) -> dict[str, str]:
     return {"job_id": job_id}
 
 
-@app.get("/api/job/{job_id}")
+@app.get("/api/job/{job_id}", dependencies=[Depends(_require_api_token)])
 def job_status(job_id: str) -> dict[str, Any]:
+    job_id = _validate_job_id(job_id)
     st = store.get_status(job_id)
     if st is None:
         raise HTTPException(status_code=404, detail="Job not found")
 
     run_dir_str = st.get("run_dir")
     if run_dir_str:
-        run_dir = Path(run_dir_str)
+        run_dir = _trusted_run_dir(run_dir_str)
+        if run_dir is None:
+            raise HTTPException(status_code=409, detail="Run directory is not available yet.")
         progress = _read_progress_snapshot(run_dir / "99_logs" / "progress.jsonl")
         st["stage"] = {
             "current": progress["current_stage"],
@@ -1249,8 +1297,9 @@ def job_status(job_id: str) -> dict[str, Any]:
     return st
 
 
-@app.get("/api/job/{job_id}/log")
+@app.get("/api/job/{job_id}/log", dependencies=[Depends(_require_api_token)])
 def job_log(job_id: str, n: int = Query(default=200, ge=1, le=2000)) -> PlainTextResponse:
+    job_id = _validate_job_id(job_id)
     st = store.get_status(job_id)
     if st is None:
         raise HTTPException(status_code=404, detail="Job not found")
@@ -1263,7 +1312,10 @@ def job_log(job_id: str, n: int = Query(default=200, ge=1, le=2000)) -> PlainTex
 
     run_dir_str = st.get("run_dir")
     if run_dir_str:
-        pipeline_log = Path(run_dir_str) / "99_logs" / "pipeline.log"
+        run_dir = _trusted_run_dir(run_dir_str)
+        if run_dir is None:
+            raise HTTPException(status_code=409, detail="Run directory is not available yet.")
+        pipeline_log = run_dir / "99_logs" / "pipeline.log"
         p_tail = _tail_file(pipeline_log, n)
         if p_tail:
             sections.append("=== pipeline.log ===")
@@ -1272,8 +1324,9 @@ def job_log(job_id: str, n: int = Query(default=200, ge=1, le=2000)) -> PlainTex
     return PlainTextResponse("\n\n".join(sections))
 
 
-@app.get("/api/job/{job_id}/outputs")
+@app.get("/api/job/{job_id}/outputs", dependencies=[Depends(_require_api_token)])
 def job_outputs(job_id: str) -> dict[str, Any]:
+    job_id = _validate_job_id(job_id)
     st = store.get_status(job_id)
     if st is None:
         raise HTTPException(status_code=404, detail="Job not found")
@@ -1282,7 +1335,9 @@ def job_outputs(job_id: str) -> dict[str, Any]:
     if not run_dir_str:
         return {"files": []}
 
-    run_dir = Path(run_dir_str)
+    run_dir = _trusted_run_dir(run_dir_str)
+    if run_dir is None:
+        return {"files": []}
     if not run_dir.exists():
         return {"files": []}
 
@@ -1297,28 +1352,36 @@ def job_outputs(job_id: str) -> dict[str, Any]:
     return {"files": sorted(files)}
 
 
-@app.get("/api/job/{job_id}/bundle")
+@app.get("/api/job/{job_id}/bundle", dependencies=[Depends(_require_api_token)])
 def job_bundle(job_id: str):
+    job_id = _validate_job_id(job_id)
     st = store.get_status(job_id)
     if st is None:
         raise HTTPException(status_code=404, detail="Job not found")
     if st.get("status") != "succeeded":
         raise HTTPException(status_code=409, detail="Job is not complete yet.")
 
-    bundle = Path(st.get("bundle_path") or "")
-    if not bundle.exists():
+    bundle_value = st.get("bundle_path")
+    bundle = Path(bundle_value).resolve() if isinstance(bundle_value, str) and bundle_value.strip() else None
+    if bundle is not None and not _is_relative_to(bundle, settings.RUNS_DIR):
+        raise HTTPException(status_code=400, detail="Invalid bundle path")
+    if bundle is None or not bundle.exists():
         run_dir_str = st.get("run_dir")
         if not run_dir_str:
             raise HTTPException(status_code=404, detail="Bundle not found")
-        bundle = Path(run_dir_str) / "bundle" / "results.zip"
+        run_dir = _trusted_run_dir(run_dir_str)
+        if run_dir is None:
+            raise HTTPException(status_code=404, detail="Bundle not found")
+        bundle = run_dir / "bundle" / "results.zip"
         if not bundle.exists():
             raise HTTPException(status_code=404, detail="Bundle not found")
 
     return FileResponse(bundle, filename=f"{job_id}_results.zip")
 
 
-@app.get("/api/job/{job_id}/download")
+@app.get("/api/job/{job_id}/download", dependencies=[Depends(_require_api_token)])
 def job_download(job_id: str, path: str = Query(..., min_length=1)):
+    job_id = _validate_job_id(job_id)
     st = store.get_status(job_id)
     if st is None:
         raise HTTPException(status_code=404, detail="Job not found")
@@ -1327,7 +1390,9 @@ def job_download(job_id: str, path: str = Query(..., min_length=1)):
     if not run_dir_str:
         raise HTTPException(status_code=409, detail="Run directory is not available yet.")
 
-    run_dir = Path(run_dir_str).resolve()
+    run_dir = _trusted_run_dir(run_dir_str)
+    if run_dir is None:
+        raise HTTPException(status_code=409, detail="Run directory is not available yet.")
     target = (run_dir / path).resolve()
     if run_dir not in target.parents and target != run_dir:
         raise HTTPException(status_code=400, detail="Invalid path")
@@ -1346,4 +1411,4 @@ def job_download(job_id: str, path: str = Query(..., min_length=1)):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=os.environ.get("HOST", "127.0.0.1"), port=8000)

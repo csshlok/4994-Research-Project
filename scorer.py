@@ -188,12 +188,13 @@ class SentimentModel:
                  offline=False, device=None, max_length=256):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.max_length = max_length
+        revision = os.environ.get("HF_SENTIMENT_MODEL_REVISION", "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7")
         try:
-            self.tok = AutoTokenizer.from_pretrained(model_name, local_files_only=offline)
-            self.model = AutoModelForSequenceClassification.from_pretrained(model_name, local_files_only=offline)
+            self.tok = AutoTokenizer.from_pretrained(model_name, revision=revision, local_files_only=offline)
+            self.model = AutoModelForSequenceClassification.from_pretrained(model_name, revision=revision, local_files_only=offline)
         except Exception:
-            self.tok = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
-            self.model = AutoModelForSequenceClassification.from_pretrained(model_name, local_files_only=True)
+            self.tok = AutoTokenizer.from_pretrained(model_name, revision=revision, local_files_only=True)
+            self.model = AutoModelForSequenceClassification.from_pretrained(model_name, revision=revision, local_files_only=True)
         self.model = self.model.to(self.device).eval()
         id2 = self.model.config.id2label
         lid = {v.lower(): k for k, v in id2.items()}

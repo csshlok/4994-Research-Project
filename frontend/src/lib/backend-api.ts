@@ -3,6 +3,7 @@ const API_BASE = (
   import.meta.env.VITE_API_BASE ||
   "http://localhost:8000"
 ).replace(/\/+$/, "");
+const API_TOKEN = import.meta.env.VITE_PIPELINE_API_TOKEN || "";
 
 export interface RunResponse {
   job_id: string;
@@ -109,7 +110,7 @@ function apiUrl(path: string): string {
 }
 
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(apiUrl(path), init);
+  const res = await fetch(apiUrl(path), withAuth(init));
   if (!res.ok) {
     const txt = await res.text();
     throw new Error(`HTTP ${res.status} for ${path}: ${txt || res.statusText}`);
@@ -118,12 +119,26 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 async function fetchText(path: string, init?: RequestInit): Promise<string> {
-  const res = await fetch(apiUrl(path), init);
+  const res = await fetch(apiUrl(path), withAuth(init));
   if (!res.ok) {
     const txt = await res.text();
     throw new Error(`HTTP ${res.status} for ${path}: ${txt || res.statusText}`);
   }
   return await res.text();
+}
+
+function withAuth(init: RequestInit = {}): RequestInit {
+  if (!API_TOKEN) {
+    return init;
+  }
+
+  const headers = new Headers(init.headers);
+  headers.set("Authorization", `Bearer ${API_TOKEN}`);
+
+  return {
+    ...init,
+    headers,
+  };
 }
 
 export async function startPipelineJob(companyName: string): Promise<RunResponse> {

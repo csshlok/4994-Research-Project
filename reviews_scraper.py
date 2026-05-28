@@ -325,7 +325,7 @@ def _extract_ldjson_reviews(html: str) -> List[Dict[str, Any]]:
                 review_id = r.get("@id")
                 if not review_id:
                     seed = f"{author_name}|{rating}|{date}|{body}"
-                    review_id = hashlib.sha1(seed.encode("utf-8", errors="ignore")).hexdigest()[:16]
+                    review_id = hashlib.sha256(seed.encode("utf-8", errors="ignore")).hexdigest()[:16]
 
                 title = r.get("name") or r.get("headline")
                 if not title and isinstance(body, str):

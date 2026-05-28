@@ -18,7 +18,10 @@ def _int_env(name: str, default: int) -> int:
         return int(default)
 
 
-def _origins_env(name: str, default: str = "*") -> tuple[str, ...]:
+def _origins_env(
+    name: str,
+    default: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080",
+) -> tuple[str, ...]:
     raw = os.environ.get(name, default)
     parts = [p.strip() for p in raw.split(",") if p.strip()]
     return tuple(parts) if parts else ("*",)
@@ -45,6 +48,7 @@ class Settings:
     RUNS_DIR: Path
     PYTHON_EXE: Path
     ALLOWED_ORIGINS: tuple[str, ...]
+    PIPELINE_API_TOKEN: str | None
     RUN_RETENTION_SECONDS: int
     JOB_RETENTION_SECONDS: int
     CLEANUP_INTERVAL_SECONDS: int
@@ -61,7 +65,8 @@ def load_settings() -> Settings:
     cache_usage_log = _path_env("CACHE_USAGE_LOG", jobs_dir / "cache_usage_log.jsonl")
     runs_dir = _path_env("RUNS_DIR", repo_root / "runs")
     python_exe = _path_env("PYTHON_EXE", Path(sys.executable))
-    allowed_origins = _origins_env("ALLOWED_ORIGINS", "*")
+    allowed_origins = _origins_env("ALLOWED_ORIGINS")
+    pipeline_api_token = os.environ.get("PIPELINE_API_TOKEN") or None
     run_retention_seconds = _retention_seconds("RUN_RETENTION_SECONDS", "RUN_RETENTION_HOURS", 1)
     job_retention_seconds = _retention_seconds("JOB_RETENTION_SECONDS", "JOB_RETENTION_HOURS", 24)
     cleanup_interval_seconds = max(30, _int_env("CLEANUP_INTERVAL_SECONDS", 600))
@@ -78,6 +83,7 @@ def load_settings() -> Settings:
         RUNS_DIR=runs_dir,
         PYTHON_EXE=python_exe,
         ALLOWED_ORIGINS=allowed_origins,
+        PIPELINE_API_TOKEN=pipeline_api_token,
         RUN_RETENTION_SECONDS=run_retention_seconds,
         JOB_RETENTION_SECONDS=job_retention_seconds,
         CLEANUP_INTERVAL_SECONDS=cleanup_interval_seconds,
